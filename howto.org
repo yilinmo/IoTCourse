@@ -116,7 +116,7 @@
    # defined above as CUSTOM_ID.  The second link uses the section
    # header’s text as link target.
    - This slide is part of section [[#features][Some Presentation Features]]
-     - We can link to slides, e.g., the [[Text Slide][the previous slide]]
+     - We can link to slides, e.g., [[Text Slide][the previous slide]]
      - Side note: Check source code to see two variants of link
        targets used on this slide
    # The following directive with “appear” lets the next thing
