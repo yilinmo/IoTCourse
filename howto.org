@@ -1,0 +1,174 @@
+# -*- org-reveal-title-slide: "title-slide.html" -*-
+# Local IspellDict: en
+#+STARTUP: showeverything
+#+INCLUDE: config.org
+
+#+TITLE: How to create presentations with emacs-reveal
+#+SUBTITLE: (Press ~?~ for help, ~n~ and ~p~ for next and previous slide)
+#+AUTHOR: Jens Lechtenbörger
+#+DATE: September 2017
+
+
+* Introduction
+** What’s This?
+   - Emacs-reveal is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
+     to generate [[http://lab.hakim.se/reveal-js/][reveal.js]] presentations (slides with audio) from simple text
+     files in [[http://orgmode.org/][Org mode]]
+   - Benefits
+     - For your audience
+       - Self-contained presentations embedding audio
+       - Usable on lots of (including mobile and offline) devices with
+         just a browser
+     - For you as producer
+       - Separation of layout and contents
+	 - Similarly to, e.g., LaTeX
+       - Simple text format allows diff and merge for ease of collaboration
+
+** Prerequisites
+  - I suppose that you use GNU/Linux
+    ([[https://getgnulinux.org/switch_to_linux/try_or_install/][help on getting started]])
+    - Actually, not much here is operating system specific
+  - This software should really be used with the text editor [[https://www.gnu.org/software/emacs/][GNU Emacs]]
+    - (You could try other editors and build presentations on GitLab’s
+      infrastructure)
+
+** Installation
+   1. Install this howto
+      - ~git clone https://gitlab.com/oer/emacs-reveal-howto.git~
+      - ~cd emacs-reveal-howto/~
+   2. Install submodules
+      - ~git submodule sync --recursive~
+      - ~git submodule update --init --recursive~
+   3. Install Emacs packages
+      - ~emacs --batch --load install.el --funcall install~
+
+
+* Usage
+** Alternatives
+   1. Create presentations locally on Command Line
+   2. Create presentations from within Emacs
+   3. Create and publish presentations on GitLab
+
+** Build Presentations on Command Line
+   1. Create Org file in directory ~emacs-reveal-howto/~
+      - See contained source file for this presentation, ~howto.org~
+   2. Build presentations for files ending in ~.org~ (except internal
+      ones listed in ~elisp/publish.el~)
+      - ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
+      - Presentations are built in subdirectory ~public/~
+   3. Open presentation in [[https://www.mozilla.org/en-US/firefox/][Firefox]]
+      - E.g.: ~firefox public/howto.html~
+   4. Optional: Copy ~public/~ to web server for public accessibility
+
+** Building Presentations from Emacs
+   1. Load [[emacs-reveal/reveal-config.el][reveal-config.el]] from
+      your =~/.emacs=, e.g., with a line like this:
+      =(load "/path/to/emacs-reveal/reveal-config.el")=
+   2. Generate HTML presentation for visited
+      ~.org~ file using the usual Org export functionality: @@html:<br>@@
+      Press ~C-c C-e R B~
+      - This generates an HTML file in the same directory and opens it
+	in your default browser
+      - For this to work, necessary resources, in particular the
+	~reveal.js~ directory, must be accessible in the ~.org~ file’s
+	directory
+
+** Build Presentations on GitLab
+   1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][project]]
+      on GitLab ([[https://docs.gitlab.com/ce/workflow/forking_workflow.html][fork documentation]])
+      - (Instead of forking, maybe use ~git clone~ [[Installation][see above]];
+        import that as new project on GitLab)
+   2. Create project’s files locally
+      - ~git clone <the URL of YOUR GitLab project>~
+   3. Create or update Org files in cloned directory, add, commit, and
+      push (see next slide)
+   4. GitLab infrastructure picks up changes and publishes presentations as
+      [[https://about.gitlab.com/features/pages/][GitLab Pages]]
+      - Takes some minutes
+      - Go to Settings → Pages to see the Pages’ address
+
+*** On Git
+    - Install Git
+      ([[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git][getting started]])
+      - The [[https://git-scm.com/book/en/v2][Pro Git book]] is a great source in general
+    - Short [[https://try.github.io/levels/1/challenges/1][in-browser Git demo]]
+      - Explains Git commands ~add~, ~commit~, ~push~, and more
+
+
+* Some Presentation Features
+  :PROPERTIES:
+  :CUSTOM_ID: features
+  :END:
+
+** Text Slide
+   - A list
+   - With a sub-list whose items appear
+     #+ATTR_REVEAL: :frag (appear)
+     - This is /emphasized/
+     - This is *bold*
+     - This ~looks like code~
+     - This is [[color:green][green]]
+     - Nothing special
+
+** On Sections
+   # As explained in the Org manual, link targets can have different
+   # forms.  The first link below points to #features, which has been
+   # defined above as CUSTOM_ID.  The second link uses the section
+   # header’s text as link target.
+   - This slide is part of section [[#features][Some Presentation Features]]
+     - We can link to slides, e.g., the [[Text Slide][the previous slide]]
+     - Side note: Check source code to see two variants of link
+       targets used on this slide
+   # The following directive with “appear” lets the next thing
+   # appear in its entirety; instead of each list item individually as
+   # on the previous slide with “(appear)” in parentheses.
+   #+ATTR_REVEAL: :frag appear
+   - This slide can also be perceived as its own subsection
+     - The [[#another-anchor][next slide]] is on a deeper level of nesting
+   - (This list item appears simultaneously with previous bullet point)
+
+*** Another Slide
+    :PROPERTIES:
+    :CUSTOM_ID: another-anchor
+    :END:
+    - This slide is on a deeper level of nesting
+    - This level of nesting is not shown in the table of contents in
+      the slide’s bottom
+    - By the way, the headings in the table of contents below are
+      hyperlinks
+      - And your browser remembers the history, back/forward buttons
+        and shortcuts should work
+      - Mousewheel and swiping work
+
+** Slide with Figure and Audio
+   :PROPERTIES:
+   :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.mp3"
+   :END:
+   - This figure is part of a
+     [[https://oer.gitlab.io/OS/OS08-Memory.html][different presentation]]
+     [[./img/8-clock-steps.gif]]
+   - The song Enthusiast by
+     [[http://freemusicarchive.org/music/Tours/][Tours]]
+     is licensed under a
+     [[http://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution License]]
+
+** Appearing Items with Audio
+   (Audios produced with
+   [[https://github.com/marytts/marytts][MaryTTS]],
+   converted to Ogg format with [[http://www.audacityteam.org/][Audacity]])
+
+   #+ATTR_REVEAL: :frag (appear) :audio (./audio/1.ogg ./audio/2.ogg ./audio/3.ogg)
+   - One
+   - Two
+   - Three
+
+* The End
+** Further Reading
+   - [[http://orgmode.org/#docs][Manuals and tutorials for Org mode]]
+   - [[https://oer.gitlab.io/OS/][Presentations for a course on Operating Systems]]
+     demonstrating more features of Org mode (e.g., table of contents
+     as agenda, bibliography with citations, PDF export) and
+     reveal.js (e.g., notes, animated SVGs)
+
+#+MACRO: copyrightyears 2017
+#+INCLUDE: license-template.org

@@ -1,0 +1,11 @@
+#+REVEAL_HTML: <div class="slide-footer"><br></div></section><section id="slide-license" data-state="no-toc-progress"><h3 class="no-toc-progress">License Information</h3>
+
+Except where otherwise noted, this work, “{{{title}}}”,
+is © {{{copyrightyears}}} {{{author}}}, under the Creative Commons license
+[[https://creativecommons.org/licenses/by-sa/4.0/][CC BY-SA 4.0]].
+
+“[[https://creativecommons.org/licenses/by-sa/4.0/#deed-understanding][No warranties are given.  The license may not give you all of the permissions necessary for your intended use.]]”
+
+In particular, trademark rights are /not/ licensed under this license.
+Thus, rights concerning (trade-) marks (e.g., “Creative Commons”
+itself) remain with their respective holders.

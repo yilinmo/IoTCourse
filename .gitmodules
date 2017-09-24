@@ -1,0 +1,3 @@
+[submodule "emacs-reveal"]
+	path = emacs-reveal
+	url = ../../oer/emacs-reveal.git

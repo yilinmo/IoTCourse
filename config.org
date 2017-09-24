@@ -1,0 +1,30 @@
+#+LANGUAGE: en
+
+# Neither generate table of contents nor section numbers
+#+OPTIONS: toc:nil num:nil
+
+# Enable: browser history, mouse wheel, links between presentations
+#+OPTIONS: reveal_history:t reveal_mousewheel:t reveal_inter_presentation_links:t
+
+# Transition styles: none/fade/slide/convex/concave/zoom/cube
+#+REVEAL_TRANS: fade
+#+REVEAL_THEME: howto
+
+# Zoom plugin does not seem to work for me.
+#+REVEAL_PLUGINS: (notes)
+
+# The following variables are non-standard.
+# Do not display TOC-progress on title slide.
+#+REVEAL_TITLE_SLIDE_STATE: no-toc-progress
+# Do not display TOC-progress on TOC slide.
+#+REVEAL_TOC_SLIDE_STATE: no-toc-progress
+# Do not include TOC slide in TOC-progress.
+#+REVEAL_TOC_SLIDE_CLASS: no-toc-progress
+# Use different heading for TOC.
+#+REVEAL_TOC_SLIDE_TITLE: Agenda
+
+# The following creates an empty footer, for which the css style defines
+# a height that agrees with the TOC-progress footer’s height.
+# In this way, the footer’s height is taken into account by reveal.js’s
+# size calculations.
+#+REVEAL_SLIDE_FOOTER: <br>

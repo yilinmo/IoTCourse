@@ -1,0 +1,12 @@
+public
+tests
+*.html
+*.class
+*.log
+*.aux
+*.bbl
+*.blg
+*.out
+*.toc
+*.tex~
+*.tex
