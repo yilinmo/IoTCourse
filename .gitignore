@@ -1,7 +1,6 @@
 auto
 public
 tests
-*.html
 *.class
 *.log
 *.aux
