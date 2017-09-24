@@ -1,5 +1,5 @@
 This project demonstrates how to use
-[emacs-reveal](../../oer/emacs-reveal) to generate
+[emacs-reveal](https://gitlab.com/oer/emacs-reveal) to generate
 [reveal.js presentations](http://lab.hakim.se/reveal-js/)
 (HTML slides embedding audio)
 from text files in [Org Mode](http://orgmode.org/).
