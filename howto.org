@@ -33,14 +33,17 @@
       infrastructure)
 
 ** Installation
-   1. Install this howto
-      - ~git clone https://gitlab.com/oer/emacs-reveal-howto.git~
-      - ~cd emacs-reveal-howto/~
-   2. Install submodules
-      - ~git submodule sync --recursive~
-      - ~git submodule update --init --recursive~
-   3. Install Emacs packages
+   1. Download software
+      - Install emacs-reveal-howto
+	- ~git clone https://gitlab.com/oer/emacs-reveal-howto.git~
+	- ~cd emacs-reveal-howto/~
+      - Install submodules
+	- ~git submodule sync --recursive~
+	- ~git submodule update --init --recursive~
+   2. Install Emacs and activate packages
       - ~emacs --batch --load install.el --funcall install~
+      - Add a line like this to =~/.emacs=
+	- =(load "/path/to/emacs-reveal/reveal-config.el")=
 
 
 * Usage
@@ -61,10 +64,7 @@
    4. Optional: Copy ~public/~ to web server for public accessibility
 
 ** Building Presentations from Emacs
-   1. Load [[emacs-reveal/reveal-config.el][reveal-config.el]] from
-      your =~/.emacs=, e.g., with a line like this:
-      =(load "/path/to/emacs-reveal/reveal-config.el")=
-   2. Generate HTML presentation for visited
+   1. Generate HTML presentation for visited
       ~.org~ file using the usual Org export functionality: @@html:<br>@@
       Press ~C-c C-e R B~
       - This generates an HTML file in the same directory and opens it
