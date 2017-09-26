@@ -47,17 +47,22 @@ body {
   font-weight: bold;
   color: #981E32; }
 
-.reveal .slides section .fragment.grey-out.visible {
-  color: #808080;
+.reveal .slides section .fragment.gray-out {
   opacity: 1;
   visibility: inherit; }
 
-.reveal .slides section .fragment.shrink {
-  opacity: 1;
-  visibility: inherit; }
+.reveal .slides section .fragment.gray-out.visible {
+  color: #a0a0a0; }
+
 .reveal .slides section .fragment.shrink.visible {
     -webkit-transform: scale(0.7);
             transform: scale(0.7);
+   -webkit-transform-origin: left;
+           transform-origin: left; }
+
+.reveal .slides section .fragment.grow.visible {
+    -webkit-transform: scale(1.3);
+            transform: scale(1.3);
    -webkit-transform-origin: left;
            transform-origin: left; }
 
