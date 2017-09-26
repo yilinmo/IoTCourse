@@ -40,8 +40,8 @@
       - Install submodules
 	- ~git submodule sync --recursive~
 	- ~git submodule update --init --recursive~
-   2. Install Emacs and activate packages
-      - ~emacs --batch --load install.el --funcall install~
+   2. Install and configure Emacs packages
+      - ~emacs --batch --load emacs-reveal/install.el --funcall install~
       - Add a line like this to =~/.emacs=
 	- =(load "/path/to/emacs-reveal/reveal-config.el")=
 
@@ -109,6 +109,13 @@
      - This ~looks like code~
      - This is [[color:green][green]]
      - Nothing special
+
+** Some Fragment Styles
+   #+ATTR_REVEAL: :frag (gray-out shrink grow highlight-red)
+   - Forget
+   - Shrink
+   - Grow
+   - Very important
 
 ** On Sections
    # As explained in the Org manual, link targets can have different
