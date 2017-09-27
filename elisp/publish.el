@@ -52,7 +52,7 @@
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal-theme"
-	     :base-directory "css"
+	     :base-directory "emacs-reveal/css"
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/css/theme"
 	     :publishing-function 'org-publish-attachment)
