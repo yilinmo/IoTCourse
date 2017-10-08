@@ -63,14 +63,15 @@ executed to publish HTML presentations from `org` files as defined in
 To work locally with this project, you'll have to follow the steps below:
 
 1. Fork, clone or download this project
-1. Initialize submodules to install emacs-reveal:
+2. Initialize submodules to install emacs-reveal:
 ```
 git submodule sync --recursive
 git submodule update --init --recursive
 ```
-1. Generate the website: `emacs --batch --load elisp/publish.el --funcall org-publish-all`
-1. Preview your project: `firefox public/howto.html`
-1. Add content
+3. Install necessary Emacs packages: `emacs --batch --load emacs-reveal/install.el --funcall install`
+4. Generate the website: `emacs --batch --load elisp/publish.el --funcall org-publish-all`
+5. Preview your project: `firefox public/howto.html`
+6. Add content; repeat, starting with step 4.
 
 Read more at emacs-reveal's [documentation][].
 
