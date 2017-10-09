@@ -1,12 +1,3 @@
-![Build Status](https://gitlab.com/pages/emacs-reveal/badges/master/build.svg)
-
----
-
-Example [emacs-reveal] website using GitLab Pages.
-
-Learn more about GitLab Pages at https://pages.gitlab.io and the official
-documentation https://docs.gitlab.com/ce/user/project/pages/.
-
 This project demonstrates how to use
 [emacs-reveal](https://gitlab.com/oer/emacs-reveal) to generate
 [reveal.js presentations](http://lab.hakim.se/reveal-js/)
@@ -95,7 +86,3 @@ unless you want to contribute back to the upstream project.
 [documentation]: https://gitlab.com/oer/emacs-reveal-howto
 [userpages]: https://docs.gitlab.com/ce/user/project/pages/introduction.html#user-or-group-pages
 [projpages]: https://docs.gitlab.com/ce/user/project/pages/introduction.html#project-pages
-
-----
-
-Forked from @lechten
