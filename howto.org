@@ -6,7 +6,7 @@
 #+TITLE: How to create presentations with emacs-reveal
 #+SUBTITLE: (Press ~?~ for help, ~n~ and ~p~ for next and previous slide)
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: September 2017
+#+DATE: October 2017
 
 
 * Introduction
