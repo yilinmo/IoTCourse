@@ -149,7 +149,7 @@
 
 ** Two Columns: Pro/Con of emacs-reveal
    #+ATTR_REVEAL: :frag appear
-   #+BEGIN_left
+   #+BEGIN_leftcol
    Pro
    #+ATTR_REVEAL: :frag (appear)
    - Free/libre open source software
@@ -159,15 +159,15 @@
        - Easy to learn
        - Collaboration with diff/merge/git
        - Separation of layout and content
-   #+END_left
+   #+END_leftcol
 
    #+ATTR_REVEAL: :frag appear
-   #+BEGIN_right
+   #+BEGIN_rightcol
    Con
    #+ATTR_REVEAL: :frag (appear)
    - No [[https://en.wikipedia.org/wiki/WYSIWYG][WYSIWYG]]
    - (Need to learn something new)
-   #+END_right
+   #+END_rightcol
 
 
 ** Slide with Figure and Audio
