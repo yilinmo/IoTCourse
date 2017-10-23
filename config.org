@@ -14,6 +14,8 @@
 #+REVEAL_PLUGINS: (notes)
 
 # The following variables are non-standard.
+# Use custom title slide.
+#+REVEAL_TITLE_SLIDE: title-slide.html
 # Do not display TOC-progress on title slide.
 #+REVEAL_TITLE_SLIDE_STATE: no-toc-progress
 # Do not display TOC-progress on TOC slide.

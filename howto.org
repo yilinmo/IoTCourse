@@ -1,4 +1,3 @@
-# -*- org-reveal-title-slide: "title-slide.html" -*-
 # Local IspellDict: en
 #+STARTUP: showeverything
 #+INCLUDE: config.org
