@@ -1,6 +1,7 @@
 # Local IspellDict: en
 #+STARTUP: showeverything
 #+INCLUDE: config.org
+#+REVEAL_PREAMBLE: <span id="forkmeongitlab"><a href="https://gitlab.com/oer/emacs-reveal-howto">Fork me on GitLab</a></span>
 
 #+TITLE: How to create presentations with emacs-reveal
 #+SUBTITLE: (Press ~?~ for help, ~n~ and ~p~ for next and previous slide)
