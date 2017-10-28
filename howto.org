@@ -14,6 +14,8 @@
    - Emacs-reveal is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
      to generate [[http://lab.hakim.se/reveal-js/][reveal.js]] presentations (slides with audio) from simple text
      files in [[http://orgmode.org/][Org mode]]
+     #+CAPTION: Image CC0, converted from [[https://pixabay.com/en/users/3dman_eu-1553824/][pixabay download]]
+     [[./img/board.png]]
    - Benefits
      - For your audience
        - Self-contained presentations embedding audio
@@ -50,7 +52,11 @@
 ** Alternatives
    1. Create presentations locally on Command Line
    2. Create presentations in Emacs
-   3. Create and publish presentations on GitLab
+   3. Create and publish presentations on [[https://about.gitlab.com/][GitLab]]
+      [[./img/gitlab-cc-by-nd-sa-4.0-wm_no_bg_prometheus.png]]
+      - Based on underlying continuous integration infrastructure
+        using [[https://www.docker.com/][Docker]] image
+        [[./img/docker-tm-horizontal_small.png]]
 
 ** Build Presentations on Command Line
    1. Create Org file in directory ~emacs-reveal-howto/~
