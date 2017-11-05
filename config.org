@@ -11,7 +11,7 @@
 #+REVEAL_THEME: simple
 
 # Zoom plugin does not seem to work for me.
-#+REVEAL_PLUGINS: (notes)
+#+REVEAL_PLUGINS: (notes search)
 
 # The following variables are non-standard.
 # Use custom title slide.
