@@ -206,5 +206,11 @@
      as agenda, bibliography with citations, PDF export) and
      reveal.js (e.g., notes, animated SVGs)
 
+** Go for it!
+
+   {{{imgwithcap(./img/steps.png, The road ahead …, Image [[https://creativecommons.org/publicdomain/zero/1.0/][CC0]]; converted from [[https://pixabay.com/en/financial-equalization-help-1015282/][pixabay download]])}}}
+
+   [[https://gitlab.com/oer/]]
+
 #+MACRO: copyrightyears 2017
 #+INCLUDE: license-template.org
