@@ -130,6 +130,7 @@
    # header’s text as link target.
    - This slide is part of section [[#features][Some Presentation Features]]
      - We can link to slides, e.g., [[Text Slide][the previous slide]]
+       - You can use the browser history to go back
      - Side note: Check source code to see two variants of link
        targets used on this slide
    # The following directive with “appear” lets the next thing
