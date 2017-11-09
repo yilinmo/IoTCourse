@@ -213,4 +213,4 @@
    [[https://gitlab.com/oer/]]
 
 #+MACRO: copyrightyears 2017
-#+INCLUDE: license-template.org
+#+INCLUDE: emacs-reveal/license-template.org
