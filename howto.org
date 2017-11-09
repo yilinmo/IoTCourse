@@ -14,7 +14,7 @@
    - Emacs-reveal is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
      to generate [[http://lab.hakim.se/reveal-js/][reveal.js]] presentations (slides with audio) from simple text
      files in [[http://orgmode.org/][Org mode]]
-     #+CAPTION: Image CC0, converted from [[https://pixabay.com/en/users/3dman_eu-1553824/][pixabay download]]
+     {{{imglicense(Image [[https://creativecommons.org/publicdomain/zero/1.0/][CC0]]; converted from [[https://pixabay.com/en/board-easel-architect-engineer-2714172/][pixabay]])}}}
      [[./img/board.png]]
    - Benefits
      - For your audience
