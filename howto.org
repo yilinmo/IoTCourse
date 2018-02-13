@@ -6,7 +6,7 @@
 #+TITLE: How to create presentations with emacs-reveal
 #+SUBTITLE: (Press ~?~ for help, ~n~ and ~p~ for next and previous slide)
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: November 2017
+#+DATE: February 2018
 
 
 * Introduction
@@ -209,6 +209,12 @@
    - Two
    - Three
 
+** Centered Text
+
+   #+ATTR_HTML: :class org-center
+   Just some horizontally centered text.  Created by assigning a class
+   with ~text-align: center~.
+
 * The End
 ** Further Reading
    - [[http://orgmode.org/#docs][Manuals and tutorials for Org mode]]
@@ -223,5 +229,5 @@
 
    [[https://gitlab.com/oer/]]
 
-#+MACRO: copyrightyears 2017
+#+MACRO: copyrightyears 2017, 2018
 #+INCLUDE: emacs-reveal/license-template.org
