@@ -92,7 +92,7 @@
 ** Build Presentations on GitLab
    1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][project]]
       on GitLab ([[https://docs.gitlab.com/ce/workflow/forking_workflow.html][fork documentation]])
-      - (Instead of forking, maybe use ~git clone~ [[Installation][see above]];
+      - (Instead of forking, maybe use ~git clone~ as [[Installation][shown above]];
         import that as new project on GitLab)
    2. Create project’s files locally
       - ~git clone <the URL of YOUR GitLab project>~
