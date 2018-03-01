@@ -6,27 +6,27 @@
 #+TITLE: How to create presentations with emacs-reveal
 #+SUBTITLE: (Press ~?~ for help, ~n~ and ~p~ for next and previous slide)
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: February 2018
+#+DATE: March 2018
 
 
 * Introduction
 ** What’s This?
-   # Note the use of macro imglicense() below to show an image with
-   # vertically aligned, rotated license statement.
+   # Note the use of macro reveallicense() below to show an inline image
+   # with vertically aligned, rotated license statement.
    # Alternatively, one could also use standard org mode features and
    # replace the macro with a #+CAPTION, which would be displayed
    # underneath the image.
-   # Towards the end of this file, you can see the use of a second
-   # macro, imgwithcap(), to display an image with caption and license
-   # statement.
-   # Both macros are defined in emacs-reveal/config.org, where also a
-   # brief explanation is available.
+   # Again alternatively, later as part of slide figure-with-meta-data,
+   # you can see the use of macro revealimg(), to display a
+   # horizontally centered image with caption and license statement.
+   # The immediately following slide describes the required format of
+   # meta-data.
+   # Both macros are defined in emacs-reveal/config.org.
    - Emacs-reveal is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
      to generate [[http://lab.hakim.se/reveal-js/][reveal.js]] presentations (slides with audio) from simple text
      files in [[http://orgmode.org/][Org mode]]
-     {{{imglicense(Image [[https://creativecommons.org/publicdomain/zero/1.0/][CC0]]; converted from [[https://pixabay.com/en/board-easel-architect-engineer-2714172/][pixabay]])}}}
-     [[./img/board.png]]
-   - Benefits
+     {{{reveallicense("./img/board.meta")}}}
+     - Benefits
      - For your audience
        - Self-contained presentations embedding audio
        - Usable on lots of (including mobile and offline) devices with
@@ -199,6 +199,24 @@
      is licensed under a
      [[http://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution License]]
 
+
+** Figure with Caption and License
+   :PROPERTIES:
+   :CUSTOM_ID: figure-with-meta-data
+   :END:
+   - Display image with meta-data specified in file
+     - Simplify sharing of images with source and license
+   - Functionality and meta-data format are specific
+     to emacs-reveal
+     - See next slide for sample file
+
+   {{{revealimg("img/decision.meta","To share or not to share")}}}
+
+*** Meta-Data File for Previous Image
+
+#+INCLUDE: ./img/decision.meta src emacs-lisp
+
+
 ** Appearing Items with Audio
    (Audios produced with
    [[https://github.com/marytts/marytts][MaryTTS]],
@@ -225,7 +243,7 @@
 
 ** Go for it!
 
-   {{{imgwithcap(./img/steps.png, The road ahead …, Image [[https://creativecommons.org/publicdomain/zero/1.0/][CC0]]; converted from [[https://pixabay.com/en/financial-equalization-help-1015282/][pixabay download]])}}}
+   {{{revealimg("./img/steps.meta","The road ahead …")}}}
 
    [[https://gitlab.com/oer/]]
 
