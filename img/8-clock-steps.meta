@@ -1,0 +1,8 @@
+((filename . "./img/8-clock-steps.gif")
+ (dc:title . "Visualization of Clock algorithm for page replacement")
+ (licenseurl . "https://creativecommons.org/licenses/by-sa/4.0/")
+ (licensetext . "CC BY-SA 4.0")
+ (cc:attributionName . "Jens Lechtenbörger")
+ (cc:attributionURL . "https://gitlab.com/lechten")
+ (texwidth . 0.7) ; Width in percent of textwidth for LaTeX export
+)
