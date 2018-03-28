@@ -25,7 +25,7 @@
    - Emacs-reveal is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
      to generate [[https://revealjs.com/][reveal.js]] presentations (slides with audio) from simple text
      files in [[http://orgmode.org/][Org mode]]
-     {{{reveallicense("./img/board.meta")}}}
+     {{{reveallicense("./img/board.meta","30vh")}}}
      - Benefits
      - For your audience
        - Self-contained presentations embedding audio
@@ -218,7 +218,7 @@
      to emacs-reveal
      - See next slide for sample file
 
-   {{{revealimg("img/decision.meta","To share or not to share")}}}
+   {{{revealimg("img/decision.meta","To share or not to share","30vh")}}}
 
 *** Meta-Data File for Previous Image
 
