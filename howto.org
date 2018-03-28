@@ -133,6 +133,14 @@
    - Grow
    - Very important
 
+*** Fragments with Custom Order
+    #+ATTR_REVEAL: :frag (appear) :frag_idx (1 4 3 2 1)
+    * I’m first.
+    * Fourth.
+    * Third
+    * Second
+    * I’m also first.
+
 ** On Sections
    # As explained in the Org manual, link targets can have different
    # forms.  The first link below points to #features, which has been
