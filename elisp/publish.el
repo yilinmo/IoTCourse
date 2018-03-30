@@ -39,6 +39,12 @@
 	     :base-extension (regexp-opt '("png" "jpg" "ico" "svg" "gif"))
 	     :publishing-directory "./public/img"
 	     :publishing-function 'org-publish-attachment)
+       (list "figures"
+	     :base-directory "figures"
+	     :base-extension (regexp-opt '("png" "jpg" "ico" "svg" "gif"))
+	     :publishing-directory "./public/figures"
+	     :publishing-function 'org-publish-attachment
+	     :recursive t)
        (list "audios"
 	     :base-directory "audio"
 	     :base-extension (regexp-opt '("ogg" "mp3"))

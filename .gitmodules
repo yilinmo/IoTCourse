@@ -1,3 +1,6 @@
 [submodule "emacs-reveal"]
 	path = emacs-reveal
 	url = ../../oer/emacs-reveal.git
+[submodule "figures"]
+	path = figures
+	url = git@gitlab.com:oer/figures.git
