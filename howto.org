@@ -237,6 +237,15 @@
 
 {{{revealgrid(42,"./figures/devices/computer.grid",60,4,3,"\"ga1 ga2 ga2 ga3\" \"ga1 ga4 ga5 ga6\" \"ga7 ga8 ga9 ga9\"")}}}
 
+*** Creation of Previous Image Grid
+    - Single line in source file, using macro ~revealgrid~
+      #+BEGIN_SRC
+{{{revealgrid(42,"./figures/devices/computer.grid",60,4,3,"\"ga1 ga2 ga2 ga3\" \"ga1 ga4 ga5 ga6\" \"ga7 ga8 ga9 ga9\"")}}}
+      #+END_SRC
+      - Arguments explained in [[https://gitlab.com/oer/emacs-reveal/blob/master/config.org][emacs-reveal/config.el]]
+      - With ~computer.grid~ as follows
+        #+INCLUDE: ./figures/devices/computer.grid src emacs-lisp
+
 ** Appearing Items with Audio
    (Audios produced with
    [[https://github.com/marytts/marytts][MaryTTS]],
