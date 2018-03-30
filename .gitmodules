@@ -3,4 +3,4 @@
 	url = ../../oer/emacs-reveal.git
 [submodule "figures"]
 	path = figures
-	url = git@gitlab.com:oer/figures.git
+	url = ../../oer/figures.git
