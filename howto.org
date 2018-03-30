@@ -143,6 +143,12 @@
     * Second
     * I’m also first.
 
+** Centered Text
+
+   #+ATTR_HTML: :class org-center
+   Just some horizontally centered text.  Created by assigning a class
+   with ~text-align: center~.
+
 ** On Sections
    # As explained in the Org manual, link targets can have different
    # forms.  The first link below points to #features, which has been
@@ -196,6 +202,7 @@
    - (Need to learn something new)
    #+END_rightcol
 
+* Figures and Audio
 
 ** Slide with Figure and Audio
    :PROPERTIES:
@@ -236,12 +243,6 @@
    - One
    - Two
    - Three
-
-** Centered Text
-
-   #+ATTR_HTML: :class org-center
-   Just some horizontally centered text.  Created by assigning a class
-   with ~text-align: center~.
 
 * The End
 ** Further Reading
