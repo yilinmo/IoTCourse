@@ -227,12 +227,15 @@
      to emacs-reveal
      - See next slide for sample file
 
-   {{{revealimg("figures/3d-man/decision.meta","To share or not to share","30vh")}}}
+   {{{revealimg("./figures/3d-man/decision.meta","To share or not to share","30vh")}}}
 
 *** Meta-Data File for Previous Image
 
-#+INCLUDE: ./img/decision.meta src emacs-lisp
+#+INCLUDE: ./figures/3d-man/decision.meta src emacs-lisp
 
+** An Image Grid: Computers
+
+{{{revealgrid(42,"./figures/devices/computer.grid",60,4,3,"\"ga1 ga2 ga2 ga3\" \"ga1 ga4 ga5 ga6\" \"ga7 ga8 ga9 ga9\"")}}}
 
 ** Appearing Items with Audio
    (Audios produced with
