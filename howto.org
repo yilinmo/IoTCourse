@@ -37,12 +37,14 @@
        - Simple text format allows diff and merge for ease of collaboration
 
 ** Prerequisites
-  - I suppose that you use GNU/Linux
+  - I suppose (and strongly recommend) that you use GNU/Linux
     ([[https://getgnulinux.org/switch_to_linux/try_or_install/][help on getting started]])
     - Actually, not much here is operating system specific
-  - This software should really be used with the text editor [[https://www.gnu.org/software/emacs/][GNU Emacs]]
-    - (You could try other editors and build presentations on GitLab’s
-      infrastructure)
+  - Emacs-reveal should really be used with the text editor [[https://www.gnu.org/software/emacs/][GNU Emacs]]
+    - (You could try other editors and build presentations within
+      GitLab, thanks to emacs-reveal’s GitLab infrastructure)
+      - (In fact, you do not need an editor at all but could edit
+        presentations using a Web browser on ~GitLab.com~)
 
 ** Installation
    1. Download software
