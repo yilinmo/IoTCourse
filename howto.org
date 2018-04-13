@@ -212,7 +212,7 @@
    :END:
    - This figure is part of a
      [[https://oer.gitlab.io/OS/OS08-Memory.html][different presentation]]
-     [[./img/8-clock-steps.gif]]
+     {{{reveallicense("./figures/OS/clock-steps.meta","40vh")}}}
    - The song Enthusiast by
      [[http://freemusicarchive.org/music/Tours/][Tours]]
      is licensed under a
