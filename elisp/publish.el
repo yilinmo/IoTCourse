@@ -34,11 +34,6 @@
 	     :exclude "config\\|license-template"
 	     :publishing-function 'org-reveal-publish-to-reveal
 	     :publishing-directory "./public")
-       (list "images"
-	     :base-directory "img"
-	     :base-extension (regexp-opt '("png" "jpg" "ico" "svg" "gif"))
-	     :publishing-directory "./public/img"
-	     :publishing-function 'org-publish-attachment)
        (list "figures"
 	     :base-directory "figures"
 	     :base-extension (regexp-opt '("png" "jpg" "ico" "svg" "gif"))
