@@ -6,7 +6,7 @@
 #+TITLE: How to create presentations with emacs-reveal
 #+SUBTITLE: (Press ~?~ for help, ~n~ and ~p~ for next and previous slide)
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: March 2018
+#+DATE: April 2018
 
 
 * Introduction
@@ -65,10 +65,10 @@
    1. Create presentations locally on Command Line
    2. Create presentations in Emacs
    3. Create and publish presentations on [[https://about.gitlab.com/][GitLab]]
-      [[./img/gitlab-cc-by-nd-sa-4.0-wm_no_bg_prometheus.png]]
+      {{{reveallicense("./figures/logos/GitLab-wm_no_bg.meta","10vh")}}}
       - Based on underlying continuous integration infrastructure
         using [[https://www.docker.com/][Docker]] image
-        [[./img/docker-tm-horizontal_small.png]]
+        {{{reveallicense("./figures/logos/docker-horizontal.meta","10vh")}}}
 
 ** Build Presentations on Command Line
    1. Create Org file in directory ~emacs-reveal-howto/~
