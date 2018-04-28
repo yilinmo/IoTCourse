@@ -7,8 +7,71 @@
 #+AUTHOR: Jens Lechtenbörger
 #+DATE: April 2018
 
+* Presentation Hints
+** General
+   - This is a [[https://revealjs.com][reveal.js]] presentation
+   - Key bindings and navigation
+     - Press “?” to see key bindings of reveal.js
+       - In general, “n” and “p” move to next and previous slide; mouse
+	 wheel works as well
+       - Search with Ctrl-Shift-F
+     - Up/down (swiping, arrows) move within sections,
+       left/right jump between sections (type “o” to see what is where)
+     - Type slide’s number followed by Enter to jump to that slide
+     - Browser history (buttons, Alt-CursorLeft, Alt-CursorRight)
+     - Zoom with Ctrl-Mouse or Alt-Mouse
+
+** Offline work
+   - Students often ask for download-able presentations
+   - Alternatives
+     1. Clone repository, build presentations locally (see [[#usage][Usage]])
+     2. Download build artifacts from
+        [[https://gitlab.com/oer/emacs-reveal-howto/pipelines][recent pipeline]]
+        (if not expired)
+     3. Generate PDF
+        - Why, really?
+	  - Why not download source files instead?
+	  - [[http://orgmode.org/][Org mode]], which is plain text
+	- Change the URL by adding “?print-pdf” after “.html”,
+	  then print to PDF file (usually, Ctrl-p)
+	- Alternatively, generate PDF via LaTeX from org
+	  source file
+
+** Audio
+   :PROPERTIES:
+   :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.mp3"
+   :END:
+   - If audio is embedded, [[https://en.wikipedia.org/wiki/Ogg][the free Ogg format]] is used
+     - Playback should start automatically
+       - Currently, you should be hearing Enthusiast by
+         [[http://freemusicarchive.org/music/Tours/][Tours]]
+	 - Licensed under a
+  	   [[http://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution License]]
+       - See [[https://github.com/rajgoel/reveal.js-plugins/tree/master/audio-slideshow#user-content-compatibility-and-known-issues][compatibility and known issues of the underlying audio plugin]]
+       - [[https://www.mozilla.org/en-US/firefox/][Firefox]],
+         which I recommend as browser in general
+         ([[https://blogs.fsfe.org/jens.lechtenboerger/2015/06/09/three-steps-towards-more-privacy-on-the-net/][here in English]]
+         and [[https://www.informationelle-selbstbestimmung-im-internet.de/][here in German]]),
+         seems to work everywhere
+     - Audio controls are shown at bottom left
+
+** (Speaker) Notes
+   - Slides contain additional notes as plain text if you see the
+     folder icon at the top left (as on this slide)
+     [[file:reveal.js/css/theme/folder_inbox.png]]
+     - Click on that icon or press “s” to see the “speaker notes view”
+     - You need to allow pop-ups
+       - If the pop-up window does not work, you may need to press “s”
+         twice or close the pop-up window once
+#+BEGIN_NOTES
+These are sample notes
+- Lists can be used here
+- You can time your presentation
+  - Maybe look at [[https://gitlab.com/lechten/talks-2018/blob/master/2018-04-24-Blockchain.org][one]] of my talks to see how to define timing
+#+END_NOTES
 
 * Introduction
+
 ** What’s This?
    # Note the use of macro reveallicense() below to show an inline image
    # with vertically aligned, rotated license statement.
@@ -43,7 +106,9 @@
     - (You could try other editors and build presentations within
       GitLab, thanks to emacs-reveal’s GitLab infrastructure)
       - (In fact, you do not need an editor at all but could edit
-        presentations using a Web browser on ~GitLab.com~)
+        presentations using a Web browser on ~GitLab.com~, e.g., with the
+        [[https://gitlab.com/-/ide/project/oer/emacs-reveal-howto/edit/master/][Web IDE]]
+        (requires login))
 
 ** Installation
    1. Download software
@@ -60,6 +125,10 @@
 
 
 * Usage
+  :PROPERTIES:
+  :CUSTOM_ID: usage
+  :END:
+
 ** Alternatives
    1. Create presentations locally on Command Line
    2. Create presentations in Emacs
