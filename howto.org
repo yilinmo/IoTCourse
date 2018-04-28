@@ -274,3 +274,7 @@
 
 #+MACRO: copyrightyears 2017, 2018
 #+INCLUDE: emacs-reveal/license-template.org
+
+# Local Variables:
+# indent-tabs-mode: nil
+# End:
