@@ -57,7 +57,7 @@
 
 ** (Speaker) Notes
    - Slides contain additional notes as plain text if you see the
-     folder icon at the top left (as on this slide)
+     folder icon at the top right (as on this slide)
      [[file:reveal.js/css/theme/folder_inbox.png]]
      - Click on that icon or press “s” to see the “speaker notes view”
      - You need to allow pop-ups
