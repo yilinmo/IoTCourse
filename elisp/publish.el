@@ -31,7 +31,7 @@
        (list "howto"
 	     :base-directory "."
 	     :base-extension "org"
-	     :exclude "config\\|license-template"
+	     :exclude "config\\|license-template\\|privacy\\|imprint"
 	     :publishing-function 'org-reveal-publish-to-reveal
 	     :publishing-directory "./public")
        (list "figures"
@@ -40,6 +40,13 @@
 	     :publishing-directory "./public/figures"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
+       (list "legalese"
+	     :base-directory "."
+	     :html-postamble nil
+	     :include '("privacy.org" "imprint.org")
+	     :exclude ".*"
+	     :publishing-function '(org-html-publish-to-html)
+	     :publishing-directory "./public")
        (list "audios"
 	     :base-directory "audio"
 	     :base-extension (regexp-opt '("ogg" "mp3"))

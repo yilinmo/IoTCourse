@@ -1,11 +1,11 @@
 # Local IspellDict: en
 #+STARTUP: showeverything
 #+INCLUDE: config.org
-#+REVEAL_PREAMBLE: <span id="forkmeongitlab"><a href="https://gitlab.com/oer/emacs-reveal-howto">Fork me on GitLab</a></span>
+#+REVEAL_PREAMBLE: <span id="forkmeongitlab"><a href="https://gitlab.com/oer/emacs-reveal-howto">Fork me on GitLab</a></span><div class="legalese"><p><a href="./imprint.html">Imprint</a> | <a href="./privacy.html">Privacy Policy</a></p></div>
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: April 2018
+#+DATE: May 2018
 
 * Presentation Hints
 ** General
