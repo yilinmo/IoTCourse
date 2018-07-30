@@ -2,7 +2,7 @@
 ;; -*- Mode: Emacs-Lisp -*-
 ;; -*- coding: utf-8 -*-
 
-;; Copyright (C) 2017 Jens Lechtenbörger
+;; Copyright (C) 2017, 2018 Jens Lechtenbörger
 
 ;;; License: GPLv3
 
