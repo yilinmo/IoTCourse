@@ -52,6 +52,11 @@
 	     :base-extension (regexp-opt '("ogg" "mp3"))
 	     :publishing-directory "./public/audio"
 	     :publishing-function 'org-publish-attachment)
+       (list "quizzes"
+	     :base-directory "quizzes"
+	     :base-extension (regexp-opt '("js"))
+	     :publishing-directory "./public/quizzes"
+	     :publishing-function 'org-publish-attachment)
        (list "reveal-static"
 	     :base-directory "emacs-reveal/reveal.js"
 	     :exclude "\\.git"
@@ -86,6 +91,12 @@
 	     :base-directory "emacs-reveal/reveal.js-jump-plugin/jump"
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/jump"
+	     :publishing-function 'org-publish-attachment
+	     :recursive t)
+       (list "reveal.js-quiz-plugin"
+	     :base-directory "emacs-reveal/reveal.js-quiz/quiz"
+	     :base-extension 'any
+	     :publishing-directory "./public/reveal.js/plugin/quiz"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "site" :components '("howto"))))

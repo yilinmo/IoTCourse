@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: May 2018
+#+DATE: July 2018
 
 * Presentation Hints
 ** General
@@ -325,6 +325,17 @@ These are sample notes
    - One
    - Two
    - Three
+
+* Quizzes
+** Quiz Plugin
+   - Emacs-reveal embeds this
+     [[https://gitlab.com/schaepermeier/reveal.js-quiz][quiz plugin]]
+     - [[https://schaepermeier.gitlab.io/reveal-quiz-demo/demo.html][Demo of plugin’s author]]
+   - In presentations, quizzes support active learning
+     - In particular, retrieval practice
+
+** Sample Quiz
+#+REVEAL_HTML: <script data-quiz src="./quizzes/sample-quiz.js"></script>
 
 * The End
 ** Further Reading
