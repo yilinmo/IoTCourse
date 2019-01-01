@@ -1,4 +1,4 @@
 # Local IspellDict: en
 #+TITLE: Privacy Policy for oer.gitlab.io
 #+MACRO: website ~oer.gitlab.io~
-#+INCLUDE: emacs-reveal/privacy.org
+#+INCLUDE: emacs-reveal/org/privacy.org

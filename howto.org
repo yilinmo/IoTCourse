@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: July 2018
+#+DATE: January 2019
 
 * Presentation Hints
 ** General
@@ -147,7 +147,7 @@ These are sample notes
       - Presentations are built in subdirectory ~public/~
    3. Open presentation in [[https://www.mozilla.org/en-US/firefox/][Firefox]]
       - E.g.: ~firefox public/howto.html~
-   4. Optional: Copy ~public/~ to web server for public accessibility
+   4. Optional: Copy ~public/~ to public web server
 
 ** Building Presentations in Emacs
    1. Generate HTML presentation for visited
@@ -225,7 +225,7 @@ These are sample notes
    # defined above as CUSTOM_ID.  The second link uses the section
    # header’s text as link target.
    - This slide is part of section [[#features][Some Presentation Features]]
-     - We can link to slides, e.g., [[Text Slide][the previous slide]]
+     - We can link to slides, e.g., [[Text Slide][an earlier slide]]
        - You can use the browser history to go back
      - Side note: Check source code to see two variants of link
        targets used on this slide
@@ -351,8 +351,8 @@ These are sample notes
 
    [[https://gitlab.com/oer/]]
 
-#+MACRO: copyrightyears 2017, 2018
-#+INCLUDE: emacs-reveal/license-template.org
+#+MACRO: copyrightyears 2017, 2018, 2019
+#+INCLUDE: emacs-reveal/org/license-template.org
 
 # Local Variables:
 # indent-tabs-mode: nil

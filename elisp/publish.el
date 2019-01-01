@@ -2,7 +2,7 @@
 ;; -*- Mode: Emacs-Lisp -*-
 ;; -*- coding: utf-8 -*-
 
-;; Copyright (C) 2017, 2018 Jens Lechtenbörger
+;; Copyright (C) 2017, 2018, 2019 Jens Lechtenbörger
 
 ;;; License: GPLv3
 
@@ -16,14 +16,15 @@
 (require 'org)
 (require 'ox-publish)
 
-(setq org-export-with-smart-quotes t
-      org-confirm-babel-evaluate nil)
+(unless (featurep 'emacs-reveal)
+  (add-to-list 'load-path
+	       (expand-file-name
+		"../emacs-reveal/" (file-name-directory load-file-name)))
+  (require 'emacs-reveal))
 
-(add-to-list 'load-path
-	     (expand-file-name
-	      "../emacs-reveal/" (file-name-directory load-file-name)))
-(require 'reveal-config)
-(setq org-reveal-root "./reveal.js"
+(setq org-export-with-smart-quotes t
+      org-confirm-babel-evaluate nil
+      org-reveal-root "./reveal.js"
       org-reveal-title-slide "title-slide.html")
 
 (setq org-publish-project-alist
@@ -58,43 +59,49 @@
 	     :publishing-directory "./public/quizzes"
 	     :publishing-function 'org-publish-attachment)
        (list "reveal-static"
-	     :base-directory "emacs-reveal/reveal.js"
+	     :base-directory (expand-file-name "reveal.js" emacs-reveal-dir)
 	     :exclude "\\.git"
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal-theme"
-	     :base-directory "emacs-reveal/css"
+	     :base-directory (expand-file-name "css" emacs-reveal-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/css/theme"
 	     :publishing-function 'org-publish-attachment)
        (list "reveal-toc-plugin"
-	     :base-directory "emacs-reveal/Reveal.js-TOC-Progress/plugin"
+	     :base-directory (expand-file-name
+			      "Reveal.js-TOC-Progress/plugin" emacs-reveal-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal.js-plugins-anything"
-	     :base-directory "emacs-reveal/reveal.js-plugins/anything"
+	     :base-directory (expand-file-name
+			      "reveal.js-plugins/anything" emacs-reveal-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/anything"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal.js-plugins-audio-slideshow"
-	     :base-directory "emacs-reveal/reveal.js-plugins/audio-slideshow"
+	     :base-directory (expand-file-name
+			      "reveal.js-plugins/audio-slideshow"
+			      emacs-reveal-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/audio-slideshow"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal.js-jump-plugin"
-	     :base-directory "emacs-reveal/reveal.js-jump-plugin/jump"
+	     :base-directory (expand-file-name
+			      "reveal.js-jump-plugin/jump" emacs-reveal-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/jump"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal.js-quiz-plugin"
-	     :base-directory "emacs-reveal/reveal.js-quiz/quiz"
+	     :base-directory (expand-file-name
+			      "reveal.js-quiz/quiz" emacs-reveal-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/quiz"
 	     :publishing-function 'org-publish-attachment
