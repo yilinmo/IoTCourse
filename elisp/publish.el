@@ -16,11 +16,16 @@
 (require 'org)
 (require 'ox-publish)
 
-(unless (featurep 'emacs-reveal)
-  (add-to-list 'load-path
-	       (expand-file-name
-		"../emacs-reveal/" (file-name-directory load-file-name)))
-  (require 'emacs-reveal))
+;; Load emacs-reveal
+(condition-case nil
+    ;; Either require package in usual location ...
+    (require 'emacs-reveal)
+  (error
+   ;; ... or look for sub-directory "emacs-reveal" of parent directory.
+   (add-to-list
+    'load-path
+    (expand-file-name "../emacs-reveal/" (file-name-directory load-file-name)))
+   (require 'emacs-reveal)))
 
 (setq org-export-with-smart-quotes t
       org-confirm-babel-evaluate nil
