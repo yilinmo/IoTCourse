@@ -121,7 +121,7 @@ These are sample notes
    2. Install and configure Emacs packages
       - ~emacs --batch --load emacs-reveal/install.el --funcall install~
       - Add a line like this to =~/.emacs=
-	- =(load "/path/to/emacs-reveal/reveal-config.el")=
+	- =(load "/path/to/emacs-reveal/emacs-reveal.el")=
 
 
 * Usage
@@ -158,6 +158,11 @@ These are sample notes
       - For this to work, necessary resources, in particular the
 	~reveal.js~ directory, must be accessible in the ~.org~ file’s
 	directory
+        - I use
+          ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
+          once to populate ~public/~, then create a symbolic link:
+          ~ln -s public/reveal.ls~
+        - For image grids, you may need: ~(setq emacs-reveal-export-dir "./")~
 
 ** Build Presentations on GitLab
    1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][project]]
