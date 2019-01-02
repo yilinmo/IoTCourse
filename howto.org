@@ -182,10 +182,7 @@ These are sample notes
     - Install Git
       ([[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git][getting started]])
       - The [[https://git-scm.com/book/en/v2][Pro Git book]] is a great source in general
-    - Short [[https://try.github.io/levels/1/challenges/1][in-browser Git demo]]
-      - Explains Git commands ~add~, ~commit~, ~push~, and more
-    - Slightly longer
-      [[https://oer.gitlab.io/oer-on-oer-infrastructure/Git-introduction.html][Git introduction as OER]]
+    - [[https://oer.gitlab.io/oer-on-oer-infrastructure/Git-introduction.html][Git introduction as OER]]
       (created with emacs-reveal)
 
 * Some Presentation Features
