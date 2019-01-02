@@ -211,8 +211,8 @@ These are sample notes
     #+ATTR_REVEAL: :frag (appear) :frag_idx (1 4 3 2 1)
     * I’m first.
     * Fourth.
-    * Third
-    * Second
+    * Third.
+    * Second.
     * I’m also first.
 
 ** Centered Text
@@ -315,7 +315,7 @@ These are sample notes
 {{{revealgrid(42,"./figures/devices/computer.grid",60,4,3,"\"ga1 ga2 ga2 ga3\" \"ga1 ga4 ga5 ga6\" \"ga7 ga8 ga9 ga9\"")}}}
       #+END_SRC
       - Arguments explained in [[https://gitlab.com/oer/emacs-reveal/blob/master/config.org][emacs-reveal/config.org]]
-      - With ~computer.grid~ as follows
+      - With file ~computer.grid~ as follows
         #+INCLUDE: ./figures/devices/computer.grid src emacs-lisp
 
 ** Appearing Items with Audio
