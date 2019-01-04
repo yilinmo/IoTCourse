@@ -126,7 +126,7 @@ These are sample notes
     - As quickstart, inspect this
       [[https://gitlab.com/oer/emacs-reveal][Howto]]
       - Which embeds ~emacs-reveal~ as submodule and contains source
-        file of Howto, ~howto.org~
+        file of Howto, [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/howto.org][howto.org]]
         - Install ~emacs-reveal-howto~
           - ~git clone https://gitlab.com/oer/emacs-reveal-howto.git~
           - ~cd emacs-reveal-howto/~
