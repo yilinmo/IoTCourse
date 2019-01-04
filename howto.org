@@ -207,12 +207,10 @@ These are sample notes
           ~(setq emacs-reveal-export-dir "./")~
 
 ** Build Presentations on GitLab
-   1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][emacs-reveal-howto]]
+   1. Fork or clone [[https://gitlab.com/oer/emacs-reveal-howto][emacs-reveal-howto]]
       on GitLab ([[https://docs.gitlab.com/ce/workflow/forking_workflow.html][fork documentation]])
-      - (Instead of forking, maybe use ~git clone~ as [[Installation][shown above]];
-        import that as new project on GitLab)
-   2. Create project’s files locally
       - ~git clone <the URL of YOUR GitLab project>~
+   2. Create project’s files locally
    3. Create or update Org files in cloned directory, add, commit, and
       push (see next slide)
    4. GitLab infrastructure picks up changes and publishes presentations as
