@@ -1,4 +1,4 @@
-#+INCLUDE: emacs-reveal/org/config.org
+#+INCLUDE: "emacs-reveal/org/config.org"
 
 # Use custom title slide.
 #+REVEAL_TITLE_SLIDE: title-slide.html
