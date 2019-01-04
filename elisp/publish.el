@@ -75,6 +75,11 @@
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/css/theme"
 	     :publishing-function 'org-publish-attachment)
+       (list "css-html"
+	     :base-directory (expand-file-name "css_html" emacs-reveal-dir)
+	     :base-extension 'any
+	     :publishing-directory "./public/"
+	     :publishing-function 'org-publish-attachment)
        (list "reveal-toc-plugin"
 	     :base-directory (expand-file-name
 			      "Reveal.js-TOC-Progress/plugin" emacs-reveal-dir)
