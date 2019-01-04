@@ -18,7 +18,7 @@ quiz = {
                 {"option": "Emacs-reveal is written in JavaScript", "correct": false} // no comma here
             ],
             "correct": "<p><span>Correct!</span> Yes, emacs-reveal respects your freedom and is useful even if you know neither HTML nor JavaScript!</p>",
-            "incorrect": "<p><span>No.</span> You may want to start over and check out the license terms.</p>" // no comma here
+            "incorrect": "<p><span>No.</span> You may want to start over.</p>" // no comma here
         },
         { // Question 2 - Multiple Choice, Multiple True Answers, Select All
             "q": "What is good about emacs-reveal? (Select ALL.)",
