@@ -200,8 +200,11 @@ These are sample notes
         - I use
           ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
           once to populate ~public/~, then create a symbolic link:
+
           ~ln -s public/reveal.ls~
-        - For image grids, you may need: ~(setq emacs-reveal-export-dir "./")~
+        - For image grids, you may need:
+
+          ~(setq emacs-reveal-export-dir "./")~
 
 ** Build Presentations on GitLab
    1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][emacs-reveal-howto]]
