@@ -34,7 +34,7 @@
 	  - [[http://orgmode.org/][Org mode]], which is plain text
 	- Change the URL by adding “?print-pdf” after “.html”,
 	  then print to PDF file (usually, Ctrl-p)
-	- Alternatively, generate PDF via LaTeX from org
+	- Alternatively, generate PDF via LaTeX from Org
 	  source file
 
 ** Audio
@@ -75,7 +75,7 @@ These are sample notes
 ** What’s This?
    # Note the use of macro reveallicense() below to show an inline image
    # with vertically aligned, rotated license statement.
-   # Alternatively, one could also use standard org mode features and
+   # Alternatively, one could also use standard Org mode features and
    # replace the macro with a #+CAPTION, which would be displayed
    # underneath the image.
    # Again alternatively, later as part of slide figure-with-meta-data,
