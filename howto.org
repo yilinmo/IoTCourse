@@ -1,6 +1,6 @@
 # Local IspellDict: en
 #+STARTUP: showeverything
-#+INCLUDE: config.org
+#+INCLUDE: "config.org"
 #+REVEAL_PREAMBLE: <div class="legalese"><p><a href="./imprint.html">Imprint</a> | <a href="./privacy.html">Privacy Policy</a></p></div>
 
 #+TITLE: How to create presentations with emacs-reveal
@@ -84,27 +84,27 @@ These are sample notes
    # The immediately following slide describes the required format of
    # meta-data.
    # Both macros are defined in emacs-reveal/config.org.
-   - Emacs-reveal is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
+   - ~Emacs-reveal~ is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
      to generate [[https://revealjs.com/][reveal.js]] presentations (slides with audio) from simple text
      files in [[http://orgmode.org/][Org mode]]
      {{{reveallicense("./figures/3d-man/board.meta","30vh")}}}
      - Benefits
-     - For your audience
-       - Self-contained presentations embedding audio
-       - Usable on lots of (including mobile and offline) devices with
-         just a browser
-     - For you as producer
-       - Separation of layout and contents
-	 - Similarly to, e.g., LaTeX
-       - Simple text format allows diff and merge for ease of collaboration
+       - For your audience
+         - Self-contained presentations embedding audio
+         - Usable on lots of (including mobile and offline) devices with
+           just a browser
+       - For you as producer
+         - Separation of layout and contents
+	   (similarly to, e.g., LaTeX)
+         - Simple text format allows diff and merge for ease of collaboration
 
 ** Prerequisites
   - I suppose (and strongly recommend) that you use GNU/Linux
     ([[https://getgnulinux.org/switch_to_linux/try_or_install/][help on getting started]])
     - Actually, not much here is operating system specific
-  - Emacs-reveal should really be used with the text editor [[https://www.gnu.org/software/emacs/][GNU Emacs]]
+  - ~Emacs-reveal~ should really be used with the text editor [[https://www.gnu.org/software/emacs/][GNU Emacs]]
     - (You could try other editors and build presentations within
-      GitLab, thanks to emacs-reveal’s GitLab infrastructure)
+      GitLab, thanks to GitLab’s infrastructure)
       - (In fact, you do not need an editor at all but could edit
         presentations using a Web browser on ~GitLab.com~, e.g., with the
         [[https://gitlab.com/-/ide/project/oer/emacs-reveal-howto/edit/master/][Web IDE]]
@@ -139,7 +139,7 @@ These are sample notes
         {{{reveallicense("./figures/logos/docker-horizontal.meta","10vh")}}}
 
 ** Build Presentations on Command Line
-   1. Create Org file in directory ~emacs-reveal-howto/~
+   1. Create Org file in directory ~emacs-reveal-howto~
       - See contained source file for this presentation, ~howto.org~
    2. Build presentations for files ending in ~.org~ (except internal
       ones listed in ~elisp/publish.el~)
@@ -165,7 +165,7 @@ These are sample notes
         - For image grids, you may need: ~(setq emacs-reveal-export-dir "./")~
 
 ** Build Presentations on GitLab
-   1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][project]]
+   1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][emacs-reveal-howto]]
       on GitLab ([[https://docs.gitlab.com/ce/workflow/forking_workflow.html][fork documentation]])
       - (Instead of forking, maybe use ~git clone~ as [[Installation][shown above]];
         import that as new project on GitLab)
@@ -183,7 +183,7 @@ These are sample notes
       ([[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git][getting started]])
       - The [[https://git-scm.com/book/en/v2][Pro Git book]] is a great source in general
     - [[https://oer.gitlab.io/oer-on-oer-infrastructure/Git-introduction.html][Git introduction as OER]]
-      (created with emacs-reveal)
+      (created with ~emacs-reveal~)
 
 * Some Presentation Features
   :PROPERTIES:
@@ -296,14 +296,14 @@ These are sample notes
    - Display image with meta-data specified in file
      - Simplify sharing of images with source and license
    - Functionality and meta-data format are specific
-     to emacs-reveal
+     to ~emacs-reveal~
      - See next slide for sample file
 
    {{{revealimg("./figures/3d-man/decision.meta","To share or not to share","30vh")}}}
 
 *** Meta-Data File for Previous Image
 
-#+INCLUDE: ./figures/3d-man/decision.meta src emacs-lisp
+#+INCLUDE: "./figures/3d-man/decision.meta" src emacs-lisp
 
 ** An Image Grid: Computers
 
@@ -316,7 +316,7 @@ These are sample notes
       #+END_SRC
       - Arguments explained in [[https://gitlab.com/oer/emacs-reveal/blob/master/config.org][emacs-reveal/config.org]]
       - With file ~computer.grid~ as follows
-        #+INCLUDE: ./figures/devices/computer.grid src emacs-lisp
+        #+INCLUDE: "./figures/devices/computer.grid" src emacs-lisp
 
 ** Appearing Items with Audio
    (Audios produced with
@@ -330,7 +330,7 @@ These are sample notes
 
 * Quizzes
 ** Quiz Plugin
-   - Emacs-reveal embeds this
+   - ~Emacs-reveal~ embeds this
      [[https://gitlab.com/schaepermeier/reveal.js-quiz][quiz plugin]]
      - [[https://schaepermeier.gitlab.io/reveal-quiz-demo/demo.html][Demo of plugin’s author]]
    - In presentations, quizzes support active learning
@@ -354,7 +354,7 @@ These are sample notes
    [[https://gitlab.com/oer/]]
 
 #+MACRO: copyrightyears 2017, 2018, 2019
-#+INCLUDE: emacs-reveal/org/license-template.org
+#+INCLUDE: "emacs-reveal/org/license-template.org"
 
 # Local Variables:
 # indent-tabs-mode: nil
