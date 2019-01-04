@@ -201,7 +201,7 @@ These are sample notes
           ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
           once to populate ~public/~, then create a symbolic link:
 
-          ~ln -s public/reveal.ls~
+          ~ln -s public/reveal.js~
         - For image grids, you may need:
 
           ~(setq emacs-reveal-export-dir "./")~
