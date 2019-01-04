@@ -167,12 +167,15 @@ These are sample notes
 
 ** Alternatives
    1. Create presentations locally on Command Line
-   2. Create presentations in Emacs
+   2. Create presentations in GNU Emacs
    3. Create and publish presentations on [[https://about.gitlab.com/][GitLab]]
       {{{reveallicense("./figures/logos/GitLab-wm_no_bg.meta","10vh")}}}
       - Based on underlying continuous integration infrastructure
         using [[https://www.docker.com/][Docker]] image
         {{{reveallicense("./figures/logos/docker-horizontal.meta","10vh")}}}
+        - Used [[https://gitlab.com/oer/docker][Docker image with GNU Emacs, Org mode, and LaTeX]]
+        - [[https://oer.gitlab.io/oer-on-oer-infrastructure/Docker.html][Introduction to Docker]],
+          built with ~emacs-reveal~
 
 ** Build Presentations on Command Line
    1. Create Org file in directory ~emacs-reveal-howto~
