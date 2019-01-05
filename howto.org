@@ -115,9 +115,6 @@ These are sample notes
      and ~org-ref~ in Gnu Emacs
      - [[https://gitlab.com/oer/emacs-reveal][~emacs-reveal~ is
        available as free software on GitLab]]
-   - Two options
-     1. Install via Git ([[#git-install][next slide]])
-     2. Install from MELPA ([[#melpa-install][afterwards]])
 
 *** Install via Git
     :PROPERTIES:
@@ -139,26 +136,6 @@ These are sample notes
             - =(load "/path/to/emacs-reveal/emacs-reveal.el")=
         - Generate the HTML presentation from Org source ~howto.org~
           - ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
-
-*** Install via MELPA
-    :PROPERTIES:
-    :CUSTOM_ID: melpa-install
-    :END:
-    - [[https://melpa.org/#/getting-started][Getting started with MELPA]]
-      - Add melpa, e.g.:
-        - ~(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))~
-        - ~(package-refresh-contents)~
-    - Install ~emacs-reveal~
-      - ~M-x package-install~, enter “emacs-reveal”
-      - Note that ~emacs-reveal~ contains some resources (Org, CSS, HTML
-        files)
-        - To use them as in
-          [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/elisp/publish.el][elisp/publish.el]]
-          of this Howto, you may want to create a symbolic link from
-          your Org source directory to the installation directory of
-          ~emacs-reveal~
-          - See variable (~C-h v~) ~emacs-reveal-dir~
-          - ~cd <dir-with-org-file>; ln -s <dir-of-emacs-reveal>~
 
 * Usage
   :PROPERTIES:
