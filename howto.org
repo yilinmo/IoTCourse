@@ -137,6 +137,22 @@ These are sample notes
         - Generate the HTML presentation from Org source ~howto.org~
           - ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
 
+*** Emacs-reveal like a Package?
+    :PROPERTIES:
+    :CUSTOM_ID: non-standard-install
+    :END:
+    - The directory ~emacs-reveal~ can be located anywhere
+      - Also under =~/.emacs.d/elpa=
+    - However, note that ~emacs-reveal~ contains some resources (Org,
+      CSS, HTML files)
+      - To use them, your publish function needs to know their
+        location (as in
+        [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/elisp/publish.el][elisp/publish.el]]
+        of this Howto)
+        - You may want to customize variable ~emacs-reveal-dir~
+        - Or create a symbolic link
+          - ~cd <dir-with-org-file>; ln -s <dir-of-emacs-reveal>~
+
 * Usage
   :PROPERTIES:
   :CUSTOM_ID: usage
