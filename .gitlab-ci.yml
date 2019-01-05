@@ -1,4 +1,4 @@
-image: lechten/emacs-tex-org:v2
+image: registry.gitlab.com/oer/docker/debian-emacs-tex-org:v2.0
 
 pages:
   stage: deploy
