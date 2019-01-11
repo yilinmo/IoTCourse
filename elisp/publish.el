@@ -46,13 +46,6 @@
 	     :publishing-directory "./public/figures"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
-       (list "legalese"
-	     :base-directory "."
-	     :html-postamble nil
-	     :include '("privacy.org" "imprint.org")
-	     :exclude ".*"
-	     :publishing-function '(org-html-publish-to-html)
-	     :publishing-directory "./public")
        (list "audios"
 	     :base-directory "audio"
 	     :base-extension (regexp-opt '("ogg" "mp3"))
