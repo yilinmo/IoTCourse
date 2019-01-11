@@ -1,6 +1,0 @@
-# Local IspellDict: en
-# Note: We cannot use the MACRO in the TITLE as HTML title elements
-# are not allowed to contain markup.
-#+TITLE: Imprint for oer.gitlab.io
-#+MACRO: website ~oer.gitlab.io~
-#+INCLUDE: "emacs-reveal/org/imprint.org"

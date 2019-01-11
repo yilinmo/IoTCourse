@@ -36,7 +36,7 @@
        (list "howto"
 	     :base-directory "."
 	     :base-extension "org"
-	     :exclude "config\\|license-template\\|privacy\\|imprint"
+	     :exclude "config\\|license-template"
 	     :publishing-function 'org-reveal-publish-to-reveal
 	     :publishing-directory "./public")
        (list "figures"
