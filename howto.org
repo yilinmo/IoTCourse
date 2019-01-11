@@ -1,7 +1,7 @@
 # Local IspellDict: en
 #+STARTUP: showeverything
 #+INCLUDE: "config.org"
-#+REVEAL_PREAMBLE: <div class="legalese"><p><a href="./imprint.html">Imprint</a> | <a href="./privacy.html">Privacy Policy</a></p></div>
+#+REVEAL_PREAMBLE: <div class="legalese"><p><a href="/imprint.html">Imprint</a> | <a href="/privacy.html">Privacy Policy</a></p></div>
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
