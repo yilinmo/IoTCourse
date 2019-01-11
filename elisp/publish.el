@@ -29,8 +29,7 @@
 
 (setq org-export-with-smart-quotes t
       org-confirm-babel-evaluate nil
-      org-reveal-root "./reveal.js"
-      org-reveal-title-slide "title-slide.html")
+      org-reveal-root "./reveal.js")
 
 (setq org-publish-project-alist
       (list
