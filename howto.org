@@ -381,17 +381,15 @@ These are sample notes
    :END:
    - Org-Reveal supports [[https://github.com/viebel/klipse][Klipse]]
      - Teach programming
+       - Code changes in upper part result in output changes in lower part
      - Browser-side code evaluation for various programming languages
-       - See [[https://github.com/lechten/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
-         for supported ones
+       - Constant ~org-reveal-klipse-languages~ contains supported subset
        - Note that variable ~org-reveal-klipsify-src~ needs to be
          ~non-nil~
        - Due to an [[https://github.com/viebel/klipse/issues/334][issue in Klipse]],
          you may need to use an older or non-minified version of Klipse
    - Next two slides copied from
      [[https://github.com/lechten/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
-     - Code changes in upper part result in output
-       changes in lower part
 
 *** HTML Src Block
 #+BEGIN_SRC html
