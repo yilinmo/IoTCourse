@@ -361,7 +361,7 @@ These are sample notes
    - Two
    - Three
 
-* Quizzes
+* Misc
 ** Quiz Plugin
    - ~Emacs-reveal~ embeds this
      [[https://gitlab.com/schaepermeier/reveal.js-quiz][quiz plugin]]
@@ -369,8 +369,36 @@ These are sample notes
    - In presentations, quizzes support active learning
      - In particular, retrieval practice
 
-** Sample Quiz
+*** Sample Quiz
 #+REVEAL_HTML: <script data-quiz src="./quizzes/sample-quiz.js"></script>
+
+** Klipse for Code Evaluation
+   - Org-Reveal supports [[https://github.com/viebel/klipse][Klipse]]
+     - Teach programming
+     - Browser-side code evaluation for various programming languages
+       - See [[https://github.com/lechten/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
+         for supported ones
+       - Note that variable ~org-reveal-klipsify-src~ needs to be
+         ~non-nil~
+       - Due to an [[https://github.com/viebel/klipse/issues/334][issue in Klipse]],
+         you may need to use an older or non-minified version of Klipse
+   - Next two slides copied from
+     [[https://github.com/lechten/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
+     - Code changes in the upper part result in output
+       changes in lower part
+
+*** HTML Src Block
+#+BEGIN_SRC html
+<h1 class="whatever">hello, what's your name</h1>
+#+END_SRC
+
+*** Javascript Src Block
+#+BEGIN_SRC js
+console.log("success");
+var x='string using single quote';
+x
+#+END_SRC
+
 
 * The End
 ** Further Reading

@@ -29,7 +29,10 @@
 
 (setq org-export-with-smart-quotes t
       org-confirm-babel-evaluate nil
-      org-reveal-root "./reveal.js")
+      org-reveal-root "./reveal.js"
+      org-reveal-klipsify-src t
+      org-reveal-klipse-js "https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"
+      )
 
 (setq org-publish-project-alist
       (list
