@@ -390,7 +390,7 @@ These are sample notes
          you may need to use an older or non-minified version of Klipse
    - Next two slides copied from
      [[https://github.com/lechten/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
-     - Code changes in the upper part result in output
+     - Code changes in upper part result in output
        changes in lower part
 
 *** HTML Src Block
@@ -405,6 +405,22 @@ var x='string using single quote';
 x
 #+END_SRC
 
+*** PHP Src Block
+#+BEGIN_SRC php
+$name = "Alice";
+echo "Moin " . $name . "!";
+#+END_SRC
+
+*** Python Src Block
+#+BEGIN_SRC python
+def factorial(n):
+    if n < 2:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+print(factorial(10))
+#+END_SRC
 
 * The End
 ** Further Reading
