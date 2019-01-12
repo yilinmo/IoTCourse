@@ -375,6 +375,7 @@ These are sample notes
 *** Sample Quiz
 #+REVEAL_HTML: <script data-quiz src="./quizzes/sample-quiz.js"></script>
 
+#+MACRO: klipse-languages (eval (message "%s" org-reveal-klipse-languages))
 ** Klipse for Code Evaluation
    :PROPERTIES:
    :CUSTOM_ID: klipse-support
@@ -384,6 +385,7 @@ These are sample notes
        - Code changes in upper part result in output changes in lower part
      - Browser-side code evaluation for various programming languages
        - Constant ~org-reveal-klipse-languages~ contains supported subset
+         - {{{klipse-languages}}}
        - Note that variable ~org-reveal-klipsify-src~ needs to be
          ~non-nil~
        - Due to an [[https://github.com/viebel/klipse/issues/334][issue in Klipse]],
