@@ -363,6 +363,9 @@ These are sample notes
 
 * Misc
 ** Quiz Plugin
+   :PROPERTIES:
+   :CUSTOM_ID: quiz-support
+   :END:
    - ~Emacs-reveal~ embeds this
      [[https://gitlab.com/schaepermeier/reveal.js-quiz][quiz plugin]]
      - [[https://schaepermeier.gitlab.io/reveal-quiz-demo/demo.html][Demo of plugin’s author]]
@@ -373,6 +376,9 @@ These are sample notes
 #+REVEAL_HTML: <script data-quiz src="./quizzes/sample-quiz.js"></script>
 
 ** Klipse for Code Evaluation
+   :PROPERTIES:
+   :CUSTOM_ID: klipse-support
+   :END:
    - Org-Reveal supports [[https://github.com/viebel/klipse][Klipse]]
      - Teach programming
      - Browser-side code evaluation for various programming languages
