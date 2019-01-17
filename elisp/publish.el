@@ -29,9 +29,9 @@
 
 (setq org-export-with-smart-quotes t
       org-confirm-babel-evaluate nil
-      org-reveal-root "./reveal.js"
-      org-reveal-klipsify-src t
-      org-reveal-klipse-js "https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"
+      org-revealjs-root "./reveal.js"
+      org-revealjs-klipsify-src t
+      org-revealjs-klipse-js "https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"
       )
 
 (setq org-publish-project-alist
@@ -40,7 +40,7 @@
 	     :base-directory "."
 	     :base-extension "org"
 	     :exclude "config\\|license-template"
-	     :publishing-function 'org-reveal-publish-to-reveal
+	     :publishing-function 'org-revealjs-publish-to-reveal
 	     :publishing-directory "./public")
        (list "figures"
 	     :base-directory "figures"

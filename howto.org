@@ -375,23 +375,23 @@ These are sample notes
 *** Sample Quiz
 #+REVEAL_HTML: <script data-quiz src="./quizzes/sample-quiz.js"></script>
 
-#+MACRO: klipse-languages (eval (message "%s" org-reveal-klipse-languages))
+#+MACRO: klipse-languages (eval (message "%s" org-revealjs-klipse-languages))
 ** Klipse for Code Evaluation
    :PROPERTIES:
    :CUSTOM_ID: klipse-support
    :END:
-   - Org-Reveal supports [[https://github.com/viebel/klipse][Klipse]]
+   - Org-revealjs supports [[https://github.com/viebel/klipse][Klipse]]
      - Teach programming
        - Code changes in upper part result in output changes in lower part
      - Browser-side code evaluation for various programming languages
-       - Constant ~org-reveal-klipse-languages~ contains supported subset
+       - Constant ~org-revealjs-klipse-languages~ contains supported subset
          - {{{klipse-languages}}}
-       - Note that variable ~org-reveal-klipsify-src~ needs to be
+       - Note that variable ~org-revealjs-klipsify-src~ needs to be
          ~non-nil~
        - Due to an [[https://github.com/viebel/klipse/issues/334][issue in Klipse]],
          you may need to use an older or non-minified version of Klipse
    - Next two slides copied from
-     [[https://github.com/lechten/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
+     [[https://github.com/yjwen/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
 
 *** HTML Src Block
 #+BEGIN_SRC html
