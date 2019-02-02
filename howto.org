@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: January 2019
+#+DATE: February 2019
 
 * Presentation Hints
 ** General
@@ -31,7 +31,7 @@
      3. Generate PDF
         - Why, really?
 	  - Why not download source files instead?
-	  - [[http://orgmode.org/][Org mode]], which is plain text
+	  - [[https://orgmode.org/][Org mode]], which is plain text
 	- Change the URL by adding “?print-pdf” after “.html”,
 	  then print to PDF file (usually, Ctrl-p)
 	- Alternatively, generate PDF via LaTeX from Org
@@ -44,9 +44,9 @@
    - If audio is embedded, [[https://en.wikipedia.org/wiki/Ogg][the free Ogg format]] is used
      - Playback should start automatically
        - Currently, you should be hearing Enthusiast by
-         [[http://freemusicarchive.org/music/Tours/][Tours]]
-	 - Licensed under a
-  	   [[http://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution License]]
+         [[https://freemusicarchive.org/music/Tours/][Tours]]
+	 - Licensed under
+  	   [[https://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution 3.0 Unported (CC BY 3.0)]]
        - See [[https://github.com/rajgoel/reveal.js-plugins/tree/master/audio-slideshow#user-content-compatibility-and-known-issues][compatibility and known issues of the underlying audio plugin]]
        - [[https://www.mozilla.org/en-US/firefox/][Firefox]],
          which I recommend as browser in general
@@ -86,7 +86,7 @@ These are sample notes
    # Both macros are defined in emacs-reveal/config.org.
    - ~Emacs-reveal~ is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
      to generate [[https://revealjs.com/][reveal.js]] presentations (slides with audio) from simple text
-     files in [[http://orgmode.org/][Org mode]]
+     files in [[https://orgmode.org/][Org mode]]
      {{{reveallicense("./figures/3d-man/board.meta","30vh")}}}
      - Benefits
        - For your audience
@@ -183,12 +183,12 @@ These are sample notes
 
 ** Building Presentations in Emacs
    1. Generate HTML presentation for visited
-      ~.org~ file using the usual Org export functionality: @@html:<br>@@
-      Press ~C-c C-e R B~
-      - This generates an HTML file in the same directory and opens it
-	in your default browser
-      - For this to work, necessary resources, in particular the
-	~reveal.js~ directory, must be accessible in the ~.org~ file’s
+      ~.org~ file using Org export functionality: @@html:<br>@@
+      Press ~C-c C-e r b~
+      - This generates HTML file in current directory and opens it
+	in default browser
+      - For this to work, necessary resources, in particular
+	~reveal.js~, must be accessible in ~.org~ file’s
 	directory
         - I use
           ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
@@ -317,9 +317,9 @@ These are sample notes
      [[https://oer.gitlab.io/OS/OS08-Memory.html][different presentation]]
      {{{reveallicense("./figures/OS/clock-steps.meta","40vh")}}}
    - The song Enthusiast by
-     [[http://freemusicarchive.org/music/Tours/][Tours]]
-     is licensed under a
-     [[http://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution License]]
+     [[https://freemusicarchive.org/music/Tours/][Tours]]
+     is licensed under
+     [[https://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution 3.0 Unported (CC BY 3.0)]]
 
 
 ** Figure with Caption and License
@@ -354,7 +354,7 @@ These are sample notes
 ** Appearing Items with Audio
    (Audios produced with
    [[https://github.com/marytts/marytts][MaryTTS]],
-   converted to Ogg format with [[http://www.audacityteam.org/][Audacity]])
+   converted to Ogg format with [[https://www.audacityteam.org/][Audacity]])
 
    #+ATTR_REVEAL: :frag (appear) :audio (./audio/1.ogg ./audio/2.ogg ./audio/3.ogg)
    - One
@@ -375,18 +375,18 @@ These are sample notes
 *** Sample Quiz
 #+REVEAL_HTML: <script data-quiz src="./quizzes/sample-quiz.js"></script>
 
-#+MACRO: klipse-languages (eval (message "%s" org-revealjs-klipse-languages))
+#+MACRO: klipse-languages (eval (message "%s" (mapconcat #'identity org-re-reveal-klipse-languages ", ")))
 ** Klipse for Code Evaluation
    :PROPERTIES:
    :CUSTOM_ID: klipse-support
    :END:
-   - Org-revealjs supports [[https://github.com/viebel/klipse][Klipse]]
+   - Org-re-reveal supports [[https://github.com/viebel/klipse][Klipse]]
      - Teach programming
        - Code changes in upper part result in output changes in lower part
      - Browser-side code evaluation for various programming languages
-       - Constant ~org-revealjs-klipse-languages~ contains supported subset
+       - Constant ~org-re-reveal-klipse-languages~ contains supported subset
          - {{{klipse-languages}}}
-       - Note that variable ~org-revealjs-klipsify-src~ needs to be
+       - Note that variable ~org-re-reveal-klipsify-src~ needs to be
          ~non-nil~
        - Due to an [[https://github.com/viebel/klipse/issues/334][issue in Klipse]],
          you may need to use an older or non-minified version of Klipse
@@ -424,7 +424,7 @@ print(factorial(10))
 
 * The End
 ** Further Reading
-   - [[http://orgmode.org/#docs][Manuals and tutorials for Org mode]]
+   - [[https://orgmode.org/#docs][Manuals and tutorials for Org mode]]
    - [[https://oer.gitlab.io/OS/][Presentations for a course on Operating Systems]]
      demonstrating more features of Org mode (e.g., table of contents
      as agenda, bibliography with citations, keyword index, PDF export) and
