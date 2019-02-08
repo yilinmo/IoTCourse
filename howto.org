@@ -315,7 +315,8 @@ These are sample notes
    :END:
    - This figure is part of a
      [[https://oer.gitlab.io/OS/OS08-Memory.html][different presentation]]
-     {{{reveallicense("./figures/OS/clock-steps.meta","40vh")}}}
+     {{{reveallicense("./figures/OS/clock-steps.meta","40vh",nil,'none)}}}
+     - Notice: No license displayed for figure → License of document applies
    - The song Enthusiast by
      [[https://freemusicarchive.org/music/Tours/][Tours]]
      is licensed under
