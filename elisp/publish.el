@@ -36,7 +36,7 @@
 
 (setq org-publish-project-alist
       (list
-       (list "howto"
+       (list "org-presentations"
 	     :base-directory "."
 	     :base-extension "org"
 	     :exclude "config\\|license-template"
@@ -106,7 +106,7 @@
 	     :publishing-directory "./public/reveal.js/plugin/quiz"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
-       (list "site" :components '("howto"))))
+       ))
 
 (provide 'publish)
 ;;; publish.el ends here

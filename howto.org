@@ -111,9 +111,9 @@ These are sample notes
         (requires login))
 
 ** Installation
-   - You need ~emacs-reveal~ with [[https://orgmode.org][Org mode]]
-     and ~org-ref~ in Gnu Emacs
-     - [[https://gitlab.com/oer/emacs-reveal][~emacs-reveal~ is
+   - ~Emacs-reveal~ builds upon Gnu Emacs with
+     [[https://orgmode.org][Org mode]]
+     - [[https://gitlab.com/oer/emacs-reveal][~Emacs-reveal~ is
        available as free software on GitLab]]
 
 *** Install via Git
