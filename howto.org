@@ -207,7 +207,7 @@ These are sample notes
    3. Create or update Org files in cloned directory, add, commit, and
       push (see next slide)
    4. GitLab infrastructure picks up changes and publishes presentations as
-      [[https://about.gitlab.com/features/pages/][GitLab Pages]]
+      [[https://about.gitlab.com/product/pages/][GitLab Pages]]
       - Takes some minutes
       - Go to Settings → Pages to see the Pages’ address
 
@@ -314,7 +314,7 @@ These are sample notes
    :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.mp3"
    :END:
    - This figure is part of a
-     [[https://oer.gitlab.io/OS/OS08-Memory.html][different presentation]]
+     [[https://oer.gitlab.io/OS/Operating-Systems-09-Memory-II.html][different presentation]]
      {{{reveallicense("./figures/OS/clock-steps.meta","40vh",nil,'none)}}}
      - Notice: No license displayed for figure → License of document applies
    - The song Enthusiast by
@@ -348,7 +348,7 @@ These are sample notes
       #+BEGIN_SRC
 {{{revealgrid(42,"./figures/devices/computer.grid",60,4,3,"\"ga1 ga2 ga2 ga3\" \"ga1 ga4 ga5 ga6\" \"ga7 ga8 ga9 ga9\"")}}}
       #+END_SRC
-      - Arguments explained in [[https://gitlab.com/oer/emacs-reveal/blob/master/config.org][emacs-reveal/config.org]]
+      - Arguments explained in [[https://gitlab.com/oer/emacs-reveal/blob/master/org/config.org][emacs-reveal/org/config.org]]
       - With file ~computer.grid~ as follows
         #+INCLUDE: "./figures/devices/computer.grid" src emacs-lisp
 
