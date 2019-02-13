@@ -184,7 +184,7 @@ These are sample notes
 ** Building Presentations in Emacs
    1. Generate HTML presentation for visited
       ~.org~ file using Org export functionality: @@html:<br>@@
-      Press ~C-c C-e r b~
+      Press ~C-c C-e v b~
       - This generates HTML file in current directory and opens it
 	in default browser
       - For this to work, necessary resources, in particular
