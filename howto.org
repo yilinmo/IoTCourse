@@ -39,21 +39,21 @@
 
 ** Audio
    :PROPERTIES:
-   :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.mp3"
+   :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.ogg"
    :END:
-   - If audio is embedded, [[https://en.wikipedia.org/wiki/Ogg][the free Ogg format]] is used
-     - Playback should start automatically
-       - Currently, you should be hearing Enthusiast by
-         [[https://freemusicarchive.org/music/Tours/][Tours]]
-	 - Licensed under
-  	   [[https://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution 3.0 Unported (CC BY 3.0)]]
-       - See [[https://github.com/rajgoel/reveal.js-plugins/tree/master/audio-slideshow#user-content-compatibility-and-known-issues][compatibility and known issues of the underlying audio plugin]]
+   - Audio playback should start automatically
+     - Currently, you should be hearing Enthusiast by
+       [[https://freemusicarchive.org/music/Tours/][Tours]]
+       - Licensed under
+  	 [[https://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution 3.0 Unported (CC BY 3.0)]]
+       - Converted to [[https://en.wikipedia.org/wiki/Ogg][free Ogg format]] with [[https://www.audacityteam.org/][Audacity]]
+     - See [[https://github.com/rajgoel/reveal.js-plugins/tree/master/audio-slideshow#user-content-compatibility-and-known-issues][compatibility and known issues of the underlying audio plugin]]
        - [[https://www.mozilla.org/en-US/firefox/][Firefox]],
          which I recommend as browser in general
          ([[https://blogs.fsfe.org/jens.lechtenboerger/2015/06/09/three-steps-towards-more-privacy-on-the-net/][here in English]]
          and [[https://www.informationelle-selbstbestimmung-im-internet.de/][here in German]]),
          seems to work everywhere
-     - Audio controls are shown at bottom left
+   - Audio controls are shown at bottom left
 
 ** (Speaker) Notes
    - Slides contain additional notes as plain text if you see the
@@ -311,7 +311,7 @@ These are sample notes
 
 ** Slide with Figure and Audio
    :PROPERTIES:
-   :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.mp3"
+   :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.ogg"
    :END:
    - This figure is part of a
      [[https://oer.gitlab.io/OS/Operating-Systems-09-Memory-II.html][different presentation]]
