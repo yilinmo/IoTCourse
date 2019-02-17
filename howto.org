@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: February 2019
+#+DATE: February 2019 (for emacs-reveal starting with version 0.9.7)
 
 * Presentation Hints
 ** General
@@ -115,6 +115,11 @@ These are sample notes
      [[https://orgmode.org][Org mode]]
      - [[https://gitlab.com/oer/emacs-reveal][~Emacs-reveal~ is
        available as free software on GitLab]]
+   - You also need Git
+     - [[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git][getting started]])
+       - The [[https://git-scm.com/book/en/v2][Pro Git book]] is a great source in general
+     - [[https://oer.gitlab.io/oer-on-oer-infrastructure/Git-introduction.html][Git introduction as OER]]
+       (created with ~emacs-reveal~)
 
 *** Install via Git
     :PROPERTIES:
@@ -149,8 +154,9 @@ These are sample notes
         location (as in
         [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/elisp/publish.el][elisp/publish.el]]
         of this Howto)
-        - You may want to customize variable ~emacs-reveal-dir~
-        - Or create a symbolic link
+        - Relevant customize variables include ~emacs-reveal-dir~ and
+          ~emacs-reveal-submodules-dir~
+        - Maybe create a symbolic link
           - ~cd <dir-with-org-file>; ln -s <dir-of-emacs-reveal>~
 
 * Usage
@@ -210,13 +216,6 @@ These are sample notes
       [[https://about.gitlab.com/product/pages/][GitLab Pages]]
       - Takes some minutes
       - Go to Settings → Pages to see the Pages’ address
-
-*** On Git
-    - Install Git
-      ([[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git][getting started]])
-      - The [[https://git-scm.com/book/en/v2][Pro Git book]] is a great source in general
-    - [[https://oer.gitlab.io/oer-on-oer-infrastructure/Git-introduction.html][Git introduction as OER]]
-      (created with ~emacs-reveal~)
 
 * Some Presentation Features
   :PROPERTIES:

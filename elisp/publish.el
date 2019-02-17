@@ -58,28 +58,31 @@
 	     :base-extension (regexp-opt '("js"))
 	     :publishing-directory "./public/quizzes"
 	     :publishing-function 'org-publish-attachment)
-       (list "reveal-static"
-	     :base-directory (expand-file-name "reveal.js" emacs-reveal-dir)
-	     :exclude "\\.git"
-	     :base-extension 'any
-	     :publishing-directory "./public/reveal.js"
-	     :publishing-function 'org-publish-attachment
-	     :recursive t)
        (list "reveal-theme"
 	     :base-directory (expand-file-name "css" emacs-reveal-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/css/theme"
 	     :publishing-function 'org-publish-attachment)
+       (list "reveal-static"
+	     :base-directory (expand-file-name
+			      "reveal.js" emacs-reveal-submodules-dir)
+	     :exclude "\\.git"
+	     :base-extension 'any
+	     :publishing-directory "./public/reveal.js"
+	     :publishing-function 'org-publish-attachment
+	     :recursive t)
        (list "reveal-toc-plugin"
 	     :base-directory (expand-file-name
-			      "Reveal.js-TOC-Progress/plugin" emacs-reveal-dir)
+			      "Reveal.js-TOC-Progress/plugin"
+			      emacs-reveal-submodules-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal.js-plugins-anything"
 	     :base-directory (expand-file-name
-			      "reveal.js-plugins/anything" emacs-reveal-dir)
+			      "reveal.js-plugins/anything"
+			      emacs-reveal-submodules-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/anything"
 	     :publishing-function 'org-publish-attachment
@@ -87,21 +90,23 @@
        (list "reveal.js-plugins-audio-slideshow"
 	     :base-directory (expand-file-name
 			      "reveal.js-plugins/audio-slideshow"
-			      emacs-reveal-dir)
+			      emacs-reveal-submodules-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/audio-slideshow"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal.js-jump-plugin"
 	     :base-directory (expand-file-name
-			      "reveal.js-jump-plugin/jump" emacs-reveal-dir)
+			      "reveal.js-jump-plugin/jump"
+			      emacs-reveal-submodules-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/jump"
 	     :publishing-function 'org-publish-attachment
 	     :recursive t)
        (list "reveal.js-quiz-plugin"
 	     :base-directory (expand-file-name
-			      "reveal.js-quiz/quiz" emacs-reveal-dir)
+			      "reveal.js-quiz/quiz"
+			      emacs-reveal-submodules-dir)
 	     :base-extension 'any
 	     :publishing-directory "./public/reveal.js/plugin/quiz"
 	     :publishing-function 'org-publish-attachment
