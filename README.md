@@ -27,7 +27,7 @@ This project's static Pages are built by [GitLab CI][ci], following the steps
 defined in [`.gitlab-ci.yml`](.gitlab-ci.yml):
 
 ```
-image: lechten/emacs-tex-org:v2
+image: registry.gitlab.com/oer/docker/debian-emacs-tex-org:v3.3
 
 pages:
   stage: deploy
@@ -39,13 +39,15 @@ pages:
   artifacts:
     paths:
     - public
+    expire_in: 4 weeks
   only:
   - master
 ```
 
 These build instructions are based on the docker image
-`lechten/emacs-tex-org:v2` which contains GNU Emacs with a LaTeX
-distribution.  Submodules are fetched first, before `emacs` is
+`debian-emacs-tex-org:v3.3` which contains GNU Emacs with a LaTeX
+distribution, Org mode and org-re-reveal-ref.
+Submodules are fetched first, before `emacs` is
 executed to publish HTML presentations from `org` files as defined in
 [publish.el](elisp/publish.el).
 
