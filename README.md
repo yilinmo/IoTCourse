@@ -1,3 +1,5 @@
+<!--- Local IspellDict: en -->
+
 This project demonstrates how to use
 [emacs-reveal](https://gitlab.com/oer/emacs-reveal) to generate
 [reveal.js presentations](https://revealjs.com/)
@@ -44,10 +46,11 @@ pages:
   - master
 ```
 
-These build instructions are based on the docker image
+These build instructions are based on the [Docker image](https://gitlab.com/oer/docker)
 `debian-emacs-tex-org:v3.3` which contains GNU Emacs with a LaTeX
-distribution, Org mode and org-re-reveal-ref.
-Submodules are fetched first, before `emacs` is
+distribution, [reveal.js](https://revealjs.com/) with selected plugins,
+[Org mode](https://orgmode.org/) and [org-re-reveal-ref](org-re-reveal-ref).
+During a build, submodules are fetched first, before `emacs` is
 executed to publish HTML presentations from `org` files as defined in
 [publish.el](elisp/publish.el).
 
@@ -66,7 +69,7 @@ git submodule update --init --recursive
 5. Preview your project: `firefox public/howto.html`
 6. Add content; repeat, starting with step 4.
 
-Read more at emacs-reveal's [documentation][].
+Read more in the generated [howto of emacs-reveal](https://oer.gitlab.io/emacs-reveal-howto/howto.html).
 
 ## GitLab User or Group Pages
 
@@ -84,7 +87,5 @@ If you forked this project for your own use, please go to your project's
 unless you want to contribute back to the upstream project.
 
 [ci]: https://about.gitlab.com/gitlab-ci/
-[emacs-reveal]: https://gitlab.com/oer/emacs-reveal
-[documentation]: https://gitlab.com/oer/emacs-reveal-howto
 [userpages]: https://docs.gitlab.com/ce/user/project/pages/introduction.html#user-or-group-pages
 [projpages]: https://docs.gitlab.com/ce/user/project/pages/introduction.html#project-pages
