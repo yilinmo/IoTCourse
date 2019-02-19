@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: February 2019 (for emacs-reveal starting with version 0.9.7)
+#+DATE: February 2019 (emacs-reveal 0.9.8 and later)
 
 * Presentation Hints
 ** General
@@ -58,6 +58,7 @@
 ** (Speaker) Notes
    - Slides contain additional notes as plain text if you see the
      folder icon at the top right (as on this slide)
+     #+ATTR_LATEX: :width 1cm
      [[file:reveal.js/css/theme/folder_inbox.png]]
      - Click on that icon or press “s” to see the “speaker notes view”
      - You need to allow pop-ups
@@ -151,9 +152,10 @@ These are sample notes
     - However, note that ~emacs-reveal~ contains some resources (Org,
       CSS, HTML files)
       - To use them, your publish function needs to know their
-        location (as in
-        [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/elisp/publish.el][elisp/publish.el]]
-        of this Howto)
+        location
+        - (As in [[https://gitlab.com/oer/emacs-reveal/blob/master/emacs-reveal-publish.el][emacs-reveal-publish.el]]
+          used by [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/elisp/publish.el][elisp/publish.el]]
+          of this Howto)
         - Relevant customize variables include ~emacs-reveal-dir~ and
           ~emacs-reveal-submodules-dir~
         - Maybe create a symbolic link
@@ -437,7 +439,8 @@ print(factorial(10))
    [[https://gitlab.com/oer/]]
 
 #+MACRO: copyrightyears 2017, 2018, 2019
-#+INCLUDE: "emacs-reveal/org/license-template.org"
+#+MACRO: licensepreamble
+#+INCLUDE: "emacs-reveal/org/license-template.org" :minlevel 2
 
 # Local Variables:
 # indent-tabs-mode: nil

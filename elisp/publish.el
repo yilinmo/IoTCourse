@@ -12,106 +12,21 @@
 
 
 ;;; Code:
-(package-initialize)
-(require 'org)
-(require 'ox-publish)
 
-;; Load emacs-reveal
+;; Load emacs-reveal-publish
 (condition-case nil
     ;; Either require package in usual location ...
-    (require 'emacs-reveal)
+    (require 'emacs-reveal-publish)
   (error
    ;; ... or look for sub-directory "emacs-reveal" of parent directory.
    (add-to-list
     'load-path
     (expand-file-name "../emacs-reveal/" (file-name-directory load-file-name)))
-   (require 'emacs-reveal)))
+   (require 'emacs-reveal-publish)))
 
-(setq org-export-with-smart-quotes t
-      org-confirm-babel-evaluate nil
-      org-re-reveal-root "./reveal.js"
-      org-re-reveal-klipsify-src t
+(setq org-re-reveal-klipsify-src t
       org-re-reveal-klipse-js "https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"
       )
-
-(setq org-publish-project-alist
-      (list
-       (list "org-presentations"
-	     :base-directory "."
-	     :base-extension "org"
-	     :exclude "config\\|license-template"
-	     :publishing-function 'org-re-reveal-publish-to-reveal
-	     :publishing-directory "./public")
-       (list "figures"
-	     :base-directory "figures"
-	     :base-extension (regexp-opt '("png" "jpg" "ico" "svg" "gif"))
-	     :publishing-directory "./public/figures"
-	     :publishing-function 'org-publish-attachment
-	     :recursive t)
-       (list "audios"
-	     :base-directory "audio"
-	     :base-extension (regexp-opt '("ogg" "mp3"))
-	     :publishing-directory "./public/audio"
-	     :publishing-function 'org-publish-attachment)
-       (list "quizzes"
-	     :base-directory "quizzes"
-	     :base-extension (regexp-opt '("js"))
-	     :publishing-directory "./public/quizzes"
-	     :publishing-function 'org-publish-attachment)
-       (list "reveal-theme"
-	     :base-directory (expand-file-name "css" emacs-reveal-dir)
-	     :base-extension 'any
-	     :publishing-directory "./public/reveal.js/css/theme"
-	     :publishing-function 'org-publish-attachment)
-       (list "reveal-static"
-	     :base-directory (expand-file-name
-			      "reveal.js" emacs-reveal-submodules-dir)
-	     :exclude "\\.git"
-	     :base-extension 'any
-	     :publishing-directory "./public/reveal.js"
-	     :publishing-function 'org-publish-attachment
-	     :recursive t)
-       (list "reveal-toc-plugin"
-	     :base-directory (expand-file-name
-			      "Reveal.js-TOC-Progress/plugin"
-			      emacs-reveal-submodules-dir)
-	     :base-extension 'any
-	     :publishing-directory "./public/reveal.js/plugin"
-	     :publishing-function 'org-publish-attachment
-	     :recursive t)
-       (list "reveal.js-plugins-anything"
-	     :base-directory (expand-file-name
-			      "reveal.js-plugins/anything"
-			      emacs-reveal-submodules-dir)
-	     :base-extension 'any
-	     :publishing-directory "./public/reveal.js/plugin/anything"
-	     :publishing-function 'org-publish-attachment
-	     :recursive t)
-       (list "reveal.js-plugins-audio-slideshow"
-	     :base-directory (expand-file-name
-			      "reveal.js-plugins/audio-slideshow"
-			      emacs-reveal-submodules-dir)
-	     :base-extension 'any
-	     :publishing-directory "./public/reveal.js/plugin/audio-slideshow"
-	     :publishing-function 'org-publish-attachment
-	     :recursive t)
-       (list "reveal.js-jump-plugin"
-	     :base-directory (expand-file-name
-			      "reveal.js-jump-plugin/jump"
-			      emacs-reveal-submodules-dir)
-	     :base-extension 'any
-	     :publishing-directory "./public/reveal.js/plugin/jump"
-	     :publishing-function 'org-publish-attachment
-	     :recursive t)
-       (list "reveal.js-quiz-plugin"
-	     :base-directory (expand-file-name
-			      "reveal.js-quiz/quiz"
-			      emacs-reveal-submodules-dir)
-	     :base-extension 'any
-	     :publishing-directory "./public/reveal.js/plugin/quiz"
-	     :publishing-function 'org-publish-attachment
-	     :recursive t)
-       ))
 
 (provide 'publish)
 ;;; publish.el ends here
