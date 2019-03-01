@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: February 2019 (emacs-reveal 0.9.8 and later)
+#+DATE: March 2019 (emacs-reveal 0.9.9 and later)
 
 * Presentation Hints
 ** General
@@ -60,7 +60,8 @@
      folder icon at the top right (as on this slide)
      #+ATTR_LATEX: :width 1cm
      [[file:reveal.js/css/theme/folder_inbox.png]]
-     - Click on that icon or press “s” to see the “speaker notes view”
+     - Either press “v” to see the “courseware view”
+       or click on that icon or press “s” to see the “speaker notes view”
      - You need to allow pop-ups
        - If the pop-up window does not work, you may need to press “s”
          twice or close the pop-up window once
@@ -386,19 +387,26 @@ These are sample notes
      - Teach programming
        - Code changes in upper part result in output changes in lower part
      - Browser-side code evaluation for various programming languages
-       - Constant ~org-re-reveal-klipse-languages~ contains supported subset
+       - See ~org-re-reveal-klipse-languages~ for supported subset
          - {{{klipse-languages}}}
-       - Note that variable ~org-re-reveal-klipsify-src~ needs to be
-         ~non-nil~
+       - Either variable ~org-re-reveal-klipsify-src~ needs to be
+         ~non-nil~ or code block needs to have ~#+ATTR_REVEAL:
+         :klipsify t~
+         - (You can also specify ~:klipse-width~ and ~:klipse-height~)
        - Due to an [[https://github.com/viebel/klipse/issues/334][issue in Klipse]],
          you may need to use an older or non-minified version of Klipse
-   - Next two slides copied from
+   - Code on next two slides copied from
      [[https://github.com/yjwen/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
 
 *** HTML Src Block
+#+ATTR_REVEAL: :klipsify t :klipse-height 200px
 #+BEGIN_SRC html
 <h1 class="whatever">hello, what's your name</h1>
 #+END_SRC
+
+- Above code block activates Klipse via ~#+ATTR_REVEAL: :klipsify t~
+  - Regardless of ~org-re-reveal-klipsify-src~
+- Subsequent code blocks do not do so
 
 *** Javascript Src Block
 #+BEGIN_SRC js
