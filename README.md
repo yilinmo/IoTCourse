@@ -61,7 +61,7 @@ executed to publish HTML presentations from `org` files as defined in
 To work locally with this project, you'll have to follow the steps below:
 
 1. Fork, clone or download this project
-2. Initialize submodules to install emacs-reveal:
+2. Initialize submodules (`figures`):
 ```
 git submodule sync --recursive
 git submodule update --init --recursive
