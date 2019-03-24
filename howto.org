@@ -113,7 +113,7 @@ These are sample notes
         [[https://gitlab.com/-/ide/project/oer/emacs-reveal-howto/edit/master/][Web IDE]]
         (requires login))
 
-** Installation
+** Installation and Quickstart
    - ~Emacs-reveal~ builds upon Gnu Emacs with
      [[https://orgmode.org][Org mode]]
      - [[https://gitlab.com/oer/emacs-reveal][~Emacs-reveal~ is
@@ -124,36 +124,38 @@ These are sample notes
      - [[https://oer.gitlab.io/oer-on-oer-infrastructure/Git-introduction.html][Git introduction as OER]]
        (created with ~emacs-reveal~)
 
-*** Install via Git
+*** Installation of ~emacs-reveal~
     :PROPERTIES:
     :CUSTOM_ID: git-install
     :END:
-    - As quickstart, inspect this
-      [[https://gitlab.com/oer/emacs-reveal-howto][Howto]]
-      - Which embeds ~emacs-reveal~ as submodule and contains source
-        file of Howto, [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/howto.org][howto.org]]
-        - Install ~emacs-reveal-howto~
-          - ~git clone https://gitlab.com/oer/emacs-reveal-howto.git~
-          - ~cd emacs-reveal-howto/~
-        - Install submodules (including ~emacs-reveal~)
-          - ~git submodule sync --recursive~
-          - ~git submodule update --init --recursive~
-        - Install necessary Emacs packages
-          - ~emacs --batch --load emacs-reveal/install.el --funcall install~
-        - Generate the HTML presentation from Org source ~howto.org~
-          - ~emacs --batch --load elisp/publish.el~
+    - Starting with version 1.0.0, you need to install ~emacs-reveal~
+      in a directory of your choice
+      1. Choose a directory, e.g., =~/.emacs.d/elpa=, and clone software
+         - =cd ~/.emacs.d/elpa=
+         - ~git clone https://gitlab.com/oer/emacs-reveal.git~
+      2. Install required Emacs packages from [[https://melpa.org/][MELPA]]
+         - ~emacs --batch --load emacs-reveal/install.el --funcall install~
+      3. Maybe add lines like this to =~/.emacs=
+         - =(add-to-list 'load-path "~/.emacs.d/elpa/emacs-reveal")=
+         - =(require 'emacs-reveal)=
+           - Beware! This changes values of other packages without warning.
+           - You may skip step (3) and restrict those changes to export runs.
 
-*** Emacs-reveal like a Package?
-    :PROPERTIES:
-    :CUSTOM_ID: non-standard-install
-    :END:
-    - You do not need to install ~emacs-reveal~ as submodule
-    - The file ~emacs-reveal.el~ can be located anywhere
-      - E.g., execute the following to obtain copy of ~emacs-reveal.el~
-        - =git clone https://gitlab.com/oer/emacs-reveal.git=
-      - Maybe add a line like this to =~/.emacs=
-        - =(load "/path/to/emacs-reveal/emacs-reveal.el")=
-        - Beware! This changes values of other packages without warning.
+*** Quickstart with ~emacs-reveal~
+    - E.g., generate this howto
+      1. Choose a directory, clone howto
+         - ~git clone https://gitlab.com/oer/emacs-reveal-howto.git~
+         - ~cd emacs-reveal-howto/~
+      2. Install submodules (the howto embeds a repository for figures)
+         - ~git submodule sync --recursive~
+         - ~git submodule update --init --recursive~
+      3. Generate the HTML presentation from Org source ~howto.org~
+         - ~emacs --batch --load elisp/publish.el~
+         - Publication code needs to be able to locate ~emacs-reveal.el~
+           - Code in ~elisp/publish.el~ tries (a) load path after adding
+             =~/.emacs.d/elpa/emacs-reveal= (suggested as directory
+             for ~emacs-reveal~ on previous slide) and
+             (b) subdirectory ~emacs-reveal~
 
 * Usage
   :PROPERTIES:
@@ -191,8 +193,8 @@ These are sample notes
 	in default browser
       - For this to work
         1. Settings of ~emacs-reveal~ should be in effect
-           (~emacs-reveal.el~ is loaded, e.g., as explained
-           [[#non-standard-install][above]])
+           (~emacs-reveal.el~ is loaded, e.g., with
+           [[#git-install][step (3) above]])
         2. Necessary resources, in particular
 	  ~reveal.js~, must be accessible in ~.org~ file’s
 	  directory
@@ -212,7 +214,10 @@ These are sample notes
       - Push changes to your fork
    3. GitLab infrastructure picks up changes and publishes presentations as
       [[https://about.gitlab.com/product/pages/][GitLab Pages]]
-      - Takes some minutes
+      - Based on Continuous Integration (CI) infrastructure
+        - Configured by file
+          [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/.gitlab-ci.yml][.gitlab-ci.yml]]
+      - CI run takes some minutes
       - Go to Settings → Pages to see the Pages’ address
 
 * Some Presentation Features
