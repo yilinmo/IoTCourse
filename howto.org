@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: March 2019 (emacs-reveal 1.0.0 and later)
+#+DATE: March 2019 (emacs-reveal 1.0.1 and later)
 
 * Presentation Hints
 ** General
