@@ -29,7 +29,7 @@ This project's static Pages are built by [GitLab CI][ci], following the steps
 defined in [`.gitlab-ci.yml`](.gitlab-ci.yml):
 
 ```
-image: registry.gitlab.com/oer/docker/debian-emacs-tex-org:v3.3
+image: registry.gitlab.com/oer/docker/emacs-reveal:1.0
 
 pages:
   stage: deploy
@@ -37,7 +37,7 @@ pages:
   - git submodule sync --recursive
   - git submodule update --init --recursive
   script:
-  - emacs --batch --load elisp/publish.el --funcall org-publish-all
+  - emacs --batch --load elisp/publish.el
   artifacts:
     paths:
     - public
@@ -47,9 +47,11 @@ pages:
 ```
 
 These build instructions are based on the [Docker image](https://gitlab.com/oer/docker)
-`debian-emacs-tex-org:v3.3` which contains GNU Emacs with a LaTeX
+`emacs-reveal:1.0` which contains GNU Emacs with a LaTeX
 distribution, [reveal.js](https://revealjs.com/) with selected plugins,
-[Org mode](https://orgmode.org/) and [org-re-reveal-ref](org-re-reveal-ref).
+[Org mode](https://orgmode.org/),
+[org-re-reveal-ref](https://gitlab.com/oer/org-re-reveal-ref), and
+[oer-reveal](https://gitlab.com/oer/oer-reveal).
 During a build, submodules are fetched first, before `emacs` is
 executed to publish HTML presentations from `org` files as defined in
 [publish.el](elisp/publish.el).
@@ -65,7 +67,7 @@ git submodule sync --recursive
 git submodule update --init --recursive
 ```
 3. Install necessary Emacs packages: `emacs --batch --load emacs-reveal/install.el --funcall install`
-4. Generate the website: `emacs --batch --load elisp/publish.el --funcall org-publish-all`
+4. Generate the website: `emacs --batch --load elisp/publish.el`
 5. Preview your project: `firefox public/howto.html`
 6. Add content; repeat, starting with step 4.
 

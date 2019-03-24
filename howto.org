@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: March 2019 (emacs-reveal 0.9.9 and later)
+#+DATE: March 2019 (emacs-reveal 1.0.0 and later)
 
 * Presentation Hints
 ** General
@@ -36,6 +36,8 @@
 	  then print to PDF file (usually, Ctrl-p)
 	- Alternatively, generate PDF via LaTeX from Org
 	  source file
+          - Replace ~.html~ (and whatever follows) in address bar of
+            browser with ~.pdf~
 
 ** Audio
    :PROPERTIES:
@@ -58,8 +60,7 @@
 ** (Speaker) Notes
    - Slides contain additional notes as plain text if you see the
      folder icon at the top right (as on this slide)
-     #+ATTR_LATEX: :width 1cm
-     [[file:reveal.js/css/theme/folder_inbox.png]]
+     {{{reveallicense("./figures/icons/folder_inbox.meta","10vh",nil,t)}}}
      - Either press “v” to see the “courseware view”
        or click on that icon or press “s” to see the “speaker notes view”
      - You need to allow pop-ups
@@ -118,7 +119,7 @@ These are sample notes
      - [[https://gitlab.com/oer/emacs-reveal][~Emacs-reveal~ is
        available as free software on GitLab]]
    - You also need Git
-     - [[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git][getting started]])
+     - [[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git][Getting started]]
        - The [[https://git-scm.com/book/en/v2][Pro Git book]] is a great source in general
      - [[https://oer.gitlab.io/oer-on-oer-infrastructure/Git-introduction.html][Git introduction as OER]]
        (created with ~emacs-reveal~)
@@ -128,7 +129,7 @@ These are sample notes
     :CUSTOM_ID: git-install
     :END:
     - As quickstart, inspect this
-      [[https://gitlab.com/oer/emacs-reveal][Howto]]
+      [[https://gitlab.com/oer/emacs-reveal-howto][Howto]]
       - Which embeds ~emacs-reveal~ as submodule and contains source
         file of Howto, [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/howto.org][howto.org]]
         - Install ~emacs-reveal-howto~
@@ -137,30 +138,22 @@ These are sample notes
         - Install submodules (including ~emacs-reveal~)
           - ~git submodule sync --recursive~
           - ~git submodule update --init --recursive~
-        - Install and configure Emacs packages
+        - Install necessary Emacs packages
           - ~emacs --batch --load emacs-reveal/install.el --funcall install~
-          - Add a line like this to =~/.emacs=
-            - =(load "/path/to/emacs-reveal/emacs-reveal.el")=
         - Generate the HTML presentation from Org source ~howto.org~
-          - ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
+          - ~emacs --batch --load elisp/publish.el~
 
 *** Emacs-reveal like a Package?
     :PROPERTIES:
     :CUSTOM_ID: non-standard-install
     :END:
-    - The directory ~emacs-reveal~ can be located anywhere
-      - Also under =~/.emacs.d/elpa=
-    - However, note that ~emacs-reveal~ contains some resources (Org,
-      CSS, HTML files)
-      - To use them, your publish function needs to know their
-        location
-        - (As in [[https://gitlab.com/oer/emacs-reveal/blob/master/emacs-reveal-publish.el][emacs-reveal-publish.el]]
-          used by [[https://gitlab.com/oer/emacs-reveal-howto/blob/master/elisp/publish.el][elisp/publish.el]]
-          of this Howto)
-        - Relevant customize variables include ~emacs-reveal-dir~ and
-          ~emacs-reveal-submodules-dir~
-        - Maybe create a symbolic link
-          - ~cd <dir-with-org-file>; ln -s <dir-of-emacs-reveal>~
+    - You do not need to install ~emacs-reveal~ as submodule
+    - The file ~emacs-reveal.el~ can be located anywhere
+      - E.g., execute the following to obtain copy of ~emacs-reveal.el~
+        - =git clone https://gitlab.com/oer/emacs-reveal.git=
+      - Maybe add a line like this to =~/.emacs=
+        - =(load "/path/to/emacs-reveal/emacs-reveal.el")=
+        - Beware! This changes values of other packages without warning.
 
 * Usage
   :PROPERTIES:
@@ -182,10 +175,10 @@ These are sample notes
 ** Build Presentations on Command Line
    1. Create Org file in directory ~emacs-reveal-howto~
       - See contained source file for this presentation, ~howto.org~
-   2. Build presentations for files ending in ~.org~ (except internal
-      ones listed in ~elisp/publish.el~)
-      - ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
-      - Presentations are built in subdirectory ~public/~
+   2. Build presentations for files ending in ~.org~
+      - (Except internal ones, see function ~oer-reveal-publish-all~)
+      - ~emacs --batch --load elisp/publish.el~
+        - Presentations are built in subdirectory ~public/~
    3. Open presentation in [[https://www.mozilla.org/en-US/firefox/][Firefox]]
       - E.g.: ~firefox public/howto.html~
    4. Optional: Copy ~public/~ to public web server
@@ -196,26 +189,28 @@ These are sample notes
       Press ~C-c C-e v b~
       - This generates HTML file in current directory and opens it
 	in default browser
-      - For this to work, necessary resources, in particular
-	~reveal.js~, must be accessible in ~.org~ file’s
-	directory
-        - I use
-          ~emacs --batch --load elisp/publish.el --funcall org-publish-all~
-          once to populate ~public/~, then create a symbolic link:
+      - For this to work
+        1. Settings of ~emacs-reveal~ should be in effect
+           (~emacs-reveal.el~ is loaded, e.g., as explained
+           [[#non-standard-install][above]])
+        2. Necessary resources, in particular
+	  ~reveal.js~, must be accessible in ~.org~ file’s
+	  directory
+           - I use
+             ~emacs --batch --load elisp/publish.el~
+             once to populate ~public/~, then create a symbolic link:
 
-          ~ln -s public/reveal.js~
-        - For image grids, you may need:
-
-          ~(setq emacs-reveal-export-dir "./")~
+             ~ln -s public/reveal.js~
+        3. For image grids, you may need:
+           ~(setq oer-reveal-export-dir "./")~
 
 ** Build Presentations on GitLab
-   1. Fork or clone [[https://gitlab.com/oer/emacs-reveal-howto][emacs-reveal-howto]]
+   1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][emacs-reveal-howto]]
       on GitLab ([[https://docs.gitlab.com/ce/workflow/forking_workflow.html][fork documentation]])
       - ~git clone <the URL of YOUR GitLab project>~
-   2. Create project’s files locally
-   3. Create or update Org files in cloned directory, add, commit, and
-      push (see next slide)
-   4. GitLab infrastructure picks up changes and publishes presentations as
+   2. Create or update Org files in cloned directory
+      - Push changes to your fork
+   3. GitLab infrastructure picks up changes and publishes presentations as
       [[https://about.gitlab.com/product/pages/][GitLab Pages]]
       - Takes some minutes
       - Go to Settings → Pages to see the Pages’ address
@@ -448,7 +443,7 @@ print(factorial(10))
 
 #+MACRO: copyrightyears 2017, 2018, 2019
 #+MACRO: licensepreamble
-#+INCLUDE: "emacs-reveal/org/license-template.org" :minlevel 2
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/license-template.org" :minlevel 2
 
 # Local Variables:
 # indent-tabs-mode: nil
