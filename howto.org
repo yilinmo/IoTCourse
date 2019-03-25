@@ -300,7 +300,6 @@ These are sample notes
        - Collaboration with diff/merge/git
        - Separation of layout and content
    #+END_leftcol
-
    #+ATTR_REVEAL: :frag appear
    #+BEGIN_rightcol
    Con
