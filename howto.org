@@ -316,7 +316,7 @@ These are sample notes
    :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.ogg"
    :END:
    - This figure is part of a
-     [[https://oer.gitlab.io/OS/Operating-Systems-09-Memory-II.html][different presentation]]
+     [[https://oer.gitlab.io/OS/Operating-Systems-Memory-II.html][different presentation]]
      {{{reveallicense("./figures/OS/clock-steps.meta","40vh",nil,'none)}}}
      - Notice: No license displayed for figure → License of document applies
    - The song Enthusiast by
