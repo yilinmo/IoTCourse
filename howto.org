@@ -58,6 +58,14 @@
    - Audio controls are shown at bottom left
 
 ** (Speaker) Notes
+   # The simplest form of macro reveallicense() occurs on
+   # [[#what][a slide below]].  On this slide and below, it shows an
+   # inline image with vertically aligned, rotated license statement.
+   # Here, the fourth argument is t, which indicates that shortened
+   # license information should be displayed.  This is particularly useful
+   # for CC0 (Public Domain) work, which does not require attribution
+   # but where others might still want to know that it can be reused
+   # under less restrictive conditions than the overall work.
    - Slides contain additional notes as plain text if you see the
      folder icon at the top right (as on this slide)
      {{{reveallicense("./figures/icons/folder_inbox.meta","10vh",nil,t)}}}
@@ -76,6 +84,9 @@ These are sample notes
 * Introduction
 
 ** What’s This?
+   :PROPERTIES:
+   :CUSTOM_ID: what
+   :END:
    # Note the use of macro reveallicense() below to show an inline image
    # with vertically aligned, rotated license statement.
    # Alternatively, one could also use standard Org mode features and
