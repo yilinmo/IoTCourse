@@ -172,7 +172,7 @@ These are sample notes
         - See [[https://gitlab.com/oer/emacs-reveal/blob/master/README.md][README of emacs-reveal]]
         - [[https://oer.gitlab.io/oer-courses/vm-neuland/04-Docker.html][Introduction to Docker]],
           built with ~emacs-reveal~
-   4. Create and publish presentations with [[https://about.gitlab.com/][GitLab CI/CD]]
+   4. Create and publish presentations on [[https://about.gitlab.com/][GitLab]]
       {{{reveallicense("./figures/logos/GitLab-wm_no_bg.meta","10vh")}}}
       - Based on [[https://docs.gitlab.com/ce/ci/][GitLab Continuous Integration infrastructure]]
         and above Docker image
