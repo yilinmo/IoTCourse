@@ -121,7 +121,7 @@ These are sample notes
    - You also need Git
      - [[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git][Getting started]]
        - The [[https://git-scm.com/book/en/v2][Pro Git book]] is a great source in general
-     - [[https://oer.gitlab.io/oer-on-oer-infrastructure/Git-introduction.html][Git introduction as OER]]
+     - [[https://oer.gitlab.io/oer-courses/cacs/Git-Introduction.html][Git introduction as OER]]
        (created with ~emacs-reveal~)
 
 *** Installation of ~emacs-reveal~
