@@ -5,7 +5,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: March 2019 (emacs-reveal 1.0.1 and later)
+#+DATE: April 2019 (emacs-reveal 3.0.0 and later)
 
 * Presentation Hints
 ** General
@@ -128,7 +128,7 @@ These are sample notes
     :PROPERTIES:
     :CUSTOM_ID: git-install
     :END:
-    - Starting with version 1.0.0, you need to install ~emacs-reveal~
+    - Starting with version 1.0.0, you can install ~emacs-reveal~
       in a directory of your choice
       1. Choose a directory, e.g., =~/.emacs.d/elpa=, and clone software
          - =cd ~/.emacs.d/elpa=
