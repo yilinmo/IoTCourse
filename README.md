@@ -29,7 +29,7 @@ This project's static Pages are built by [GitLab CI][ci], following the steps
 defined in [`.gitlab-ci.yml`](.gitlab-ci.yml):
 
 ```
-image: registry.gitlab.com/oer/docker/emacs-reveal:1.0
+image: registry.gitlab.com/oer/docker/emacs-reveal:3.1
 
 pages:
   stage: deploy
@@ -47,7 +47,7 @@ pages:
 ```
 
 These build instructions are based on the [Docker image](https://gitlab.com/oer/docker)
-`emacs-reveal:1.0` which contains GNU Emacs with a LaTeX
+`emacs-reveal:3.1` which contains GNU Emacs with a LaTeX
 distribution, [reveal.js](https://revealjs.com/) with selected plugins,
 [Org mode](https://orgmode.org/),
 [org-re-reveal-ref](https://gitlab.com/oer/org-re-reveal-ref), and
