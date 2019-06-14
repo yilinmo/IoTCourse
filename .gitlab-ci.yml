@@ -10,6 +10,7 @@ pages:
   - git submodule update --init --recursive
   script:
   - emacs --batch --load elisp/publish.el
+  - cp public/howto.html public/index.html
   - find public -type f -regex '.*\.\(html\|js\|css\)$' -exec gzip -f -k {} \;
   artifacts:
     paths:
