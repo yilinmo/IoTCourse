@@ -97,7 +97,7 @@ These are sample notes
    # horizontally centered image with caption and license statement.
    # The immediately following slide describes the required format of
    # meta-data.
-   # Both macros are defined in emacs-reveal/config.org.
+   # Both macros are defined in config.org of oer-reveal.
    - ~Emacs-reveal~ is [[https://fsfe.org/about/basics/freesoftware.en.html][free software]]
      to generate [[https://revealjs.com/][reveal.js]] presentations (slides with audio) from simple text
      files in [[https://orgmode.org/][Org mode]]
@@ -363,7 +363,8 @@ These are sample notes
       #+BEGIN_SRC
 {{{revealgrid(42,"./figures/devices/computer.grid",60,4,3,"\"ga1 ga2 ga2 ga3\" \"ga1 ga4 ga5 ga6\" \"ga7 ga8 ga9 ga9\"")}}}
       #+END_SRC
-      - Arguments explained in [[https://gitlab.com/oer/emacs-reveal/blob/master/org/config.org][emacs-reveal/org/config.org]]
+      - Arguments explained in
+        [[https://gitlab.com/oer/oer-reveal/blob/master/org/config.org][config.org of oer-reveal]]
       - With file ~computer.grid~ as follows
         #+INCLUDE: "./figures/devices/computer.grid" src emacs-lisp
 
