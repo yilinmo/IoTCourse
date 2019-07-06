@@ -10,6 +10,7 @@
 * Presentation Hints
 ** General
    - This is a [[https://revealjs.com][reveal.js]] presentation
+     - See [[https://oer.gitlab.io/hints.html][usage hints for emacs-reveal presentations]]
    - Key bindings and navigation
      - Press “?” to see key bindings of reveal.js
        - In general, “n” and “p” move to next and previous slide; mouse
