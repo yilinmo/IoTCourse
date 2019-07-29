@@ -72,7 +72,7 @@ git submodule update --init --recursive
 ```
 5. Generate the website: `emacs --batch --load elisp/publish.el`
 6. Preview your project: `firefox public/howto.html`
-7. Add content; repeat, starting with step 4.
+7. Add content; repeat, starting with step 5.
 
 Read more in the generated [howto of emacs-reveal](https://oer.gitlab.io/emacs-reveal-howto/howto.html).
 
