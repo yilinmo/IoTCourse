@@ -60,16 +60,19 @@ executed to publish HTML presentations from `org` files as defined in
 
 To work locally with this project, you'll have to follow the steps below:
 
-1. Fork, clone or download this project
-2. Initialize submodules (`figures`):
+1. Install emacs-reveal.  Choose a directory, e.g., =~/.emacs.d/elpa=, and clone software
+   - =cd ~/.emacs.d/elpa=
+   - ~git clone https://gitlab.com/oer/emacs-reveal.git~
+2. Install necessary Emacs packages: `emacs --batch --load emacs-reveal/install.el --funcall install`
+3. Fork, clone or download this project
+4. Initialize submodules (`figures`):
 ```
 git submodule sync --recursive
 git submodule update --init --recursive
 ```
-3. Install necessary Emacs packages: `emacs --batch --load emacs-reveal/install.el --funcall install`
-4. Generate the website: `emacs --batch --load elisp/publish.el`
-5. Preview your project: `firefox public/howto.html`
-6. Add content; repeat, starting with step 4.
+5. Generate the website: `emacs --batch --load elisp/publish.el`
+6. Preview your project: `firefox public/howto.html`
+7. Add content; repeat, starting with step 4.
 
 Read more in the generated [howto of emacs-reveal](https://oer.gitlab.io/emacs-reveal-howto/howto.html).
 
