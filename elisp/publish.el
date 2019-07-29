@@ -27,10 +27,10 @@
     ;; (e.g., in docker) ...
     (require 'emacs-reveal)
   (error
-   ;; ... or look for sub-directory "emacs-reveal" of parent directory.
+   ;; ... or look for sub-directory "emacs-reveal" of parent project.
    (add-to-list
     'load-path
-    (expand-file-name "../emacs-reveal/" (file-name-directory load-file-name)))
+    (expand-file-name "../../emacs-reveal/" (file-name-directory load-file-name)))
    (require 'emacs-reveal)))
 
 ;; Activate klipse.
