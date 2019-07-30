@@ -20,6 +20,22 @@
 (package-initialize)
 (require 'oer-reveal)
 
+;; Setup dot.
+;; The following supposes that png images are generated into directory img.
+(setq oer-reveal-publish-babel-languages '((dot . t) (emacs-lisp . t))
+      org-publish-project-alist
+      (list (list "img"
+                  :base-directory "img"
+                  :base-extension "png"
+                  :publishing-function 'org-publish-attachment
+                  :publishing-directory "./public/img")))
+
+;; Let audio start automatically.
+(setq oer-reveal-audio-slideshow-config
+      "audioStartAtFragment: true,
+audio: {
+    advance: -1, autoplay: true, defaultDuration: 0, defaultAudios: false, playerOpacity: 0.8, playerStyle: 'position: fixed; bottom: 9.5vh; left: 0%; width: 30%; height:30px; z-index: 33;' }")
+
 ;; Load emacs-reveal.
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa/emacs-reveal"))
 (condition-case nil
