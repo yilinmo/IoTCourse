@@ -44,8 +44,8 @@
    :PROPERTIES:
    :reveal_extra_attr: data-audio-src="./audio/Tours_-_01_-_Enthusiast.ogg"
    :END:
-   - Audio playback should start automatically
-     - Currently, you should be hearing Enthusiast by
+   - Audio should start automatically here (differently from emacs-reveal’s default)
+     - Enthusiast by
        [[https://freemusicarchive.org/music/Tours/][Tours]]
        - Licensed under
   	 [[https://creativecommons.org/licenses/by/3.0/][Creative Commons Attribution 3.0 Unported (CC BY 3.0)]]
@@ -56,7 +56,7 @@
          ([[https://blogs.fsfe.org/jens.lechtenboerger/2015/06/09/three-steps-towards-more-privacy-on-the-net/][here in English]]
          and [[https://www.informationelle-selbstbestimmung-im-internet.de/][here in German]]),
          seems to work everywhere
-   - Audio controls are shown at bottom left
+     - Audio controls are shown at bottom left
 
 ** (Speaker) Notes
    # The simplest form of macro reveallicense() occurs on
