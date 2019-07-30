@@ -141,8 +141,8 @@ These are sample notes
     :CUSTOM_ID: git-install
     :END:
     - Starting with version 1.0.0, you can install ~emacs-reveal~
-      in a directory of your choice
-      1. Choose a directory, e.g., =~/.emacs.d/elpa=, and clone software
+      in directory of your choice
+      1. Choose directory, e.g., =~/.emacs.d/elpa=, and clone software
          - =cd ~/.emacs.d/elpa=
          - ~git clone https://gitlab.com/oer/emacs-reveal.git~
       2. Install required Emacs packages from [[https://melpa.org/][MELPA]]
@@ -155,7 +155,7 @@ These are sample notes
 
 *** Quickstart with ~emacs-reveal~
     - E.g., generate this howto
-      1. Choose a directory, clone howto
+      1. Choose directory, clone howto
          - ~git clone https://gitlab.com/oer/emacs-reveal-howto.git~
          - ~cd emacs-reveal-howto/~
       2. Install submodules (the howto embeds a repository for figures)
@@ -167,7 +167,7 @@ These are sample notes
            - Code in ~elisp/publish.el~ tries (a) load path after adding
              =~/.emacs.d/elpa/emacs-reveal= (suggested as directory
              for ~emacs-reveal~ on previous slide) and
-             (b) subdirectory ~emacs-reveal~
+             (b) sibling directory ~emacs-reveal~
 
 * Usage
   :PROPERTIES:
