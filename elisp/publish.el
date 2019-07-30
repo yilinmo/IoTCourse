@@ -21,7 +21,9 @@
 (require 'oer-reveal)
 
 ;; Setup dot.
-;; The following supposes that png images are generated into directory img.
+;; The following supposes that png images are generated into directory img,
+;; which needs to exist.
+(make-directory "img" t)
 (setq oer-reveal-publish-babel-languages '((dot . t) (emacs-lisp . t))
       org-publish-project-alist
       (list (list "img"
