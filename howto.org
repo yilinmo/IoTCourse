@@ -447,6 +447,49 @@ def factorial(n):
 print(factorial(10))
 #+END_SRC
 
+** Figures with Babel
+   - Org export can execute embedded source code, with results
+     injected into exported HTML presentation
+     - For example, [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-dot.html][diagrams generated with ~dot~ of Graphviz]]
+   - With emacs-reveal
+     - Activate necessary source languages in ~oer-reveal-publish-babel-languages~
+     - Maybe generate figures into separate directory
+       - Publish contents with ~org-publish-project-alist~
+   - See subsequent slides for sample code
+
+*** Hello World with Dot
+#+BEGIN_SRC dot :file img/hello-world.png :exports both
+graph {
+  hello [label="Hello"];
+  world [label="World!"];
+
+  hello -- world;
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:img/hello-world.png]]
+
+*** Relevant Excerpt of Publication Code
+    - The following snippet of ~elisp/publish.el~ activates ~dot~ and
+      publication of generated images
+      - Adapt based on your needs
+      #+begin_src elisp
+;; Setup dot.
+;; The following supposes that png images are generated into directory img.
+(setq oer-reveal-publish-babel-languages '((dot . t) (emacs-lisp . t))
+      org-publish-project-alist
+      (list (list "img"
+                  :base-directory "img"
+                  :base-extension "png"
+                  :publishing-function 'org-publish-attachment
+                  :publishing-directory "./public/img")))
+      #+end_src
+
+** Need Additional Software in Publication Process?
+   - Maybe suggest as [[https://gitlab.com/oer/docker/issues][issue for Docker image of emacs-reveal]]
+   - Or install additional software in Docker container of your project with [[https://docs.gitlab.com/ee/ci/quick_start/][~before_script~]]
+
 * The End
 ** Further Reading
    - [[https://orgmode.org/#docs][Manuals and tutorials for Org mode]]
