@@ -474,9 +474,10 @@ graph {
     - The following snippet of ~elisp/publish.el~ activates ~dot~ and
       publication of generated images
       - Adapt based on your needs
+        - Note that necessary directories must exist (Babel does not
+          create them)
       #+begin_src elisp
-;; Setup dot.
-;; The following supposes that png images are generated into directory img.
+(make-directory "img" t)
 (setq oer-reveal-publish-babel-languages '((dot . t) (emacs-lisp . t))
       org-publish-project-alist
       (list (list "img"
