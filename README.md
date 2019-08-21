@@ -29,7 +29,7 @@ This project's static Pages are built by [GitLab CI][ci], following the steps
 defined in [`.gitlab-ci.yml`](.gitlab-ci.yml):
 
 ```
-image: registry.gitlab.com/oer/docker/emacs-reveal:3.1
+image: registry.gitlab.com/oer/docker/emacs-reveal:5.0.1
 
 pages:
   stage: deploy
@@ -38,6 +38,8 @@ pages:
   - git submodule update --init --recursive
   script:
   - emacs --batch --load elisp/publish.el
+  - cp public/howto.html public/index.html
+  - find public -type f -regex '.*\.\(html\|js\|css\)$' -exec gzip -f -k {} \;
   artifacts:
     paths:
     - public
@@ -47,14 +49,19 @@ pages:
 ```
 
 These build instructions are based on the [Docker image](https://gitlab.com/oer/docker)
-`emacs-reveal:3.1` which contains GNU Emacs with a LaTeX
+`emacs-reveal:5.0.1` which contains GNU Emacs with a LaTeX
 distribution, [reveal.js](https://revealjs.com/) with selected plugins,
 [Org mode](https://orgmode.org/),
+[org-re-reveal](https://gitlab.com/oer/org-re-reveal), and
 [org-re-reveal-ref](https://gitlab.com/oer/org-re-reveal-ref), and
 [oer-reveal](https://gitlab.com/oer/oer-reveal).
 During a build, submodules are fetched first, before `emacs` is
 executed to publish HTML presentations from `org` files as defined in
 [publish.el](elisp/publish.el).
+
+The `cp` statement makes sure that an index page is available for your
+GitLab Pages, while the `find` statement creates compressed versions
+of text resources to reduce page load times.
 
 ## Building locally
 
