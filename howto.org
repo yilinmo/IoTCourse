@@ -1,11 +1,17 @@
 # Local IspellDict: en
 #+STARTUP: showeverything
+
+# Enable klipse, but disable scaling, which interferes.
+#+OPTIONS: reveal_klipsify_src:t
+#+REVEAL_MIN_SCALE: 1.0
+#+REVEAL_MAX_SCALE: 1.0
+
 #+INCLUDE: "config.org"
 #+REVEAL_PREAMBLE: <div class="legalese"><p><a href="/imprint.html">Imprint</a> | <a href="/privacy.html">Privacy Policy</a></p></div>
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: July 2019 (emacs-reveal 3.0.2 and later)
+#+DATE: August 2019 (emacs-reveal 4.0.0 and later)
 
 * Presentation Hints
 ** General
@@ -361,6 +367,7 @@ These are sample notes
 
 *** Creation of Previous Image Grid
     - Single line in source file, using macro ~revealgrid~
+      #+ATTR_REVEAL: :htmlize t
       #+BEGIN_SRC
 {{{revealgrid(42,"./figures/devices/computer.grid",60,4,3,"\"ga1 ga2 ga2 ga3\" \"ga1 ga4 ga5 ga6\" \"ga7 ga8 ga9 ga9\"")}}}
       #+END_SRC
@@ -404,24 +411,16 @@ These are sample notes
      - Browser-side code evaluation for various programming languages
        - See ~org-re-reveal-klipse-languages~ for supported subset
          - {{{klipse-languages}}}
-       - Either variable ~org-re-reveal-klipsify-src~ needs to be
-         ~non-nil~ or code block needs to have ~#+ATTR_REVEAL:
-         :klipsify t~
-         - (You can also specify ~:klipse-width~ and ~:klipse-height~)
-       - Due to an [[https://github.com/viebel/klipse/issues/334][issue in Klipse]],
-         you may need to use an older or non-minified version of Klipse
+       - To activate, either add option ~reveal_klipsify_src:t~ (as in
+         header of this file) or set variable ~org-re-reveal-klipsify-src~
+         to ~t~; be sure to disable scaling of reveal.js
    - Code on next two slides copied from
      [[https://github.com/yjwen/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
 
 *** HTML Src Block
-#+ATTR_REVEAL: :klipsify t :klipse-height 200px
 #+BEGIN_SRC html
 <h1 class="whatever">hello, what's your name</h1>
 #+END_SRC
-
-- Above code block activates Klipse via ~#+ATTR_REVEAL: :klipsify t~
-  - Regardless of ~org-re-reveal-klipsify-src~
-- Subsequent code blocks do not do so
 
 *** Javascript Src Block
 #+BEGIN_SRC js
@@ -458,6 +457,7 @@ print(factorial(10))
    - See subsequent slides for sample code
 
 *** Hello World with Dot
+#+ATTR_REVEAL: :htmlize t
 #+BEGIN_SRC dot :file img/hello-world.png :exports both
 graph {
   hello [label="Hello"];
@@ -476,6 +476,7 @@ graph {
       - Adapt based on your needs
         - Note that necessary directories must exist (Babel does not
           create them)
+      #+ATTR_REVEAL: :htmlize t
       #+begin_src elisp
 (make-directory "img" t)
 (setq oer-reveal-publish-babel-languages '((dot . t) (emacs-lisp . t))
@@ -511,4 +512,5 @@ graph {
 
 # Local Variables:
 # indent-tabs-mode: nil
+# org-src-preserve-indentation: t
 # End:

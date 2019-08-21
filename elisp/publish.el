@@ -51,11 +51,6 @@ audio: {
     (expand-file-name "../../emacs-reveal/" (file-name-directory load-file-name)))
    (require 'emacs-reveal)))
 
-;; Activate klipse.
-(setq org-re-reveal-klipsify-src t
-      org-re-reveal-klipse-js "https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"
-      )
-
 ;; Publish Org files.
 (oer-reveal-publish-all)
 ;;; publish.el ends here
