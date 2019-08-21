@@ -58,6 +58,4 @@ audio: {
 
 ;; Publish Org files.
 (oer-reveal-publish-all)
-
-(provide 'publish)
 ;;; publish.el ends here
