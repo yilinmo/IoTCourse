@@ -2,6 +2,8 @@
 #+STARTUP: showeverything
 
 # Enable klipse, but disable scaling, which interferes.
+# (This is only necessary for presentations using klipse.  Otherwise,
+# the following three lines can be removed.)
 #+OPTIONS: reveal_klipsify_src:t
 #+REVEAL_MIN_SCALE: 1.0
 #+REVEAL_MAX_SCALE: 1.0
