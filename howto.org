@@ -448,6 +448,9 @@ def factorial(n):
 print(factorial(10))
 #+END_SRC
 
+Correct indentation may require that you set
+~org-src-preserve-indentation~ to ~t~ (see bottom of this file)
+
 ** Figures with Babel
    - Org export can execute embedded source code, with results
      injected into exported HTML presentation
