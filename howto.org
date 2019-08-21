@@ -416,6 +416,8 @@ These are sample notes
        - To activate, either add option ~reveal_klipsify_src:t~ (as in
          header of this file) or set variable ~org-re-reveal-klipsify-src~
          to ~t~; be sure to disable scaling of reveal.js
+       - Correct indentation may require that you set
+         ~org-src-preserve-indentation~ to ~t~ (see bottom of this file)
    - Code on next two slides copied from
      [[https://github.com/yjwen/org-reveal/blob/master/Readme.org][README of Org-Reveal]]
 
@@ -447,9 +449,6 @@ def factorial(n):
 
 print(factorial(10))
 #+END_SRC
-
-Correct indentation may require that you set
-~org-src-preserve-indentation~ to ~t~ (see bottom of this file)
 
 ** Figures with Babel
    - Org export can execute embedded source code, with results
