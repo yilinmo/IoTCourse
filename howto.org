@@ -8,12 +8,15 @@
 #+REVEAL_MIN_SCALE: 1.0
 #+REVEAL_MAX_SCALE: 1.0
 
+# Set autoplay to true for audio plugin.
+#+OER_REVEAL_AUDIO_SLIDESHOW_CONFIG: audioStartAtFragment: true, audio: { advance: -1, autoplay: true, defaultDuration: 0, defaultAudios: false, playerOpacity: 0.8, playerStyle: 'position: fixed; bottom: 9.5vh; left: 0%; width: 30%; height:30px; z-index: 33;' }
+
 #+INCLUDE: "config.org"
 #+REVEAL_PREAMBLE: <div class="legalese"><p><a href="/imprint.html">Imprint</a> | <a href="/privacy.html">Privacy Policy</a></p></div>
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: August 2019 (emacs-reveal 4.0.0 and later)
+#+DATE: September 2019 (emacs-reveal 4.1.0 and later)
 
 * Presentation Hints
 ** General
@@ -149,7 +152,7 @@ These are sample notes
     :CUSTOM_ID: git-install
     :END:
     - Starting with version 1.0.0, you can install ~emacs-reveal~
-      in directory of your choice
+      in a directory of your choice
       1. Choose directory, e.g., =~/.emacs.d/elpa=, and clone software
          - =cd ~/.emacs.d/elpa=
          - ~git clone https://gitlab.com/oer/emacs-reveal.git~
@@ -211,7 +214,7 @@ These are sample notes
 ** Building Presentations in Emacs
    1. Generate HTML presentation for visited
       ~.org~ file using Org export functionality: @@html:<br>@@
-      Press ~C-c C-e v b~
+      Press ~C-c C-e w b~ (export with oer-reveal)
       - This generates HTML file in current directory and opens it
 	in default browser
       - For this to work
@@ -228,6 +231,19 @@ These are sample notes
              ~ln -s public/reveal.js~
         3. For image grids, you may need:
            ~(setq oer-reveal-export-dir "./")~
+
+*** Org-re-reveal and oer-reveal
+    - Emacs-reveal embeds the packages org-re-reveal and oer-reveal
+      - Oer-reveal is an Org mode export backend (extending
+        org-re-reveal)
+        - Starting with oer-reveal 1.4.0, part of emacs-reveal 4.1.0
+        - With key binding mentioned on previous slide
+      - You can export with org-re-reveal (~C-c C-e v v~ and ~C-c C-e
+        v b~) or oer-reveal (~C-c C-e w w~ and ~C-c C-e w b~)
+        - With oer-reveal, additional reveal.js plugins are enabled by
+          default
+          - See customizable variables ~oer-reveal-plugins~ and
+            ~oer-reveal-plugin-config~
 
 ** Build Presentations on GitLab
    1. Fork [[https://gitlab.com/oer/emacs-reveal-howto][emacs-reveal-howto]]
