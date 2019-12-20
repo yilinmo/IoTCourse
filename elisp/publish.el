@@ -18,7 +18,10 @@
 
 ;;; Code:
 (package-initialize)
-(require 'oer-reveal)
+(setq
+ oer-reveal-plugins
+ '("reveal.js-plugins" "Reveal.js-TOC-Progress" "reveal.js-jump-plugin"
+   "reveal.js-quiz" "reveal.js-coursemod" "klipse-libs"))
 
 ;; Setup dot.
 ;; The following supposes that png images are generated into directory img,
@@ -33,17 +36,24 @@
                   :publishing-directory "./public/img")))
 
 ;; Load emacs-reveal.
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/elpa/emacs-reveal"))
-(condition-case nil
-    ;; Either require package with above hard-coded location
-    ;; (e.g., in docker) ...
-    (require 'emacs-reveal)
-  (error
-   ;; ... or look for sub-directory "emacs-reveal" of parent project.
-   (add-to-list
-    'load-path
-    (expand-file-name "../../emacs-reveal/" (file-name-directory load-file-name)))
-   (require 'emacs-reveal)))
+(require 'f)
+(let ((install-dir (f-join user-emacs-directory "elpa" "emacs-reveal")))
+  (when (file-exists-p "/.dockerenv")
+    (message
+     "File /.dockerenv exists.  Setting up load-path for packages under %s."
+     install-dir)
+    (setq emacs-reveal-docker-path install-dir))
+  (add-to-list 'load-path install-dir)
+  (condition-case nil
+      ;; Either require package with above hard-coded location
+      ;; (e.g., in docker) ...
+      (require 'emacs-reveal)
+    (error
+     ;; ... or look for sub-directory "emacs-reveal" of parent project.
+     (add-to-list
+      'load-path
+      (expand-file-name "../../emacs-reveal/" (file-name-directory load-file-name)))
+     (require 'emacs-reveal))))
 
 ;; Publish Org files.
 (oer-reveal-publish-all)
