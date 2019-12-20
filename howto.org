@@ -180,6 +180,20 @@ These are sample notes
            - Beware! This changes values of other packages without warning.
            - You may skip step (3) and restrict those changes to export runs.
 
+*** Alternative installation
+    - Starting with version 4.3.0, ~emacs-reveal~ includes the Lisp
+      packages ~org~, ~org-re-reveal~, ~org-re-reveal-ref~, and
+      ~oer-reveal~ as submodules.
+    - Thus, you can also initialize those submodules and adjust your
+      ~load-path~ instead of the MELPA installation mentioned on the
+      previous slide.
+      - Submodule setup in directory ~emacs-reveal~
+        - ~git submodule sync --recursive~
+        - ~git submodule update --init --recursive~
+      - File ~elisp/publish.el~ of this howto sets the new variable
+        ~emacs-reveal-docker-path~ to have ~emacs-reveal.el~ configure
+        the ~load-path~
+
 *** Quickstart with ~emacs-reveal~
     :PROPERTIES:
     :CUSTOM_ID: git-howto
