@@ -2,3 +2,6 @@
 
 # Use custom title slide.
 #+REVEAL_TITLE_SLIDE: title-slide.html
+
+# Indicate alternate MIME types for presentation.
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/config-alternate-types.org"
