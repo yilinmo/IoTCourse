@@ -24,7 +24,8 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: October 2019 (emacs-reveal 4.2.0 and later)
+#+DATE: December 2019 (emacs-reveal 4.3.0 and later)
+
 #+KEYWORDS: emacs-reveal, howto, HTML, reveal.js, org, Org mode, presentation, slideshow, OER
 #+DESCRIPTION: Howto for the creation of OER presentations (HTML with audio) with reveal.js from Org mode sources
 
