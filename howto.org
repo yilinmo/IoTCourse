@@ -32,18 +32,21 @@
 
 * Presentation Hints
 ** General
-   - This is a [[https://revealjs.com][reveal.js]] presentation
-     - See [[https://oer.gitlab.io/hints.html][usage hints for emacs-reveal presentations]]
-   - Key bindings and navigation
-     - Press “?” to see key bindings of reveal.js
-       - In general, “n” and “p” move to next and previous slide; mouse
-	 wheel works as well
-       - Search with Ctrl-Shift-F
-     - Up/down (swiping, arrows) move within sections,
-       left/right jump between sections (type “o” to see what is where)
-     - Type slide’s number followed by Enter to jump to that slide
-     - Browser history (buttons, Alt-CursorLeft, Alt-CursorRight)
-     - Zoom with Ctrl-Mouse or Alt-Mouse
+   - This is a [[https://revealjs.com][reveal.js]] presentation and an
+     [[https://en.wikipedia.org/wiki/Open_educational_resources][Open Educational Resource (OER)]]
+     - Generated with [[https://gitlab.com/oer/emacs-reveal][emacs-reveal]]
+       from [[https://gitlab.com/oer/emacs-reveal-howto][Free/libre Org mode sources]]
+       - See [[https://oer.gitlab.io/hints.html][usage hints for emacs-reveal presentations]]
+     - Key bindings and navigation
+       - Press “?” to see key bindings of reveal.js
+         - In general, “n” and “p” move to next and previous slide; mouse
+	   wheel works as well
+         - Search with Ctrl-Shift-F
+       - Up/down (swiping, arrows) move within sections,
+         left/right jump between sections (type “o” to see what is where)
+       - Type slide’s number followed by Enter to jump to that slide
+       - Browser history (buttons, Alt-CursorLeft, Alt-CursorRight)
+       - Zoom with Ctrl-Mouse or Alt-Mouse
 
 ** Offline work
    - Students often ask for download-able presentations
