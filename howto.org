@@ -1,5 +1,7 @@
 # Local IspellDict: en
 #+STARTUP: showeverything
+# Copyright (C) 2017-2019 Jens Lechtenbörger
+# SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Enable klipse, but disable scaling, which interferes.
 # (This is only necessary for presentations using klipse.  Otherwise,
