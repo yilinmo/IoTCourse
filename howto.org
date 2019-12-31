@@ -3,6 +3,8 @@
 #+SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger <https://lechten.gitlab.io/#me>
 #+SPDX-License-Identifier: CC-BY-SA-4.0
 
+# Apply standard settings of oer-reveal.
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/config.org"
 
 # Enable klipse, but disable scaling, which interferes.
 # (This is only necessary for presentations using klipse.  Otherwise,
@@ -20,8 +22,11 @@
 # Set autoplay to true for audio plugin.
 #+OER_REVEAL_AUDIO_SLIDESHOW_CONFIG: audioStartAtFragment: true, audio: { advance: -1, autoplay: true, defaultDuration: 0, defaultAudios: false, playerOpacity: 0.8, playerStyle: 'position: fixed; bottom: 9.5vh; left: 0%; width: 30%; height:30px; z-index: 33;' }
 
-#+INCLUDE: "config.org"
+# Show legalese.
 #+REVEAL_PREAMBLE: <div class="legalese"><p><a href="/imprint.html">Imprint</a> | <a href="/privacy.html">Privacy Policy</a></p></div>
+
+# Use custom title slide.
+#+REVEAL_TITLE_SLIDE: title-slide.html
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
@@ -29,8 +34,6 @@
 
 #+KEYWORDS: emacs-reveal, howto, HTML, reveal.js, org, Org mode, presentation, slideshow, OER
 #+DESCRIPTION: Howto for the creation of OER presentations (HTML with audio) with reveal.js from Org mode sources
-
-#+CALL: org-add-alternate-types(types='("org" "pdf"), source-repo="https://gitlab.com/oer/emacs-reveal-howto", html-url="https://oer.gitlab.io/emacs-reveal-howto/")
 
 * Presentation Hints
 ** General
