@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2018-2019 Jens Lechtenbörger
+// SPDX-License-Identifier: CC-BY-SA-4.0
+
 quiz = {
     "info": {
         "name":    "", // Should be empty with emacs-reveal

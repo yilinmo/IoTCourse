@@ -1,4 +1,7 @@
 <!--- Local IspellDict: en -->
+<!--- SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger -->
+<!--- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+
 
 This project demonstrates how to use
 [emacs-reveal](https://gitlab.com/oer/emacs-reveal) to generate

@@ -2,9 +2,10 @@
 ;; -*- Mode: Emacs-Lisp -*-
 ;; -*- coding: utf-8 -*-
 
-;; Copyright (C) 2017, 2018, 2019 Jens Lechtenbörger
+;; SPDX-FileCopyrightText: 2017, 2018, 2019 Jens Lechtenbörger
+;; SPDX-License-Identifier: GPL-3.0-or-later
 
-;;; License: GPLv3
+;;; License: GPL-3.0-or-later
 
 ;;; Commentary:
 ;; Publication of Org source files to reveal.js uses Org export

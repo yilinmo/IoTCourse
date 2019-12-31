@@ -1,6 +1,12 @@
+# SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger
+# SPDX-License-Identifier: CC0-1.0
+
+*.elc
 auto
 public
 tests
+img
+howto.html*
 *.class
 *.log
 *.aux
