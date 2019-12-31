@@ -30,7 +30,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: December 2019 (emacs-reveal 4.3.0 and later)
+#+DATE: December 2019 (emacs-reveal 5.0.3 and later)
 
 #+KEYWORDS: emacs-reveal, howto, HTML, reveal.js, org, Org mode, presentation, slideshow, OER
 #+DESCRIPTION: Howto for the creation of OER presentations (HTML with audio) with reveal.js from Org mode sources
@@ -365,6 +365,24 @@ These are sample notes
         and shortcuts should work
       - Mousewheel and swiping work
 
+** Licensing
+   - Starting with emacs-reveal 5.0.3 (and oer-reveal 2.0.2),
+     presentations can show license information that is derived from
+     SPDX headers of the [[https://reuse.software/][REUSE]] project
+     - See [[#license][licensing slide]] at the end of this presentation
+       - Information on that slide is derived from the following
+         header lines of ~howto.org~
+         #+BEGIN_SRC
+,#+SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger <https://lechten.gitlab.io/#me>
+,#+SPDX-License-Identifier: CC-BY-SA-4.0
+         #+END_SRC
+       - Note that SPDX headers must be prefixed with ~#+~ to
+         recognize them as Org mode keywords
+     - License information is also embedded in machine-readable RDFa
+       format
+   - Macros to embed OER figures with (human- and machine-readable)
+     license information are discussed [[#figure-with-meta-data][later]]
+
 ** Two Columns: Pro/Con of emacs-reveal
    #+ATTR_REVEAL: :frag appear
    #+BEGIN_leftcol
@@ -565,9 +583,9 @@ graph {
 
    [[https://gitlab.com/oer/]]
 
-#+MACRO: copyrightyears 2017, 2018, 2019
 #+MACRO: licensepreamble
 #+INCLUDE: "~/.emacs.d/oer-reveal-org/license-template.org" :minlevel 2
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/license-disclaimer-cc-by-sa-4.0.org"
 
 # Local Variables:
 # indent-tabs-mode: nil
