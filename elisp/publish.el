@@ -2,7 +2,7 @@
 ;; -*- Mode: Emacs-Lisp -*-
 ;; -*- coding: utf-8 -*-
 
-;; SPDX-FileCopyrightText: 2017, 2018, 2019 Jens Lechtenbörger
+;; SPDX-FileCopyrightText: 2017-2020 Jens Lechtenbörger
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;;; License: GPL-3.0-or-later
@@ -39,11 +39,6 @@
 ;; Load emacs-reveal.
 (require 'f)
 (let ((install-dir (f-join user-emacs-directory "elpa" "emacs-reveal")))
-  (when (file-exists-p "/.dockerenv")
-    (message
-     "File /.dockerenv exists.  Setting up load-path for packages under %s."
-     install-dir)
-    (setq emacs-reveal-docker-path install-dir))
   (add-to-list 'load-path install-dir)
   (condition-case nil
       ;; Either require package with above hard-coded location
