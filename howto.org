@@ -30,7 +30,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: January 2020 (emacs-reveal 5.1.0 and later)
+#+DATE: January 2020 (emacs-reveal 5.2.0 and later)
 
 #+KEYWORDS: emacs-reveal, howto, HTML, reveal.js, org, Org mode, presentation, slideshow, OER
 #+DESCRIPTION: Howto for the creation of OER presentations (HTML with audio) with reveal.js from Org mode sources
@@ -434,6 +434,9 @@ These are sample notes
    {{{revealimg("./figures/3d-man/decision.meta","To share or not to share","30vh")}}}
 
 *** Meta-Data File for Previous Image
+    :PROPERTIES:
+    :CUSTOM_ID: sample-figure-meta-data
+    :END:
 
 #+INCLUDE: "./figures/3d-man/decision.meta" src emacs-lisp
 
@@ -451,6 +454,17 @@ These are sample notes
         [[https://gitlab.com/oer/oer-reveal/blob/master/org/config.org][config.org of oer-reveal]]
       - With file ~computer.grid~ as follows
         #+INCLUDE: "./figures/devices/computer.grid" src emacs-lisp
+
+*** Notes on figures
+    - If you used emacs-reveal previously and did not like that it
+      exported all figures from a growing repository, note
+      that as of emacs-reveal 5.2.0 only used figures are exported
+    - So far, emacs-reveal uses meta-data in an ad-hoc format (as
+      shown on a [[#sample-figure-meta-data][previous slide]])
+      - For all [[https://gitlab.com/oer/figures/][figures in this repository]]
+      - Please, contact me if you’d like to contribute with a
+        different format, e.g., JSON-LD
+        - Maybe with an [[https://gitlab.com/oer/figures/issues][issue]]?
 
 ** Appearing Items with Audio
    (Audios produced with
