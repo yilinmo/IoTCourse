@@ -6,6 +6,7 @@ auto
 public
 tests
 img
+figures.for-export
 howto.html*
 *.class
 *.log
