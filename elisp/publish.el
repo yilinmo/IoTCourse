@@ -24,6 +24,11 @@
  '("reveal.js-plugins" "Reveal.js-TOC-Progress" "reveal.js-jump-plugin"
    "reveal.js-quiz" "reveal.js-coursemod" "klipse-libs"))
 
+;; Uncomment the following for tests with unreleased changes.
+;; (add-to-list 'load-path "../oer-reveal")
+;; (require 'oer-reveal)
+;; (require 'oer-reveal-publish)
+
 ;; Setup dot.
 ;; The following supposes that png images are generated into directory img,
 ;; which needs to exist.
