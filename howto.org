@@ -1,6 +1,6 @@
 # Local IspellDict: en
 #+STARTUP: showeverything
-#+SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger <https://lechten.gitlab.io/#me>
+#+SPDX-FileCopyrightText: 2017-2020 Jens Lechtenbörger <https://lechten.gitlab.io/#me>
 #+SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Apply standard settings of oer-reveal.
@@ -30,7 +30,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: December 2019 (emacs-reveal 5.0.3 and later)
+#+DATE: January 2020 (emacs-reveal 5.1.0 and later)
 
 #+KEYWORDS: emacs-reveal, howto, HTML, reveal.js, org, Org mode, presentation, slideshow, OER
 #+DESCRIPTION: Howto for the creation of OER presentations (HTML with audio) with reveal.js from Org mode sources
@@ -195,9 +195,10 @@ These are sample notes
       - Submodule setup in directory ~emacs-reveal~
         - ~git submodule sync --recursive~
         - ~git submodule update --init --recursive~
-      - File ~elisp/publish.el~ of this howto sets the new variable
-        ~emacs-reveal-docker-path~ to have ~emacs-reveal.el~ configure
-        the ~load-path~
+      - If you install your ~emacs-reveal~ into =~/.emacs.d/elpa= as
+        suggested above, ~emacs-reveal.el~ (starting with version
+        5.1.0) sets up your ~load-path~ to include the submodule
+        packages
 
 *** Quickstart with ~emacs-reveal~
     :PROPERTIES:
@@ -373,11 +374,11 @@ These are sample notes
        - Information on that slide is derived from the following
          header lines of ~howto.org~
          #+BEGIN_SRC
-,#+SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger <https://lechten.gitlab.io/#me>
+,#+SPDX-FileCopyrightText: 2017-2020 Jens Lechtenbörger <https://lechten.gitlab.io/#me>
 ,#+SPDX-License-Identifier: CC-BY-SA-4.0
          #+END_SRC
        - Note that SPDX headers must be prefixed with ~#+~ to
-         recognize them as Org mode keywords
+         be recognized as Org mode keywords
      - License information is also embedded in machine-readable RDFa
        format
    - Macros to embed OER figures with (human- and machine-readable)
