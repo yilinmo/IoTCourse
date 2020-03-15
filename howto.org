@@ -30,7 +30,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: January 2020 (emacs-reveal 5.2.0 and later)
+#+DATE: March 2020 (emacs-reveal 7.1.0 and later)
 
 #+KEYWORDS: emacs-reveal, howto, HTML, reveal.js, org, Org mode, presentation, slideshow, OER
 #+DESCRIPTION: Howto for the creation of OER presentations (HTML with audio) with reveal.js from Org mode sources
@@ -171,53 +171,46 @@ These are sample notes
     :PROPERTIES:
     :CUSTOM_ID: git-install
     :END:
-    - Starting with version 1.0.0, you can install ~emacs-reveal~
-      in a directory of your choice
+    - You can install ~emacs-reveal~ in a directory of your choice
       1. Choose directory, e.g., =~/.emacs.d/elpa=, and clone software
          - =cd ~/.emacs.d/elpa=
          - ~git clone https://gitlab.com/oer/emacs-reveal.git~
-      2. Install required Emacs packages from [[https://melpa.org/][MELPA]]
-         - ~emacs --batch --load emacs-reveal/install.el --funcall install~
-         - (See comments in file ~install.el~ for update instructions)
-      3. Maybe add lines like this to =~/.emacs=
+      2. Add following lines to =~/.emacs=
          - =(add-to-list 'load-path "~/.emacs.d/elpa/emacs-reveal")=
          - =(require 'emacs-reveal)=
-           - Beware! This changes values of other packages without warning.
-           - You may skip step (3) and restrict those changes to export runs.
+           - Beware! This changes values of other packages (~org-ref~,
+             ~oer-reveal~) without warning
+      3. Restart Emacs (installation of ~org-ref~ is offered, if necessary)
 
 *** Alternative installation
-    - Starting with version 4.3.0, ~emacs-reveal~ includes the Lisp
-      packages ~org~, ~org-re-reveal~, ~org-re-reveal-ref~, and
-      ~oer-reveal~ as submodules.
-    - Thus, you can also initialize those submodules and adjust your
-      ~load-path~ instead of the MELPA installation mentioned on the
-      previous slide.
-      - Submodule setup in directory ~emacs-reveal~
-        - ~git submodule sync --recursive~
-        - ~git submodule update --init --recursive~
-      - If you install your ~emacs-reveal~ into =~/.emacs.d/elpa= as
-        suggested above, ~emacs-reveal.el~ (starting with version
-        5.1.0) sets up your ~load-path~ to include the submodule
-        packages
+    - Starting with version 7.1.0, ~emacs-reveal~ includes lots of
+      components as Git submodules, which are activated by default
+      - If you prefer to manage packages such as ~org-re-reveal~ and
+        ~oer-reveal~ yourself, set
+        ~emacs-reveal-managed-install-p~ to nil before restarting Emacs:
+        - =(add-to-list 'load-path "~/.emacs.d/elpa/emacs-reveal")=
+        - =(setq emacs-reveal-managed-install-p nil)=
+        - =(require 'emacs-reveal)=
+      - (Now subdirectories under ="~/.emacs.d/elpa/emacs-reveal"=
+        remain empty)
 
 *** Quickstart with ~emacs-reveal~
     :PROPERTIES:
     :CUSTOM_ID: git-howto
     :END:
     - E.g., generate this howto
-      1. Choose directory, clone howto
-         - ~git clone https://gitlab.com/oer/emacs-reveal-howto.git~
+      1. Choose directories for howto and emacs-reveal, clone both
+         - ~git clone https://gitlab.com/oer/emacs-reveal.git~
+         - ~git clone --recursive https://gitlab.com/oer/emacs-reveal-howto.git~
+           - Option ~--recursive~ gets an embedded repository for figures
          - ~cd emacs-reveal-howto/~
-      2. Install submodules (the howto embeds a repository for figures)
-         - ~git submodule sync --recursive~
-         - ~git submodule update --init --recursive~
-      3. Generate the HTML presentation from Org source ~howto.org~
+      2. Generate the HTML presentation from Org source ~howto.org~
          - ~emacs --batch --load elisp/publish.el~
          - Publication code needs to be able to locate ~emacs-reveal.el~
-           - Code in ~elisp/publish.el~ tries (a) load path after adding
-             =~/.emacs.d/elpa/emacs-reveal= (suggested as directory
-             for ~emacs-reveal~ on previous slide) and
-             (b) sibling directory ~emacs-reveal~
+           - Code in ~elisp/publish.el~ tries (a) load path after
+             adding =~/.emacs.d/elpa/emacs-reveal= (suggested on
+             [[#git-install][previous slide]]) and (b) sibling
+             directory ~emacs-reveal~
 
 * Usage
   :PROPERTIES:

@@ -9,26 +9,16 @@
 
 ;;; Commentary:
 ;; Publication of Org source files to reveal.js uses Org export
-;; functionality offered by org-re-reveal and oer-reveal.
-;; Initialization code for both is provided by emacs-reveal.
-;; Note that org-re-reveal and oer-reveal are available on MELPA.
+;; functionality offered by emacs-reveal, which bundles reveal.js with
+;; several plugins and MELPA packages org-re-reveal,
+;; org-re-reveal-ref, and oer-reveal.  Initialization code is provided
+;; by emacs-reveal.
 ;;
 ;; Use this file from its parent directory with the following shell
 ;; command:
 ;; emacs --batch --load elisp/publish.el
 
 ;;; Code:
-(package-initialize)
-(setq
- oer-reveal-plugins
- '("reveal.js-plugins" "Reveal.js-TOC-Progress" "reveal.js-jump-plugin"
-   "reveal.js-quiz" "reveal.js-coursemod" "klipse-libs"))
-
-;; Uncomment the following for tests with unreleased changes.
-;; (add-to-list 'load-path "../oer-reveal")
-;; (require 'oer-reveal)
-;; (require 'oer-reveal-publish)
-
 ;; Setup dot.
 ;; The following supposes that png images are generated into directory img,
 ;; which needs to exist.
@@ -42,8 +32,9 @@
                   :publishing-directory "./public/img")))
 
 ;; Load emacs-reveal.
-(require 'f)
-(let ((install-dir (f-join user-emacs-directory "elpa" "emacs-reveal")))
+(let ((install-dir
+       (mapconcat #'file-name-as-directory
+                  `(,user-emacs-directory "elpa" "emacs-reveal") "")))
   (add-to-list 'load-path install-dir)
   (condition-case nil
       ;; Either require package with above hard-coded location
@@ -55,6 +46,9 @@
       'load-path
       (expand-file-name "../../emacs-reveal/" (file-name-directory load-file-name)))
      (require 'emacs-reveal))))
+
+;; Add klipse plugin for live code execution.
+(add-to-list 'oer-reveal-plugins "klipse-libs")
 
 ;; Publish Org files.
 (oer-reveal-publish-all)
