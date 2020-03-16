@@ -84,16 +84,16 @@ To work locally with this project, you'll have to follow the steps below:
      ```
 
 2. Fork, clone or download this project
-3. Initialize submodules (`figures`):
+   - Including submodules (`figures`):
 
-   ```
-   git submodule sync --recursive
-   git submodule update --init --recursive
-   ```
+     ```
+     git submodule sync --recursive
+     git submodule update --init --recursive
+     ```
 
-4. Generate the website: `emacs --batch --load elisp/publish.el`
-5. Preview your project: `firefox public/howto.html`
-6. Add content; repeat, starting with step 5.
+3. Generate the website: `emacs --batch --load elisp/publish.el`
+4. Preview your project: `firefox public/howto.html`
+5. Add/change contents; repeat, starting with step 3.
 
 Read more in the generated [howto of emacs-reveal](https://oer.gitlab.io/emacs-reveal-howto/howto.html).
 
