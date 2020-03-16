@@ -29,7 +29,8 @@ which was generated from [this Org file](howto.org).
 ## GitLab CI
 
 This project's static Pages are built by [GitLab CI][ci], following the steps
-defined in (an older version of) [`.gitlab-ci.yml`](.gitlab-ci.yml):
+defined in [`.gitlab-ci.yml`](.gitlab-ci.yml) (the following may not
+show the most recent contents of that file):
 
 ```
 image: registry.gitlab.com/oer/emacs-reveal/emacs-reveal:7.1.1
