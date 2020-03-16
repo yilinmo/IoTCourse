@@ -1,5 +1,5 @@
 <!--- Local IspellDict: en -->
-<!--- SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger -->
+<!--- SPDX-FileCopyrightText: 2017-2020 Jens Lechtenbörger -->
 <!--- SPDX-License-Identifier: CC-BY-SA-4.0 -->
 
 
@@ -32,7 +32,7 @@ This project's static Pages are built by [GitLab CI][ci], following the steps
 defined in (an older version of) [`.gitlab-ci.yml`](.gitlab-ci.yml):
 
 ```
-image: registry.gitlab.com/oer/docker/emacs-reveal:5.0.1
+image: registry.gitlab.com/oer/emacs-reveal/emacs-reveal:7.1.1
 
 pages:
   stage: deploy
@@ -51,8 +51,9 @@ pages:
   - master
 ```
 
-These build instructions are based on the [Docker image](https://gitlab.com/oer/docker)
-`emacs-reveal:5.0.1` which contains GNU Emacs with a LaTeX
+These build instructions are based on the `emacs-reveal:7.1.1` from
+[this container registry](https://gitlab.com/oer/emacs-reveal/container_registry),
+which contains GNU Emacs with a LaTeX
 distribution, [reveal.js](https://revealjs.com/) with selected plugins,
 [Org mode](https://orgmode.org/),
 [org-re-reveal](https://gitlab.com/oer/org-re-reveal), and
@@ -73,16 +74,25 @@ To work locally with this project, you'll have to follow the steps below:
 1. Install emacs-reveal.  Choose a directory, e.g., `~/.emacs.d/elpa`, and clone software
    - `cd ~/.emacs.d/elpa`
    - `git clone https://gitlab.com/oer/emacs-reveal.git`
-2. Install necessary Emacs packages: `emacs --batch --load emacs-reveal/install.el --funcall install`
-3. Fork, clone or download this project
-4. Initialize submodules (`figures`):
-```
-git submodule sync --recursive
-git submodule update --init --recursive
-```
-5. Generate the website: `emacs --batch --load elisp/publish.el`
-6. Preview your project: `firefox public/howto.html`
-7. Add content; repeat, starting with step 5.
+   - Then, make sure that `emacs-reveal.el` gets loaded in
+     your Emacs sessions, e.g., by adding this to your `~/.emacs`:
+
+     ```
+     (add-to-list 'load-path "~/.emacs.d/elpa/emacs-reveal")
+     (require 'emacs-reveal)
+     ```
+
+2. Fork, clone or download this project
+3. Initialize submodules (`figures`):
+
+   ```
+   git submodule sync --recursive
+   git submodule update --init --recursive
+   ```
+
+4. Generate the website: `emacs --batch --load elisp/publish.el`
+5. Preview your project: `firefox public/howto.html`
+6. Add content; repeat, starting with step 5.
 
 Read more in the generated [howto of emacs-reveal](https://oer.gitlab.io/emacs-reveal-howto/howto.html).
 
