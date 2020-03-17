@@ -187,11 +187,11 @@ These are sample notes
       components as Git submodules, which are activated by default
       - If you prefer to manage packages such as ~org-re-reveal~ and
         ~oer-reveal~ yourself, set
-        ~emacs-reveal-managed-install-p~ to nil before restarting Emacs:
+        ~emacs-reveal-managed-install-p~ to ~nil~ before restarting Emacs:
         - =(add-to-list 'load-path "~/.emacs.d/elpa/emacs-reveal")=
         - =(setq emacs-reveal-managed-install-p nil)=
         - =(require 'emacs-reveal)=
-      - (Now subdirectories under ="~/.emacs.d/elpa/emacs-reveal"=
+      - (Now, subdirectories under ="~/.emacs.d/elpa/emacs-reveal"=
         remain empty)
 
 *** Quickstart with ~emacs-reveal~
@@ -207,10 +207,10 @@ These are sample notes
       2. Generate the HTML presentation from Org source ~howto.org~
          - ~emacs --batch --load elisp/publish.el~
          - Publication code needs to be able to locate ~emacs-reveal.el~
-           - Code in ~elisp/publish.el~ tries (a) load path after
-             adding =~/.emacs.d/elpa/emacs-reveal= (suggested on
-             [[#git-install][previous slide]]) and (b) sibling
-             directory ~emacs-reveal~
+           - Code in ~elisp/publish.el~ tries
+             (a) =~/.emacs.d/elpa/emacs-reveal= (suggested on
+             [[#git-install][previous slide]]) and
+             (b) sibling directory ~emacs-reveal~
 
 * Usage
   :PROPERTIES:
@@ -253,7 +253,7 @@ These are sample notes
       - For this to work
         1. Settings of ~emacs-reveal~ should be in effect
            (~emacs-reveal.el~ is loaded, e.g., with
-           [[#git-install][step (3) above]])
+           [[#git-install][step (2) above]])
         2. Necessary resources, in particular
 	  ~reveal.js~, must be accessible in ~.org~ file’s
 	  directory
@@ -267,7 +267,7 @@ These are sample notes
 
 *** Org-re-reveal and oer-reveal
     - Emacs-reveal embeds the packages org-re-reveal and oer-reveal
-      - Oer-reveal is an Org mode export backend (extending
+      - Package oer-reveal is an Org mode export backend (extending
         org-re-reveal)
         - Starting with oer-reveal 1.4.0, part of emacs-reveal 4.1.0
         - With key binding mentioned on previous slide
@@ -361,10 +361,10 @@ These are sample notes
 
 ** Licensing
    - Starting with emacs-reveal 5.0.3 (and oer-reveal 2.0.2),
-     presentations can show license information that is derived from
+     presentations can show license information derived from
      SPDX headers of the [[https://reuse.software/][REUSE]] project
      - See [[#license][licensing slide]] at the end of this presentation
-       - Information on that slide is derived from the following
+       - Information on that slide is derived from
          header lines of ~howto.org~
          #+BEGIN_SRC
 ,#+SPDX-FileCopyrightText: 2017-2020 Jens Lechtenbörger <https://lechten.gitlab.io/#me>
@@ -374,7 +374,7 @@ These are sample notes
          be recognized as Org mode keywords
      - License information is also embedded in machine-readable RDFa
        format
-   - Macros to embed OER figures with (human- and machine-readable)
+   - Macros for OER figures with (human- and machine-readable)
      license information are discussed [[#figure-with-meta-data][later]]
 
 ** Two Columns: Pro/Con of emacs-reveal
@@ -451,7 +451,7 @@ These are sample notes
 *** Notes on figures
     - If you used emacs-reveal previously and did not like that it
       exported all figures from a growing repository, note
-      that as of emacs-reveal 5.2.0 only used figures are exported
+      that as of emacs-reveal 5.2.0, only used figures are exported
     - So far, emacs-reveal uses meta-data in an ad-hoc format (as
       shown on a [[#sample-figure-meta-data][previous slide]])
       - For all [[https://gitlab.com/oer/figures/][figures in this repository]]
