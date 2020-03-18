@@ -167,27 +167,40 @@ These are sample notes
      - [[https://oer.gitlab.io/oer-courses/cacs/Git-Introduction.html][Git introduction as OER]]
        (created with ~emacs-reveal~)
 
-*** Installation of ~emacs-reveal~
+*** Initial Consideration
+    - ~Emacs-reveal~ can manage bundled software (submodules for Lisp
+      packages Org mode, org-re-reveal, org-re-reveal-ref, oer-reveal
+      as well as reveal.js with several plugins)
+      - Default with customizable variable
+        ~emacs-reveal-managed-install-p~ being ~t~
+    - Or, you manage those components yourself
+      - Set ~emacs-reveal-managed-install-p~ to ~nil~
+    - In any case, ~emacs-reveal~ changes values of other packages
+      (~org-ref~, ~oer-reveal~) without warning
+
+*** Managed install of ~emacs-reveal~
     :PROPERTIES:
     :CUSTOM_ID: git-install
     :END:
-    - You can install ~emacs-reveal~ in a directory of your choice
+    - Install ~emacs-reveal~ in a directory of your choice
       1. Choose directory, e.g., =~/.emacs.d/elpa=, and clone software
          - =cd ~/.emacs.d/elpa=
-         - ~git clone https://gitlab.com/oer/emacs-reveal.git~
+         - ~git clone --recursive https://gitlab.com/oer/emacs-reveal.git~
+           - (Option ~--recursive~ downloads submodules)
       2. Add following lines to =~/.emacs=
          - =(add-to-list 'load-path "~/.emacs.d/elpa/emacs-reveal")=
          - =(require 'emacs-reveal)=
-           - Beware! This changes values of other packages (~org-ref~,
-             ~oer-reveal~) without warning
       3. Restart Emacs (installation of ~org-ref~ is offered, if necessary)
 
 *** Alternative installation
-    - Starting with version 7.1.0, ~emacs-reveal~ includes lots of
-      components as Git submodules, which are activated by default
-      - If you prefer to manage packages such as ~org-re-reveal~ and
-        ~oer-reveal~ yourself, set
-        ~emacs-reveal-managed-install-p~ to ~nil~ before restarting Emacs:
+    - You you prefer to manage the submodules of ~emacs-reveal~
+      yourself, clone without option ~--recursive~ and set
+      ~emacs-reveal-managed-install-p~ to ~nil~ (*before* you
+      load/require ~emacs-reveal~ for the first time)
+      1. Choose directory and clone
+         - =cd ~/.emacs.d/elpa=
+         - ~git clone https://gitlab.com/oer/emacs-reveal.git~
+      2. Add following lines to =~/.emacs=
         - =(add-to-list 'load-path "~/.emacs.d/elpa/emacs-reveal")=
         - =(setq emacs-reveal-managed-install-p nil)=
         - =(require 'emacs-reveal)=
