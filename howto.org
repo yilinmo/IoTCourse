@@ -228,7 +228,7 @@ These are sample notes
    2. Create presentations in GNU Emacs
    3. Create presentations with [[https://www.docker.com/][Docker]]
       {{{reveallicense("./figures/logos/docker-horizontal.meta","10vh")}}}
-      - [[https://gitlab.com/oer/docker][Docker image with emacs-reveal]]
+      - [[https://gitlab.com/oer/emacs-reveal/container_registry][Docker image emacs-reveal]]
         - Similarly to previous alternative; necessary software bundled
         - See [[https://gitlab.com/oer/emacs-reveal/blob/master/README.md][README of emacs-reveal]]
         - [[https://oer.gitlab.io/oer-courses/vm-neuland/04-Docker.html][Introduction to Docker]],
@@ -580,7 +580,7 @@ graph {
       #+end_src
 
 ** Need Additional Software in Publication Process?
-   - Maybe suggest as [[https://gitlab.com/oer/docker/issues][issue for Docker image of emacs-reveal]]
+   - Maybe suggest as [[https://gitlab.com/oer/emacs-reveal/-/issues][issue for Docker image of emacs-reveal]]
    - Or install additional software in Docker container of your project with [[https://docs.gitlab.com/ee/ci/quick_start/][~before_script~]]
 
 * The End
