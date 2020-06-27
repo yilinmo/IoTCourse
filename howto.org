@@ -24,7 +24,7 @@
 
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
-#+DATE: March 2020 (emacs-reveal 7.1.0 and later)
+#+DATE: June 2020 (emacs-reveal 8.0.0 and later)
 
 #+KEYWORDS: emacs-reveal, howto, HTML, reveal.js, org, Org mode, presentation, slideshow, OER
 #+DESCRIPTION: Howto for the creation of OER presentations (HTML with audio) with reveal.js from Org mode sources
@@ -36,6 +36,7 @@
      - Generated with [[https://gitlab.com/oer/emacs-reveal][emacs-reveal]]
        from [[https://gitlab.com/oer/emacs-reveal-howto][Free/libre Org mode sources]]
        - See [[https://oer.gitlab.io/hints.html][usage hints for emacs-reveal presentations]]
+       - Emacs-reveal 8.0.0 supports reveal.js 4
      - Key bindings and navigation
        - Press “?” to see key bindings of reveal.js
          - In general, “n” and “p” move to next and previous slide; mouse
@@ -167,6 +168,8 @@ These are sample notes
       as well as reveal.js with several plugins)
       - Default with customizable variable
         ~emacs-reveal-managed-install-p~ being ~t~
+      - Variable ~oer-reveal-revealjs-version~ specifies the
+        target version of reveal.js
     - Or, you manage those components yourself
       - Set ~emacs-reveal-managed-install-p~ to ~nil~
     - In any case, ~emacs-reveal~ changes values of other packages
