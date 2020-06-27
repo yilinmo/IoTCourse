@@ -31,6 +31,9 @@
                   :publishing-function 'org-publish-attachment
                   :publishing-directory "./public/img")))
 
+;; Use present environment.
+(setq emacs-reveal-managed-install-p nil)
+
 ;; Load emacs-reveal.
 (let ((install-dir
        (mapconcat #'file-name-as-directory
