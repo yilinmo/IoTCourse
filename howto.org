@@ -163,13 +163,14 @@ These are sample notes
        (created with ~emacs-reveal~)
 
 *** Initial Consideration
-    - ~Emacs-reveal~ can manage bundled software (submodules for Lisp
-      packages Org mode, org-re-reveal, org-re-reveal-ref, oer-reveal
-      as well as reveal.js with several plugins)
+    - ~Emacs-reveal~ can manage bundled software
+      - (Submodules for Lisp
+        packages Org mode, org-re-reveal, org-re-reveal-ref, oer-reveal
+        as well as reveal.js with several plugins)
       - Default with customizable variable
         ~emacs-reveal-managed-install-p~ being ~t~
       - Variable ~oer-reveal-revealjs-version~ specifies the
-        target version of reveal.js
+        target version of reveal.js for emacs-reveal
     - Or, you manage those components yourself
       - Set ~emacs-reveal-managed-install-p~ to ~nil~
     - In any case, ~emacs-reveal~ changes values of other packages
