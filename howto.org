@@ -209,17 +209,17 @@ These are sample notes
     :CUSTOM_ID: git-howto
     :END:
     - E.g., generate this howto
-      1. Choose directories for howto and emacs-reveal, clone both
-         - ~git clone https://gitlab.com/oer/emacs-reveal.git~
+      1. Install emacs-reveal (see previous two slides for alternatives)
+      2. Choose directory for howto, clone it
          - ~git clone --recursive https://gitlab.com/oer/emacs-reveal-howto.git~
            - Option ~--recursive~ gets an embedded repository for figures
          - ~cd emacs-reveal-howto/~
-      2. Generate the HTML presentation from Org source ~howto.org~
+      3. Generate the HTML presentation from Org source ~howto.org~
          - ~emacs --batch --load elisp/publish.el~
          - Publication code needs to be able to locate ~emacs-reveal.el~
            - Code in ~elisp/publish.el~ tries
              (a) =~/.emacs.d/elpa/emacs-reveal= (suggested on
-             [[#git-install][previous slide]]) and
+             [[#git-install][earlier slide]]) and
              (b) sibling directory ~emacs-reveal~
 
 * Usage
