@@ -1,9 +1,10 @@
-# SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger
+# SPDX-FileCopyrightText: 2017-2020 Jens Lechtenbörger
 # SPDX-License-Identifier: CC0-1.0
 
 *.elc
 auto
 public
+public-*
 tests
 img
 figures.for-export
