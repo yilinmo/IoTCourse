@@ -612,9 +612,9 @@ graph {
 ** Further Reading
    - [[https://orgmode.org/#docs][Manuals and tutorials for Org mode]]
    - [[https://oer.gitlab.io/OS/][Presentations for a course on Operating Systems]]
-     demonstrating more features of Org mode (e.g., table of contents
-     as agenda, bibliography with citations, keyword index, PDF export) and
-     reveal.js (e.g., notes, animated SVGs)
+     - My first use case for emacs-reveal
+     - More features of Org mode (e.g., table of contents as agenda,
+       keyword index) and reveal.js (e.g., notes, animated SVGs)
 
 ** Go for it!
 
