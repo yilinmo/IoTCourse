@@ -22,6 +22,10 @@
 # Use custom title slide.
 #+REVEAL_TITLE_SLIDE: title-slide.html
 
+# Generate bibliography with LaTeX
+#+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
+#+LATEX_HEADER: \addbibresource{references.bib}
+
 #+TITLE: How to create presentations with emacs-reveal
 #+AUTHOR: Jens Lechtenbörger
 #+DATE: June 2020 (emacs-reveal 8.0.0 and later)
@@ -47,6 +51,20 @@
        - Type slide’s number followed by Enter to jump to that slide
        - Browser history (buttons, Alt-CursorLeft, Alt-CursorRight)
        - Zoom with Ctrl-Mouse or Alt-Mouse
+
+** Why?
+   - I created emacs-reveal as software bundle to produce
+     [[https://en.wikipedia.org/wiki/Open_educational_resources][Open Educational Resources (OER)]]
+     for my own teaching
+     - Described in cite:Lec19a
+     - Personally, I prefer text over video when learning
+       - Skim reading with superior search, navigation, and
+         hyperlinks; own speed
+       - Lots of students like audio explanations (and PDF), though
+   - Education should be free and open
+     - [[https://electures.uni-muenster.de/engage/theodul/ui/core.html?id=bfd84252-634d-40d0-996a-3979a21abe3e][Recording of a talk “Open Educational Resources: What, why, and how?”]]
+     - Proper license attribution is a hassle
+       - Emacs-reveal simplifies that process (for me), see cite:Lec19b
 
 ** Offline work
    - Students often ask for download-able presentations
@@ -370,6 +388,9 @@ These are sample notes
       - Mousewheel and swiping work
 
 ** Licensing
+   :PROPERTIES:
+   :CUSTOM_ID: licensing
+   :END:
    - Starting with emacs-reveal 5.0.3 (and oer-reveal 2.0.2),
      presentations can show license information derived from
      SPDX headers of the [[https://reuse.software/][REUSE]] project
@@ -600,6 +621,13 @@ graph {
    {{{revealimg("./figures/3d-man/steps.meta","The road ahead …")}}}
 
    [[https://gitlab.com/oer/]]
+
+** Bibliography
+   :PROPERTIES:
+   :CUSTOM_ID: bibliography
+   :END:
+
+printbibliography:references.bib
 
 #+MACRO: licensepreamble
 #+INCLUDE: "~/.emacs.d/oer-reveal-org/license-template.org" :minlevel 2
