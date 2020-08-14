@@ -1,0 +1,59 @@
+# Local IspellDict: en
+#+STARTUP: showeverything
+#+SPDX-FileCopyrightText: 2017-2020 Mo, Yilin <https://yilinmo.github.io>
+#+SPDX-License-Identifier: CC-BY-SA-4.0
+
+# Apply standard settings of oer-reveal.
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/config.org"
+
+# Enable klipse, but disable scaling, which interferes.
+# (This is only necessary for presentations using klipse.  Otherwise,
+# the following three lines and subsequent klipse settings can be removed.)
+#+OPTIONS: reveal_klipsify_src:t
+#+REVEAL_MIN_SCALE: 1.0
+#+REVEAL_MAX_SCALE: 1.0
+
+# Use custom title slide.
+#+REVEAL_TITLE_SLIDE: title-slide.html
+
+# Generate bibliography with LaTeX
+#+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
+#+LATEX_HEADER: \addbibresource{references.bib}
+
+#+TITLE: Introduction to Intelligent Network System
+#+AUTHOR: Mo, Yilin
+#+DATE: Sept 2020 
+
+#+KEYWORDS: 
+#+DESCRIPTION: 
+
+* History of Intelligent Network System
+ 
+ 
+** Internet of Things
+   cite:Lec19a
+** Cyber-Physical Systems
+** Wireless Sensor Networks
+** Smart Grid
+** Smart City
+** Intelligent Network System
+
+
+* Technology Stack
+
+* Conclusion  
+** Bibliography
+   :PROPERTIES:
+   :CUSTOM_ID: bibliography
+   :END:
+
+printbibliography:references.bib
+
+#+MACRO: licensepreamble
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/license-template.org" :minlevel 2
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/license-disclaimer-cc-by-sa-4.0.org"
+
+# Local Variables:
+# indent-tabs-mode: nil
+# org-src-preserve-indentation: t
+# End:
