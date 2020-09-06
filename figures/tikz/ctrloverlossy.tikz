@@ -1,0 +1,39 @@
+  \begin{tikzpicture}[>=stealth',
+    box/.style={rectangle, draw=blue!50,fill=blue!20,rounded corners, semithick},
+    mycircle/.style={circle, draw,inner sep=1pt},
+    point/.style={coordinate}]
+    \matrix[row sep = 7mm, column sep = 7mm]{
+      % first row
+      \node (p11) [point] {}; &
+      \node (actuator) [box] {Actuator};&
+      \node (plant) [box] {Plant};&
+      \node (sensor) [box] {Sensor};&
+      \node (p14) [point] {};  \\
+      % second row
+      \node (p21) [point] {}; &
+      &
+      &
+      &
+      \node (p22) [point] {}; \\
+      % third row
+      \node (p31) [point] {}; &
+      \node (control)[box]{Controller};&
+      &
+      \node (est)[box]{Estimator};&
+      \node (p34) [point] {};  \\
+    };
+    \draw[semithick,->] (actuator)--(plant);
+    \draw[semithick,->] (plant)--(sensor);
+    \draw[semithick,->] (sensor)--(p14)--(p34)--(est);
+    \draw[semithick,->] (est)--(control);
+    \draw[semithick] (control)--(p31)--(p11)--(actuator);
+
+    \draw[thick,white](p21)--+(90:0.5cm);
+    \draw[semithick](p21)--node[anchor=0]{$\nu_t$}+(120:0.5cm);
+    \draw[fill=white](p21) circle (2pt);
+
+    \draw[thick,white](p22)--+(90:0.5cm);
+    \draw[semithick](p22)--node[anchor=0]{$\gamma_t$}+(120:0.5cm);
+    \draw[fill=white](p22) circle (2pt);
+  \end{tikzpicture}
+

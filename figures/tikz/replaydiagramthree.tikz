@@ -1,0 +1,52 @@
+\begin{tikzpicture}[>=stealth',
+box/.style={rectangle, draw=caltechcolor!50,fill=caltechcolor!20,rounded corners, semithick},
+point/.style={coordinate},
+every node/.append style={font=\small}
+]
+\matrix[row sep = 10mm, column sep = 10mm]{
+%first row
+\node (p1) [point] {};&
+\node (p2) [circle,draw,inner sep=2pt] {};&
+\node (plant) [box] {Plant};&
+\node (sensor) [box] {Sensor};&
+\node (p3) [point] {};\\
+%second row
+&\node (p4) [point] {};
+& \node (attacker) [box] {Attacker};&&
+\node (p10)  [point] {};\\
+%third row
+\node (p5) [point] {};&
+&
+\node (delay) [box] {$z^{-1}$};&
+\node (p6) [point] {};&\\
+%fourth row
+\node (p7) [point] {};&
+\node (controller) [box] {Controller};&
+&
+\node (estimator) [box] {Estimator};&
+\node (p8) [point] {};\\
+%fifth row
+& \node {Cyber System}; 
+& \node (detector) [box] {Failure Detector};&
+\node (p9) [point] {};&\\
+};
+\draw [semithick,->] (plant) -- (sensor);
+%\draw [semithick,->] (sensor) -- (p3)--(p10);
+%\draw [semithick,->] (p10)-- node[near end,right]{$y^c(k)$} (p8) -- (estimator);
+\draw [semithick,->] (attacker)-- node[midway,above]{replay $y^c(k)$} (p10)--(p8)--(estimator);
+\draw [semithick,->] (attacker)-- node[midway,above]{$u^a(k)$} (p4)--(p2);
+\draw [semithick,->] (estimator)-- node[midway,above]{$\hat x^c(k)$}(controller);
+\draw [semithick,->] (controller)-- node[midway,above]{$u^c(k)$} (p7)--(p1)--(p2);
+\draw [semithick,->] (p2)--(plant);
+\draw [semithick,->] (p5)--(delay)-- node[midway,below]{$u^c(k-1)$}(p6)--(estimator);
+\draw [semithick,->] (estimator)--(p9)--node[midway,above]{$z^c(k)$}(detector);
+\draw [semithick] (p2.north)--(p2.south);
+\draw [semithick] (p2.east)--(p2.west);
+%\draw [semithick] (p10.north)--(p10.south);
+%\draw [semithick] (p10.east)--(p10.west);
+
+\begin{pgfonlayer}{background}
+\node (r1) [fill=red!10,rounded corners,fit=(p7)(p8)(delay)(detector)] {};
+\end{pgfonlayer}
+
+\end{tikzpicture}

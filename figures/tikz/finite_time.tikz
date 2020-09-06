@@ -1,0 +1,73 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2.56in,
+height=1.78in,
+at={(0.758in,0.481in)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+every x tick/.append style={black},
+xmin=1,
+xmax=10,
+xlabel={time $k$},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+every y tick/.append style={black},
+ylabel={$\epsilon(k)$},
+ymode=log,
+axis background/.style={fill=white},
+legend style={legend cell align=left, align=left, draw=black}
+]
+\addplot [color=blue,dashed]
+  table[row sep=crcr]{%
+1	1.3078e-02\\
+2	3.9211e-04\\
+3	1.3203e-05\\
+4	7.9448e-07\\
+5	5.0116e-08\\
+6	3.2024e-09\\
+7	2.0816e-10\\
+8	1.3572e-11\\
+9	4.9711e-13\\
+10	1.9296e-14\\
+};
+\addlegendentry{Naive Bayes}
+%\addplot [color=blue]
+%  table[row sep=crcr]{%
+%1	2.5034e-02\\
+%2	3.8590e-04\\
+%3	1.3191e-05\\
+%4	7.8627e-07\\
+%5	4.9681e-08\\
+%6	3.2021e-09\\
+%7	2.0828e-10\\
+%8	1.3620e-11\\
+%9	4.9790e-13\\
+%10	1.9377e-14\\
+%};
+%\addlegendentry{$z_1=0.7141$}
+\addplot [color=red]
+  table[row sep=crcr]{%
+1	2.5074e-02\\
+2	8.3486e-04\\
+3	1.2897e-05\\
+4	1.5836e-06\\
+5	4.8561e-08\\
+6	3.8571e-09\\
+7	2.0210e-10\\
+8	1.0938e-11\\
+9	5.6596e-13\\
+10	2.0986e-14\\
+};
+\addlegendentry{$f_{1.4282}^*$}
+
+\end{axis}
+\end{tikzpicture}%

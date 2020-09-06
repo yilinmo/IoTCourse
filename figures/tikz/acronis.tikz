@@ -1,0 +1,82 @@
+\definecolor{greencontent}{RGB}{106,149,157}
+\definecolor{greenborder}{RGB}{1,44,52}
+\definecolor{bluecontent}{RGB}{192,230,158}
+\definecolor{blueborder}{RGB}{96,134,12}
+
+\definecolor{redborder}{RGB}{141,12,19}
+\definecolor{redcontent}{RGB}{240,113,120}
+
+\begin{tikzpicture}
+\draw[thick,rounded corners,fill=bluecontent,draw=blueborder] (0,0) rectangle (10,1);
+\node at (5,0.5) {CAN Bus};
+%%%%%%%%%%%%%%%%%%%%%%%%
+\draw[thick,rounded corners,fill=bluecontent,draw=blueborder] (0,2) rectangle (3,7);
+\node at (1.5,6.5) {Actuation};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (0.25,5.1) rectangle (2.75,5.9);
+\node at (1.5,5.5) {Engine};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (0.25,4.1) rectangle (2.75,4.9);
+\node at (1.5,4.5) {Steering};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (0.25,3.1) rectangle (2.75,3.9);
+\node at (1.5,3.5) {Brake};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (0.25,2.1) rectangle (2.75,2.9);
+\node at (1.5,2.5) {\dots};
+%%%%%%%%%%%%%%%%%%%%%%
+\draw[thick,rounded corners,fill=bluecontent,draw=blueborder] (7,2) rectangle (10,7);
+\node at (8.5,6.5) {Sensing};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (7.25,5.1) rectangle (9.75,5.9);
+\node at (8.5,5.5) {GPS};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (7.25,4.1) rectangle (9.75,4.9);
+\node at (8.5,4.5) {Vision};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (7.25,3.1) rectangle (9.75,3.9);
+\node at (8.5,3.5) {Lidar};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (7.25,2.1) rectangle (9.75,2.9);
+\node at (8.5,2.5) {IMU};
+%%%%%%%%%%%%%%%%%%%%%%
+\draw[thick,rounded corners,fill=bluecontent,draw=blueborder] (3.5,2) rectangle (6.5,7);
+\node at (5,6.5) {Control};
+
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (3.75,5.1) rectangle (6.25,5.9);
+\node at (5,5.5) {Localization};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (3.75,4.1) rectangle (6.25,4.9);
+\node at (5,4.5) {Mapping};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (3.75,3.1) rectangle (6.25,3.9);
+\node at (5,3.5) {Planning};
+\draw[thick,rounded corners,fill=greencontent,draw=greenborder] (3.75,2.1) rectangle (6.25,2.9);
+\node at (5,2.5) {Navigation};
+%%%%%%%%%%%%%%%%%%%%%%
+\draw[thick,rounded corners,fill=bluecontent,draw=blueborder] (0,8) rectangle (10,9);
+\node at (5,8.5) {Vehicle};
+
+
+\draw[thick,rounded corners,fill=bluecontent,draw=blueborder] (0,-1) rectangle (4,-2);
+\node at (2,-1.5) {V2V};
+\draw[thick,rounded corners,fill=bluecontent,draw=blueborder] (6,-1) rectangle (10,-2);
+\node at (8,-1.5) {Other Modules};
+
+%%%%%%%%%%%%%%%%%%%%%%
+\draw[line width=2pt,<-] (1.5,8)--(1.5,7);
+\draw[line width=2pt,<-] (1.5,2)--(1.5,1);
+
+\draw[line width=2pt,->] (8.5,8)--(8.5,7);
+\draw[line width=2pt,->] (8.5,2)--(8.5,1);
+
+\draw[line width=2pt,<->] (5,2)--(5,1);
+
+\draw[line width=2pt,<->] (2,-1)--(2,0);
+\draw[line width=2pt,<->] (8,-1)--(8,0);
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%\draw[thick,rounded corners,fill=redcontent,draw=redborder] (-3,5) rectangle (-1,4);
+%\node at (-2,4.5) {\begin{tabular}{c} Actuator \\ Attack\end{tabular}};
+%\draw[thick,rounded corners,fill=redcontent,draw=redborder] (13,5) rectangle (11,4);
+%\node at (12,4.5) {\begin{tabular}{c} Sensor \\ Attack\end{tabular}};
+%\draw[thick,rounded corners,fill=redcontent,draw=redborder] (0,-4) rectangle (10,-3);
+%\node at (5,-3.5) {Cyber Attack};
+
+%\draw[line width=2pt,->,redborder] (-1,4.5)--(0,4.5);
+%\draw[line width=2pt,->,redborder] (11,4.5)--(10,4.5);
+%\draw[line width=2pt,->,redborder] (2,-3)--(2,-2);
+%\draw[line width=2pt,->,redborder] (8,-3)--(8,-2);
+\end{tikzpicture}
+
+

@@ -1,0 +1,52 @@
+% This file was created by matlab2tikz v0.2.0.
+% Copyright (c) 2008--2012, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+% 
+% 
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=\figurewidth,
+height=\figureheight,
+scale only axis,
+xmin=-1, xmax=19,
+xlabel={$k$},
+ymin=0, ymax=1,
+ylabel={$\beta^c(k)$},
+legend entries={
+System One,
+System Two
+},
+legend style={
+at={(0.9,0.3)},
+anchor=east,
+},
+axis on top]
+
+\addplot [
+color=blue,
+mark = o,
+line width = 1.0pt,
+solid
+]
+coordinates{
+ (-1,0.0089)(0,0.1553)(1,0.0733)(2,0.0187)(3,0.0116)(4,0.0103)(5,0.0094)(6,0.0109)(7,0.009)(8,0.0113)(9,0.0113)(10,0.0111)(11,0.0115)(12,0.0098)(13,0.0096)(14,0.0102)(15,0.01)(16,0.0092)(17,0.0117)(18,0.011)(19,0.0089) 
+};
+
+\addplot [
+color=red,
+mark=square,
+line width = 1.0pt,
+solid
+]
+coordinates{
+ (-1,0.0084)(0,0.126)(1,0.202)(2,0.2499)(3,0.3099)(4,0.3717)(5,0.4389)(6,0.5055)(7,0.5617)(8,0.6143)(9,0.6632)(10,0.7043)(11,0.7489)(12,0.7823)(13,0.8108)(14,0.8383)(15,0.8559)(16,0.8772)(17,0.8937)(18,0.9078)(19,0.9231) 
+};
+
+\end{axis}
+\end{tikzpicture}

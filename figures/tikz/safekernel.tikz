@@ -1,0 +1,8 @@
+
+\begin{tikzpicture}
+\draw [thick, <->] (0,2.5) -- (0,0) -- (2.5,0);
+\draw [fill=gray,gray] (0,1.2) rectangle (2.5,1.6);
+\draw [fill=gray,gray] (1.2,0) rectangle (1.6,2.5);
+\draw [fill=red,red] (1.2,1.2) rectangle (1.6,1.6);
+\end{tikzpicture}
+

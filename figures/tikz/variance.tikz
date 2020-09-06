@@ -1,0 +1,122 @@
+% This file was created by matlab2tikz v0.4.2.
+% Copyright (c) 2008--2013, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+% 
+% 
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=\figurewidth,
+height=\figureheight,
+scale only axis,
+xlabel={$k$},
+ylabel={$P_{ii}(k)$},
+every axis y label/.style={at={(ticklabel cs:0.5)},rotate=90,anchor=near ticklabel},
+legend style={draw=black,fill=white,align=left},
+xmin=0,
+xmax=30,
+ymin=0,
+ymax=10
+]
+\addplot [
+color=blue,
+solid,
+]
+table[row sep=crcr]{
+1 0.723756906077348\\
+2 0.611733526886106\\
+3 0.555227554639088\\
+4 0.522723562848161\\
+5 0.502234226155889\\
+6 0.48845200210391\\
+7 0.478742576308317\\
+8 0.471670899992559\\
+9 0.466393460956112\\
+10 0.462383022874141\\
+11 0.459293365584203\\
+12 0.456887948865022\\
+13 0.454999928171319\\
+14 0.453508544238355\\
+15 0.452324544989976\\
+16 0.451380832202541\\
+17 0.450626257824218\\
+18 0.450021388845416\\
+19 0.449535542360442\\
+20 0.449144663773581\\
+21 0.448829779062427\\
+22 0.448575846903309\\
+23 0.448370895088202\\
+24 0.448205362807609\\
+25 0.448071594468874\\
+26 0.447963446682032\\
+27 0.447875980838994\\
+28 0.447805221147763\\
+29 0.447747963200596\\
+30 0.447701621872662\\
+};
+\addlegendentry{\scriptsize $P_{11}(k)$};
+
+\addplot [
+color=red,
+solid,
+]
+table[row sep=crcr]{
+1 9.14500000000001\\
+2 4.53185708689414\\
+3 3.26056929472188\\
+4 2.71039666003953\\
+5 2.41628951039466\\
+6 2.23834207302651\\
+7 2.12173054594893\\
+8 2.04105754579613\\
+9 1.98307725855728\\
+10 1.94023990595309\\
+11 1.90793692573791\\
+12 1.8831993310164\\
+13 1.86403049456908\\
+14 1.84904052721822\\
+15 1.83723446549823\\
+16 1.82788366356933\\
+17 1.82044450657525\\
+18 1.8145052212291\\
+19 1.80975000552296\\
+20 1.80593419138948\\
+21 1.80286664459914\\
+22 1.80039703824229\\
+23 1.79840648657486\\
+24 1.79680054574719\\
+25 1.79550391394891\\
+26 1.79445637287387\\
+27 1.79360964986303\\
+28 1.79292497217814\\
+29 1.7923711477712\\
+30 1.7919230506594\\
+};
+\addlegendentry{\scriptsize $P_{22}(k)$};
+
+\addplot [
+color=blue,
+dashed,
+]
+table[row sep=crcr]{
+1 0.4475\\
+30 0.4475\\
+};
+\addlegendentry{\scriptsize  $P_{11}$};
+
+\addplot [
+color=red,
+dashed,
+]
+table[row sep=crcr]{
+1 1.79\\
+30 1.79\\
+};
+\addlegendentry{\scriptsize $P_{22}$};
+\end{axis}
+\end{tikzpicture}%

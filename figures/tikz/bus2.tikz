@@ -1,0 +1,133 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=10cm,
+height=6cm,
+scale only axis,
+xmin=0.5,
+xmax=4.5,
+xtick={1,2,3,4},
+xticklabels={{A},{B},{C},{D}},
+xmajorgrids,
+ymin=-0.280838718360848,
+ymax=0.303106363340319,
+ylabel={Error},
+ymajorgrids,
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={Bus 2}
+]
+\addplot [color=red,solid,forget plot]
+  table[row sep=crcr]{%
+1	-0.182037704868178\\
+1	0.180275415997218\\
+};
+\addplot [color=gray,solid,forget plot]
+  table[row sep=crcr]{%
+2	-0.226132852958181\\
+2	0.204151491714196\\
+};
+\addplot [color=blue,solid,forget plot]
+  table[row sep=crcr]{%
+3	-0.178456646108621\\
+3	0.182033199029181\\
+};
+\addplot [color=mycolor1,solid,forget plot]
+  table[row sep=crcr]{%
+4	-0.254295760101704\\
+4	0.237052172546713\\
+};
+\addplot [color=red,solid,line width=4.0pt,forget plot]
+  table[row sep=crcr]{%
+1	-0.0598001363105209\\
+1	0.039957470141514\\
+};
+\addplot [color=gray,solid,line width=4.0pt,forget plot]
+  table[row sep=crcr]{%
+2	-0.0684145635750961\\
+2	0.0468091624068694\\
+};
+\addplot [color=blue,solid,line width=4.0pt,forget plot]
+  table[row sep=crcr]{%
+3	-0.0601092346726912\\
+3	0.0392723109160824\\
+};
+\addplot [color=mycolor1,solid,line width=4.0pt,forget plot]
+  table[row sep=crcr]{%
+4	-0.0635264998299683\\
+4	0.0722119494280955\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,fill=black,draw=red},forget plot]
+  table[row sep=crcr]{%
+1	0.00207610363711908\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,fill=black,draw=gray},forget plot]
+  table[row sep=crcr]{%
+2	-0.00261736048082573\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,fill=black,draw=blue},forget plot]
+  table[row sep=crcr]{%
+3	0.0014963473200007\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,fill=black,draw=mycolor1},forget plot]
+  table[row sep=crcr]{%
+4	0.0108724494946786\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,draw=black},forget plot]
+  table[row sep=crcr]{%
+1	0.00207610363711908\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,draw=black},forget plot]
+  table[row sep=crcr]{%
+2	-0.00261736048082573\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,draw=black},forget plot]
+  table[row sep=crcr]{%
+3	0.0014963473200007\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,draw=black},forget plot]
+  table[row sep=crcr]{%
+4	0.0108724494946786\\
+};
+\addplot [color=black,mark size=2.0pt,only marks,mark=o,mark options={solid,draw=red},forget plot]
+  table[row sep=crcr]{%
+1.0945687784355	-0.222422997260423\\
+1.01375619405937	-0.222206264887948\\
+0.956227016526212	-0.218768786138727\\
+1.03713393546182	-0.215209490053376\\
+1.02760090484764	-0.214239822687222\\
+0.897240657285762	0.209064287123911\\
+0.966701371843127	0.209077479247395\\
+1.10998810624065	0.209931247652913\\
+};
+\addplot [color=black,mark size=2.0pt,only marks,mark=o,mark options={solid,draw=gray},forget plot]
+  table[row sep=crcr]{%
+2.10570337814159	-0.250770164347044\\
+1.94021432213547	0.224313583890884\\
+1.94114332288824	0.249389505113387\\
+};
+\addplot [color=black,mark size=2.0pt,only marks,mark=o,mark options={solid,draw=blue},forget plot]
+  table[row sep=crcr]{%
+3.0700826993012	-0.22193670898251\\
+2.97547694790243	-0.221400591376229\\
+3.09661397915636	-0.217855200913314\\
+2.98804676599415	-0.214886831843576\\
+2.99924713168318	-0.212411464147406\\
+2.96824046651722	0.208457130227927\\
+2.97042738547715	0.211697132307402\\
+2.98952141272828	0.214009561955287\\
+};
+\addplot [color=black,mark size=2.0pt,only marks,mark=o,mark options={solid,draw=mycolor1},forget plot]
+  table[row sep=crcr]{%
+4.05444623644125	0.276563405081175\\
+};
+\end{axis}
+\end{tikzpicture}%

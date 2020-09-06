@@ -1,0 +1,36 @@
+\begin{tikzpicture}[->,>=stealth',
+box/.style={rectangle, draw=caltechcolor!50,fill=caltechcolor!20,rounded corners, semithick},
+point/.style={coordinate},
+every node/.append style={font=\small}
+]
+\matrix[row sep = 10mm, column sep = 10mm]{
+%first row
+\node (p1) [point] {};&
+\node (p2) [point] {};&
+\node (plant) [box] {Plant};&
+\node (sensor) [box] {Sensor};&
+\node (p3) [point] {};\\
+%second row
+\node (p5) [point] {};&
+&
+\node (delay) [box] {$z^{-1}$};&
+\node (p6) [point] {};&\\
+%third row
+\node (p7) [point] {};&
+\node (controller) [box] {Controller};&
+&
+\node (estimator) [box] {Estimator};&
+\node (p8) [point] {};\\
+%fourth row
+&& \node (detector) [box] {Failure Detector};&
+\node (p9) [point] {};&\\
+};
+\draw [semithick] (plant) -- (sensor);
+\draw [semithick](sensor) -- (p3) -- node[midway,right]{$y(k)$} (p8) -- (estimator);
+\draw [semithick](estimator)-- node[midway,above]{$\hat x(k)$}(controller);
+\draw [semithick](controller)-- node[midway,above]{$u(k)$} (p7)--(p1)--(plant);
+
+\draw [semithick](p5)--(delay)-- node[midway,above]{$u(k-1)$}(p6)--(estimator);
+\draw [semithick](estimator)--(p9) --node[midway,below]{$z(k)$}(detector);
+
+\end{tikzpicture}

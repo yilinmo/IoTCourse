@@ -1,0 +1,96 @@
+% This file was created by matlab2tikz v0.2.0.
+% Copyright (c) 2008--2012, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+% 
+% 
+
+\begin{tikzpicture}
+
+\tikzset{every mark/.append style={scale=0.75}}
+\pgfplotsset{every axis label/.append style={font=\footnotesize}}
+\pgfplotsset{tick label style={font=\footnotesize}}
+
+\begin{semilogyaxis}[%
+width=\figurewidth,
+height=\figureheight,
+scale only axis,
+xmin=1, xmax=20,
+xlabel={$m$},
+ymin=1e-06, ymax=1,
+yminorticks=true,
+ylabel={$P_e$},
+ylabel style={rotate=-90},
+legend entries={
+$f = 1$,
+$l=0$,
+$l=1$,
+$l=2$,
+$l=3$
+},
+legend style={
+at={(1.1,0.5)},
+anchor=west,
+},
+axis on top]
+
+\addplot [
+color=black!50,
+%dashed,
+line width=1.0pt
+]
+coordinates{
+ (1,0.5)(20,0.5) 
+};
+
+\addplot [
+color=green,
+%solid,
+mark=triangle,
+mark repeat = 2,
+line width=1.0pt
+]
+coordinates{
+ (1,0.15864807)(2,0.07869521)(3,0.04163154)(4,0.0227731)(5,0.01267809)(6,0.00715506)(7,0.00408067)(8,0.00233474)(9,0.00134995)(10,0.00078674)(11,0.00045634)(12,0.0002661)(13,0.00015528)(14,9.18e-05)(15,5.418e-05)(16,3.093e-05)(17,1.854e-05)(18,1.096e-05)(19,6.42e-06)(20,4.07e-06) 
+};
+
+\addplot [
+color=red,
+%dashed,
+mark=o,
+mark repeat = 2,
+line width=1.0pt
+]
+coordinates{
+ (3,0.40438822)(4,0.27724279)(5,0.18264245)(6,0.11829266)(7,0.07570288)(8,0.0480603)(9,0.03034198)(10,0.01907888)(11,0.01194749)(12,0.00744945)(13,0.00464872)(14,0.00288592)(15,0.00179175)(16,0.00110951)(17,0.00068228)(18,0.00042414)(19,0.00026106)(20,0.00016169) 
+};
+
+\addplot [
+color=black,
+%dotted,
+mark=x,
+mark repeat = 2,
+line width=1.0pt
+]
+coordinates{
+ (5,0.57844256)(6,0.45704223)(7,0.34314453)(8,0.24992986)(9,0.17798981)(10,0.12449759)(11,0.08591919)(12,0.05858202)(13,0.03954064)(14,0.02647097)(15,0.01759084)(16,0.01162552)(17,0.00762539)(18,0.0049912)(19,0.00324978)(20,0.00210894) 
+};
+
+\addplot [
+color=blue,
+%dash pattern=on 1pt off 3pt on 3pt off 3pt,
+mark=square,
+mark repeat = 2,
+line width=1.0pt
+]
+coordinates{
+ (7,0.70161574)(8,0.60003182)(9,0.4899891)(10,0.38754203)(11,0.29876793)(12,0.2255005)(13,0.16707037)(14,0.12193073)(15,0.08773833)(16,0.06249166)(17,0.04396628)(18,0.03067892)(19,0.02118843)(20,0.0145656) 
+};
+
+
+\end{semilogyaxis}
+\end{tikzpicture}

@@ -1,0 +1,22 @@
+  \begin{tikzpicture}[>=stealth',
+    box/.style={rectangle, draw=blue!50,fill=blue!20,rounded corners, semithick},
+    mycircle/.style={circle, draw,inner sep=1pt},
+    point/.style={coordinate}]
+    \matrix[row sep = 5mm, column sep = 5mm]{
+\node (system) [box] {System}; &
+\node (p31) [point] {}; &
+\node (sensor3) [box] {Sensor};&
+\node (p32) [mycircle] {}; &
+\node (p33) [point] {}; &
+\node (p34) [point] {}; & 
+\node (estimator) [box] {Estimator};\\
+    };
+    \draw [semithick,->] (system)--(p31)--(p31)--(sensor3);
+    
+    \draw [semithick] (sensor3)--(p32);
+
+    \draw [semithick,->] (p33)--(p34)--(estimator);
+    
+    \draw [semithick]  (p32)-- node [above] {$\gamma_{t}$} +(20:5mm);
+
+  \end{tikzpicture}

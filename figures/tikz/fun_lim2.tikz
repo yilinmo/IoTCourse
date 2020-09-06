@@ -1,0 +1,57 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{1,1,0.94}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2.5058in,
+height=1.9767in,
+at={(0.758in,0.481in)},
+scale only axis,
+area style,
+%stack plots=y,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+every x tick/.append style={black},
+xmin=0,
+xmax=3.3,
+xlabel={Efficiency},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+every y tick/.append style={black},
+ymin=0,
+ymax=3,
+ylabel={Security},
+ticks=none,
+axis background/.style={fill=white},
+legend style={legend cell align=left, align=left, draw=black}]
+
+\addplot[color=black, forget plot] table[row sep=crcr]{%
+2.87	0\\
+2.87	1.59873330905482\\
+};
+
+\addplot[fill=mycolor1, draw=black, forget plot] table[row sep=crcr]{%
+0	1.59873330905482\\
+2.87	1.59873330905482\\
+}
+\closedcycle;
+
+\node[right, align=left]
+at (axis cs:0.03,1.699) {\scriptsize $(m-2p)C$};
+
+\node[right, align=left]
+at (axis cs:2.87,0.15) {\scriptsize $mC$};
+
+\draw [fill=thupurple!80] (axis cs:2.87,0.05) circle [radius=2pt] node[above left]{\scriptsize{Naive Bayes}};
+\draw [fill=thupurple!80] (axis cs:2.25,1.59873330905482) circle [radius=2pt]node[above ]{\scriptsize{Trimmed Sum}};
+\draw [fill=thupurple!80] (axis cs:2.87,1.59873330905482) circle [radius=2pt]node[above right]{\scriptsize{???}};
+
+\end{axis}
+\end{tikzpicture}%

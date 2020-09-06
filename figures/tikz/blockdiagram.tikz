@@ -1,0 +1,52 @@
+\begin{tikzpicture}
+\draw [thick] (0.1,0.1) rectangle (0.54,0.54);
+\node [right] at (0,0.3) {$s_m$};
+
+\draw [fill] (0.32,0.94) circle [radius=0.022];
+\draw [fill] (0.32,1.24) circle [radius=0.022];
+\draw [fill] (0.32,1.54) circle [radius=0.022];
+
+\draw [thick] (0.1,1.94) rectangle (0.54,2.38);
+\node [right] at (0.05,2.16) {$s_1$};
+
+\draw [->,thick] (0.54,2.16) -- (1.65,2.16);
+\draw [thick, red] (1.8,2.16) circle [radius=0.15];
+\draw [-,thick,red] (1.65,2.16) -- (1.95,2.16);
+\draw [-,thick,red] (1.8,2.01) -- (1.8,2.31);
+\draw [->,thick,red] (1.8,2.66) -- (1.8,2.31);
+
+\draw [->,thick] (0.54,0.3) -- (1.65,0.3);
+\draw [thick, red] (1.8,0.3) circle [radius=0.15];
+\draw [-,thick,red] (1.65,0.3) -- (1.95,0.3);
+\draw [-,thick,red] (1.8,0.15) -- (1.8,0.45);
+\draw [->,thick,red] (1.8,0.8) -- (1.8,0.45);
+
+
+\draw [fill, red] (1.8,1.04) circle [radius=0.022];
+\draw [fill, red] (1.8,1.34) circle [radius=0.022];
+\draw [fill, red] (1.8,1.64) circle [radius=0.022];
+
+
+\draw [thick] (-1,0) rectangle (-0.5,2.4);
+\node [right] at (-1,1.2) {$\theta$};
+\draw [-,thick] (-0.5,0.3) -- (0.1,0.3);
+\draw [-,thick] (-0.5,2.16) -- (0.1,2.16);
+
+\draw [-,thick, blue] (1.95,0.3) -- (2.5,0.3);
+\draw [-,thick, blue] (1.95,2.16) -- (2.5,2.16);
+
+\draw [thick] (3.3,0.9) rectangle (4,1.5);
+\node [right] at (3.3,1.2) {FC};
+\draw [->,thick, blue] (2.5,2.16) -- (3.3,1.5);
+\draw [->,thick, blue] (2.5,0.3) -- (3.3,0.9);
+\draw [->,thick, blue] (4,1.2) -- node [above] {$\hat \theta$?} (5,1.2);
+
+{\footnotesize
+\node [above right] at (0.54,0.3) {$z_m(k)$};
+\node [above right] at (0.54,2.16) {$z_1(k)$};
+\node [above right] at (1.95,0.3) {$ y_m(k)$};
+\node [above right] at (1.95,2.16) {$ y_1(k)$};
+}
+
+\end{tikzpicture}
+

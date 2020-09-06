@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+  \node (x01) at (0,1) {\textcolor{red}{$x_{0,1}$}};
+  \node (x12) at (1,0) {\textcolor{red}{$x_{1,2}$}};
+  \node (x21) at (2,1) {\textcolor{red}{$x_{2,1}$}};
+  \node (x32) at (3,0) {\textcolor{red}{$x_{3,2}$}};
+  \node (x41) at (4,1) {\textcolor{red}{$x_{4,1}$}};
+
+  \node (x02) at (0,0) {\textcolor{blue}{$x_{0,2}$}};
+  \node (x11) at (1,1) {\textcolor{blue}{$x_{1,1}$}};
+  \node (x22) at (2,0) {\textcolor{blue}{$x_{2,2}$}};
+  \node (x31) at (3,1) {\textcolor{blue}{$x_{3,1}$}};
+  \node (x42) at (4,0) {\textcolor{blue}{$x_{4,2}$}};
+
+  \draw [semithick,red] (x01)--(x12)--(x21)--(x32)--(x41);
+  \draw [semithick,blue] (x02)--(x11)--(x22)--(x31)--(x42);
+
+  \node (y0) at (0,2) {\textcolor{red}{$y_{0}$}};
+  \node (y1) at (1,2) {\textcolor{blue}{$y_{1}$}};
+  \node (y2) at (2,2) {\textcolor{red}{$y_{2}$}};
+  \node (y3) at (3,2) {\textcolor{blue}{$y_{3}$}};
+  \node (y4) at (4,2) {\textcolor{red}{$y_{4}$}};
+
+  \draw [semithick, red] (x01)--(y0);
+  \draw [semithick, blue] (x11)--(y1);
+  \draw [semithick, red] (x21)--(y2);
+  \draw [semithick, blue] (x31)--(y3);
+  \draw [semithick, red] (x41)--(y4);
+\end{tikzpicture}
+

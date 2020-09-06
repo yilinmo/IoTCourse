@@ -1,0 +1,127 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=10cm,
+height=6cm,
+scale only axis,
+xmin=0.5,
+xmax=4.5,
+xtick={1,2,3,4},
+xticklabels={{A},{B},{C},{D}},
+xmajorgrids,
+ymin=-0.171625717537204,
+ymax=0.276587978434719,
+ylabel={Error},
+ymajorgrids,
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={Bus 4}
+]
+\addplot [color=red,solid,forget plot]
+  table[row sep=crcr]{%
+1	-0.130772781463433\\
+1	0.114180917218329\\
+};
+\addplot [color=gray,solid,forget plot]
+  table[row sep=crcr]{%
+2	-0.127311743127816\\
+2	0.157102783621123\\
+};
+\addplot [color=blue,solid,forget plot]
+  table[row sep=crcr]{%
+3	-0.151252367720298\\
+3	0.142310582630688\\
+};
+\addplot [color=mycolor1,solid,forget plot]
+  table[row sep=crcr]{%
+4	-0.100405107682406\\
+4	0.210600505368942\\
+};
+\addplot [color=red,solid,line width=4.0pt,forget plot]
+  table[row sep=crcr]{%
+1	-0.0364981564177342\\
+1	0.0344189541156417\\
+};
+\addplot [color=gray,solid,line width=4.0pt,forget plot]
+  table[row sep=crcr]{%
+2	-0.0421889037265895\\
+2	0.0376628273828021\\
+};
+\addplot [color=blue,solid,line width=4.0pt,forget plot]
+  table[row sep=crcr]{%
+3	-0.0412381981362469\\
+3	0.0359471529997688\\
+};
+\addplot [color=mycolor1,solid,line width=4.0pt,forget plot]
+  table[row sep=crcr]{%
+4	0.0102474568569144\\
+4	0.0938641631690351\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,fill=black,draw=red},forget plot]
+  table[row sep=crcr]{%
+1	-0.00368730613468049\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,fill=black,draw=gray},forget plot]
+  table[row sep=crcr]{%
+2	-0.00461585393299124\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,fill=black,draw=blue},forget plot]
+  table[row sep=crcr]{%
+3	-0.0059061769298614\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,fill=black,draw=mycolor1},forget plot]
+  table[row sep=crcr]{%
+4	0.0514235276616728\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,draw=black},forget plot]
+  table[row sep=crcr]{%
+1	-0.00368730613468049\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,draw=black},forget plot]
+  table[row sep=crcr]{%
+2	-0.00461585393299124\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,draw=black},forget plot]
+  table[row sep=crcr]{%
+3	-0.0059061769298614\\
+};
+\addplot [color=black,only marks,mark=*,mark options={solid,draw=black},forget plot]
+  table[row sep=crcr]{%
+4	0.0514235276616728\\
+};
+\addplot [color=black,mark size=2.0pt,only marks,mark=o,mark options={solid,draw=red},forget plot]
+  table[row sep=crcr]{%
+1.05748781712386	-0.146204315592782\\
+0.959033015790611	0.155444974565577\\
+0.991074486509321	0.178622392313768\\
+};
+\addplot [color=black,mark size=2.0pt,only marks,mark=o,mark options={solid,draw=gray},forget plot]
+  table[row sep=crcr]{%
+1.96942642815413	0.184210172547101\\
+};
+\addplot [color=black,mark size=2.0pt,only marks,mark=o,mark options={solid,draw=blue},forget plot]
+  table[row sep=crcr]{%
+2.8909874562019	0.166568582242874\\
+3.12067548844185	0.17128987977489\\
+3.02407329554735	0.171499773003554\\
+};
+\addplot [color=black,mark size=2.0pt,only marks,mark=o,mark options={solid,draw=mycolor1},forget plot]
+  table[row sep=crcr]{%
+3.98753420850001	-0.121984652701828\\
+4.11800264714937	-0.121615603559815\\
+4.04716359841931	0.234368756149286\\
+3.99699584218413	0.238059044863028\\
+3.96433661521043	0.2394453541215\\
+3.98287198629533	0.2476217783092\\
+3.92654869267618	0.256214628617814\\
+};
+\end{axis}
+\end{tikzpicture}%

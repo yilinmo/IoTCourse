@@ -1,0 +1,81 @@
+% This file was created by matlab2tikz v0.2.0.
+% Copyright (c) 2008--2012, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The latest updates can be retrieved from
+%   http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz
+% where you can also make suggestions and rate matlab2tikz.
+% 
+% 
+% 
+\begin{tikzpicture}
+
+% defining custom colors
+\definecolor{mycolor1}{rgb}{0.501960784313725,0.250980392156863,0}
+
+
+\begin{axis}[%
+width=\figurewidth,
+height=\figureheight,
+scale only axis,
+xmin=-1, xmax=9,
+xlabel={$k$},
+ymin=0, ymax=0.4,
+ylabel={$\beta^c(k)$},
+legend entries={
+$\mathcal T = 2$,
+$\mathcal T = 3$,
+$\mathcal T = 4$,
+$\mathcal T = 5$
+},
+legend style={
+at={(1.1,0.5)},
+anchor=west,
+} ]
+
+\addplot [
+color=black,
+mark=o,
+mark repeat = 2,
+line width=1.0pt,
+solid
+]
+coordinates{
+ (-1,0.0514)(0,0.1148)(1,0.204)(2,0.2238)(3,0.2243)(4,0.2278)(5,0.2272)(6,0.2213)(7,0.2235)(8,0.2275)(9,0.2159) 
+};
+
+\addplot [
+color=red,
+mark=x,
+mark repeat = 2,
+line width=1.0pt,
+solid
+]
+coordinates{
+ (-1,0.0496)(0,0.1016)(1,0.1791)(2,0.2526)(3,0.2714)(4,0.2748)(5,0.2756)(6,0.2761)(7,0.2701)(8,0.2672)(9,0.2678) 
+};
+
+\addplot [
+color=green,
+mark=triangle,
+mark repeat = 2,
+line width=1.0pt,
+solid
+]
+coordinates{
+ (-1,0.0528)(0,0.0995)(1,0.1618)(2,0.2299)(3,0.2963)(4,0.3148)(5,0.3193)(6,0.3245)(7,0.328)(8,0.3309)(9,0.3295) 
+};
+
+\addplot [
+color=blue,
+mark=square,
+mark repeat = 2,
+line width=1.0pt,
+solid
+]
+coordinates{
+ (-1,0.0525)(0,0.0961)(1,0.1513)(2,0.218)(3,0.2768)(4,0.3392)(5,0.3563)(6,0.3616)(7,0.3602)(8,0.3609)(9,0.3608) 
+};
+
+\end{axis}
+\end{tikzpicture}

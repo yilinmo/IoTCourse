@@ -1,0 +1,74 @@
+\setlength{\figureheight}{6cm}
+\setlength{\figurewidth}{10cm}
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+
+\begin{tikzpicture}
+
+  \begin{axis}[%
+    width=\figurewidth,
+    height=\figureheight,
+    at={(1.527in,1.083in)},
+    scale only axis,
+    xmin=0.95,
+    xmax=2.4,
+    xlabel={Normalized MSE of the estimators without attack},
+    xmajorgrids,
+    ymin=0.95,
+    ymax=2.5,
+    ylabel={Normalized MSE when under attack},
+    ymajorgrids,
+    axis background/.style={fill=white},
+    legend style={at={(0.597,0.528)},anchor=south west,legend cell align=left,align=left,draw=white!15!black}
+    ]
+    \addplot [color=blue,dashed,line width=1.5pt,mark=triangle,mark options={solid},forget plot]
+    table[row sep=crcr]{%
+      2.16434829886514	2.41673714136766\\
+      1.49824142620916	1.6273922047888\\
+      1.46836558726546	1.61304395019434\\
+      1.42878218405531	1.58080265845186\\
+      1.33509034059386	1.48317348510781\\
+      1.24979953097586	1.4011442907391\\
+      1.20190884155895	1.36475282176979\\
+      1.14816845697376	1.32743887772808\\
+      1.104692902235	1.30458587111275\\
+      1.0727554366346	1.2930587844785\\
+      1.04837293442887	1.29286647088633\\
+      1.03276380632143	1.30464750437787\\
+      1.02491383863213	1.32636243694814\\
+      1.0209295289153	1.35606289076979\\
+      1.01470702949196	1.40680155569416\\
+      1.00686189169388	1.48274325705327\\
+      1.00166658882151	1.69020329692052\\
+      1.00012894457222	2.29806950301701\\
+    };
+
+    \addplot [color=mycolor1,dashed,forget plot]
+    table[row sep=crcr]{%
+      1	1\\
+      2.2	1\\
+    };
+    \addplot [color=mycolor1,dashed,forget plot]
+    table[row sep=crcr]{%
+      1	1\\
+      1	2.5\\
+    };
+    \node[right, align=left, text=blue]
+    at (axis cs:2.164,2.417) {$\text{   }\leftarrow\text{ }\lambda\rightarrow 0$};
+    \node[right, align=left, text=blue]
+    at (axis cs:1.335,1.483) {$\text{   }\leftarrow\text{ }\lambda\text{=0.5}$};
+    \node[right, align=left, text=blue]
+    at (axis cs:1.202,1.365) {$\text{   }\leftarrow\text{ }\lambda\text{=1}$};
+    \node[right, align=left, text=blue]
+    at (axis cs:1.073,1.293) {$\text{   }\leftarrow\text{ }\lambda\text{=1.9}$};
+    \node[right, align=left, text=blue]
+    at (axis cs:1.02,1.356) {$\leftarrow\lambda\text{=3}$};
+    \node[right, align=left, text=blue]
+    at (axis cs:1,2.298) {$\text{   }\leftarrow\text{ }\lambda\text{=7}$};
+    \node[right, align=left, text=mycolor1]
+    at (axis cs:1,2.4) {$\text{   }\leftarrow\text{ LSE}$};
+    \node[right, align=left, text=mycolor1]
+    at (axis cs:1.9,1.14) {Oracle LSE};
+    \node[right, align=left, text=mycolor1]
+    at (axis cs:1.9,1.07) {$\text{     ~~~~~}\downarrow$};
+  \end{axis}
+\end{tikzpicture}
