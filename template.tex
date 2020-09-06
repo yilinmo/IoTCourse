@@ -1,0 +1,81 @@
+\documentclass{standalone}
+
+\usepackage{unicode-math}
+
+\setmainfont{Source Sans Pro}
+
+\setmathfont{latinmodern-math.otf}
+
+\setmathfont{MathJax_Math}[
+  range={
+   up,it,bb,bbit,scr,cal,bfcal,frak,tt,sfup,sfit,bfup,bfit,bfscr,bffrak,bfsfup,bfsfit,
+  },
+]
+
+\setmathfont{MathJax_Main}[
+  range=up/num,
+]
+
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Sans CJK SC}
+\xeCJKsetup{PunctStyle=kaiming,CJKspace=true,CheckSingle=true} 
+
+\usepackage{amsmath,verbatim}
+\usepackage{tikz}
+\graphicspath{ {./} }
+\usetikzlibrary{matrix,arrows,fit,backgrounds,mindmap,plotmarks,decorations.pathreplacing}
+%\usepackage{tkz-euclide}
+%\usetkzobj{all}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+\tikzset{decoration={name=none},}
+
+\newlength\figureheight
+\newlength\figurewidth
+
+\newcommand{\tikzdir}[1]{#1.tikz}
+\newcommand{\inputtikz}[1]{\input{\tikzdir{#1}}}
+
+\newcommand{\tI}{\tilde {\mathcal I}}
+\newcommand{\tA}{\tilde A}
+\newcommand{\ty}{\tilde y}
+\newcommand{\tx}{\tilde x}
+\newcommand{\tw}{\tilde w}
+\newcommand{\tv}{\tilde v}
+\newcommand{\tC}{\tilde C}
+\newcommand{\tP}{\tilde P}
+\newcommand{\Ic}{{\mathcal I^c}}
+\newcommand{\J}{{\mathcal J}}
+\newcommand{\K}{{\mathcal K}}
+
+\DeclareMathOperator{\Smin}{Smin}
+\DeclareMathOperator{\Smid}{Smid}
+\DeclareMathOperator{\Smax}{Smax}
+\DeclareMathOperator{\MSE}{MSE}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Med}{Med}
+\DeclareMathOperator{\Max}{Max}
+\DeclareMathOperator{\Min}{Min}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\logdet}{log\;det}
+\DeclareMathOperator{\argmin}{arg\;min}
+\DeclareMathOperator{\argmax}{arg\;max}
+\let\Tiny\tiny
+
+
+\colorlet{thupurple}{blue}
+\colorlet{caltechcolor}{blue}
+\colorlet{mycolor1}{blue}
+%\definecolor{thupurple}{RGB}{102,8,116}
+%\definecolor{caltechcolor}{RGB}{102,8,116}
+
+\begin{document}
+\setlength\figureheight{4.5cm}
+\setlength\figurewidth{10cm}
+\inputtikz{%TIKZNAME%}
+\end{document}
+

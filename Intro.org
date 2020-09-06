@@ -16,6 +16,8 @@
 # Use custom title slide.
 #+REVEAL_TITLE_SLIDE: title-slide.html
 
+#+HTML_HEAD: <style type="text/css"> div.right {text-align:right;} </style>
+
 # Generate bibliography with LaTeX
 #+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
 #+LATEX_HEADER: \addbibresource{references.bib}
@@ -29,20 +31,104 @@
 
 * History of Intelligent Network System
  
+** Wireless Sensor Networks
+   
+- 1997: [[https://en.wikipedia.org/wiki/Smartdust][Smart Dust Project]] proposed by researchers from UCB
  
 ** Internet of Things
-   cite:Lec19a
+/In the real world, things matter more than ideas./
+  #+BEGIN_right 
+  cite:Ashton, /"That 'internet of things' thing"/, 2009
+  #+END_right 
+ /Internet of things (IoT) is the inter-networking of physical devices, vehicles (also referred to as "connected devices" and "smart devices"), buildings, and other items embedded with electronics, software, sensors, actuators, and network connectivity which enable these objects to collect and exchange data./ 
+  #+BEGIN_right 
+  [[https://en.wikipedia.org/wiki/Internet_of_things][Wikipedia]]
+  #+END_right 
+
+
+*** The Internet of Things Vision 
+    
+*** History of "Things"
+    
+*** History of Internet of Things    
+
+*** Trends
+- Google Search Trends
+- The Hype Cycle
+- Number of Connected Devices v.s. Human Population
+- Metcalfe's law
+    
 ** Cyber-Physical Systems
-** Wireless Sensor Networks
-** Smart Grid
-** Smart City
+  {{{revealimg("./cps.meta","Cyber-Physical System","40vh",nil,'none)}}}
+ /CPSs refer to the next generation of engineered systems that require tight integration of *computing*, *communication*, and *control* technologies to achieve *stability*, *performance*, *reliability*, *robustness*, and *efficiency* in dealing with physical systems of many application domains./
+ 
+  #+BEGIN_right 
+  cite:Kumar, Proceedings of the IEEE, 2012
+  #+END_right 
+   
+*** Convergence of Computation and Control 
+
+- 1948: The term "Cybernetics" was coined by Norbert Wiener.
+- 1970s: Real time system
+- 1990s: Hybrid system
+- 2006: The term "Cyber-Physical System" was coined by NSF.
+
+*** Boeing 787 Incident 
+    
+*** Convergence of Communication and Control
+- 1971: [[https://en.wikipedia.org/wiki/ALOHAnet][ALOHAnet]], first public wireless packet data network
+- 1997: IEEE 802.11 (Wifi) was introduced
+- 1999: The term [[https://en.wikipedia.org/wiki/Internet_of_things][Internet of Things]] was invented.
+- 2000: Panel on Future Directions in Control, Dynamics, and Systems, Control in an Information Rich World:
+/Networks of sensory or actuator nodes with computational capabilities, connected wirelessly or by wires, can form an orchestra which controls our physical environment./
+
+*** Convergence of Communication and Computation
+- distributed systems
+- cognitive radio
+
+*** Many-Sidedness of Internet of Things & CPS
+    #+BEGIN_leftcol
+    #+HTML: <div class="r-stack">
+    #+ATTR_HTML: :class fragment fade-out :data-fragment-index 0
+    [[./blindmenandelephant.jpg]]
+    #+ATTR_HTML: :class fragment :data-fragment-index 0
+    [[./singpilot.jpg]]
+    #+HTML: </div>
+    #+END_leftcol
+    #+ATTR_REVEAL: :frag appear
+    #+BEGIN_rightcol
+    {{{revealimg("./acronis.meta","Diagram of Autonomous Car","40vh",nil,'none)}}}
+    #+END_rightcol
+  
 ** Intelligent Network System
 
 
+
+* Applications
+** Driven Force
+- New revenue streams (green energy solutions)
+- Reducing costs (in-home patient healthcare)
+- Reducing time to market (factory automation)
+- Improving supply chain logistics (asset tracking)
+- Reducing production loss (theft, spoilage of perishable)
+- Increasing productivity (machine learning and data analytics)
+- Cannibalization (Nest replacing traditional thermostats)
+
+** Manufacturing  
+** Consumer 
+** Retail
+** Healthcare
+** Energy
+** Transportation
+** Smart City
+
 * Technology Stack
 
-* Conclusion  
-** Bibliography
+
+* Course Information
+   
+
+* Bibliography
    :PROPERTIES:
    :CUSTOM_ID: bibliography
    :END:

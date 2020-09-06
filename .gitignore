@@ -1,6 +1,3 @@
-# SPDX-FileCopyrightText: 2017-2020 Jens Lechtenbörger
-# SPDX-License-Identifier: CC0-1.0
-
 *.elc
 auto
 public
@@ -16,7 +13,10 @@ howto.html*
 *.blg
 *.out
 *.toc
-*.tex~
-*.tex
 *.pdf
 *~
+*.tex
+!template.tex
+*.meta
+figures/tikz/*png
+figures/tikz/*svg
