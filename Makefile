@@ -18,9 +18,15 @@ TIKZSVGS  := $(patsubst %.tikz,%.svg,$(TIKZS))
 TIKZPNGS  := $(patsubst %.tikz,%.png,$(TIKZS))
 TIKZMETAS := $(patsubst $(TIKZDIR)/%.tikz,$(METADIR)/%.meta,$(TIKZS))
 
-.PHONY: all clean pics
+CSVDIR     := ./data
+CSVDESTDIR := ./public/data
+CSVS       := $(wildcard $(CSVDIR)/*.csv)
+PUBCSVS    := $(patsubst $(CSVDIR)/%.csv,$(CSVDESTDIR)/%.csv,$(CSVS))
 
-all: pics
+
+.PHONY: all clean pics csvs
+
+all: pics csvs
 
 pics: $(PNGMETAS) $(GIFMETAS) $(JPGMETAS) $(TIKZMETAS) $(TIKZPNGS) $(TIKZSVGS)
 
@@ -37,6 +43,11 @@ pics: $(PNGMETAS) $(GIFMETAS) $(JPGMETAS) $(TIKZMETAS) $(TIKZPNGS) $(TIKZSVGS)
 %.png: %.pdf
 	pdftoppm -r 300 -png $^ tmp
 	mv tmp-1.png $@
+
+csvs: $(PUBCSVS)
+
+$(CSVDESTDIR)/%.csv: $(CSVDIR)/%.csv
+	cp $^ $@
 
 $(METADIR)/%.meta: $(TIKZDIR)/%.png
 	./gen_meta.sh $^ > $@

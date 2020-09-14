@@ -2,7 +2,6 @@
 #+STARTUP: showeverything
 #+SPDX-FileCopyrightText: 2017-2020 Mo, Yilin <https://yilinmo.github.io>
 #+SPDX-License-Identifier: CC-BY-SA-4.0
-
 # Apply standard settings of oer-reveal.
 #+INCLUDE: "~/.emacs.d/oer-reveal-org/config.org"
 
@@ -16,11 +15,28 @@
 # Use custom title slide.
 #+REVEAL_TITLE_SLIDE: title-slide.html
 
-#+HTML_HEAD: <style type="text/css"> div.right {text-align:right;} </style>
+#+HTML_HEAD: <style type="text/css"> div.flushright{text-align:right;} </style>
+
+#+HTML_HEAD: <script src="./reveal.js/plugin/chart/Chart.min.js"></script>
+#+HTML_HEAD: <script src="./reveal.js/plugin/chart/plugin.js"></script>
+#+OPTIONS: html5-fancy:t
+
+#+HTML_HEAD: <script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
+#+HTML_HEAD: <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 
 # Generate bibliography with LaTeX
 #+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
 #+LATEX_HEADER: \addbibresource{references.bib}
+
+#+LATEX_HEADER: \usepackage{xeCJK}
+#+LATEX_HEADER: \setCJKmainfont{Noto Sans CJK SC}
+#+LATEX_HEADER: \xeCJKsetup{PunctStyle=kaiming,CJKspace=true,CheckSingle=true} 
+#+LATEX_COMPILER: xelatex
+#+LATEX_HEADER: \newenvironment{canvas}{}{}
+
+#+REVEAL_EXTERNAL_PLUGINS: ((spotlight . "{src:'%splugin/spotlight/spotlight.js'}") (wordcloud . "{src: '%splugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } }"))
+#+REVEAL_INIT_SCRIPT: plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false,}, keyboard: {67: function() { RevealSpotlight.toggleSpotlight() },}
 
 #+TITLE: Introduction to Intelligent Networked System
 #+AUTHOR: Mo, Yilin
@@ -32,26 +48,96 @@
 * Intelligent Networked System
 
 ** What is Intelligent Networked System
+- Not many search results   
+   {{{revealimg("figures/ins1.meta","Search Results for Intelligent Networked System","40vh",nil,'none)}}}
    
-   {{{revealimg("figures/ins1.meta","Search Results","40vh",nil,'none)}}}
-   {{{revealimg("figures/ins2.meta","Search Results","40vh",nil,'none)}}}
+*** What is Intelligent Networked System
+- Not many search results   
+   {{{revealimg("figures/ins2.meta","Search Results for 智能网联系统","40vh",nil,'none)}}}
 
-** Intelligent Networked System 
-   TODO: [[https://gitlab.com/andersjohansson/reveal-wordcloud][word cloud]]
+*** Intelligent Networked System 
+   #+ATTR_HTML: :class stretch :wordcloud ""
+   30 Internet of Things
+   30 Informatization
+   20 Cyber-Physical System
+   15 Wireless Sensor Network
+   15 5G
+   15 LPWAN
+   12 MQTT
+   12 Embedded Device
+   12 Distributed System
+   10 Information Fusion
+   10 Smart Algorithms
+   10 Bishop Myriel
+   10 Patron-Minette
+   10 God
+   8 ABC Café
+   8 Paris
+   8 Digne
+   8 Elephant of the Bastille
+   5 silverware
+   5 Bagne of Toulon
+   5 loaf of bread
+   5 Rue Plumet
+   5 revolution
+   5 barricade
+   4 sewers
+   4 Fex urbis lex orbis
    
 ** Wireless Sensor Networks
+ /Wireless sensor network (WSN) refers to a group of spatially dispersed and dedicated sensors for monitoring and recording the physical conditions of the environment and organizing the collected data at a central location./
+   #+BEGIN_flushright 
+   [[https://en.wikipedia.org/wiki/Wireless_sensor_network][Wikipedia]]
+   #+END_flushright 
    - 1997: [[https://en.wikipedia.org/wiki/Smartdust][Smart Dust Project]] proposed by researchers from UCB
-  {{{revealimg("./smartdust.meta","","30vh",nil,'none)}}}
+  {{{revealimg("figures/smartdust.meta","","40vh",nil,'none)}}}
 
-*** Vision of Wireless Sensor Networks
+*** Pros and Cons of Going Wireless
+   
+    #+BEGIN_leftcol
+    {{{revealimg("figures/cable.meta","","60vh",nil,'none)}}}
+    #+END_leftcol
+    #+ATTR_REVEAL: :frag appear
+    #+BEGIN_rightcol
+    {{{revealimg("figures/wirelessfactory.meta","","60vh",nil,'none)}}}
+    #+END_rightcol
+ 
+*** Pros and Cons of Going Wireless
+
+    #+BEGIN_leftcol
+Pros:
+- Increased Mobility
+- Scalability
+- Lower Cost
+- Ease of Installation
+- Wider Reach
+
+    #+END_leftcol
     
-   {{{revealimg("figures/firefly.meta","Search Results","40vh",nil,'none)}}}
-
-
-   {{{revealgrid(4, "figures/sensor.grid", 60, 2, 2, "\"ga1 ga2\" \"ga1 ga3\"")}}}
-   {{{revealgrid(2, "figures/mine.grid", 60, 2, 1, "\"ga1 ga2\" ")}}}
+    #+ATTR_REVEAL: :frag appear
+    #+BEGIN_rightcol
+Cons:
+- Communication Issues:
+  - Packet drop
+  - Low throughput
+  - High latency
+- Energy Constraints
+    #+END_rightcol
+    
+*** Vision of Wireless Sensor Networks
+   - Building Monitoring
+   {{{revealimg("figures/firefly.meta","","70vh",nil,'none)}}}
+   
+#+REVEAL: split
+   - Mine Monitoring
+   {{{revealgrid(2, "figures/mine.grid", 90, 2, 1, "\"ga1 ga2\" ")}}}
+   
+#+REVEAL: split
+   - Typical Sensor Nodes:
+   {{{revealgrid(4, "figures/sensor.grid", 90, 2, 2, "\"ga1 ga2\" \"ga3 ga4\"")}}}
   
 *** History of Wireless Sensor Networks 
+    
 |            | Gen 1 (80s-90s)          | Gen 2 (1999-2006)           | Gen 3 (2010 and beyond)            |
 | Size       | Large shoe-box           | Pack of cards               | Dust particle                      |
 | Weight     | Kilograms                | Grams                       | Negligible                         |
@@ -63,51 +149,60 @@
 
 ** Internet of Things
    /Internet of things (IoT) is the inter-networking of physical devices, vehicles (also referred to as "connected devices" and "smart devices"), buildings, and other items embedded with electronics, software, sensors, actuators, and network connectivity which enable these objects to collect and exchange data./ 
-   #+BEGIN_right 
+   #+BEGIN_flushright 
    [[https://en.wikipedia.org/wiki/Internet_of_things][Wikipedia]]
-   #+END_right 
+   #+END_flushright 
    /In the real world, things matter more than ideas./
-   #+BEGIN_right 
+   #+BEGIN_flushright
    cite:Ashton, /"That 'internet of things' thing"/, 2009
-   #+END_right 
-
+   #+END_flushright
+ 
 *** Internet of Things Paradigm
 
-   {{{revealimg("figures/iot.meta","","40vh",nil,'none)}}}
+   {{{revealimg("figures/iot.meta","","60vh",nil,'none)}}}
  
    #+BEGIN_center 
-   Internet of Things Paradigm, cite:IoT2017
+   Internet of Things Paradigm, cite:IoT2018
    #+END_center
+   
    
 *** Early History of Internet of Things
     - 1973: Mario W. Cardullo receives the patent for first RFID tag
-    - 1982 Carnegie Mellon internet-connected soda machine
-    - 1991: HP introduces HP LaserJet IIISi: first Ethernet-connected network printer
-    - 1993: Internet-connected coffee pot at University of Cambridge (first internet-connected camera)
-    - 1999: LG Internet Digital DIOS refrigerator
+    - 1982: Carnegie Mellon internet-connected soda machine
+    - 1991: HP introduces HP LaserJet IIISi: First Ethernet-connected network printer{{{reveallicense("figures/hp.meta","20vh",nil,'none)}}}
+    - 1993: Internet-connected coffee pot at University of Cambridge (First Networked Camera) {{{reveallicense("figures/xcoffee.meta","20vh",nil,'none)}}}
     - 1999: The term [[https://en.wikipedia.org/wiki/Internet_of_things][Internet of Things]] was coined
     - 2005: United Nation's International Telecommunications Union report predicting the rise of IoT for the first time
 
 *** Trends
     - Google Search Trends
+    #+ATTR_HTML: :data-chart line :class stretch
+    #+BEGIN_canvas
+    #+INCLUDE: "data/iot.csv" export html
+    #+END_canvas
+
+    #+REVEAL: split
     - The Hype Cycle
-   {{{revealimg("figures/hypecycle.meta","Gartner Hype Cycle","40vh",nil,'none)}}}
-    - Number of Connected Devices v.s. Human Population
-    
+    {{{revealimg("figures/hypecycle.meta","Gartner Hype Cycle","80vh",nil,'none)}}}
+   
 *** Metcalfe's law
     /The value of a network goes up as the square of the number of users./
-   #+BEGIN_right 
-   cite:Shapiro, /"Information Rules"/, 1998
-   #+END_right 
-   \[V \propto N^2]
+    
+    #+ATTR_HTML: :data-chart bar :class stretch
+    #+BEGIN_canvas
+    #+INCLUDE: "data/connection.csv" export html
+    #+END_canvas
    
 ** Cyber-Physical Systems
-   {{{revealimg("figures/cps.meta","Cyber-Physical System","40vh",nil,'none)}}}
+   
    /CPSs refer to the next generation of engineered systems that require tight integration of *computing*, *communication*, and *control* technologies to achieve *stability*, *performance*, *reliability*, *robustness*, and *efficiency* in dealing with physical systems of many application domains./
  
-   #+BEGIN_right 
+   #+BEGIN_flushright
    cite:Kumar, Proceedings of the IEEE, 2012
-   #+END_right 
+   #+END_flushright
+   
+   #+REVEAL: split
+   {{{revealimg("figures/cps.meta","Cyber-Physical System","80vh",nil,'none)}}}
    
 *** Convergence of Computation and Control 
 
@@ -116,33 +211,32 @@
     - 1990s: Hybrid system
     - 2006: The term "Cyber-Physical System" was coined by NSF.
 
-*** Boeing 787 Incident 
-    
+*** Boeing 787 ZA002 Incident 
+  
+#+BEGIN_leftcol
+    /The P100 panel is one of several power panels in the aft electronics bay. It receives power from the left engine and distributes it to an array of systems. *In the event of a failure of the P100 panel, backup power sources* – including *power from the right engine*, *the Ram Air Turbine*, the auxiliary power unit or the battery – *are designed to automatically engage to ensure that those systems needed for continued safe operation of the airplane are powered*./ 
+#+END_leftcol
+#+BEGIN_rightcol
+{{{revealimg("figures/RAT.meta","","50vh",nil,'none)}}}
+#+END_rightcol
 *** Convergence of Communication and Control
     - 1971: [[https://en.wikipedia.org/wiki/ALOHAnet][ALOHAnet]], first public wireless packet data network
     - 1997: IEEE 802.11 (Wifi) was introduced
     - 2000: Panel on Future Directions in Control, Dynamics, and Systems, Control in an Information Rich World:
     /Networks of sensory or actuator nodes with computational capabilities, connected wirelessly or by wires, can form an orchestra which controls our physical environment./
 
+
+*** Convergence of Communication and Control
+   #+ATTR_HTML: :controls controls :width 1280
+   #+BEGIN_video
+   #+HTML: <source src="./videos/nokia.mp4" type="video/mp4">
+   Your browser does not support the video tag.
+   #+END_video
+
 *** Convergence of Communication and Computation
     - distributed systems
     - cognitive radio
-
-*** Many-Sidedness of Internet of Things & CPS
-    #+BEGIN_leftcol
-    #+HTML: <div class="r-stack">
-    #+ATTR_HTML: :class fragment fade-out :data-fragment-index 0
-    [[figures/raw/blindmenandelephant.jpg]]
-    #+ATTR_HTML: :class fragment :data-fragment-index 0
-    [[figures/raw/singpilot.jpg]]
-    #+HTML: </div>
-    #+END_leftcol
-    #+ATTR_REVEAL: :frag appear
-    #+BEGIN_rightcol
-    {{{revealimg("figures/acronis.meta","Anatomy of Autonomous Car","40vh",nil,'none)}}}
-    #+END_rightcol
-  
-
+ 
 * Applications
   
 ** Driven Force
@@ -170,51 +264,121 @@
 
 * Technology Stack
 
+
+    # *** Many-Sidedness of Internet of Things & CPS
+    #    #+BEGIN_leftcol
+    #    #+HTML: <div class="r-stack">
+    #    #+ATTR_HTML: :class fragment fade-out :data-fragment-index 0
+    #    [[figures/raw/blindmenandelephant.jpg]]
+    #    #+ATTR_HTML: :class fragment :data-fragment-index 0
+    #    [[figures/raw/singpilot.jpg]]
+    #    #+HTML: </div>
+    #    #+END_leftcol
+    #    #+ATTR_REVEAL: :frag appear
+    #    #+BEGIN_rightcol
+    #    {{{revealimg("figures/acronis.meta","Anatomy of Autonomous Car","40vh",nil,'none)}}}
+    #    #+END_rightcol
+ 
+
 * Course Information
  
-- Pre-requisites:
-  - 计算机语言与程序设计
-  - 计算机网络与应用
-- Things that you will need for the lab:
-  * Linux(Debian)
-  * SSH
-  * Python
-  * Git
+  - Pre-requisites:
+    - 计算机语言与程序设计
+    - 计算机网络与应用
+  - Things that you will need to learn for the lab/project:
+    * Raspberry Pi: Most popular single board computer
+    * GNU/Linux: Most popular OS for IoT
+    * Use SSH to connect to RPi
+    * Write and execute short Python code (<100 lines)
+    * Version control and collaborate using Git
 
 ** Course Instructor
-- Mo, Yilin
-- Pei, Xin
+   - Mo, Yilin
+     - Office: FIT Building 3-613
+     - Office Hour: Wednesday 14:00-17:00
+     - Phone: 62792438
+     - Email: ylmo@tsinghua.edu.cn
+   - Pei, Xin
+     - Office: Central Main Building 809
+     - Office Hour: Wednesday 14:00-17:00
+     - Phone: 62795043
+     - Email: peixin@tsinghua.edu.cn
 
 ** Teaching Assistant
+   - Lu, Yiwen
+     - Office: FIT Building 3-623
+     - Office Hour: Friday 14:00-17:00
+     - Phone: 62772430
+     - Email: luyw20n@mails.tsinghua.edu.cn
 
 ** /Tentative/ Lecture Schedule 
-| Lecture # | Date  | Topics                         |
-|         1 | 9/18  | Introduction, Sensor OS               |
-|         2 | 9/25  | Sensors, Actuators, Energy Harvesting |
-|         3 | 10/2  | Lab 1: Raspberry Pi platform          |
-|         4 | 10/9  | Physical Layer                        |
-|         5 | 10/16 | MAC Layer                             |
-|         6 | 10/23 | Routing                               |
-|         7 | 10/30 | Lab 2: Networking                     |
-|         8 | 11/6  | Lab 3: Wireless Ad-Hoc Network        |
-|         9 | 11/13 | Security                              |
-|        10 | 11/20 | Clock Synchronization                 |
-|        11 | 11/27 | Localization                          |
-|        12 | 12/4  | Big Data, Cloud Computing             |
-|        13 | 12/11 | Smart Transportation System           |
-|        14 | 12/18 | Applications                          |
-|        15 | 12/25 | Lab 4: Project                        |
-|        16 | 1/1   | Project Demonstration                 |
+   - Lecturer: Mo, Yilin
+   | Lecture # | Date   | Topics                                |
+   |         1 | 9/18   | Introduction, Sensor OS               |
+   |         2 | 9/25   | Sensors, Actuators, Energy Harvesting |
+   |         3 | *9/27* | Lab 1: Raspberry Pi platform          |
+   |         4 | 10/9   | Physical Layer                        |
+   |         5 | 10/16  | MAC Layer                             |
+   |         6 | 10/23  | Routing                               |
+   |         7 | 10/30  | Lab 2: Networking                     |
+   |         8 | 11/6   | Lab 3: Wireless Mesh Network          |
+   |         9 | 11/13  | Security                              |
+
+   #+REVEAL: split
+   - Lecturer: Pei, Xin
+   | Lecture # | Date   | Topics                                |
+   |        10 | 11/20  | Clock Synchronization                 |
+   |        11 | 11/27  | Localization                          |
+   |        12 | 12/4   | Big Data, Cloud Computing             |
+   |        13 | 12/11  | Smart Transportation System           |
+   |        14 | 12/18  | Applications                          |
+   |        15 | 12/25  | Lab 4: Project                        |
+   |        16 | *1/1*  | Project Demonstration                 |
 
 ** Grading Criteria
 
-- Quizzes (4 total): 20%
-- Lab Assignment: 20%
-- Final Project: 60%
-  * Demo: 20%
-  * Report: 40%
+   - Quizzes (4 total): 20%
+   - Lab Assignment: 20%
+   - Final Project: 60%
+     * Demo: 20%
+     * Report: 40%
+   - Pass/Fail
+
+** Quizzes
+   - *Four* in-class, closed-book quizzes
+   - Spread throughout the semester
+   - Announcement will be one week ahead of time (with *reading assignment*)
+   - The questions will be based on the reading assignment.
+
+** Lab Assignments
+   - *Three* lab assignments at the first half of the semester
+   - Location: *Central Main Building 510*
+   - Goal: Get familiar with Raspberry Pi and networking protocols
+     1. Installing Raspberry Pi OS, SSH, Light Sensor, LED
+     2. Distributed “Whack-a-Mole”
+     3. Wireless Mesh Network
+
 ** Project
-   
+   - Carried out in teams of *3* students.
+     - The code should be hosted on Tsinghua Gitlab Repo
+     - We will review everyone's contribution to the Repo
+   - Each group will be given 3 Raspberry Pis, Sensors + LED, SD cards and other accessories
+     - Take good care of the equipment
+   - Buying additional hardware 
+     - Write a proposal with a budget (Typically < ¥1,000)
+     - We will review the proposal and buy the HW
+   #+REVEAL: split
+   - A project list will be presented and discussed in detail
+   - Example: 
+     - Developing an ad-hoc sensor network of 5+ nodes via Wifi and a front-end to show the sensor readings
+     - Completing the tasks in Lab 2 while running RPI on bare metal
+     - ...
+   - You are encourage to propose your own project and discuss with us
+     - Combining it with your final year project!
+   - Grading Criteria:
+     - 2/3: Final Report
+     - 1/3: Demonstration
+
 * Bibliography
   :PROPERTIES:
   :CUSTOM_ID: bibliography

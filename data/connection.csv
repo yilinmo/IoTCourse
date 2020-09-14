@@ -1,0 +1,15 @@
+Year,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030
+ Population (billion),7.33,7.41,7.49,7.57,7.64,7.72,7.79,7.86,7.94,8.01,8.08,8.14,8.21,8.28,8.34
+ Connected devices (billion),17.68,20.35,23.14,26.66,30.73,35.82,42.62,51.11,62.12,75.44,91.58,111.18,134.97,163.86,198.92
+
+<!--
+{
+"data" : {
+"datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
+},
+"options": {
+"title": {
+"display": true,
+"text": "Number of Connected Devices v.s. Human Population"
+}}}
+-->

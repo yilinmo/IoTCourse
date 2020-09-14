@@ -20,3 +20,4 @@ howto.html*
 *.meta
 figures/tikz/*png
 figures/tikz/*svg
+!public/reveal.js/*

@@ -1,0 +1,3 @@
+[submodule "public/reveal.js/plugin/reveal-wordcloud"]
+	path = public/reveal.js/plugin/reveal-wordcloud
+	url = https://gitlab.com/andersjohansson/reveal-wordcloud.git
