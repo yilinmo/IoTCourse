@@ -5,13 +5,6 @@
 # Apply standard settings of oer-reveal.
 #+INCLUDE: "~/.emacs.d/oer-reveal-org/config.org"
 
-# Enable klipse, but disable scaling, which interferes.
-# (This is only necessary for presentations using klipse.  Otherwise,
-# the following three lines and subsequent klipse settings can be removed.)
-#+OPTIONS: reveal_klipsify_src:t
-#+REVEAL_MIN_SCALE: 1.0
-#+REVEAL_MAX_SCALE: 1.0
-
 # Use custom title slide.
 #+REVEAL_TITLE_SLIDE: title-slide.html
 
@@ -34,9 +27,10 @@
 #+LATEX_HEADER: \xeCJKsetup{PunctStyle=kaiming,CJKspace=true,CheckSingle=true} 
 #+LATEX_COMPILER: xelatex
 #+LATEX_HEADER: \newenvironment{canvas}{}{}
+#+LATEX_HEADER: \newenvironment{r-stack}{}{}
 
 #+REVEAL_EXTERNAL_PLUGINS: ((spotlight . "{src:'%splugin/spotlight/spotlight.js'}") (wordcloud . "{src: '%splugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } }"))
-#+REVEAL_INIT_SCRIPT: plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false,}, keyboard: {67: function() { RevealSpotlight.toggleSpotlight() },}
+#+REVEAL_INIT_SCRIPT: plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {67: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1
 
 #+TITLE: Introduction to Intelligent Networked System
 #+AUTHOR: Mo, Yilin
@@ -48,41 +42,38 @@
 * Intelligent Networked System
 
 ** What is Intelligent Networked System
-- Not many search results   
-   {{{revealimg("figures/ins1.meta","Search Results for Intelligent Networked System","40vh",nil,'none)}}}
+   {{{revealimg("figures/ins1.meta","Search Results for Intelligent Networked System","70vh",nil,'none)}}}
    
 *** What is Intelligent Networked System
-- Not many search results   
-   {{{revealimg("figures/ins2.meta","Search Results for 智能网联系统","40vh",nil,'none)}}}
+   {{{revealimg("figures/ins2.meta","Search Results for 智能网联系统","70vh",nil,'none)}}}
 
 *** Intelligent Networked System 
    #+ATTR_HTML: :class stretch :wordcloud ""
    30 Internet of Things
    30 Informatization
-   20 Cyber-Physical System
+   20 Data Analytics
+   15 Cyber-Physical System
    15 Wireless Sensor Network
-   15 5G
-   15 LPWAN
-   12 MQTT
-   12 Embedded Device
-   12 Distributed System
-   10 Information Fusion
-   10 Smart Algorithms
-   10 Bishop Myriel
-   10 Patron-Minette
-   10 God
-   8 ABC Café
-   8 Paris
-   8 Digne
-   8 Elephant of the Bastille
-   5 silverware
-   5 Bagne of Toulon
-   5 loaf of bread
-   5 Rue Plumet
-   5 revolution
-   5 barricade
-   4 sewers
-   4 Fex urbis lex orbis
+   15 Smart Algorithms
+   12 Cloud Computing
+   12 Embedded Devices
+   12 5G
+   10 RFID
+   10 LPWAN
+   10 802.15
+   10 TLS
+   10 Linux
+   8 RTOS
+   8 Python
+   8 C/C++
+   8 Java
+   5 MQTT
+   5 CoAP
+   5 Bluetooth
+   5 Zigbee
+   5 Wifi
+   5 OFDMA
+   4 Mesh
    
 ** Wireless Sensor Networks
  /Wireless sensor network (WSN) refers to a group of spatially dispersed and dedicated sensors for monitoring and recording the physical conditions of the environment and organizing the collected data at a central location./
@@ -95,11 +86,11 @@
 *** Pros and Cons of Going Wireless
    
     #+BEGIN_leftcol
-    {{{revealimg("figures/cable.meta","","60vh",nil,'none)}}}
+    {{{revealimg("figures/cable.meta","","80vh",nil,'none)}}}
     #+END_leftcol
     #+ATTR_REVEAL: :frag appear
     #+BEGIN_rightcol
-    {{{revealimg("figures/wirelessfactory.meta","","60vh",nil,'none)}}}
+    {{{revealimg("figures/wirelessfactory.meta","","80vh",nil,'none)}}}
     #+END_rightcol
  
 *** Pros and Cons of Going Wireless
@@ -126,15 +117,15 @@ Cons:
     
 *** Vision of Wireless Sensor Networks
    - Building Monitoring
-   {{{revealimg("figures/firefly.meta","","70vh",nil,'none)}}}
+   {{{revealimg("figures/firefly.meta","","60vh",nil,'none)}}}
    
 #+REVEAL: split
    - Mine Monitoring
-   {{{revealgrid(2, "figures/mine.grid", 90, 2, 1, "\"ga1 ga2\" ")}}}
+   {{{revealgrid(2, "figures/mine.grid", 40 , 2, 1, "\"ga1 ga2\" ")}}}
    
 #+REVEAL: split
    - Typical Sensor Nodes:
-   {{{revealgrid(4, "figures/sensor.grid", 90, 2, 2, "\"ga1 ga2\" \"ga3 ga4\"")}}}
+   {{{revealgrid(4, "figures/sensor.grid", 40, 2, 2, "\"ga1 ga2\" \"ga4 ga3\"")}}}
   
 *** History of Wireless Sensor Networks 
     
@@ -201,12 +192,11 @@ Cons:
    cite:Kumar, Proceedings of the IEEE, 2012
    #+END_flushright
    
-   #+REVEAL: split
-   {{{revealimg("figures/cps.meta","Cyber-Physical System","80vh",nil,'none)}}}
+   {{{revealimg("figures/cps.meta","Cyber-Physical System","40vh",nil,'none)}}}
    
 *** Convergence of Computation and Control 
 
-    - 1948: The term "Cybernetics" was coined by Norbert Wiener.
+    - 1948: The term "Cybernetics" was coined by Norbert Wiener.{{{reveallicense("figures/wiener.meta","40vh",nil,'none)}}}
     - 1970s: Real time system
     - 1990s: Hybrid system
     - 2006: The term "Cyber-Physical System" was coined by NSF.
@@ -227,72 +217,167 @@ Cons:
 
 
 *** Convergence of Communication and Control
-   #+ATTR_HTML: :controls controls :width 1280
+   #+ATTR_HTML: :controls controls :width 1280 :height 720
    #+BEGIN_video
    #+HTML: <source src="./videos/nokia.mp4" type="video/mp4">
    Your browser does not support the video tag.
    #+END_video
-
-*** Convergence of Communication and Computation
-    - distributed systems
-    - cognitive radio
  
 * Applications
-  
-** Driven Force
-   - New revenue streams (green energy solutions)
-   - Reducing costs (in-home patient healthcare)
-   - Reducing time to market (factory automation)
-   - Improving supply chain logistics (asset tracking)
-   - Reducing production loss (theft, spoilage of perishable)
-   - Increasing productivity (machine learning and data analytics)
-   - Cannibalization (Nest replacing traditional thermostats)
-    
+   
 ** Manufacturing  
-   
+    - Use cases:
+      - Preventative maintenance on new and pre-existing factory machinery
+      - Throughput increase through real-time demand
+      - Energy savings
+      - Safety systems such as thermal sensing, pressure sensing, and gas leaks
+      - Factory floor expert systems
+    - Goal: Improving yield, uptime, real-time response, and systems safety. 
+    - Challenges: Real-time decision, Legacy system, Security
+
 ** Consumer 
+
+   - Use cases:
+     - Smart home gadgetry: Smart irrigation, smart garage doors, smart locks, smart lights, smart thermostats, and smart security.
+     - Wearables: Health and movement trackers, smart clothing/wearables.
+     - Pets: Pet location systems, smart dog doors.
+   - Goal: Improving quality of life
+   - Constraints: bifurcation of standards
+
+** Retailing
    
-** Retail
-   
+   - Use cases:
+     - Beaconing, such as proximity sensing customers, traffic patterns, and inter-arrival times as marketing analytics.
+     - Beaconing systems within entertainment venues, conferences, concerts, amusement parks, and museums.
+     - Targeted advertising, such as locating known or potential customers by proximity and providing sales information.
+     - Asset tracking, such as inventory control, loss control, and supply chain optimizations.
+     - Apply predictive analytics to food supply.
+     - Digital signage within retail, hospitality, or citywide.
+   - Goal: Lowering sales costs and Improving customer experience
+   - Constraints: Cost/benefit ratio
+
 ** Healthcare
-   
+   - Use cases:
+     - In-home patient care
+     - Learning models of predictive and preventative healthcare
+     - Dementia and elderly care and tracking
+     - Hospital equipment and supply asset tracking
+     - Pharmaceutical tracking and security
+     - Remote field medicine
+     - Drug research
+     - Patient fall indicators
+   - Goal: Improving the quality of life and reduce health costs 
+   - Constraints: Government Regulation, Reliability, Zero downtime, Privacy
+
 ** Energy
    
+- Use cases:
+  - Oil rig analysis of thousands of sensors and data points for efficiency gains
+  - Remote solar panel monitoring and maintenance
+  - Hazardous analysis of nuclear facilities
+  - Smart electric meters in a citywide deployment to monitor energy usage and demand
+  - Real-time blade adjustments as a function of weather on remote wind turbines
+- Constraints: Real-time responsiveness, extreme environment
+
 ** Transportation
-   
+
+- Use cases:
+  - Fleet tracking and location awareness
+  - Railcar identification and tracking
+  - Asset and package tracking within fleets
+  - Preventative maintenance of vehicles on the road
+- Goal: Safety, Minimize downtime
+- Challenges: Mobility, Spatial data
+
 ** Smart City
+   
+
+- Use cases:
+  - Pollution control and regulatory analysis through environmental sensing
+  - Microclimate weather predictions using citywide sensor networks
+  - Efficiency gains and improved costs through waste management service on demand
+  - Improved traffic flow and fuel economy through smart traffic light control and patterning
+  - Energy efficiency of city lighting on demand
+  - Smart snow plowing based on real-time road demand, weather conditions, and nearby plows
+  - Smart irrigation of parks and public spaces, depending on weather and current usage
+  - Smart cameras to watch for crime and real-time automated AMBER Alerts
+  - Smart parking lots to automatically find best space parking on demand
+  - Bridge, street, and infrastructure wear and usage monitors to improve longevity and service
+- Challenges: Scale (/More is different/)
 
 * Technology Stack
 
+** Enabling Technology
+   
+   {{{revealimg("figures/enablingtech.meta","Enabling Technology","80vh",nil,'none)}}}
 
-    # *** Many-Sidedness of Internet of Things & CPS
-    #    #+BEGIN_leftcol
-    #    #+HTML: <div class="r-stack">
-    #    #+ATTR_HTML: :class fragment fade-out :data-fragment-index 0
-    #    [[figures/raw/blindmenandelephant.jpg]]
-    #    #+ATTR_HTML: :class fragment :data-fragment-index 0
-    #    [[figures/raw/singpilot.jpg]]
-    #    #+HTML: </div>
-    #    #+END_leftcol
-    #    #+ATTR_REVEAL: :frag appear
-    #    #+BEGIN_rightcol
-    #    {{{revealimg("figures/acronis.meta","Anatomy of Autonomous Car","40vh",nil,'none)}}}
-    #    #+END_rightcol
+*** Four Layer Model
+   
+   {{{revealimg("figures/4layer.meta","Four-Layer Model of Internet of Things","80vh",nil,'none)}}}
+  
+*** Enabling Technology
+- Node Level:
+  - Embedded systems: Sensors, RFIDs
+  - Embedded operating systems: Linux, Windows IoT, Real-time OS
+  - Energy-harvesting 
+  - Micro-Electro-Mechanical Systems (MEMs).
+- Network Level:
+  - Wireless communication: Cellular, LPWAN, IEEE 802.15
+  - Ad-Hoc network
+  - MQTT, CoAP
+  - Internet Security
+- Service Level:
+  - Clouding computing
+  - Big data, Data analytics, Machine learning
+  - Clock Synchronization
+  - Localization
+- Applications
  
+** The Many-Sidedness of Internet of Things & CPS
+   
+#+BEGIN_r-stack
+#+ATTR_HTML: :class fragment fade-out :data-fragment-index 0 :style "max-height:60vh"
+[[./figures/raw/iot.png]]
+#+ATTR_HTML: :class fragment :data-fragment-index 0 :style "max-height:60vh"
+[[./figures/raw/blindmenandelephant.jpg]]
+#+END_r-stack
+ 
+** Takeaway from the course
+- We *CANNOT* cover everything in details in this course.
+- Look at the big picture:
+  - What are we trying to solve?
+  - What are the key considerations?
+  - What is the fundamental limit?
+  - How to effectively trade off between X and Y based on specific application?
 
+*** Example: Physical Layer
+  - What are we trying to solve?
+    - Transmitting raw bits via a physical medium 
+  - What are the key considerations?
+    - Throughput, Range, Energy consumption
+    - Other considerations: Latency, Mobility, Cost
+  - What is the fundamental limit?
+    - The Shannon Limit
+    - Free space path loss formula
+  - How to effectively trade off between X and Y based on specific application?
+    - Surveillance camera: Wifi, 4G/5G, Wired
+    - Environmental monitoring: LoRa, NBIoT
+    - Smart home: Zigbee, Bluetooth
+     
 * Course Information
- 
+
+** Course Information 
   - Pre-requisites:
     - 计算机语言与程序设计
     - 计算机网络与应用
-  - Things that you will need to learn for the lab/project:
+  - Things that you will need for the lab/project:
     * Raspberry Pi: Most popular single board computer
     * GNU/Linux: Most popular OS for IoT
-    * Use SSH to connect to RPi
-    * Write and execute short Python code (<100 lines)
-    * Version control and collaborate using Git
+    * Using SSH to connect to RPi
+    * Writing short Python code (<100 lines)
+    * Version control and collaborating with your teammate using Git
 
-** Course Instructor
+** Course Instructors
    - Mo, Yilin
      - Office: FIT Building 3-613
      - Office Hour: Wednesday 14:00-17:00
@@ -324,16 +409,16 @@ Cons:
    |         8 | 11/6   | Lab 3: Wireless Mesh Network          |
    |         9 | 11/13  | Security                              |
 
-   #+REVEAL: split
+*** /Tentative/ Lecture Schedule 
    - Lecturer: Pei, Xin
-   | Lecture # | Date   | Topics                                |
-   |        10 | 11/20  | Clock Synchronization                 |
-   |        11 | 11/27  | Localization                          |
-   |        12 | 12/4   | Big Data, Cloud Computing             |
-   |        13 | 12/11  | Smart Transportation System           |
-   |        14 | 12/18  | Applications                          |
-   |        15 | 12/25  | Lab 4: Project                        |
-   |        16 | *1/1*  | Project Demonstration                 |
+   | Lecture # | Date  | Topics                      |
+   |        10 | 11/20 | Clock Synchronization       |
+   |        11 | 11/27 | Localization                |
+   |        12 | 12/4  | Big Data, Cloud Computing   |
+   |        13 | 12/11 | Smart Transportation System |
+   |        14 | 12/18 | Smart Cities                |
+   |        15 | 12/25 | Lab 4: Project              |
+   |        16 | *1/1* | Project Demonstration       |
 
 ** Grading Criteria
 
@@ -367,8 +452,9 @@ Cons:
    - Buying additional hardware 
      - Write a proposal with a budget (Typically < ¥1,000)
      - We will review the proposal and buy the HW
-   #+REVEAL: split
-   - A project list will be presented and discussed in detail
+
+*** Project
+   - A sample project list will be presented later 
    - Example: 
      - Developing an ad-hoc sensor network of 5+ nodes via Wifi and a front-end to show the sensor readings
      - Completing the tasks in Lab 2 while running RPI on bare metal
@@ -385,10 +471,6 @@ Cons:
   :END:
 
   printbibliography:references.bib
-
-  #+MACRO: licensepreamble
-  #+INCLUDE: "~/.emacs.d/oer-reveal-org/license-template.org" :minlevel 2
-  #+INCLUDE: "~/.emacs.d/oer-reveal-org/license-disclaimer-cc-by-sa-4.0.org"
 
   # Local Variables:
   # indent-tabs-mode: nil

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-09-13 日 22:36 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to Intelligent Networked System</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Mo, Yilin">
+<meta name="description" content="Concept of Intelligent Networked System, History of related concepts, Enabling Technologies"
+>
+<meta name="keywords" content="Internet of Things, Wireless Sensors Network, Cyber Physical System">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style type="text/css"> div.flushright{text-align:right;} </style>
+<script src="reveal.js/plugin/chart/Chart.min.js"></script>
+<script src="./reveal.js/plugin/chart/plugin.js"></script>
+<script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Introduction to Intelligent Networked System</h1>
+
+<div id="outline-container-orgc0ce2a8" class="outline-2">
+<h2 id="orgc0ce2a8">Intelligent Networked System</h2>
+<div class="outline-text-2" id="text-orgc0ce2a8">
+</div>
+<div id="outline-container-orgfd666bd" class="outline-3">
+<h3 id="orgfd666bd">What is Intelligent Networked System</h3>
+<div class="outline-text-3" id="text-orgfd666bd">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/ins1.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/ins1.png" alt="Figure" style="max-height:40vh" /></p><p>Search Results</p></div></div><p>
+</p>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/ins2.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/ins2.png" alt="Figure" style="max-height:40vh" /></p><p>Search Results</p></div></div><p>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org300bda3" class="outline-3">
+<h3 id="org300bda3">Intelligent Networked System</h3>
+<div class="outline-text-3" id="text-org300bda3">
+<pre class="example" class="stretch">
+   30 Les Misérables
+   20 Victor Hugo
+   15 Jean Valjean
+   15 Javert
+   15 Fantine
+   15 Cosette
+   12 Éponine
+   12 Marius
+   12 Enjolras
+   10 Thénardiers
+   10 Gavroche
+   10 Bishop Myriel
+   10 Patron-Minette
+   10 God
+   8 ABC Café
+   8 Paris
+   8 Digne
+   8 Elephant of the Bastille
+   5 silverware
+   5 Bagne of Toulon
+   5 loaf of bread
+   5 Rue Plumet
+   5 revolution
+   5 barricade
+   4 sewers
+   4 Fex urbis lex orbis
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgbba091d" class="outline-3">
+<h3 id="orgbba091d">Wireless Sensor Networks</h3>
+<div class="outline-text-3" id="text-orgbba091d">
+<ul class="org-ul">
+<li>1997: <a href="https://en.wikipedia.org/wiki/Smartdust">Smart Dust Project</a> proposed by researchers from UCB</li>
+</ul>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/smartdust.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/smartdust.png" alt="Figure" style="max-height:30vh" /></p><p></p></div></div><p>
+</p>
+</div>
+
+
+<div id="outline-container-orgb251148" class="outline-4">
+<h4 id="orgb251148">Vision of Wireless Sensor Networks</h4>
+<div class="outline-text-4" id="text-orgb251148">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/firefly.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/firefly.png" alt="Figure" style="max-height:40vh" /></p><p>Search Results</p></div></div><p>
+</p>
+<p>
+ </p><div class="grid4"><div about="figures/raw/sensor1.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid4-img1"><p><img data-src="figures/raw/sensor1.jpg" alt="Figure" style="max-height:28.5vh" /></p><p></p></div> <div about="figures/raw/sensor2.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid4-img2"><p><img data-src="figures/raw/sensor2.jpg" alt="Figure" style="max-height:28.5vh" /></p><p></p></div> <div about="figures/raw/sensor3.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid4-img3"><p><img data-src="figures/raw/sensor3.jpg" alt="Figure" style="max-height:28.5vh" /></p><p></p></div> <div about="figures/raw/sensor4.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid4-img4"><p><img data-src="figures/raw/sensor4.jpg" alt="Figure" style="max-height:28.5vh" /></p><p></p></div></div><p>
+
+</p>
+
+<p>
+ </p><div class="grid2"><div about="figures/raw/mine2.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid2-img1"><p><img data-src="figures/raw/mine2.jpg" alt="Figure" style="max-height:57.0vh" /></p><p></p></div> <div about="figures/raw/mine.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid2-img2"><p><img data-src="figures/raw/mine.jpg" alt="Figure" style="max-height:57.0vh" /></p><p></p></div></div><p>
+
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf22eceb" class="outline-4">
+<h4 id="orgf22eceb">History of Wireless Sensor Networks</h4>
+<div class="outline-text-4" id="text-orgf22eceb">
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Gen 1 (80s-90s)</td>
+<td class="org-left">Gen 2 (1999-2006)</td>
+<td class="org-left">Gen 3 (2010 and beyond)</td>
+</tr>
+
+<tr>
+<td class="org-left">Size</td>
+<td class="org-left">Large shoe-box</td>
+<td class="org-left">Pack of cards</td>
+<td class="org-left">Dust particle</td>
+</tr>
+
+<tr>
+<td class="org-left">Weight</td>
+<td class="org-left">Kilograms</td>
+<td class="org-left">Grams</td>
+<td class="org-left">Negligible</td>
+</tr>
+
+<tr>
+<td class="org-left">Node</td>
+<td class="org-left">Separate sensing/comm</td>
+<td class="org-left">Semi-integrated</td>
+<td class="org-left">Fully integrated</td>
+</tr>
+
+<tr>
+<td class="org-left">Topology</td>
+<td class="org-left">Point-to-point, star</td>
+<td class="org-left">Client-server, peer-to-peer</td>
+<td class="org-left">P2P</td>
+</tr>
+
+<tr>
+<td class="org-left">Energy</td>
+<td class="org-left">Large batteries</td>
+<td class="org-left">AA batteries</td>
+<td class="org-left">Energy Harvesting</td>
+</tr>
+
+<tr>
+<td class="org-left">Life Time</td>
+<td class="org-left">hours/days/weeks</td>
+<td class="org-left">days to months</td>
+<td class="org-left">years</td>
+</tr>
+
+<tr>
+<td class="org-left">Deployment</td>
+<td class="org-left">Vehicle-placed, air drop</td>
+<td class="org-left">Hand placed</td>
+<td class="org-left">Embedded, “scattered” leave behind</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3230e3b" class="outline-3">
+<h3 id="org3230e3b">Internet of Things</h3>
+<div class="outline-text-3" id="text-org3230e3b">
+<p>
+<i>Internet of things (IoT) is the inter-networking of physical devices, vehicles (also referred to as &ldquo;connected devices&rdquo; and &ldquo;smart devices&rdquo;), buildings, and other items embedded with electronics, software, sensors, actuators, and network connectivity which enable these objects to collect and exchange data.</i> 
+</p>
+<div class="flushright">
+<p>
+<a href="https://en.wikipedia.org/wiki/Internet_of_things">Wikipedia</a>
+</p>
+
+</div>
+<p>
+<i>In the real world, things matter more than ideas.</i>
+</p>
+<div class="flushright">
+<p>
+<a class="org-ref-reference" href="#slide-bibliography">[Ashton]</a>, <i>&ldquo;That &lsquo;internet of things&rsquo; thing&rdquo;</i>, 2009
+</p>
+
+</div>
+</div>
+
+<div id="outline-container-org9574575" class="outline-4">
+<h4 id="org9574575">Internet of Things Paradigm</h4>
+<div class="outline-text-4" id="text-org9574575">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/iot.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/iot.png" alt="Figure" style="max-height:40vh" /></p><p></p></div></div><p>
+</p>
+<div class="org-center">
+<p>
+Internet of Things Paradigm, <a class="org-ref-reference" href="#slide-bibliography">[IoT2018]</a>
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf67f1b4" class="outline-4">
+<h4 id="orgf67f1b4">Early History of Internet of Things</h4>
+<div class="outline-text-4" id="text-orgf67f1b4">
+<ul class="org-ul">
+<li>1973: Mario W. Cardullo receives the patent for first RFID tag</li>
+<li>1982 Carnegie Mellon internet-connected soda machine</li>
+<li>1991: HP introduces HP LaserJet IIISi: first Ethernet-connected network printer</li>
+<li>1993: Internet-connected coffee pot at University of Cambridge (first internet-connected camera)</li>
+<li>1999: LG Internet Digital DIOS refrigerator</li>
+<li>1999: The term <a href="https://en.wikipedia.org/wiki/Internet_of_things">Internet of Things</a> was coined</li>
+<li>2005: United Nation&rsquo;s International Telecommunications Union report predicting the rise of IoT for the first time</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgccfb040" class="outline-4">
+<h4 id="orgccfb040">Trends</h4>
+<div class="outline-text-4" id="text-orgccfb040">
+<ul class="org-ul">
+<li>Google Search Trends</li>
+</ul>
+
+<ul class="org-ul">
+<li>The Hype Cycle</li>
+</ul>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/hypecycle.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hypecycle.png" alt="Figure" style="max-height:40vh" /></p><p>Gartner Hype Cycle</p></div></div><p>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgfd7cf9d" class="outline-4">
+<h4 id="orgfd7cf9d">Metcalfe&rsquo;s law</h4>
+<div class="outline-text-4" id="text-orgfd7cf9d">
+<ul class="org-ul">
+<li>Number of Connected Devices v.s. Human Population</li>
+</ul>
+
+<p>
+<i>The value of a network goes up as the square of the number of users.</i>
+</p>
+<div class="flushright">
+<p>
+<a class="org-ref-reference" href="#slide-bibliography">[Shapiro]</a>, <i>&ldquo;Information Rules&rdquo;</i>, 1998
+</p>
+
+</div>
+<p>
+\[ V \propto N^2 \]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7099a32" class="outline-3">
+<h3 id="org7099a32">Cyber-Physical Systems</h3>
+<div class="outline-text-3" id="text-org7099a32">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/cps.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/cps.png" alt="Figure" style="max-height:40vh" /></p><p>Cyber-Physical System</p></div></div><p>
+</p>
+<p>
+<i>CPSs refer to the next generation of engineered systems that require tight integration of <b>computing</b>, <b>communication</b>, and <b>control</b> technologies to achieve <b>stability</b>, <b>performance</b>, <b>reliability</b>, <b>robustness</b>, and <b>efficiency</b> in dealing with physical systems of many application domains.</i>
+</p>
+
+<div class="flushright">
+<p>
+<a class="org-ref-reference" href="#slide-bibliography">[Kumar]</a>, Proceedings of the IEEE, 2012
+</p>
+
+</div>
+</div>
+
+<div id="outline-container-org5f2cacc" class="outline-4">
+<h4 id="org5f2cacc">Convergence of Computation and Control</h4>
+<div class="outline-text-4" id="text-org5f2cacc">
+<ul class="org-ul">
+<li>1948: The term &ldquo;Cybernetics&rdquo; was coined by Norbert Wiener.</li>
+<li>1970s: Real time system</li>
+<li>1990s: Hybrid system</li>
+<li>2006: The term &ldquo;Cyber-Physical System&rdquo; was coined by NSF.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org80298b4" class="outline-4">
+<h4 id="org80298b4">Boeing 787 Incident</h4>
+</div>
+
+<div id="outline-container-org46a0dc8" class="outline-4">
+<h4 id="org46a0dc8">Convergence of Communication and Control</h4>
+<div class="outline-text-4" id="text-org46a0dc8">
+<ul class="org-ul">
+<li>1971: <a href="https://en.wikipedia.org/wiki/ALOHAnet">ALOHAnet</a>, first public wireless packet data network</li>
+<li>1997: IEEE 802.11 (Wifi) was introduced</li>
+<li>2000: Panel on Future Directions in Control, Dynamics, and Systems, Control in an Information Rich World:</li>
+</ul>
+<p>
+<i>Networks of sensory or actuator nodes with computational capabilities, connected wirelessly or by wires, can form an orchestra which controls our physical environment.</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga33ed95" class="outline-4">
+<h4 id="orga33ed95">Convergence of Communication and Computation</h4>
+<div class="outline-text-4" id="text-orga33ed95">
+<ul class="org-ul">
+<li>distributed systems</li>
+<li>cognitive radio</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org973420e" class="outline-2">
+<h2 id="org973420e">Applications</h2>
+<div class="outline-text-2" id="text-org973420e">
+</div>
+<div id="outline-container-org57f41be" class="outline-3">
+<h3 id="org57f41be">Driven Force</h3>
+<div class="outline-text-3" id="text-org57f41be">
+<ul class="org-ul">
+<li>New revenue streams (green energy solutions)</li>
+<li>Reducing costs (in-home patient healthcare)</li>
+<li>Reducing time to market (factory automation)</li>
+<li>Improving supply chain logistics (asset tracking)</li>
+<li>Reducing production loss (theft, spoilage of perishable)</li>
+<li>Increasing productivity (machine learning and data analytics)</li>
+<li>Cannibalization (Nest replacing traditional thermostats)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org198d332" class="outline-3">
+<h3 id="org198d332">Manufacturing</h3>
+</div>
+
+<div id="outline-container-orgea9f6a8" class="outline-3">
+<h3 id="orgea9f6a8">Consumer</h3>
+</div>
+
+<div id="outline-container-org99c4491" class="outline-3">
+<h3 id="org99c4491">Retail</h3>
+</div>
+
+<div id="outline-container-org88d2837" class="outline-3">
+<h3 id="org88d2837">Healthcare</h3>
+</div>
+
+<div id="outline-container-orgc282fae" class="outline-3">
+<h3 id="orgc282fae">Energy</h3>
+</div>
+
+<div id="outline-container-org0f7bbb3" class="outline-3">
+<h3 id="org0f7bbb3">Transportation</h3>
+</div>
+
+<div id="outline-container-orgba97be4" class="outline-3">
+<h3 id="orgba97be4">Smart City</h3>
+</div>
+</div>
+
+<div id="outline-container-org9c758cc" class="outline-2">
+<h2 id="org9c758cc">Technology Stack</h2>
+</div>
+
+<div id="outline-container-org8b7f1c0" class="outline-2">
+<h2 id="org8b7f1c0">Course Information</h2>
+<div class="outline-text-2" id="text-org8b7f1c0">
+<ul class="org-ul">
+<li>Pre-requisites:
+<ul class="org-ul">
+<li>计算机语言与程序设计</li>
+<li>计算机网络与应用</li>
+</ul></li>
+<li>Things that you will need to learn for the lab:
+<ul class="org-ul">
+<li>Raspberry Pi</li>
+<li>GNU/Linux(Raspberry Pi OS)</li>
+<li>SSH</li>
+<li>Python</li>
+<li>Git</li>
+</ul></li>
+</ul>
+</div>
+
+<div id="outline-container-org03d0d13" class="outline-3">
+<h3 id="org03d0d13">Course Instructor</h3>
+<div class="outline-text-3" id="text-org03d0d13">
+<ul class="org-ul">
+<li>Mo, Yilin
+<ul class="org-ul">
+<li>Office: FIT Building 3-613</li>
+<li>Office Hour: Wednesday 14:00-17:00</li>
+<li>Phone: 62792438</li>
+<li>Email: ylmo@tsinghua.edu.cn</li>
+</ul></li>
+<li>Pei, Xin
+<ul class="org-ul">
+<li>Office: Central Main Building 809</li>
+<li>Office Hour: Wednesday 14:00-17:00</li>
+<li>Phone: 62795043</li>
+<li>Email: peixin@tsinghua.edu.cn</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3f0847a" class="outline-3">
+<h3 id="org3f0847a">Teaching Assistant</h3>
+<div class="outline-text-3" id="text-org3f0847a">
+<ul class="org-ul">
+<li>Lu, Yiwen
+<ul class="org-ul">
+<li>Office: FIT Building 3-623</li>
+<li>Office Hour: Friday 14:00-17:00</li>
+<li>Phone: 62772430</li>
+<li>Email: luyw20n@mails.tsinghua.edu.cn</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org91f5d52" class="outline-3">
+<h3 id="org91f5d52"><i>Tentative</i> Lecture Schedule</h3>
+<div class="outline-text-3" id="text-org91f5d52">
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">Lecture #</td>
+<td class="org-left">Date</td>
+<td class="org-left">Topics</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">9/18</td>
+<td class="org-left">Introduction, Sensor OS</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">9/25</td>
+<td class="org-left">Sensors, Actuators, Energy Harvesting</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left"><b>9/27</b></td>
+<td class="org-left">Lab 1: Raspberry Pi platform</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">10/9</td>
+<td class="org-left">Physical Layer</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">10/16</td>
+<td class="org-left">MAC Layer</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">10/23</td>
+<td class="org-left">Routing</td>
+</tr>
+
+<tr>
+<td class="org-right">7</td>
+<td class="org-left">10/30</td>
+<td class="org-left">Lab 2: Networking</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">11/6</td>
+<td class="org-left">Lab 3: Wireless Mesh Network</td>
+</tr>
+
+<tr>
+<td class="org-right">9</td>
+<td class="org-left">11/13</td>
+<td class="org-left">Security</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">Lecture #</td>
+<td class="org-left">Date</td>
+<td class="org-left">Topics</td>
+</tr>
+
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">11/20</td>
+<td class="org-left">Clock Synchronization</td>
+</tr>
+
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">11/27</td>
+<td class="org-left">Localization</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-left">12/4</td>
+<td class="org-left">Big Data, Cloud Computing</td>
+</tr>
+
+<tr>
+<td class="org-right">13</td>
+<td class="org-left">12/11</td>
+<td class="org-left">Smart Transportation System</td>
+</tr>
+
+<tr>
+<td class="org-right">14</td>
+<td class="org-left">12/18</td>
+<td class="org-left">Applications</td>
+</tr>
+
+<tr>
+<td class="org-right">15</td>
+<td class="org-left">12/25</td>
+<td class="org-left">Lab 4: Project</td>
+</tr>
+
+<tr>
+<td class="org-right">16</td>
+<td class="org-left"><b>1/1</b></td>
+<td class="org-left">Project Demonstration</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org1610312" class="outline-3">
+<h3 id="org1610312">Grading Criteria</h3>
+<div class="outline-text-3" id="text-org1610312">
+<ul class="org-ul">
+<li>Quizzes (4 total): 20%</li>
+<li>Lab Assignment: 20%</li>
+<li>Final Project: 60%
+<ul class="org-ul">
+<li>Demo: 20%</li>
+<li>Report: 40%</li>
+</ul></li>
+<li>Pass/Fail</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2385c58" class="outline-3">
+<h3 id="org2385c58">Quizzes</h3>
+<div class="outline-text-3" id="text-org2385c58">
+<ul class="org-ul">
+<li><b>Four</b> in-class, closed-book quizzes</li>
+<li>Spread throughout the semester</li>
+<li>Announcement will be one week ahead of time (with <b>reading assignment</b>)</li>
+<li>The questions will be based on the reading assignment.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org43085a0" class="outline-3">
+<h3 id="org43085a0">Lab Assignments</h3>
+<div class="outline-text-3" id="text-org43085a0">
+<ul class="org-ul">
+<li><b>Three</b> lab assignments at the first half of the semester</li>
+<li>Location: <b>Central Main Building 510</b></li>
+<li>Goal: Get familiar with Raspberry Pi and networking protocols
+<ol class="org-ol">
+<li>Installing Raspberry Pi OS, SSH, Light Sensor, LED</li>
+<li>Distributed “Whack-a-Mole”</li>
+<li>Wireless Mesh Network</li>
+</ol></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1c3bf3d" class="outline-3">
+<h3 id="org1c3bf3d">Project</h3>
+<div class="outline-text-3" id="text-org1c3bf3d">
+<ul class="org-ul">
+<li>Carried out in teams of <b>3</b> students.
+<ul class="org-ul">
+<li>The code should be hosted on Tsinghua Gitlab Repo</li>
+<li>We will review the code contribution</li>
+</ul></li>
+<li>Each group will be given 3 Raspberry Pis, Sensors + LED, SD cards and other accessories
+<ul class="org-ul">
+<li>Take good care of the equipment</li>
+</ul></li>
+<li>Buying additional hardware 
+<ul class="org-ul">
+<li>Write a proposal with a budget (Typically &lt; 1,000)</li>
+<li>We will review the proposal and buy the HW</li>
+</ul></li>
+</ul>
+<ul class="org-ul">
+<li>A project list will be presented and discussed in detail</li>
+<li>Example: 
+<ul class="org-ul">
+<li>Developing an ad-hoc sensor network of 5+ nodes via Wifi and a front-end to show the sensor readings</li>
+<li>Completing the tasks in Lab 2 while running RPI on bare metal</li>
+<li>&#x2026;</li>
+</ul></li>
+<li>You are encourage to propose your own project and discuss with us
+<ul class="org-ul">
+<li>Combining it with your final year project!</li>
+</ul></li>
+<li>Grading Criteria:
+<ul class="org-ul">
+<li>66%: Final Report</li>
+<li>33%: Demonstration</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org82e6f07" class="outline-2">
+<h2 id="bibliography">Bibliography</h2>
+<div class="outline-text-2" id="text-bibliography">
+<ul class='org-ref-bib'><li><a id="Ashton">[Ashton]</a> <a name="Ashton"></a>Kevin Ashton, That ‘internet of things’ thing, <i>RFID Journal 22</i>, 97-114 (2009). <a href=""></a></li>
+<li><a id="IoT2018">[IoT2018]</a> <a name="IoT2018"></a>Parry Lea, Internet of Things for Architects, Packt Publishing, 2018. <a href=""></a></li>
+<li><a id="Kumar">[Kumar]</a> <a name="Kumar"></a>Kim & Kumar, Cyber-physical systems: A perspective at the centennial, in: Proc. IEEE, 2012. <a href=""></a></li>
+<li><a id="Shapiro">[Shapiro]</a> <a name="Shapiro"></a>Carl Shapiro & Hal Varian, Information Rules: A Strategic Guide to the Network Economy, Harvard Business School Press, 1998. <a href="https://books.google.com/books?id=aE_J4Iv_PVEC&printsec=frontcover&dq=inauthor:shapiro+inauthor:varian#v=onepage&q&f=false">https://books.google.com/books?id=aE_J4Iv_PVEC&printsec=frontcover&dq=inauthor:shapiro+inauthor:varian#v=onepage&q&f=false</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8a383fa" class="outline-2">
+<h2 id="license" class="no-toc-progress">License Information</h2>
+<div class="outline-text-2" id="text-license">
+<div class="rdfa-license" about="/Intro.html"><p>Except where otherwise noted, the work “<span property="dcterms:title">Introduction to Intelligent Networked System</span>”, <span property="dc:rights">© <span property="dcterms:dateCopyrighted">2017-2020</span> <a rel="cc:attributionURL dcterms:creator" href="https://yilinmo.github.io" property="cc:attributionName">Mo, Yilin</a></span>, is published under the <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons license CC BY-SA 4.0</a>.</p></div>
+
+<blockquote>
+<p>
+<a href="https://creativecommons.org/licenses/by-sa/4.0/#deed-understanding">No warranties are given.  The license may not give you all of the permissions necessary for your intended use.</a>
+</p>
+</blockquote>
+
+<p>
+In particular, trademark rights are <i>not</i> licensed under this license.
+Thus, rights concerning third party logos (e.g., on the title slide)
+and other (trade-) marks (e.g., “Creative Commons” itself) remain with
+their respective holders.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div class="rdfa-license" about="/Intro.html" prefix="dc: http://purl.org/dc/elements/1.1/ dcterms: http://purl.org/dc/terms/ dcmitype: http://purl.org/dc/dcmitype/ cc: http://creativecommons.org/ns#" typeof="dcmitype:InteractiveResource"><p>Except where otherwise noted, the work “<span property="dcterms:title">Introduction to Intelligent Networked System</span>”, <span property="dc:rights">© <span property="dcterms:dateCopyrighted">2017-2020</span> <a rel="cc:attributionURL dcterms:creator" href="https://yilinmo.github.io" property="cc:attributionName">Mo, Yilin</a></span>, is published under the <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons license CC BY-SA 4.0</a>.</p><p class="date">Created: <span property="dcterms:created">2020-09-13 日 22:36</span></p></div>
+<div class="legalese"><p><a href="/imprint.html">Imprint</a> | <a href="/privacy.html">Privacy Policy</a></p></div>
+</div>
+</body>
+</html>
