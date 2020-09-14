@@ -125,7 +125,7 @@ Cons:
    
 #+REVEAL: split
    - Typical Sensor Nodes:
-   {{{revealgrid(4, "figures/sensor.grid", 40, 2, 2, "\"ga1 ga2\" \"ga4 ga3\"")}}}
+   {{{revealgrid(6, "figures/sensor.grid", 40, 2, 2, "\"ga1 ga2 ga5\" \"ga4 ga3 ga6\"")}}}
   
 *** History of Wireless Sensor Networks 
     
