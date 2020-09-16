@@ -8,170 +8,27 @@
 #+DESCRIPTION: OS for iot course
 
 * Introduction
-*** OS Responsibilities
-    :PROPERTIES:
-    :CUSTOM_ID: os-responsibilities
-    :END:
-    {{{revealimg("./figures/OS-responsibilities.meta",t,"50vh")}}}
-
+  
 ** Learning Objectives
    :PROPERTIES:
    :CUSTOM_ID: learning-objectives-os
    :END:
    - Explain notion of Operating System and its goals
      - Explain notion of kernel with system call API
-       - (More details in [[file:Operating-Systems-Interrupts.org][next presentation]])
-   - Explain notions and relationships of process, thread, multitasking
-#+INCLUDE: "~/.emacs.d/oer-reveal-org/learning-objectives-notes.org"
-
-
+     - Explain different between various OS / bare metal options
+   - Explain notions of process, thread, multitasking
+     - Explain race condition, mutual exclusion
+   - Explain mechanisms and uses for virtual memory
 
 ** Today’s Core Questions
    - What exactly are threads?
-     - Why and for what are they used?
-     - How can I inspect them?
      - How does switching between threads work?
-
-** Learning Objectives
-   - Explain thread concept, thread switching, and multitasking
-     - Including reasons for threads
-       - With learning objectives for [[file:Operating-Systems-Introduction.org::#battlethreads][BattleThreads]],
-         rephrased from cite:HRB+03
-	 - Explain distinctions between threads and processes
-	 - Explain advantages of a multithreaded organization in
-	   structuring applications and in performance
-     - Including states (after upcoming presentation)
-   - Discuss differences between and use cases for blocking and non-blocking I/O
-
-
-*** Previously on OS …
-    #+ATTR_REVEAL: :frag (appear)
-    - What is a thread?
-      {{{revealimg("./figures/threads.meta",t,"40vh","figure fragment appear")}}}
-    - What are [[file:Operating-Systems-Introduction.org::#multitasking][multitasking and scheduling]]?
-
-
-
-
-*** CPU Scheduling
-    :PROPERTIES:
-    :CUSTOM_ID: drawing-scheduling
-    :END:
-    #+INDEX: Scheduling!Drawing (Scheduling)
-    {{{revealimg("./figures/scheduling.meta",t,"50vh")}}}
-
-** Today’s Core Questions
    - How does the OS manage the shared resource CPU?  What goals are pursued?
-   - How does the OS distinguish threads that could run on the CPU
-     from those that cannot (i.e., that are blocked)?
    - How does the OS schedule threads for execution?
-
-** Learning Objectives
-   - Explain thread concept (continued)
-     - Including states and priorities
-   - Explain scheduling mechanisms and their goals
-   - Apply scheduling algorithms
-     - FCFS, Round Robin
-
-
-** Today’s Core Questions
    - What can go wrong with concurrent computations?
      - What is a race condition?
-   - How to avoid subtle programming bugs related to timing issues?
-     - What mechanisms does the OS provide to help?
-
-** Learning Objectives
-   - Recognize and explain race conditions
-     - (Playing [[https://deadlockempire.github.io/][Deadlock Empire]] helps)
-   - Explain notions of critical section and mutual exclusion
-   - Use mutexes and semaphores (and monitors after upcoming lectures)
-     to enforce mutual exclusion
-
-** Today’s Core Questions
    - What is virtual memory?
      - How can RAM be (de-) allocated flexibly under multitasking?
-     - How does the OS keep track for each process what data resides
-       where in RAM?
-
-** Learning Objectives
-   - Explain mechanisms and uses for virtual memory
-     - Including principle of locality and page fault handling
-     - Including access of data on disk
-   - Explain and perform address translation with page tables
-
-** Previously on OS …
-*** Retrieval Practice
-    - How are
-      [[file:Operating-Systems-Introduction.org::#computations-processes-threads][processes and threads]]
-      related?
-    - Why were threads in
-      [[file:Operating-Systems-Introduction.org::#battlethreads][BattleThreads]]
-      more successful?
-    - What [[file:Operating-Systems-Overview.org::#virtual-address-space][layer of abstraction]]
-      do OSs use to manage RAM?
-    - What happens when an [[file:Operating-Systems-Interrupts.org::#irq-idea][interrupt]]
-      is triggered (e.g., a [[file:Operating-Systems-Interrupts.org::#terminology][page fault]])?
-
-** Big Picture
-   :PROPERTIES:
-   :CUSTOM_ID: big-picture
-   :END:
-   #+INDEX: Virtual memory big picture (Memory I)
-   {{{reveallicense("./figures/vm.meta","50vh",nil,none)}}}
-#+BEGIN_NOTES
-The key idea of virtual memory management is to provide a layer of
-abstraction that hides allocation of the shared hardware resource RAM
-to individual processes.  Thus, processes (and their threads) do not
-need to care or know whether or where their data structures reside in RAM.
-
-Physical memory consists of RAM and secondary storage devices such as
-SSDs or HDDs.  Typically, the OS uses dedicated portions of secondary
-storage as so-called swap or paging areas to enlarge physical memory
-beyond the size of RAM.  Again, processes need neither care nor know
-about this fact, which is handled by OS in the background.
-
-Each process has its own individual virtual address space, starting at
-address 0, consisting of equal-sized blocks called pages (e.g., 4 KiB
-in size each).  Each of those pages may or may not be present in RAM.
-RAM in turn is split into frames (of the size of pages).  The OS
-loads pages into frames and keeps track what pages of virtual address
-spaces are located where in physical memory.
-
-Here you see a process with a virtual address space consisting of 10
-pages (numbered 0 to 9, implying that the virtual address space has a
-size of 10*4 KiB = 40 KiB), while RAM consists of 8 frames (numbered 0 to
-7, implying that RAM has a size of 8*4 KiB = 32 KiB).
-For example, page 0 is located in frame 6, while page 3 is located on
-disk, and frames 2, 3, and 7 are not allocated to the process under
-consideration.
-
-Notice that neighboring pages in the virtual address space may be
-allocated in arbitrary order in physical memory.  As processes and
-threads just use virtual addresses, they do not need to know about
-such details of physical memory.
-
-Code of threads just uses virtual addresses within machine
-instructions, and it is the OS’s task to locate the corresponding
-physical addresses in RAM or to bring data from secondary storage to
-RAM in the first place.
-#+END_NOTES
-
-** Different Learning Styles
-   - The bullet point style may be particularly challenging for this
-     presentation
-   - You may prefer [[file:texts/virtual-addressing.pdf][this 5-page introduction]]
-     - It provides an alternative view on
-       - Topics of Introduction and
-         Main Concepts
-       - Topics of section Paging
-     - After working through that text, you may want to jump directly
-       to the corresponding
-       JiTT assignment
-       to check your understanding
-       - Afterwards, come back here to look at the slides, in
-         particular work through section
-         Uses for Virtual Memory (not covered in the text)
-   - Besides, Chapter 6 of cite:Hai19 is about virtual memory
 
 ** Table of Contents
    :PROPERTIES:
@@ -179,56 +36,122 @@ RAM in the first place.
    :END:
 #+REVEAL_TOC: headlines 1
 
-* Operating Systems
-** TODO Sample Modern Operating Systems
+
+* Why do we need an operating system? 
+  
+** "Hello World!" on Bare Metal
+
+#+NAME: helloworld
+#+begin_src C :eval never-export :export code
+void main()
+{
+    // set up serial console
+    uart_init();
+    
+    // say hello
+    uart_puts("Hello World!\n");
+    
+    // echo everything back
+    while(1) {
+        uart_send(uart_getc());
+    }
+}
+#+end_src
+
+*** UART Initialization
+   
+#+NAME: uart_init
+#+begin_src C :eval never-export :export code
+void uart_init()
+{
+    register unsigned int r;
+
+    /* initialize UART */
+    *AUX_ENABLE |=1;       // enable UART1, AUX mini uart
+    *AUX_MU_CNTL = 0;
+    *AUX_MU_LCR = 3;       // 8 bits
+    *AUX_MU_MCR = 0;
+    *AUX_MU_IER = 0;
+    *AUX_MU_IIR = 0xc6;    // disable interrupts
+    *AUX_MU_BAUD = 270;    // 115200 baud
+    /* map UART1 to GPIO pins */
+    r=*GPFSEL1;
+    r&=~((7<<12)|(7<<15)); // gpio14, gpio15
+    r|=(2<<12)|(2<<15);    // alt5
+    *GPFSEL1 = r;
+    *GPPUD = 0;            // enable pins 14 and 15
+    r=150; while(r--) { asm volatile("nop"); }
+    *GPPUDCLK0 = (1<<14)|(1<<15);
+    r=150; while(r--) { asm volatile("nop"); }
+    *GPPUDCLK0 = 0;        // flush GPIO setup
+    *AUX_MU_CNTL = 3;      // enable Tx, Rx
+}
+#+end_src
+
+*** UART Send Char and String
+   
+#+NAME: uart_send
+#+begin_src C :eval never-export :export code
+void uart_send(unsigned int c) {
+    /* wait until we can send */
+    do{asm volatile("nop");}while(!(*AUX_MU_LSR&0x20));
+    /* write the character to the buffer */
+    *AUX_MU_IO=c;
+}
+#+end_src
+
+#+NAME: uart_puts
+#+begin_src C :eval never-export :export code
+void uart_puts(char *s) {
+    while(*s) {
+        /* convert newline to carrige return + newline */
+        if(*s=='\n')
+            uart_send('\r');
+        uart_send(*s++);
+    }
+}
+#+end_src
+
+*** UART Get Char
+#+NAME: uart_getc
+#+begin_src C :eval never-export :export code
+char uart_getc() {
+    char r;
+    /* wait until something is in the buffer */
+    do{asm volatile("nop");}while(!(*AUX_MU_LSR&0x01));
+    /* read it and return */
+    r=(char)(*AUX_MU_IO);
+    /* convert carrige return to newline */
+    return r=='\r'?'\n':r;
+}
+#+end_src
+
+** Popular operating System 
    :PROPERTIES:
    :CUSTOM_ID: modern-oss
    :END:
    #+INDEX: Operating system!Examples (Introduction)
-   - Different systems for different scenarios
-     - Mainframes
-       - [[https://en.wikipedia.org/wiki/BS2000][BS2000/OSD]],
-         [[https://en.wikipedia.org/wiki/General_Comprehensive_Operating_System][GCOS]],
-         [[https://en.wikipedia.org/wiki/Z/OS][z/OS]]
-     - PCs
-       - [[https://en.wikipedia.org/wiki/MS-DOS][MS-DOS]],
-         [[https://en.wikipedia.org/wiki/GNU%2FLinux_naming_controversy][GNU/Linux]],
-         [[https://en.wikipedia.org/wiki/MacOS][MacOS]],
-         [[https://www.redox-os.org][Redox]],
-         [[https://en.wikipedia.org/wiki/Microsoft_Windows][Windows]]
-     - Mobile devices
-       - Variants of other OSs
-       - Separate developments, e.g.,
-         BlackBerry
-         ([[https://en.wikipedia.org/wiki/BlackBerry_10][BlackBerry 10]]
-         based on QNX, abandoned),
-	 [[https://en.wikipedia.org/wiki/Google_Fuchsia][Google Fuchsia]],
-         [[https://en.wikipedia.org/wiki/Symbian][Symbian]] (Nokia, most popular smartphone OS until
-         2010, now replaced)
-     - Gaming devices
-     - Real-time OS
-       - Embedded systems
-       - QNX,
-         [[https://en.wikipedia.org/wiki/VxWorks][VxWorks]]
-#+BEGIN_NOTES
-There is a vast variety of OSs for different devices and usage
-scenarios, of which this slide shows a selection.
 
-The goal of the OS sessions is not to turn you into an expert for any
-specific OS, but to teach you major concepts and techniques that are shared by
-most modern OSs.  As [[file:Operating-Systems-Motivation.org][explained previously]]
-my hope is that you can apply your knowledge on the one hand when
-designing, analyzing, or implementing information systems and on the
-other when taking control of your own devices.
+   
+    #+ATTR_HTML: :data-chart bar :class stretch
+    #+BEGIN_canvas
+    #+INCLUDE: "data/os1.csv" export html
+    #+END_canvas
+    
+*** Popular operating System for Endpoints
+    #+ATTR_HTML: :data-chart bar :class stretch
+    #+BEGIN_canvas
+    #+INCLUDE: "data/os2.csv" export html
+    #+END_canvas
 
-Based on my personal beliefs, I will not teach you anything about
-non-free OSs (except maybe first steps to get away from them).  In
-particular, examples shown in presentations and in class will be based
-on the [[file:Operating-Systems-Motivation.org::#free-software][free]] OS
-[[file:Operating-Systems-Motivation.org::#gnu-linux][GNU/Linux]].  As GNU/Linux is
-free, you can experiment with it at any level of detail yourself.
-#+END_NOTES
 
+*** Popular operating System for Gateways/Edge
+    
+    #+ATTR_HTML: :data-chart bar :class stretch
+    #+BEGIN_canvas
+    #+INCLUDE: "data/os3.csv" export html
+    #+END_canvas
+    
 ** Definition of Operating System
    :PROPERTIES:
    :CUSTOM_ID: os-definition
@@ -351,17 +274,6 @@ of the OS, which is called kernel and whose functions are
 called system calls.
    #+end_notes
 
-*** Aside: API
-    :PROPERTIES:
-    :CUSTOM_ID: API
-    :END:
-    - API = [[https://en.wikipedia.org/wiki/Application_programming_interface][Application Programming Interface]]
-      - Set of functions or interfaces or protocols defining how to
-        use some system (as programmer)
-      - E.g.,
-        [[https://docs.oracle.com/en/java/javase/14/docs/api/index.html][Java 14 API ]]
-        - Packages with classes, interfaces, methods, etc.
-
 *** OS Services
     - OS services/features/functionality defined by its API
       - Functionality includes
@@ -381,16 +293,8 @@ called system calls.
    #+ATTR_REVEAL: :frag (appear)
    - Boundary between OS and applications is fuzzy
    - *Kernel* is fundamental, core part of OS
-     - Kernel defines API and services via *system call* interface
-     - (More details on next and later slide)
       
-*** How to Talk to OSs
-    {{{revealimg("./figures/system-calls.meta",t,"50vh")}}}
-
-*** User Space and Kernel Space
-    {{{revealimg("./figures/user-space.meta",t,"50vh")}}}
-
-** OS Architecture and Kernel Variants
+*** OS Architecture and Kernel Variants
    :PROPERTIES:
    :CUSTOM_ID: kernel-variants
    :END:
@@ -472,12 +376,769 @@ approaches.
 	- E.g., process execution, main memory allocation,
           hardware resource access (e.g., keyboard, network, disk, graphics
           card)
-    - Different OSs offer different system calls (i.e., offer
-      incompatible APIs)
+    - Different OSs may offer different system calls (i.e., offer incompatible APIs)
       - With different implementations
       - With different calling conventions
+    - The Portable Operating System Interface (*POSIX() is a family of standards specified by the IEEE Computer Society for maintaining compatibility between operating systems.
+      - Many OS are POSIX-complaint
 
-*** TODO POSIX
+* Main Concepts
+  :PROPERTIES:
+  :CUSTOM_ID: main-concepts
+  :END:
+
+** Big Picture
+   :PROPERTIES:
+   :CUSTOM_ID: big-picture
+   :END:
+   #+INDEX: Virtual memory big picture (Memory I)
+   {{{reveallicense("./figures/vm.meta","50vh",nil,none)}}}
+#+BEGIN_NOTES
+The key idea of virtual memory management is to provide a layer of
+abstraction that hides allocation of the shared hardware resource RAM
+to individual processes.  Thus, processes (and their threads) do not
+need to care or know whether or where their data structures reside in RAM.
+
+Physical memory consists of RAM and secondary storage devices such as
+SSDs or HDDs.  Typically, the OS uses dedicated portions of secondary
+storage as so-called swap or paging areas to enlarge physical memory
+beyond the size of RAM.  Again, processes need neither care nor know
+about this fact, which is handled by OS in the background.
+
+Each process has its own individual virtual address space, starting at
+address 0, consisting of equal-sized blocks called pages (e.g., 4 KiB
+in size each).  Each of those pages may or may not be present in RAM.
+RAM in turn is split into frames (of the size of pages).  The OS
+loads pages into frames and keeps track what pages of virtual address
+spaces are located where in physical memory.
+
+Here you see a process with a virtual address space consisting of 10
+pages (numbered 0 to 9, implying that the virtual address space has a
+size of 10*4 KiB = 40 KiB), while RAM consists of 8 frames (numbered 0 to
+7, implying that RAM has a size of 8*4 KiB = 32 KiB).
+For example, page 0 is located in frame 6, while page 3 is located on
+disk, and frames 2, 3, and 7 are not allocated to the process under
+consideration.
+
+Notice that neighboring pages in the virtual address space may be
+allocated in arbitrary order in physical memory.  As processes and
+threads just use virtual addresses, they do not need to know about
+such details of physical memory.
+
+Code of threads just uses virtual addresses within machine
+instructions, and it is the OS’s task to locate the corresponding
+physical addresses in RAM or to bring data from secondary storage to
+RAM in the first place.
+#+END_NOTES
+
+** Modern Computers
+   - RAM is *byte*-addressed (1 byte = 8 bits)
+     - Each ~address~ selects a byte (not a word as in Hack)
+       - (Machine instructions typically operate on words (= multiple
+         bytes), though)
+   - *Physical* vs *virtual* addresses
+     - Physical: Addresses used on memory bus
+       - Hack ~address~
+     - Virtual: Addresses used by threads and CPU
+       - Do not exist in Hack
+
+** Virtual Addresses
+   :PROPERTIES:
+   :CUSTOM_ID: virtual-address
+   :END:
+   #+INDEX: Virtual addresses (Memory I)
+   - Additional layer of *abstraction* provided by OS
+     - Programmers do not need to worry about physical memory
+       locations at all
+     - Pieces of data (and instructions) are identified by virtual addresses
+       - At different points in time, the same piece of data
+         (identified by its virtual address) may reside at
+         different locations in RAM (identified by different physical
+         addresses) or may not be present in RAM at all
+   - OS keeps track of *(virtual) address spaces*:
+     What (virtual address) is located where (physical address)
+     - Supported by hardware, *memory management unit* (*MMU*)
+       - Translation of virtual into physical addresses (see next
+         slide)
+
+*** Memory Management Unit
+    :PROPERTIES:
+    :CUSTOM_ID: mmu
+    :END:
+    #+INDEX: Memory management unit (MMU) (Memory I)
+    {{{reveallicense("./figures/hail_f0604.pdf.meta","40vh")}}}
+#+BEGIN_NOTES
+When the CPU executes machine instructions, only virtual addresses
+occur in those instructions, which need to be translated into physical
+RAM addresses to be used on the address bus.  A piece of hardware
+called memory management unit (MMU) performs that translation, before
+resulting physical addresses are used on the memory’s address bus
+to access RAM contents, i.e., data.
+
+As explained in detail later on, the OS manages data structures called
+page tables to keep track of what virtual addresses correspond to what
+physical addresses, and the MMU uses those page tables during address
+translation.  Also, as discussed in the next presentation but not
+shown here, the MMU uses a special cache called translation lookaside
+buffer (TLB) to speed up address translation.
+#+END_NOTES
+** Processes
+   :PROPERTIES:
+   :CUSTOM_ID: processes
+   :END:
+   #+INDEX: Process!Process with virtual address space (Memory I)
+   - OS manages running programs via *processes*
+     - More details in [[file:Operating-Systems-Processes.org][upcoming presentation]]
+   - For now: *Process* ≈ group of threads that share a virtual
+     address space
+     #+ATTR_REVEAL: :frag (appear)
+     - Each process has its *own* address space
+       - Starting at virtual address 0, mapped
+         per process to RAM by the OS, e.g.:
+	 - Virtual address 0 of process P1 located at physical address 0
+	 - Virtual address 0 of process P2 located at physical address 16384
+	 - Virtual address 0 of process P3 not located in RAM at all
+       - Processes may *share* data (with OS permission), e.g.:
+	 - ~BoundedBuffer~ located at RAM address 42
+	 - Identified by virtual address 42 in P1, by 4138 in P3
+     - Address space of process is *shared by its threads*
+       - E.g., for all threads of P2, virtual address 0 is associated
+         with physical address 16384
+
+** Pages and Page Tables
+   :PROPERTIES:
+   :CUSTOM_ID: page-page-table
+   :END:
+   #+INDEX: Frame (Memory I)
+   #+INDEX: Page!Definition (Memory I)
+   #+INDEX: Page table!Approximate definition (Memory I)
+   - Mapping between virtual and physical addresses does *not* happen at
+     level of bytes
+     - Instead, larger *blocks* of memory, say 4 [[https://en.wikipedia.org/wiki/Binary_prefix#kibi][KiB]]
+       - Blocks of virtual memory are called *pages*
+       - Blocks of physical memory (RAM) are called *(page) frames*
+   #+ATTR_REVEAL: :frag appear
+   - OS manages a *page table* per process
+     - One entry per page
+       - In what frame is page located (if present in RAM)
+       - Additional information: Is page read-only, executable, or
+	 modified (from an on-disk version)?
+
+*** Page Fault Handler
+    :PROPERTIES:
+    :CUSTOM_ID: page-fault-handler
+    :END:
+    #+INDEX: Page!Page fault (Memory I)
+    #+INDEX: Page!Page fault handler (Memory I)
+    #+INDEX: Page!Page hit (Memory I)
+    #+INDEX: Page!Page miss (Memory I)
+    - Pages may or may not be present in RAM
+      - Access of virtual address whose page is in RAM is called
+        *page hit*
+	- (Access = CPU executes machine instruction referring to that
+          address)
+      - Otherwise, *page miss*
+    #+ATTR_REVEAL: :frag (appear)
+    - Upon page miss, a *page fault* is triggered
+      - Special type of [[file:Operating-Systems-Interrupts.org::#irq-idea][interrupt]]
+      - *Page fault handler* of OS responsible for disk transfers
+	and page table updates
+	- OS [[file:Operating-Systems-Scheduling.org::#thread-states][blocks]] corresponding thread and manages transfer of
+          page to RAM
+	- (Thread runnable after transfer complete)
+
+** Drawing for Page Tables
+   :PROPERTIES:
+   :CUSTOM_ID: drawing-page-table
+   :END:
+   #+INDEX: Page table!Drawing (Memory I)
+   {{{revealimg("./figures/pagetable.meta",t,"50vh")}}}
+
+* Uses for Virtual Memory
+  :PROPERTIES:
+  :CUSTOM_ID: vm-uses
+  :END:
+
+** Private Storage
+   - Each process has its own address space, *isolated* from others
+     #+ATTR_REVEAL: :frag (appear)
+     - *Autonomous use* of virtual addresses
+       - Recall: Virtual address 0 used differently in every process
+     - Underlying *data protected* from accidental and malicious
+       modifications by other processes
+       - OS allocates frames exclusively to processes (leading to
+         disjoint portions of RAM for different processes)
+       - Unless frames are explicitly shared between processes
+	 - Next slide
+   #+ATTR_REVEAL: :frag appear
+   - Processes may partition address space
+     - Read-only region holding machine instructions, called *text*
+     - Writable region(s) holding rest (data, stack, heap)
+
+** Controlled Sharing
+   :PROPERTIES:
+   :CUSTOM_ID: shared-memory
+   :END:
+   - OS may map limited portion of RAM into multiple address spaces
+     - Multiple page tables contain entries for the *same frames* then
+       - See ~smem~ demo later on
+   - Shared code
+     - If same program runs multiple times, processes can share text
+     - If multiple programs use same libraries (libXYZ.so under
+       GNU/Linux, DLLs under Windows), processes can share them
+
+*** Copy-On-Write Drawing
+    :PROPERTIES:
+    :CUSTOM_ID: drawing-cow
+    :END:
+    #+INDEX: Copy-on-write!Drawing (Memory I)
+    {{{revealimg("./figures/copyonwrite.meta",t,"50vh")}}}
+
+*** Copy-On-Write (COW)
+    :PROPERTIES:
+    :CUSTOM_ID: copy-on-write
+    :END:
+    #+INDEX: Copy-on-write!Definition (Memory I)
+    #+ATTR_REVEAL: :frag (appear)
+    - Technique to create a copy of data for second process
+      - Data may or may not be modified subsequently
+    - Pages *not* copied initially, but marked as *read-only* with
+      access by second process
+      - Entries in page tables of both processes point to original frames
+      - Fast, no data is copied
+    - If process tries to *write* read-only data, MMU triggers interrupt
+      - Handler of OS *copies* corresponding frames, which then
+        become writable
+	- *Copy* only takes place *on write*
+      - Afterwards, write operation on (now) writable data
+
+** Flexible Memory Allocation
+   - Allocation of RAM does not need to be contiguous
+     - Large portions of RAM can be allocated via individual frames
+       - Which may or may not be contiguous
+       - See next slide or big picture
+     - The virtual address space can be contiguous, though
+
+*** Non-Contiguous Allocation
+    {{{reveallicense("./figures/hail_f0609.pdf.meta","40vh")}}}
+
+# *** Excursion: Fragmentation
+#     - Fragmentation = situation where free regions of RAM cannot be used
+#       - *External fragmentation*: free regions arise over time which are
+# 	too small to be useful
+# 	- Cannot happen with paging
+# 	- (Only possible with memory allocation schemes, where units
+#           of different size are (de-) allocated)
+#       - *Internal fragmentation*: allocated regions remain (partially) unused
+# 	- Can happen with paging
+# 	- OS allocates entire frames
+# 	  - Even if process needs just a couple of bytes
+# 	  - “Free” portion of frame unusable for other processes
+#     - (Fragmentation on disk: data stored non-contiguously such that the
+#       disk’s head needs to move frequently)
+
+# ** Sparse Address Spaces
+#    - Consider some program with large, growing data structures
+#      - Process can allocate virtual address space for each data
+#        structure that is large enough for future growth (include gaps)
+#        - While only currently used part is kept in RAM
+#    - OS does not provide physical address mappings for virtual
+#      addresses in gaps
+
+** Persistence
+   :PROPERTIES:
+   :CUSTOM_ID: mapped-file
+   :END:
+   #+INDEX: Persistence (Memory I)
+   #+INDEX: Memory mapped file (Memory I)
+   - Data kept persistently in files on secondary storage
+   - When process opens file, file can be *mapped* into
+     virtual address space
+     #+ATTR_REVEAL: :frag appear 
+     - Initially without loading data into RAM
+       - See ~page 3~ in big picture
+     - Page accesses in that file trigger *page faults*
+       - Handled by OS by loading those pages into RAM
+	 - Marked read-only and *clean*
+     #+ATTR_REVEAL: :frag appear 
+     - Upon write, MMU triggers interrupt, OS makes page writable and
+       remembers it as *dirty* (changed from *clean*)
+       - Typically with MMU hardware support via *dirty bit* in page table
+       - Dirty = to be written to secondary storage at some point in time
+	 - After being written, marked as clean and read-only
+#+BEGIN_NOTES
+Typical OSs offer file systems for the persistent storage of data on
+disks, where persistent means that (in contrast to RAM) such data
+remains safely in place even if the machine is powered down.
+Different OSs offer different system calls for file access, and this
+slide focuses on a technique called memory-mapped files.  Here, the
+file is simply mapped into the virtual address space of the process
+containing the thread, which invokes the system call.  “Mapping” means
+that afterwards the file’s bytes are available starting at a virtual
+address returned by the system call.
+
+Initially, no data needs to be loaded into RAM at all.  If the thread
+now tries to access a byte belonging to the file, a page fault occurs,
+and the thread gets blocked.  The page fault handler then triggers the
+transfer of the corresponding block of disk data to RAM (using
+metadata about the file system for address calculations).  The
+completion of that transfer is indicated by an interrupt, in
+response to which the page table is updated and the corresponding page
+is marked as read-only and clean, where clean indicates that the page
+is identical to the copy stored on disk.  Also, the thread accessing
+the file is made runnable and can access its data.
+
+While read accesses just return the requested data, write accesses
+trigger another interrupt as the page is marked read-only.  Now, the
+interrupt handler marks the page as writable and dirty.  Being
+writable implies that further write accesses succeed without further
+interrupts, and being dirty indicates that the version in RAM now
+differs from the version on disk.  Thus, when a thread requests to
+write data back to the file, dirty pages need to be written to
+disk.  Afterwards, the file’s pages are marked as clean and read-only
+again.
+#+END_NOTES
+
+** Demand-Driven Program Loading
+   :PROPERTIES:
+   :CUSTOM_ID: demand-loading
+   :END:
+   #+INDEX: Demand loading (Memory I)
+   - Start of program is *special case* of previous slide
+     - Map executable file into virtual memory
+     - Jump to first instruction
+       - Page faults automatically trigger loading of necessary pages
+       - No need to load entire program upon start
+	 - Faster than loading everything at once
+	 - Reduced memory requirements
+
+*** Working Set
+    :PROPERTIES:
+    :CUSTOM_ID: working-set
+    :END:
+    #+INDEX: Working set (Memory I)
+    #+INDEX: Principle of locality (Memory I)
+    #+INDEX: Locality principle (Memory I)
+    #+ATTR_REVEAL: :frag (appear) 
+    - OS loads part of program into main memory
+      - *Resident set*: Pages currently in main memory
+      - At least current instruction (and required data) necessary in main memory
+    - *Principle of locality*
+      - Memory references typically close to each other
+      - Few pages sufficient for some interval
+    - *Working set*: Necessary pages for some interval
+      - Aim: Keep working set in resident set
+	- [[file:Operating-Systems-Memory-II.org::#replacement-policy][Replacement policies]] in next presentation
+#+BEGIN_NOTES
+As discussed so far, typically not all pages of a process are located
+in RAM.  Those that are located in RAM comprise the resident set.  For
+von Neumann machines at least the currently executing instruction and
+its required data need to be present in RAM, and demand-driven loading
+is a technique to provide that data on the fly.
+
+As data is transferred in pages, one can hope that a newly loaded page
+does not only contain one useful instruction or one useful byte of
+data but lots of them.  Indeed, if you think of a typical program it is
+reasonable to expect that the program counter is often just
+incremented or changed by small amounts, e.g., in case of sequential
+statements, loops, or local function calls.  Similarly, references to
+data also often touch neighboring locations in short sequence, e.g.,
+in case of arrays or objects.  This reasoning is known as principle of
+locality, which implies that frequently only few pages in RAM are
+sufficient to allow prolonged progress for a thread without page
+faults.
+
+Please take a moment to convince yourself that without the principle of
+locality caching, i.e., the transfer of some set of data from a large
+and slow storage area to a smaller and faster storage area, would not
+be effective; neither the form of caching seen here, where RAM serves
+as cache for disk data, nor CPU caches for RAM data.
+
+The so-called working set (for some given time interval) of a thread T
+is that set of pages which allows T to execute without page faults
+throughout the interval.  Clearly, once in a while new pages are added
+to the working set while other pages are removed since their contents
+are not necessary any longer.  Note that the working set is a hypothetical
+construct, whose precise shape and evolution is unknown to the OS.
+However, the goal of memory management is to manage the resident
+set in such a way that is contains the working set (and ideally not
+much else).  Page replacement policies, to be discussed in the
+next presentation, work towards that goal.
+#+END_NOTES
+
+* Paging
+  :PROPERTIES:
+  :CUSTOM_ID: paging
+  :END:
+
+** Major Ideas
+   :PROPERTIES:
+   :CUSTOM_ID: page-offset
+   :END:
+   #+INDEX: Paging (Memory I)
+   - Virtual address spaces split into *pages*, RAM into *frames*
+     #+ATTR_REVEAL: :frag (appear)
+     - Page is *unit of transfer* by OS
+       - Between RAM and secondary storage (e.g., disks)
+     - Each virtual ~address~ can be interpreted in two ways
+       1. Integer number (~address~ as binary number, as in Hack)
+       2. Hierarchical object consisting of page number and offset
+	  - *Page number*, determined by most significant bits of ~address~
+	  - *Offset*, remaining bits of ~address~ = byte number within its page
+	    - (Detailed example follows)
+   #+ATTR_REVEAL: :frag appear
+   - *Page tables* keep track of RAM locations for pages
+     - If CPU uses virtual address whose page is not present in RAM, the
+       Page fault handler takes over
+
+** Sample Memory Allocation
+   :PROPERTIES:
+   :CUSTOM_ID: fig-6.10
+   :END:
+   - Sample allocation of frames to some process
+     {{{reveallicense("./figures/hail_f0610.pdf.meta","50vh")}}}
+#+BEGIN_NOTES
+Several subsequent slides will refer to this example, which shows a main
+memory situation with just four frames of main memory.  Clearly, that
+is an unrealistically small example, but it is sufficient to
+demonstrate the main points.
+Here, a process with a virtual address space of 8 pages is shown, some
+of which are allocated to frames as indicated by arrows.  Note that
+neighboring  pages can (a) be mapped to frames in arbitrary order or
+(b) not be mapped to RAM at all.
+The Xs indicate that no frame is assigned to hold pages 2-5 or page 7.
+Frame 2 is unused.
+#+END_NOTES
+
+** Page Tables
+   :PROPERTIES:
+   :CUSTOM_ID: page-table-definition
+   :END:
+   #+INDEX: Page table!Definition (Memory I)
+   - Page Table = Data structure managed by OS
+     - *Per process*
+   - Table contains one entry per page of virtual address space
+     - Each entry contains
+       - Frame number for page in RAM (if present in RAM)
+       - Control bits (not standardized, e.g., valid, read-only,
+         dirty, executable)
+       - Note: Page tables do not contain page numbers
+         as they are implicitly given by row numbers (starting from 0)
+     - Note on following sample page table
+       - “0” as valid bit indicates that page is not present in RAM, so
+	 value under “Frame#” does not matter and is shown as “X”
+
+*** Sample Page Table
+    :PROPERTIES:
+    :CUSTOM_ID: sample-page-table
+    :END:
+    #+INDEX: Page table!Example (Memory I)
+    - Consider previously shown RAM allocation (Fig. 6.10)
+      {{{reveallicense("./figures/hail_f0610.pdf.meta","50vh")}}}
+      #+ATTR_REVEAL: :frag appear
+      - Page table for that situation (Fig. 6.11)
+        |-------+--------|
+        | Valid | Frame# |
+        |-------+--------|
+        | <l>   | <c>    |
+        | 1     | 1      |
+        | 1     | 0      |
+        | 0     | X      |
+        | 0     | X      |
+        | 0     | X      |
+        | 0     | X      |
+        | 1     | 3      |
+        | 0     | X      |
+        |-------+--------|
+
+*** Address Translation Example (1/3)
+    :PROPERTIES:
+    :CUSTOM_ID: ex-translation
+    :END:
+    #+INDEX: Address translation example (Memory I)
+    #+INDEX: Virtual address translation example (Memory I)
+    - Task: Translate virtual address to physical address
+      - Subtask: Translate bits for page number to bits for frame number
+    #+ATTR_REVEAL: :frag appear
+    - Suppose
+      - [[color:darkgreen][Pages]] and [[color:sienna][frames]] have a size of 1 KiB (= 1024 B)
+      - 15-bit addresses, as in Hack
+    #+ATTR_REVEAL: :frag appear
+    - Consequently
+      - Size of address space: 2^{15} B = 32 KiB
+      - 10 bits are used for offsets (as 2^{10} B = 1024 B)
+      - The remaining 5 bits enumerate 2^5 = 32 pages
+
+*** Address Translation Example (2/3)
+    - Hierarchical interpretation of 15-bit addresses
+      - Virtual address: [[color:darkgreen][5 bits for page number]] \nbsp
+        [[color:darkblue][10 bits for offset]]
+      - Physical address: [[color:sienna][5 bits for frame number]] \nbsp
+        [[color:darkblue][10 bits for offset]]
+    - Based on page table
+      - [[color:darkgreen][Page 0]] is located in [[color:sienna][frame 1]]
+    - [[color:darkgreen][Page 0]] contains virtual addresses
+      between 0 and 1023, [[color:sienna][frame 1]] physical
+      addresses between 1024 and 2047
+      - Consider virtual address 42
+	- 42 = [[color:darkgreen][00000]] [[color:darkblue][0000101010]]
+	  - [[color:darkgreen][Page number]] = [[color:darkgreen][00000]] = [[color:darkgreen][0]]
+	  - [[color:darkblue][Offset]] = [[color:darkblue][0000101010]] = [[color:darkblue][42]]
+	- 42 is located at physical address
+	  [[color:sienna][00001]] [[color:darkblue][0000101010]]
+	  = 1066 (= 1024 + 42)
+
+*** Address Translation Example (3/3)
+    - Based on page table
+      - [[color:darkgreen][Page 6]] is located in [[color:sienna][frame 3]]
+    - [[color:darkgreen][Page 6]] contains addresses
+      between 6*1024 = 6144 and 6*1024+1023 = 7167
+      - Consider virtual address 7042
+	- 7042 = [[color:darkgreen][00110]] [[color:darkblue][1110000010]]
+	  - [[color:darkgreen][Page number]] = [[color:darkgreen][00110]] = [[color:darkgreen][6]]
+	  - [[color:darkblue][Offset]] = [[color:darkblue][1110000010]] = [[color:darkblue][898]]
+	- In general, address translation exchanges
+          [[color:darkgreen][page number]] with
+          [[color:sienna][frame number]]
+	  - Here, [[color:darkgreen][6]] with [[color:sienna][3]]
+	- 7042 is located at physical address
+	  [[color:sienna][00011]] [[color:darkblue][1110000010]] =
+          3970 (= 3*1024 + 898)
+
+** Challenge: Page Table Sizes
+   :PROPERTIES:
+   :CUSTOM_ID: page-table-sizes
+   :END:
+   #+INDEX: Page table!Size (Memory I)
+   - E.g., 32-bit addresses with page size of 4 KiB (2^{12} B)
+     - Virtual address space consists of up to 2^{32} B = 4 GiB = 2^{20} pages
+       - Every page with entry in page table
+       - If 4 bytes per entry, then *4 MiB* (2^{22} B) per page table
+	 - Page table itself needs 2^{10} pages/frames! *Per process*!
+     - Much worse for 64-bit addresses
+   #+ATTR_REVEAL: :frag appear 
+   - Solutions to reduce amount of RAM for page tables
+     - Multilevel (or *hierarchical*)
+       page tables (2 or more levels)
+       - Tree-like structure, efficiently representing large unused areas
+       - Root, called *page directory*
+	 - 4 KiB with 2^{10} entries for page tables
+	 - Each entry represents 4 MiB of address space
+     - [[file:Operating-Systems-Memory-II.org::#inverted-page-tables][Inverted]]
+       page tables in next presentation
+#+BEGIN_NOTES
+While the sample pages tables shown so far may seem simple to manage,
+pages tables can be huge in practice.  As page tables are used to
+locate data in RAM, a naïve implementation might require the page
+tables themselves to be located in RAM in the first place.  Let’s see
+how large page tables might get.
+
+With 32-bit addresses, you see a calculation on this slide, showing
+that the page table for every process requires up to 4 MiB of RAM.
+Note that those 4 MiB are pure OS overhead, unusable for applications.
+So, after you booted your system half a GB of RAM may already be gone.
+
+Although this result is already pretty bad, for 64-bit systems the
+situation is much worse, even if current PC processors do not use all
+64 bits for addressing.  Suppose 48 bits are used for virtual
+addresses, again with 4 KiB pages.  Then 2^{36} pages may exist per
+process, now maybe with 8 B per entry in the page table, leading to
+2^{39} B = 2^9 GiB = 512 GiB.  In words: A single page table might
+occupy 512 GiB of RAM, quite likely more than you’ve got.
+
+Solutions to reduce the amount of RAM for page tables fall into two
+classes, namely multilevel page tables and inverted page tables.
+
+The key idea of multilevel page tables is that large portions of the
+theoretically possible virtual address space remain unused, and such
+unused portions do not need to be represented in the page table.  To
+efficiently represent smaller (used) and larger (unused) portions, the
+page table is represented and traversed as a tree-like structure with
+multiple levels.  The root of that tree-like structure is always
+located in RAM and is called page directory.  Each entry in that page
+directory represents a large portion of the address space, in case of
+32-bit addresses and two levels (as on subsequent slides) each entry
+represents 1024 pages with a total size of 4 MiB.  If such a 4 MiB
+region is not used at all, no data needs to be allocated in lower
+levels of the tree like structure.  Details are presented on
+subsequent slides.
+
+The key idea of inverted page tables is that RAM is limited and
+typically smaller than the virtual address space.  Instead of storing
+each allocated frame per page as discussed so far, with inverted page
+tables one entry exists per frame of RAM, recording what page of what
+process is currently located in that frame (if any).  Note that only
+one such inverted page table needs to be maintained, whereas page
+tables exist per process.  Also note that the number of entries of the
+inverted table is determined by the number of frames in RAM, instead
+of the (potentially much larger) number of pages of virtual address
+space.  You will see how address translation works with inverted page
+tables on later slides.  Right now, you may want to think about that
+yourself.  Starting again from a page number for which the
+corresponding frame number is necessary, how do you locate the
+appropriate entry in the inverted page table?  Clearly, a linear
+search is too slow.
+#+END_NOTES
+
+* Multilevel Page Tables
+  :PROPERTIES:
+  :CUSTOM_ID: multilevel-page-tables
+  :END:
+
+** Core Idea
+   - So far: Virtual address is hierarchical object consisting of page
+     number and offset
+   - Now multilevel page tables: Interpret page table as tree with
+     fixed depth, i.e., a fixed number of multiple levels
+     - (Visualizations on next two slides)
+     - For depth /n/, split page number into /n/ smaller parts
+       - Two-level: Split 20 bits into two parts with 10 bits each
+     - To traverse page table (tree), use one part on each level
+   - Aside: On 64-bit machines, Linux uses 5-level tables by default
+     [[https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=18ec1eaf58fbf2d9009a752a102a3d8e0d905a0f][since 2019-09-16]]
+
+** Two-Level Page Table
+   :PROPERTIES:
+   :CUSTOM_ID: fig-6.13
+   :END:
+   #+INDEX: Page table!Two-level (Memory I)
+   {{{reveallicense("./figures/hail_f0613_with_embedded_frame_nos.meta","50vh")}}}
+
+   #+ATTR_HTML: :class smaller
+   Note: /Page table/ contains entries of an ordinary page table.
+   Previously, valid bit and page frame numbers were shown in columns;
+   here, they are shown in rows.
+#+BEGIN_NOTES
+This figure shows a two-level page table as used in Intel’s 32-bit
+processor architecture IA-32.
+The entry point to this two-level page table is called page directory
+and can point to 1024 chunks of the page table, each of which can
+point to 1024 page frames.  Note that with 1024 entries of 4 B each, the
+page directory as well as chunks of the page table fit exactly into
+pages and frames of 4 KiB.
+The leftmost pointer leading from the leftmost chunk of the
+page table points to the frame holding page 0.
+Each entry can also be marked invalid, indicated by an X in this
+diagram.  For example, the second entry in the first chunk of the page
+table is invalid, showing that no frame holds page 1.  The same
+principle applies at the page directory level as well; in this example, no
+frames hold pages 1024-2047, so the second page directory entry is
+marked invalid.
+#+END_NOTES
+
+*** Two-Level Address Translation
+    :PROPERTIES:
+    :CUSTOM_ID: fig-6.14
+    :END:
+     {{{reveallicense("./figures/hail_f0614.pdf.meta","50vh")}}}
+#+BEGIN_NOTES
+This diagram shows the core of IA-32 paged address mapping.
+As explained previously, virtual addresses are understood as
+hierarchical objects which are divided into a 20-bit page number and
+12-bit offset within the page; the latter 12 bits are left unchanged
+by the translation process.
+Due to the two-level nature of the page table, the 20-bit page number
+is subdivided into a 10-bit page directory index and a 10-bit page
+table index.
+Each index is multiplied by 4, the number of bytes in each entry, and
+then added to the base physical address of the corresponding data
+structure, producing a physical memory address from which the entry is
+loaded.  The base address of the page directory comes from a special
+register, whereas the base address of the page table comes from the page
+directory entry.
+#+END_NOTES
+
+* Looking at Memory
+** Linux Kernel: ~/proc/<pid>/~
+   :PROPERTIES:
+   :CUSTOM_ID: proc
+   :END:
+   #+INDEX: /proc!Filesystem (Memory I)
+   - ~/proc~ is a pseudo-filesystem
+     - See http://man7.org/linux/man-pages/man5/proc.5.html
+       - (Specific to Linux kernel; incomplete or missing elsewhere)
+     - “Pseudo”: Look and feel of any other filesystem
+       - Sub-directories and files
+       - However, files are no “real” files but meta-data
+     - Interface to internal *kernel data structures*
+       - One sub-directory per process ID
+       - OS identifies process by integer number
+       - Here and elsewhere, ~<pid>~ is meant as *placeholder* for such a number
+
+*** Video about ~/proc~
+    :PROPERTIES:
+    :CUSTOM_ID: video-proc
+    :END:
+    @@html:<video controls width="1280" height="720" data-src="./videos/proc-smaps.mp4"></video>@@
+    #+begin_notes
+This video, “Looking at /proc” by
+[[https://lechten.gitlab.io/#me][Jens Lechtenbörger]],
+shares the presentation’s license terms, namely
+[[https://creativecommons.org/licenses/by-sa/4.0/][CC BY-SA 4.0]].
+
+The video shows some aspects of the ~/proc~ filesystem related to
+memory management, which are described in more abstract form on
+subsequent slides.
+    #+end_notes
+
+*** Drawing about ~/proc~
+    :PROPERTIES:
+    :CUSTOM_ID: drawing-proc
+    :END:
+    #+INDEX: /proc!Drawing (Memory I)
+    {{{revealimg("./figures/proc.meta",t,"50vh")}}}
+
+*** Drawing about ~man~ pages
+    {{{revealimg("./figures/man.meta",t,"50vh")}}}
+
+** Linux Kernel Memory Interface
+   :PROPERTIES:
+   :CUSTOM_ID: proc-memory
+   :END:
+   #+INDEX: /proc!Memory allocation (Memory I)
+   - Memory allocation (and much more) visible under ~/proc/<pid>~
+   - E.g.:
+     - ~/proc/<pid>/pagemap~: One 64-bit value per virtual page
+       - Mapping to RAM or swap area
+     - ~/proc/<pid>/maps~: Mapped memory regions
+     - ~/proc/<pid>/smaps~: Memory usage for mapped regions
+   - Notice: Memory regions include *shared* libraries that are used by
+     lots of processes
+
+** GNU/Linux Reporting: ~smem~
+   :PROPERTIES:
+   :CUSTOM_ID: smem
+   :END:
+   #+INDEX: GNU/Linux!Tools!smem (Memory I)
+   - User space tool to read ~smaps~ files: ~smem~
+     - See https://linoxide.com/tools/memory-usage-reporting-smem/
+   - Terminology
+     - *Virtual set size* (VSS): Size of virtual address space
+     - *Resident set size* (RSS): Allocated main memory
+       - Standard notion, yet overestimates memory usage as lots of
+         memory is shared between processes
+	 - Shared memory is added to the RSS of every sharing process
+     - *Unique set size* (USS): memory allocated exclusively to process
+       - That much would be returned upon process’ termination
+     - *Proportional set size* (PSS): USS plus “fair share” of shared pages
+       - If page shared by 5 processes, each gets a fifth of a page
+         added to its PSS
+
+*** Sample ~smem~ Output
+#+BEGIN_SRC bash
+$ smem -c "pid command uss pss rss vss" -P "bash|xinit|emacs"
+  PID Command                          USS      PSS      RSS      VSS
+  765 /usr/bin/xinit /etc/X11/Xse      220      285     2084    15952
+ 1390 /bin/bash -c libreoffice5.3      240      510     2936    13188
+  826 /bin/bash /usr/bin/qubes-se      256      524     3008    13204
+  750 -su -c /usr/bin/xinit /etc/      316      587     3368    21636
+ 1251 bash                            4864     5136     7900    26024
+ 2288 /usr/bin/python /usr/bin/sm     5272     6035     9432    24688
+ 1145 emacs                          90876    93224   106568   662768
+#+END_SRC
+
+*** Sample ~smem~ Graph
+    {{{revealimg("./figures/smem.meta","~smem --bar pid -c \"uss pss rss\" -P \"bash|xinit\"~","70vh")}}}
 
 * Multitasking
 
@@ -1304,12 +1965,10 @@ whether they consist of multiple steps or not is not an issue.
        - Abstract datatype, think of Java class, methods as CS with MX
        - Keyword ~synchronized~ turns Java method into CS with MX!
 
-
 * Locking
   :PROPERTIES:
   :CUSTOM_ID: locking
   :END:
-
 ** Mutexes
    :PROPERTIES:
    :CUSTOM_ID: drawing-mutex
@@ -1359,6 +2018,58 @@ Unlocked upon unlock() or whether it is immediately reassigned to one of
 the blocked threads (e.g., in FIFO order) is a design decision, which
 will be revisited later in the context of the so-called convoy problem.
 #+END_NOTES
+
+* Semaphores
+** Semaphore Origin
+   :PROPERTIES:
+   :CUSTOM_ID: semaphore-origin
+   :END:
+   #+INDEX: Semaphore!Definition (MX I)
+   - Proposed by [[https://en.wikipedia.org/wiki/Edsger_W._Dijkstra][Dijkstra]], 1965
+     - Based on *waiting* (sleeping) for *signals* (wake-up calls)
+       - Thread waiting for signal is *blocked*
+   #+ATTR_REVEAL: :frag appear
+   - *Abstract data type*
+     #+ATTR_REVEAL: :frag (appear)
+     - Non-negative integer
+       - Number of available resources; 1 for MX on CPU
+     - Queue for blocked threads
+     - *Atomic* operations
+       - Initialize integer
+       - ~acquire~ (wait, sleep, down, P [passeren, proberen]): entry into CS
+	 - Decrement integer by 1
+	 - As integer must be non-negative, *block* when 0
+       - ~release~ (signal, wakeup, up, V [vrijgeven, verlaten]): exit
+         from CS
+	 - Increment integer by 1 (value may grow without bound)
+	 - Potentially *unblock* blocked thread
+
+** Use of Semaphores for MX
+   - Programming discipline *required* similarly to locks
+     - Create semaphore for shared data structure
+     - ~acquire()~ before CS, ~release()~ after
+   - Ticket example modified with ~seatSem~ initialized to ~1~ (leading to MX behavior):
+     - (The semaphore initialized to 1 behaves exactly like a lock here)
+#+BEGIN_SRC java
+seatSem.acquire();
+if (seatsRemaining > 0) {
+   dispenseTicket();
+   seatsRemaining = seatsRemaining - 1;
+} else displaySorrySoldOut();
+seatSem.release();
+#+END_SRC
+
+*** Semaphores for Capacity Control
+    - Semaphores initialized to other values than 1 are typically used
+      to model capacities
+    #+ATTR_REVEAL: :frag appear
+    - Example from [[https://stackoverflow.com/a/40473][stack overflow: bouncer in nightclub]]
+      - Nightclub has limited capacity, i.e., number of people allowed
+        in club at any moment: /n/
+	- Bouncer (semaphore initialized to /n/) makes sure that no more than /n/ people can be inside
+	- If club is full, a queue collects waiting people
+      - Guests (threads) call ~acquire()~ on bouncer/semaphore to enter
+      - Guests (threads) call ~release()~ on bouncer/semaphore to leave
 
 ** Challenges
    :PROPERTIES:
@@ -1428,721 +2139,6 @@ leading to starvation of a philosopher.
 
 Apparently, avoidance of starvation is no simple task.
    #+end_notes
-
-* Main Concepts
-  :PROPERTIES:
-  :CUSTOM_ID: main-concepts
-  :END:
-
-** Modern Computers
-   - RAM is *byte*-addressed (1 byte = 8 bits)
-     - Each ~address~ selects a byte (not a word as in Hack)
-       - (Machine instructions typically operate on words (= multiple
-         bytes), though)
-   - *Physical* vs *virtual* addresses
-     - Physical: Addresses used on memory bus
-       - Hack ~address~
-     - Virtual: Addresses used by threads and CPU
-       - Do not exist in Hack
-
-** Virtual Addresses
-   :PROPERTIES:
-   :CUSTOM_ID: virtual-address
-   :END:
-   #+INDEX: Virtual addresses (Memory I)
-   - Additional layer of *abstraction* provided by OS
-     - Programmers do not need to worry about physical memory
-       locations at all
-     - Pieces of data (and instructions) are identified by virtual addresses
-       - At different points in time, the same piece of data
-         (identified by its virtual address) may reside at
-         different locations in RAM (identified by different physical
-         addresses) or may not be present in RAM at all
-   - OS keeps track of *(virtual) address spaces*:
-     What (virtual address) is located where (physical address)
-     - Supported by hardware, *memory management unit* (*MMU*)
-       - Translation of virtual into physical addresses (see next
-         slide)
-
-*** Memory Management Unit
-    :PROPERTIES:
-    :CUSTOM_ID: mmu
-    :END:
-    #+INDEX: Memory management unit (MMU) (Memory I)
-    {{{reveallicense("./figures/hail_f0604.pdf.meta","40vh")}}}
-#+BEGIN_NOTES
-When the CPU executes machine instructions, only virtual addresses
-occur in those instructions, which need to be translated into physical
-RAM addresses to be used on the address bus.  A piece of hardware
-called memory management unit (MMU) performs that translation, before
-resulting physical addresses are used on the memory’s address bus
-to access RAM contents, i.e., data.
-
-As explained in detail later on, the OS manages data structures called
-page tables to keep track of what virtual addresses correspond to what
-physical addresses, and the MMU uses those page tables during address
-translation.  Also, as discussed in the next presentation but not
-shown here, the MMU uses a special cache called translation lookaside
-buffer (TLB) to speed up address translation.
-#+END_NOTES
-** Processes
-   :PROPERTIES:
-   :CUSTOM_ID: processes
-   :END:
-   #+INDEX: Process!Process with virtual address space (Memory I)
-   - OS manages running programs via *processes*
-     - More details in [[file:Operating-Systems-Processes.org][upcoming presentation]]
-   - For now: *Process* ≈ group of threads that share a virtual
-     address space
-     #+ATTR_REVEAL: :frag (appear)
-     - Each process has its *own* address space
-       - Starting at virtual address 0, mapped
-         per process to RAM by the OS, e.g.:
-	 - Virtual address 0 of process P1 located at physical address 0
-	 - Virtual address 0 of process P2 located at physical address 16384
-	 - Virtual address 0 of process P3 not located in RAM at all
-       - Processes may *share* data (with OS permission), e.g.:
-	 - ~BoundedBuffer~ located at RAM address 42
-	 - Identified by virtual address 42 in P1, by 4138 in P3
-     - Address space of process is *shared by its threads*
-       - E.g., for all threads of P2, virtual address 0 is associated
-         with physical address 16384
-
-** Pages and Page Tables
-   :PROPERTIES:
-   :CUSTOM_ID: page-page-table
-   :END:
-   #+INDEX: Frame (Memory I)
-   #+INDEX: Page!Definition (Memory I)
-   #+INDEX: Page table!Approximate definition (Memory I)
-   - Mapping between virtual and physical addresses does *not* happen at
-     level of bytes
-     - Instead, larger *blocks* of memory, say 4 [[https://en.wikipedia.org/wiki/Binary_prefix#kibi][KiB]]
-       - Blocks of virtual memory are called *pages*
-       - Blocks of physical memory (RAM) are called *(page) frames*
-   #+ATTR_REVEAL: :frag appear
-   - OS manages a *page table* per process
-     - One entry per page
-       - In what frame is page located (if present in RAM)
-       - Additional information: Is page read-only, executable, or
-	 modified (from an on-disk version)?
-
-*** Page Fault Handler
-    :PROPERTIES:
-    :CUSTOM_ID: page-fault-handler
-    :END:
-    #+INDEX: Page!Page fault (Memory I)
-    #+INDEX: Page!Page fault handler (Memory I)
-    #+INDEX: Page!Page hit (Memory I)
-    #+INDEX: Page!Page miss (Memory I)
-    - Pages may or may not be present in RAM
-      - Access of virtual address whose page is in RAM is called
-        *page hit*
-	- (Access = CPU executes machine instruction referring to that
-          address)
-      - Otherwise, *page miss*
-    #+ATTR_REVEAL: :frag (appear)
-    - Upon page miss, a *page fault* is triggered
-      - Special type of [[file:Operating-Systems-Interrupts.org::#irq-idea][interrupt]]
-      - *Page fault handler* of OS responsible for disk transfers
-	and page table updates
-	- OS [[file:Operating-Systems-Scheduling.org::#thread-states][blocks]] corresponding thread and manages transfer of
-          page to RAM
-	- (Thread runnable after transfer complete)
-
-** Drawing for Page Tables
-   :PROPERTIES:
-   :CUSTOM_ID: drawing-page-table
-   :END:
-   #+INDEX: Page table!Drawing (Memory I)
-   {{{revealimg("./figures/pagetable.meta",t,"50vh")}}}
-
-* Uses for Virtual Memory
-  :PROPERTIES:
-  :CUSTOM_ID: vm-uses
-  :END:
-
-** Private Storage
-   - Each process has its own address space, *isolated* from others
-     #+ATTR_REVEAL: :frag (appear)
-     - *Autonomous use* of virtual addresses
-       - Recall: Virtual address 0 used differently in every process
-     - Underlying *data protected* from accidental and malicious
-       modifications by other processes
-       - OS allocates frames exclusively to processes (leading to
-         disjoint portions of RAM for different processes)
-       - Unless frames are explicitly shared between processes
-	 - Next slide
-   #+ATTR_REVEAL: :frag appear
-   - Processes may partition address space
-     - Read-only region holding machine instructions, called *text*
-     - Writable region(s) holding rest (data, stack, heap)
-
-** Controlled Sharing
-   :PROPERTIES:
-   :CUSTOM_ID: shared-memory
-   :END:
-   - OS may map limited portion of RAM into multiple address spaces
-     - Multiple page tables contain entries for the *same frames* then
-       - See ~smem~ demo later on
-   - Shared code
-     - If same program runs multiple times, processes can share text
-     - If multiple programs use same libraries (libXYZ.so under
-       GNU/Linux, DLLs under Windows), processes can share them
-
-*** Copy-On-Write Drawing
-    :PROPERTIES:
-    :CUSTOM_ID: drawing-cow
-    :END:
-    #+INDEX: Copy-on-write!Drawing (Memory I)
-    {{{revealimg("./figures/copyonwrite.meta",t,"50vh")}}}
-
-*** Copy-On-Write (COW)
-    :PROPERTIES:
-    :CUSTOM_ID: copy-on-write
-    :END:
-    #+INDEX: Copy-on-write!Definition (Memory I)
-    #+ATTR_REVEAL: :frag (appear)
-    - Technique to create a copy of data for second process
-      - Data may or may not be modified subsequently
-    - Pages *not* copied initially, but marked as *read-only* with
-      access by second process
-      - Entries in page tables of both processes point to original frames
-      - Fast, no data is copied
-    - If process tries to *write* read-only data, MMU triggers interrupt
-      - Handler of OS *copies* corresponding frames, which then
-        become writable
-	- *Copy* only takes place *on write*
-      - Afterwards, write operation on (now) writable data
-
-** Flexible Memory Allocation
-   - Allocation of RAM does not need to be contiguous
-     - Large portions of RAM can be allocated via individual frames
-       - Which may or may not be contiguous
-       - See next slide or big picture
-     - The virtual address space can be contiguous, though
-
-*** Non-Contiguous Allocation
-    {{{reveallicense("./figures/hail_f0609.pdf.meta","40vh")}}}
-
-# *** Excursion: Fragmentation
-#     - Fragmentation = situation where free regions of RAM cannot be used
-#       - *External fragmentation*: free regions arise over time which are
-# 	too small to be useful
-# 	- Cannot happen with paging
-# 	- (Only possible with memory allocation schemes, where units
-#           of different size are (de-) allocated)
-#       - *Internal fragmentation*: allocated regions remain (partially) unused
-# 	- Can happen with paging
-# 	- OS allocates entire frames
-# 	  - Even if process needs just a couple of bytes
-# 	  - “Free” portion of frame unusable for other processes
-#     - (Fragmentation on disk: data stored non-contiguously such that the
-#       disk’s head needs to move frequently)
-
-# ** Sparse Address Spaces
-#    - Consider some program with large, growing data structures
-#      - Process can allocate virtual address space for each data
-#        structure that is large enough for future growth (include gaps)
-#        - While only currently used part is kept in RAM
-#    - OS does not provide physical address mappings for virtual
-#      addresses in gaps
-
-** Persistence
-   :PROPERTIES:
-   :CUSTOM_ID: mapped-file
-   :END:
-   #+INDEX: Persistence (Memory I)
-   #+INDEX: Memory mapped file (Memory I)
-   - Data kept persistently in files on secondary storage
-   - When process opens file, file can be *mapped* into
-     virtual address space
-     #+ATTR_REVEAL: :frag appear 
-     - Initially without loading data into RAM
-       - See ~page 3~ in big picture
-     - Page accesses in that file trigger *page faults*
-       - Handled by OS by loading those pages into RAM
-	 - Marked read-only and *clean*
-     #+ATTR_REVEAL: :frag appear 
-     - Upon write, MMU triggers interrupt, OS makes page writable and
-       remembers it as *dirty* (changed from *clean*)
-       - Typically with MMU hardware support via *dirty bit* in page table
-       - Dirty = to be written to secondary storage at some point in time
-	 - After being written, marked as clean and read-only
-#+BEGIN_NOTES
-Typical OSs offer file systems for the persistent storage of data on
-disks, where persistent means that (in contrast to RAM) such data
-remains safely in place even if the machine is powered down.
-Different OSs offer different system calls for file access, and this
-slide focuses on a technique called memory-mapped files.  Here, the
-file is simply mapped into the virtual address space of the process
-containing the thread, which invokes the system call.  “Mapping” means
-that afterwards the file’s bytes are available starting at a virtual
-address returned by the system call.
-
-Initially, no data needs to be loaded into RAM at all.  If the thread
-now tries to access a byte belonging to the file, a page fault occurs,
-and the thread gets blocked.  The page fault handler then triggers the
-transfer of the corresponding block of disk data to RAM (using
-metadata about the file system for address calculations).  The
-completion of that transfer is indicated by an interrupt, in
-response to which the page table is updated and the corresponding page
-is marked as read-only and clean, where clean indicates that the page
-is identical to the copy stored on disk.  Also, the thread accessing
-the file is made runnable and can access its data.
-
-While read accesses just return the requested data, write accesses
-trigger another interrupt as the page is marked read-only.  Now, the
-interrupt handler marks the page as writable and dirty.  Being
-writable implies that further write accesses succeed without further
-interrupts, and being dirty indicates that the version in RAM now
-differs from the version on disk.  Thus, when a thread requests to
-write data back to the file, dirty pages need to be written to
-disk.  Afterwards, the file’s pages are marked as clean and read-only
-again.
-#+END_NOTES
-
-** Demand-Driven Program Loading
-   :PROPERTIES:
-   :CUSTOM_ID: demand-loading
-   :END:
-   #+INDEX: Demand loading (Memory I)
-   - Start of program is *special case* of previous slide
-     - Map executable file into virtual memory
-     - Jump to first instruction
-       - Page faults automatically trigger loading of necessary pages
-       - No need to load entire program upon start
-	 - Faster than loading everything at once
-	 - Reduced memory requirements
-
-*** Working Set
-    :PROPERTIES:
-    :CUSTOM_ID: working-set
-    :END:
-    #+INDEX: Working set (Memory I)
-    #+INDEX: Principle of locality (Memory I)
-    #+INDEX: Locality principle (Memory I)
-    #+ATTR_REVEAL: :frag (appear) 
-    - OS loads part of program into main memory
-      - *Resident set*: Pages currently in main memory
-      - At least current instruction (and required data) necessary in main memory
-    - *Principle of locality*
-      - Memory references typically close to each other
-      - Few pages sufficient for some interval
-    - *Working set*: Necessary pages for some interval
-      - Aim: Keep working set in resident set
-	- [[file:Operating-Systems-Memory-II.org::#replacement-policy][Replacement policies]] in next presentation
-#+BEGIN_NOTES
-As discussed so far, typically not all pages of a process are located
-in RAM.  Those that are located in RAM comprise the resident set.  For
-von Neumann machines at least the currently executing instruction and
-its required data need to be present in RAM, and demand-driven loading
-is a technique to provide that data on the fly.
-
-As data is transferred in pages, one can hope that a newly loaded page
-does not only contain one useful instruction or one useful byte of
-data but lots of them.  Indeed, if you think of a typical program it is
-reasonable to expect that the program counter is often just
-incremented or changed by small amounts, e.g., in case of sequential
-statements, loops, or local function calls.  Similarly, references to
-data also often touch neighboring locations in short sequence, e.g.,
-in case of arrays or objects.  This reasoning is known as principle of
-locality, which implies that frequently only few pages in RAM are
-sufficient to allow prolonged progress for a thread without page
-faults.
-
-Please take a moment to convince yourself that without the principle of
-locality caching, i.e., the transfer of some set of data from a large
-and slow storage area to a smaller and faster storage area, would not
-be effective; neither the form of caching seen here, where RAM serves
-as cache for disk data, nor CPU caches for RAM data.
-
-The so-called working set (for some given time interval) of a thread T
-is that set of pages which allows T to execute without page faults
-throughout the interval.  Clearly, once in a while new pages are added
-to the working set while other pages are removed since their contents
-are not necessary any longer.  Note that the working set is a hypothetical
-construct, whose precise shape and evolution is unknown to the OS.
-However, the goal of memory management is to manage the resident
-set in such a way that is contains the working set (and ideally not
-much else).  Page replacement policies, to be discussed in the
-next presentation, work towards that goal.
-#+END_NOTES
-
-* Paging
-  :PROPERTIES:
-  :CUSTOM_ID: paging
-  :END:
-
-** Major Ideas
-   :PROPERTIES:
-   :CUSTOM_ID: page-offset
-   :END:
-   #+INDEX: Paging (Memory I)
-   - Virtual address spaces split into *pages*, RAM into *frames*
-     #+ATTR_REVEAL: :frag (appear)
-     - Page is *unit of transfer* by OS
-       - Between RAM and secondary storage (e.g., disks)
-     - Each virtual ~address~ can be interpreted in two ways
-       1. Integer number (~address~ as binary number, as in Hack)
-       2. Hierarchical object consisting of page number and offset
-	  - *Page number*, determined by most significant bits of ~address~
-	  - *Offset*, remaining bits of ~address~ = byte number within its page
-	    - (Detailed example follows)
-   #+ATTR_REVEAL: :frag appear
-   - *Page tables* keep track of RAM locations for pages
-     - If CPU uses virtual address whose page is not present in RAM, the
-       Page fault handler takes over
-
-** Sample Memory Allocation
-   :PROPERTIES:
-   :CUSTOM_ID: fig-6.10
-   :END:
-   - Sample allocation of frames to some process
-     {{{reveallicense("./figures/hail_f0610.pdf.meta","50vh")}}}
-#+BEGIN_NOTES
-Several subsequent slides will refer to this example, which shows a main
-memory situation with just four frames of main memory.  Clearly, that
-is an unrealistically small example, but it is sufficient to
-demonstrate the main points.
-Here, a process with a virtual address space of 8 pages is shown, some
-of which are allocated to frames as indicated by arrows.  Note that
-neighboring  pages can (a) be mapped to frames in arbitrary order or
-(b) not be mapped to RAM at all.
-The Xs indicate that no frame is assigned to hold pages 2-5 or page 7.
-Frame 2 is unused.
-#+END_NOTES
-
-** Page Tables
-   :PROPERTIES:
-   :CUSTOM_ID: page-table-definition
-   :END:
-   #+INDEX: Page table!Definition (Memory I)
-   - Page Table = Data structure managed by OS
-     - *Per process*
-   - Table contains one entry per page of virtual address space
-     - Each entry contains
-       - Frame number for page in RAM (if present in RAM)
-       - Control bits (not standardized, e.g., valid, read-only,
-         dirty, executable)
-       - Note: Page tables do not contain page numbers
-         as they are implicitly given by row numbers (starting from 0)
-     - Note on following sample page table
-       - “0” as valid bit indicates that page is not present in RAM, so
-	 value under “Frame#” does not matter and is shown as “X”
-
-*** Sample Page Table
-    :PROPERTIES:
-    :CUSTOM_ID: sample-page-table
-    :END:
-    #+INDEX: Page table!Example (Memory I)
-    - Consider previously shown RAM allocation (Fig. 6.10)
-      {{{reveallicense("./figures/hail_f0610.pdf.meta","50vh")}}}
-      #+ATTR_REVEAL: :frag appear
-      - Page table for that situation (Fig. 6.11)
-        |-------+--------|
-        | Valid | Frame# |
-        |-------+--------|
-        | <l>   | <c>    |
-        | 1     | 1      |
-        | 1     | 0      |
-        | 0     | X      |
-        | 0     | X      |
-        | 0     | X      |
-        | 0     | X      |
-        | 1     | 3      |
-        | 0     | X      |
-        |-------+--------|
-
-*** Address Translation Example (1/3)
-    :PROPERTIES:
-    :CUSTOM_ID: ex-translation
-    :END:
-    #+INDEX: Address translation example (Memory I)
-    #+INDEX: Virtual address translation example (Memory I)
-    - Task: Translate virtual address to physical address
-      - Subtask: Translate bits for page number to bits for frame number
-    #+ATTR_REVEAL: :frag appear
-    - Suppose
-      - [[color:darkgreen][Pages]] and [[color:sienna][frames]] have a size of 1 KiB (= 1024 B)
-      - 15-bit addresses, as in Hack
-    #+ATTR_REVEAL: :frag appear
-    - Consequently
-      - Size of address space: 2^{15} B = 32 KiB
-      - 10 bits are used for offsets (as 2^{10} B = 1024 B)
-      - The remaining 5 bits enumerate 2^5 = 32 pages
-
-*** Address Translation Example (2/3)
-    - Hierarchical interpretation of 15-bit addresses
-      - Virtual address: [[color:darkgreen][5 bits for page number]] \nbsp
-        [[color:darkblue][10 bits for offset]]
-      - Physical address: [[color:sienna][5 bits for frame number]] \nbsp
-        [[color:darkblue][10 bits for offset]]
-    - Based on page table
-      - [[color:darkgreen][Page 0]] is located in [[color:sienna][frame 1]]
-    - [[color:darkgreen][Page 0]] contains virtual addresses
-      between 0 and 1023, [[color:sienna][frame 1]] physical
-      addresses between 1024 and 2047
-      - Consider virtual address 42
-	- 42 = [[color:darkgreen][00000]] [[color:darkblue][0000101010]]
-	  - [[color:darkgreen][Page number]] = [[color:darkgreen][00000]] = [[color:darkgreen][0]]
-	  - [[color:darkblue][Offset]] = [[color:darkblue][0000101010]] = [[color:darkblue][42]]
-	- 42 is located at physical address
-	  [[color:sienna][00001]] [[color:darkblue][0000101010]]
-	  = 1066 (= 1024 + 42)
-
-*** Address Translation Example (3/3)
-    - Based on page table
-      - [[color:darkgreen][Page 6]] is located in [[color:sienna][frame 3]]
-    - [[color:darkgreen][Page 6]] contains addresses
-      between 6*1024 = 6144 and 6*1024+1023 = 7167
-      - Consider virtual address 7042
-	- 7042 = [[color:darkgreen][00110]] [[color:darkblue][1110000010]]
-	  - [[color:darkgreen][Page number]] = [[color:darkgreen][00110]] = [[color:darkgreen][6]]
-	  - [[color:darkblue][Offset]] = [[color:darkblue][1110000010]] = [[color:darkblue][898]]
-	- In general, address translation exchanges
-          [[color:darkgreen][page number]] with
-          [[color:sienna][frame number]]
-	  - Here, [[color:darkgreen][6]] with [[color:sienna][3]]
-	- 7042 is located at physical address
-	  [[color:sienna][00011]] [[color:darkblue][1110000010]] =
-          3970 (= 3*1024 + 898)
-
-** Challenge: Page Table Sizes
-   :PROPERTIES:
-   :CUSTOM_ID: page-table-sizes
-   :END:
-   #+INDEX: Page table!Size (Memory I)
-   - E.g., 32-bit addresses with page size of 4 KiB (2^{12} B)
-     - Virtual address space consists of up to 2^{32} B = 4 GiB = 2^{20} pages
-       - Every page with entry in page table
-       - If 4 bytes per entry, then *4 MiB* (2^{22} B) per page table
-	 - Page table itself needs 2^{10} pages/frames! *Per process*!
-     - Much worse for 64-bit addresses
-   #+ATTR_REVEAL: :frag appear 
-   - Solutions to reduce amount of RAM for page tables
-     - Multilevel (or *hierarchical*)
-       page tables (2 or more levels)
-       - Tree-like structure, efficiently representing large unused areas
-       - Root, called *page directory*
-	 - 4 KiB with 2^{10} entries for page tables
-	 - Each entry represents 4 MiB of address space
-     - [[file:Operating-Systems-Memory-II.org::#inverted-page-tables][Inverted]]
-       page tables in next presentation
-#+BEGIN_NOTES
-While the sample pages tables shown so far may seem simple to manage,
-pages tables can be huge in practice.  As page tables are used to
-locate data in RAM, a naïve implementation might require the page
-tables themselves to be located in RAM in the first place.  Let’s see
-how large page tables might get.
-
-With 32-bit addresses, you see a calculation on this slide, showing
-that the page table for every process requires up to 4 MiB of RAM.
-Note that those 4 MiB are pure OS overhead, unusable for applications.
-So, after you booted your system half a GB of RAM may already be gone.
-
-Although this result is already pretty bad, for 64-bit systems the
-situation is much worse, even if current PC processors do not use all
-64 bits for addressing.  Suppose 48 bits are used for virtual
-addresses, again with 4 KiB pages.  Then 2^{36} pages may exist per
-process, now maybe with 8 B per entry in the page table, leading to
-2^{39} B = 2^9 GiB = 512 GiB.  In words: A single page table might
-occupy 512 GiB of RAM, quite likely more than you’ve got.
-
-Solutions to reduce the amount of RAM for page tables fall into two
-classes, namely multilevel page tables and inverted page tables.
-
-The key idea of multilevel page tables is that large portions of the
-theoretically possible virtual address space remain unused, and such
-unused portions do not need to be represented in the page table.  To
-efficiently represent smaller (used) and larger (unused) portions, the
-page table is represented and traversed as a tree-like structure with
-multiple levels.  The root of that tree-like structure is always
-located in RAM and is called page directory.  Each entry in that page
-directory represents a large portion of the address space, in case of
-32-bit addresses and two levels (as on subsequent slides) each entry
-represents 1024 pages with a total size of 4 MiB.  If such a 4 MiB
-region is not used at all, no data needs to be allocated in lower
-levels of the tree like structure.  Details are presented on
-subsequent slides.
-
-The key idea of inverted page tables is that RAM is limited and
-typically smaller than the virtual address space.  Instead of storing
-each allocated frame per page as discussed so far, with inverted page
-tables one entry exists per frame of RAM, recording what page of what
-process is currently located in that frame (if any).  Note that only
-one such inverted page table needs to be maintained, whereas page
-tables exist per process.  Also note that the number of entries of the
-inverted table is determined by the number of frames in RAM, instead
-of the (potentially much larger) number of pages of virtual address
-space.  You will see how address translation works with inverted page
-tables on later slides.  Right now, you may want to think about that
-yourself.  Starting again from a page number for which the
-corresponding frame number is necessary, how do you locate the
-appropriate entry in the inverted page table?  Clearly, a linear
-search is too slow.
-#+END_NOTES
-
-* Multilevel Page Tables
-  :PROPERTIES:
-  :CUSTOM_ID: multilevel-page-tables
-  :END:
-
-** Core Idea
-   - So far: Virtual address is hierarchical object consisting of page
-     number and offset
-   - Now multilevel page tables: Interpret page table as tree with
-     fixed depth, i.e., a fixed number of multiple levels
-     - (Visualizations on next two slides)
-     - For depth /n/, split page number into /n/ smaller parts
-       - Two-level: Split 20 bits into two parts with 10 bits each
-     - To traverse page table (tree), use one part on each level
-   - Aside: On 64-bit machines, Linux uses 5-level tables by default
-     [[https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=18ec1eaf58fbf2d9009a752a102a3d8e0d905a0f][since 2019-09-16]]
-
-** Two-Level Page Table
-   :PROPERTIES:
-   :CUSTOM_ID: fig-6.13
-   :END:
-   #+INDEX: Page table!Two-level (Memory I)
-   {{{reveallicense("./figures/hail_f0613_with_embedded_frame_nos.meta","50vh")}}}
-
-   #+ATTR_HTML: :class smaller
-   Note: /Page table/ contains entries of an ordinary page table.
-   Previously, valid bit and page frame numbers were shown in columns;
-   here, they are shown in rows.
-#+BEGIN_NOTES
-This figure shows a two-level page table as used in Intel’s 32-bit
-processor architecture IA-32.
-The entry point to this two-level page table is called page directory
-and can point to 1024 chunks of the page table, each of which can
-point to 1024 page frames.  Note that with 1024 entries of 4 B each, the
-page directory as well as chunks of the page table fit exactly into
-pages and frames of 4 KiB.
-The leftmost pointer leading from the leftmost chunk of the
-page table points to the frame holding page 0.
-Each entry can also be marked invalid, indicated by an X in this
-diagram.  For example, the second entry in the first chunk of the page
-table is invalid, showing that no frame holds page 1.  The same
-principle applies at the page directory level as well; in this example, no
-frames hold pages 1024-2047, so the second page directory entry is
-marked invalid.
-#+END_NOTES
-
-*** Two-Level Address Translation
-    :PROPERTIES:
-    :CUSTOM_ID: fig-6.14
-    :END:
-     {{{reveallicense("./figures/hail_f0614.pdf.meta","50vh")}}}
-#+BEGIN_NOTES
-This diagram shows the core of IA-32 paged address mapping.
-As explained previously, virtual addresses are understood as
-hierarchical objects which are divided into a 20-bit page number and
-12-bit offset within the page; the latter 12 bits are left unchanged
-by the translation process.
-Due to the two-level nature of the page table, the 20-bit page number
-is subdivided into a 10-bit page directory index and a 10-bit page
-table index.
-Each index is multiplied by 4, the number of bytes in each entry, and
-then added to the base physical address of the corresponding data
-structure, producing a physical memory address from which the entry is
-loaded.  The base address of the page directory comes from a special
-register, whereas the base address of the page table comes from the page
-directory entry.
-#+END_NOTES
-
-* Looking at Memory
-** Linux Kernel: ~/proc/<pid>/~
-   :PROPERTIES:
-   :CUSTOM_ID: proc
-   :END:
-   #+INDEX: /proc!Filesystem (Memory I)
-   - ~/proc~ is a pseudo-filesystem
-     - See http://man7.org/linux/man-pages/man5/proc.5.html
-       - (Specific to Linux kernel; incomplete or missing elsewhere)
-     - “Pseudo”: Look and feel of any other filesystem
-       - Sub-directories and files
-       - However, files are no “real” files but meta-data
-     - Interface to internal *kernel data structures*
-       - One sub-directory per process ID
-       - OS identifies process by integer number
-       - Here and elsewhere, ~<pid>~ is meant as *placeholder* for such a number
-
-*** Video about ~/proc~
-    :PROPERTIES:
-    :CUSTOM_ID: video-proc
-    :END:
-    @@html:<video controls width="1280" height="720" data-src="./videos/proc-smaps.mp4"></video>@@
-    #+begin_notes
-This video, “Looking at /proc” by
-[[https://lechten.gitlab.io/#me][Jens Lechtenbörger]],
-shares the presentation’s license terms, namely
-[[https://creativecommons.org/licenses/by-sa/4.0/][CC BY-SA 4.0]].
-
-The video shows some aspects of the ~/proc~ filesystem related to
-memory management, which are described in more abstract form on
-subsequent slides.
-    #+end_notes
-
-*** Drawing about ~/proc~
-    :PROPERTIES:
-    :CUSTOM_ID: drawing-proc
-    :END:
-    #+INDEX: /proc!Drawing (Memory I)
-    {{{revealimg("./figures/proc.meta",t,"50vh")}}}
-
-*** Drawing about ~man~ pages
-    {{{revealimg("./figures/man.meta",t,"50vh")}}}
-
-** Linux Kernel Memory Interface
-   :PROPERTIES:
-   :CUSTOM_ID: proc-memory
-   :END:
-   #+INDEX: /proc!Memory allocation (Memory I)
-   - Memory allocation (and much more) visible under ~/proc/<pid>~
-   - E.g.:
-     - ~/proc/<pid>/pagemap~: One 64-bit value per virtual page
-       - Mapping to RAM or swap area
-     - ~/proc/<pid>/maps~: Mapped memory regions
-     - ~/proc/<pid>/smaps~: Memory usage for mapped regions
-   - Notice: Memory regions include *shared* libraries that are used by
-     lots of processes
-
-** GNU/Linux Reporting: ~smem~
-   :PROPERTIES:
-   :CUSTOM_ID: smem
-   :END:
-   #+INDEX: GNU/Linux!Tools!smem (Memory I)
-   - User space tool to read ~smaps~ files: ~smem~
-     - See https://linoxide.com/tools/memory-usage-reporting-smem/
-   - Terminology
-     - *Virtual set size* (VSS): Size of virtual address space
-     - *Resident set size* (RSS): Allocated main memory
-       - Standard notion, yet overestimates memory usage as lots of
-         memory is shared between processes
-	 - Shared memory is added to the RSS of every sharing process
-     - *Unique set size* (USS): memory allocated exclusively to process
-       - That much would be returned upon process’ termination
-     - *Proportional set size* (PSS): USS plus “fair share” of shared pages
-       - If page shared by 5 processes, each gets a fifth of a page
-         added to its PSS
-
-*** Sample ~smem~ Output
-#+BEGIN_SRC bash
-$ smem -c "pid command uss pss rss vss" -P "bash|xinit|emacs"
-  PID Command                          USS      PSS      RSS      VSS
-  765 /usr/bin/xinit /etc/X11/Xse      220      285     2084    15952
- 1390 /bin/bash -c libreoffice5.3      240      510     2936    13188
-  826 /bin/bash /usr/bin/qubes-se      256      524     3008    13204
-  750 -su -c /usr/bin/xinit /etc/      316      587     3368    21636
- 1251 bash                            4864     5136     7900    26024
- 2288 /usr/bin/python /usr/bin/sm     5272     6035     9432    24688
- 1145 emacs                          90876    93224   106568   662768
-#+END_SRC
-
-*** Sample ~smem~ Graph
-    {{{revealimg("./figures/smem.meta","~smem --bar pid -c \"uss pss rss\" -P \"bash|xinit\"~","70vh")}}}
-
 
 * Conclusions
 ** Summary

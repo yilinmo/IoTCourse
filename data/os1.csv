@@ -1,0 +1,11 @@
+OS, Linux, Windows, FreeRTOS, No OS / Bare metal, Other, Mbed OS, Contiki, TinyOS, Riot OS, QNX, Vxworks, Zephyr, Micrium OS, Huawei LiteOS, KEIL RTXS
+Percentage, 71.8,  22.9,  20.4,  19.9,  10.5,  8.8,  7.2,  6.1,  5.2,  3.6,  3.0,  2.8,  1.9,  1.7,  1.1
+
+<!--
+{
+"options": {
+"title": {
+"display": true,
+"text": "Which operating system(s) do you use for your IoT devices?"
+}}}
+-->

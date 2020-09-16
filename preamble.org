@@ -30,6 +30,6 @@
 #+LATEX_HEADER: \newenvironment{r-stack}{}{}
 
 #+REVEAL_EXTERNAL_PLUGINS: ((spotlight . "{src:'%splugin/spotlight/spotlight.js'}") (wordcloud . "{src: '%splugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } }"))
-#+REVEAL_INIT_SCRIPT: plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {67: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1
+#+REVEAL_INIT_SCRIPT: plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {84: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1
 
 
