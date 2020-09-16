@@ -17,7 +17,6 @@ howto.html*
 *~
 *.tex
 !template.tex
-*.meta
 figures/tikz/*png
 figures/tikz/*svg
 !public/reveal.js/*

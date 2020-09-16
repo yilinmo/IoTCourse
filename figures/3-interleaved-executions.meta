@@ -1,0 +1,11 @@
+; Note that the corresponding svg figures contain meta data.
+((filename . "figures/raw/3-interleaved-executions.png")
+ (licenseurl . "https://creativecommons.org/licenses/by-sa/4.0/")
+ (licensetext . "CC BY-SA 4.0")
+ (cc:attributionName . "Jens Lechtenbörger")
+ (cc:attributionURL . "https://lechten.gitlab.io/#me")
+ (dc:source . "https://gitlab.com/oer/figures/blob/master/OS/3-interleaved-executions.svg")
+ (sourcetext . "GitLab")
+ (dc:title . "Interleaved execution of threads.  Based on [[https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/][Figure 2.7 of book by Max Hailperin]], CC BY-SA 3.0.")
+ (texwidth . 0.9)
+)

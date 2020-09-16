@@ -1,0 +1,11 @@
+* Bibliography
+  :PROPERTIES:
+  :CUSTOM_ID: bibliography
+  :END:
+
+  printbibliography:references.bib
+
+  # Local Variables:
+  # indent-tabs-mode: nil
+  # org-src-preserve-indentation: t
+  # End:

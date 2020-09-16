@@ -1,0 +1,13 @@
+((filename . "figures/raw/hail_f0206.pdf.svg")
+ (dependencies . ("figures/raw/hail_f0206a.pdf.png"
+                  "figures/raw/hail_f0206b.pdf.png"))
+ (licenseurl . "https://creativecommons.org/licenses/by-sa/4.0/")
+ (licensetext . "CC BY-SA 4.0")
+ (cc:attributionName . "Jens Lechtenbörger")
+ (cc:attributionURL . "https://lechten.gitlab.io/#me")
+ (dc:source . "https://gitlab.com/oer/figures/blob/master/OS/hail_f0206.pdf.svg")
+ (sourcetext . "GitLab")
+ (dc:title . "Interleaved execution example")
+ (imgadapted . "SVG image refers to converted and cut parts of [[https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0206.pdf][Figure 2.6 of a book by Max Hailperin]] under [[https://creativecommons.org/licenses/by-sa/3.0/][CC BY-SA 3.0]]. From")
+ (texwidth . 0.9)
+)

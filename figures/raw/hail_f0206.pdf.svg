@@ -1,0 +1,11 @@
+<svg class="animate" id="f0206" viewBox="0 0 1460 660"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+  <image id="f0206a" y="0" x="0" height="660" width="1460"
+         xlink:href="./figures/OS/hail_f0206a.pdf.png" />
+  <image id="f0206b" y="344" x="0" height="279" width="1031" opacity="0"
+         xlink:href="./figures/OS/hail_f0206b.pdf.png">
+    <animate class="fragment" data-audio-src="./audio/f0206b.ogg" data-reverse="reverse0" begin="indefinite" attributeName="opacity" from="0" to="1" dur="0.1s" fill="freeze" repeatCount="1" />
+    <animate id="reverse0" begin="indefinite" attributeName="opacity" to="0" from="1" dur="0.1s" fill="freeze" repeatCount="1" />
+  </image>
+</svg>

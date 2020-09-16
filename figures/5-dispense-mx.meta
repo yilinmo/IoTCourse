@@ -1,0 +1,11 @@
+; Note that the corresponding svg figures contain meta data.
+((filename . "figures/raw/5-dispense-mx.svg")
+ (licenseurl . "https://creativecommons.org/licenses/by-sa/4.0/")
+ (licensetext . "CC BY-SA 4.0")
+ (cc:attributionName . "Jens Lechtenbörger")
+ (cc:attributionURL . "https://lechten.gitlab.io/#me")
+ (dc:source . "https://gitlab.com/oer/figures/blob/master/OS/5-dispense-mx.svg")
+ (sourcetext . "GitLab")
+ (dc:title . "Interleaved execution of threads with MX for code from Sec. 4.2 of [[https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/][book by Max Hailperin]], CC BY-SA 3.0.")
+ (texwidth . 0.8)
+)

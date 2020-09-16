@@ -1,0 +1,7 @@
+((filename . "figures/raw/syscalls.svg")
+ (copyright . "© 2016 Julia Evans, all rights reserved")
+ (permit . "Displayed here with personal permission.")
+ (dc:source . "https://drawings.jvns.ca/syscalls/")
+ (sourcetext . "julia's drawings")
+ (dc:title . "How to talk to your operating system")
+)

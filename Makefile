@@ -18,15 +18,10 @@ TIKZSVGS  := $(patsubst %.tikz,%.svg,$(TIKZS))
 TIKZPNGS  := $(patsubst %.tikz,%.png,$(TIKZS))
 TIKZMETAS := $(patsubst $(TIKZDIR)/%.tikz,$(METADIR)/%.meta,$(TIKZS))
 
-CSVDIR     := ./data
-CSVDESTDIR := ./public/data
-CSVS       := $(wildcard $(CSVDIR)/*.csv)
-PUBCSVS    := $(patsubst $(CSVDIR)/%.csv,$(CSVDESTDIR)/%.csv,$(CSVS))
 
+.PHONY: all clean pics
 
-.PHONY: all clean pics csvs
-
-all: pics csvs
+all: pics
 
 pics: $(PNGMETAS) $(GIFMETAS) $(JPGMETAS) $(TIKZMETAS) $(TIKZPNGS) $(TIKZSVGS)
 
@@ -49,17 +44,17 @@ csvs: $(PUBCSVS)
 $(CSVDESTDIR)/%.csv: $(CSVDIR)/%.csv
 	cp $^ $@
 
-$(METADIR)/%.meta: $(TIKZDIR)/%.png
-	./gen_meta.sh $^ > $@
+$(METADIR)/%.meta: | $(TIKZDIR)/%.png
+	./gen_meta.sh $| > $@
 
-$(METADIR)/%.meta: $(RAWDIR)/%.png
-	./gen_meta.sh $^ > $@
+$(METADIR)/%.meta: | $(RAWDIR)/%.png
+	./gen_meta.sh $| > $@
 
-$(METADIR)/%.meta: $(RAWDIR)/%.gif
-	./gen_meta.sh $^ > $@
+$(METADIR)/%.meta: | $(RAWDIR)/%.gif
+	./gen_meta.sh $| > $@
 
-$(METADIR)/%.meta: $(RAWDIR)/%.jpg
-	./gen_meta.sh $^ > $@
+$(METADIR)/%.meta: | $(RAWDIR)/%.jpg
+	./gen_meta.sh $| > $@
 
 clean:
 	rm $(PNGMETAS) $(GIFMETAS) $(JPGMETAS) $(TIKZTEXS) $(TIKZPDFS) $(TIKZSVGS) $(TIKZPNGS) $(TIKZMETAS) 

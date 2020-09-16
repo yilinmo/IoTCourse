@@ -1,0 +1,2302 @@
+#+INCLUDE: "preamble.org"
+
+#+TITLE: Operating Systems
+#+AUTHOR: Mo, Yilin
+#+DATE: Sept 2020 
+
+#+KEYWORDS: operating systems 
+#+DESCRIPTION: OS for iot course
+
+* Introduction
+*** OS Responsibilities
+    :PROPERTIES:
+    :CUSTOM_ID: os-responsibilities
+    :END:
+    {{{revealimg("./figures/OS-responsibilities.meta",t,"50vh")}}}
+
+*** Definition of Operating System
+    :PROPERTIES:
+    :CUSTOM_ID: os-definition
+    :END:
+    - Definition from cite:Hai19: *Software*
+      - that *uses hardware* resources of a computer system
+      - to provide support for the *execution of other software*.
+
+    {{{reveallicense("./figures/hail_f0101.pdf.meta","35vh")}}}
+
+   #+begin_notes
+Although the Hack computer does not have an OS, it
+will help to recall briefly how you interact with that machine.
+On Hack, you are able to run a single program, where you access
+hardware directly.  E.g., reading from the keyboard requires access to
+a special memory location that represents the state of the underlying
+hardware device.
+
+With OSs, applications no longer have direct access to hardware.
+Instead OSs manages applications and their use of hardware.
+You will learn that the core part of OSs is called
+[[file:Operating-Systems-Introduction.org::#kernel][kernel]],
+and each vendor’s kernel comes with a specific interface to provide
+functionality to applications, usually in the form of so-called
+[[file:Operating-Systems-Introduction.org::#system-calls][system calls]].
+E.g., when you use ~System.in~ in Java to read keyboard input,
+the Java runtime executes a system call to ask the OS for
+keyboard input.
+
+Starting from system calls, we will look into techniques for
+[[file:Operating-Systems-Interrupts.org][input/output processing]]
+(I/O for short) such as access to the keyboard.  Recall that in Hack
+you programmed a loop to wait for keyboard input.  Clearly, such a
+loop keeps the CPU busy even if no key is pressed, wasting the
+resource CPU if other application could perform useful computations.
+Hence, I/O is usually paired with
+[[file:Operating-Systems-Interrupts.org::#irq-big-picture][interrupt processing]],
+which does not exist in Hack.  Briefly, interrupts indicate the
+occurrence of external events, and OSs come with
+[[file:Operating-Systems-Interrupts.org::#idt][interrupt handlers]].
+Then, for example, keyboard processing code only needs to be executed
+when a key was pressed.
+
+In contrast to Hack, OSs manage the execution of several applications,
+and each application might contain several so-called
+[[file:Operating-Systems-Threads.org][threads]] of execution.  It is
+up to application programmers to decide how many threads to use for a
+single application (and you will create
+[[file:Operating-Systems-Threads.org::#java-threads][threads in
+Java]]).
+
+The OS manages all those threads and their
+[[file:Operating-Systems-Scheduling.org][scheduling]] for execution
+on the CPU (or their parallel execution on multiple CPU cores).
+Usually, scheduling mechanisms involve
+[[[file:Operating-Systems-Scheduling.org][time slicing]], which means
+that each thread runs for a brief amount of time before the OS
+schedules a different thread for execution.  Such scheduling happens
+in intervals of about 10-50ms, creating the illusion of parallelism
+even if just a single CPU core exists.  Such time-sliced or parallel
+executions are also called
+[[file:Operating-Systems-Threads.org::#concurrency][concurrent]] executions.
+
+If shared resources are accessed in concurrent executions, subtle bugs
+may arise, a special case of which are update anomalies in database
+systems.  The notion of
+[[file:Operating-Systems-MX.org][mutual exclusion (MX)]]
+generalizes several synchronization mechanisms to overcome concurrency
+challenges, and we will look at typical related OS mechanisms and
+their use in Java.
+
+Just as in Hack, instructions and code of applications need to be
+stored in memory.  Differently from Hack with its Harvard
+architecture, code and instructions are stored uniformly in RAM in our
+Von Neumann machines, and the OS manages the allocation of RAM.
+Importantly, mainstream OSs provide support for
+[[file:Operating-Systems-Memory-I.org][virtual]] memory,
+which does not exist in Hack, but for which we will see advantages
+such as isolation and flexibility.
+
+Furthermore, mainstream OSs offer a
+[[file:Operating-Systems-Processes.org::#process-control-block][process]]
+concept as abstraction for applications, under which several related
+and cooperating threads share resources (such as virtual memory or
+files).  Finally, OSs offer various
+[[file:Operating-Systems-Security.org::#safety-security][security]]
+mechanisms for processes and applications, a selection of which will
+be topics for the final presentation.
+
+To sum up, this figure visualizes
+- what OS topics will be discussed when and
+- how topics build upon each other.
+
+Note that some parts of this figure are hyperlinked to other
+presentations, which the mouse pointer should indicate.
+   #+end_notes
+
+   
+
+
+* Introduction
+** Learning Objectives
+   :PROPERTIES:
+   :CUSTOM_ID: learning-objectives-os
+   :END:
+   - Explain notion of Operating System and its goals
+     - Explain notion of kernel with system call API
+       - (More details in [[file:Operating-Systems-Interrupts.org][next presentation]])
+   - Explain notions and relationships of process, thread, multitasking
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/learning-objectives-notes.org"
+
+*** OS Responsibilities
+    {{{revealimg("./figures/OS-responsibilities.meta",t,"50vh")}}}
+
+* Operating Systems
+** Sample Modern Operating Systems
+   :PROPERTIES:
+   :CUSTOM_ID: modern-oss
+   :END:
+   #+INDEX: Operating system!Examples (Introduction)
+   - Different systems for different scenarios
+     - Mainframes
+       - [[https://en.wikipedia.org/wiki/BS2000][BS2000/OSD]],
+         [[https://en.wikipedia.org/wiki/General_Comprehensive_Operating_System][GCOS]],
+         [[https://en.wikipedia.org/wiki/Z/OS][z/OS]]
+     - PCs
+       - [[https://en.wikipedia.org/wiki/MS-DOS][MS-DOS]],
+         [[https://en.wikipedia.org/wiki/GNU%2FLinux_naming_controversy][GNU/Linux]],
+         [[https://en.wikipedia.org/wiki/MacOS][MacOS]],
+         [[https://www.redox-os.org][Redox]],
+         [[https://en.wikipedia.org/wiki/Microsoft_Windows][Windows]]
+     - Mobile devices
+       - Variants of other OSs
+       - Separate developments, e.g.,
+         BlackBerry
+         ([[https://en.wikipedia.org/wiki/BlackBerry_10][BlackBerry 10]]
+         based on QNX, abandoned),
+	 [[https://en.wikipedia.org/wiki/Google_Fuchsia][Google Fuchsia]],
+         [[https://en.wikipedia.org/wiki/Symbian][Symbian]] (Nokia, most popular smartphone OS until
+         2010, now replaced)
+     - Gaming devices
+     - Real-time OS
+       - Embedded systems
+       - QNX,
+         [[https://en.wikipedia.org/wiki/VxWorks][VxWorks]]
+#+BEGIN_NOTES
+There is a vast variety of OSs for different devices and usage
+scenarios, of which this slide shows a selection.
+
+The goal of the OS sessions is not to turn you into an expert for any
+specific OS, but to teach you major concepts and techniques that are shared by
+most modern OSs.  As [[file:Operating-Systems-Motivation.org][explained previously]]
+my hope is that you can apply your knowledge on the one hand when
+designing, analyzing, or implementing information systems and on the
+other when taking control of your own devices.
+
+Based on my personal beliefs, I will not teach you anything about
+non-free OSs (except maybe first steps to get away from them).  In
+particular, examples shown in presentations and in class will be based
+on the [[file:Operating-Systems-Motivation.org::#free-software][free]] OS
+[[file:Operating-Systems-Motivation.org::#gnu-linux][GNU/Linux]].  As GNU/Linux is
+free, you can experiment with it at any level of detail yourself.
+#+END_NOTES
+
+** Definition of Operating System
+   :PROPERTIES:
+   :CUSTOM_ID: os-definition
+   :END:
+   #+INDEX: Operating system!Definition (Introduction)
+   - Definition from cite:Hai19: *Software*
+     - that *uses hardware* resources of a computer system
+     - to provide support for the *execution of other software*.
+
+   {{{reveallicense("./figures/hail_f0101.pdf.meta","35vh")}}}
+   #+begin_notes
+Part (a) of the figure shows the situation of a computer without an OS.
+Here, applications (and programmers) need to interact with hardware
+directly at a low level of abstraction.  This is what you did on
+Hack.  E.g., you needed to know a specific memory location to access
+the keyboard.
+
+Part (b) illustrates typical services provided by an OS to shield
+applications (and programmers) from hardware-specific details.  E.g.,
+multiple applications may run concurrently, interact as parts of
+distributed systems with networking functionality, or share persistent
+storage at the abstraction of file systems (without needing to worry
+about, say, specifics of particular keyboards, disks, or network cards
+and their interfaces).
+
+What you see here is a typical example of layering to hide lower-layer
+details with the abstractions of an interface in software engineering:
+The OS provides an API (see next slide) of functions that
+application programmers can invoke to access OS services, in
+particular to access underlying hardware.  As
+explained later, that API is provided by a core part
+of the OS, which is called kernel and whose functions are
+called system calls.
+   #+end_notes
+
+*** Aside: API
+    :PROPERTIES:
+    :CUSTOM_ID: API
+    :END:
+    - API = [[https://en.wikipedia.org/wiki/Application_programming_interface][Application Programming Interface]]
+      - Set of functions or interfaces or protocols defining how to
+        use some system (as programmer)
+      - E.g.,
+        [[https://docs.oracle.com/en/java/javase/14/docs/api/index.html][Java 14 API ]]
+        - Packages with classes, interfaces, methods, etc.
+
+*** OS Services
+    - OS services/features/functionality defined by its API
+      - Functionality includes
+      #+ATTR_REVEAL: :frag (appear)
+      - Support for *multiple concurrent* computations
+	- Run programs, divide hardware, manage state
+      - *Control interactions* between concurrent computations
+	- E.g., locking, private memory
+      - Typically, also *networking* support
+
+    {{{reveallicense("./figures/hail_f0101.pdf.meta","25vh")}}}
+
+** Kernel
+   :PROPERTIES:
+   :CUSTOM_ID: os-boundary
+   :END:
+   #+ATTR_REVEAL: :frag (appear)
+   - Boundary between OS and applications is fuzzy
+   - *Kernel* is fundamental, core part of OS
+     - Kernel defines API and services via *system call* interface
+     - (More details on next and later slide)
+      
+*** How to Talk to OSs
+    {{{revealimg("./figures/system-calls.meta",t,"50vh")}}}
+
+*** User Space and Kernel Space
+    {{{revealimg("./figures/user-space.meta",t,"50vh")}}}
+
+** OS Architecture and Kernel Variants
+   :PROPERTIES:
+   :CUSTOM_ID: kernel-variants
+   :END:
+   #+INDEX: Kernel!Variants (Introduction)
+   #+INDEX: Kernel!Monolithic (Introduction)
+   #+INDEX: Kernel!Micro (Introduction)
+   #+INDEX: Privilege level (Introduction)
+   #+INDEX: Kernel mode (Introduction)
+   #+INDEX: User mode (Introduction)
+   {{{revealimg("./figures/1280px-OS-structure2.svg.meta",t,"35vh")}}}
+
+   See [[http://www.makelinux.net/kernel_map/][this map of the Linux kernel]]
+   for a real-life monolithic example
+#+BEGIN_NOTES
+This figure shows different approaches towards layering and modularization
+in the context of OS kernels.  First of all, note the common layers,
+namely applications at the top and hardware at the bottom.
+
+In between are different layers related to what we think of as OS
+functionality.  Note that this OS functionality is marked with a red
+(left) and yellow (middle and right) background labeled “kernel mode”
+and “user mode”, respectively.  These modes refer to different
+CPU privilege levels, which will be discussed in the
+[[file:Operating-Systems-Interrupts.org::#kernel-mode][next presentation]];
+for now it is sufficient to know that code running in kernel mode has
+full control over the underlying hardware, while code running in user
+mode is restricted and needs to invoke lower layers (that run in kernel
+mode) for certain functionality.
+
+At one extreme, shown in the middle here, are so-called /micro kernels/,
+which just provide the minimal functionality and services as
+foundation for full-fledged OSs.  Typical functionality that we expect
+from OSs, such as file services or hardware independent network
+access, is then /not/ implemented in the kernel but in user mode
+processes or servers.  The L4 family mentioned later on as
+well as Fuchsia provide examples for micro kernels.
+
+The other extreme is made up of so-called /monolithic kernels/, which
+provide (almost) everything that we expect from OSs.  For
+modularization, such kernels may be structured in a sequence of
+layers, where the top layer provides the system call API to be
+explained on subsequent slides, while the bottom layer implements
+device driver abstractions to hide hardware peculiarities.
+Intermediate layers offer levels of abstraction on the way from
+hardware to application facing functionality.  GNU/Linux and Windows
+come with monolithic kernels.
+
+Finally, [[https://en.wikipedia.org/wiki/Hybrid_kernel][hybrid kernels]]
+(e.g., Windows NT) can be built as trade-off between both extreme
+approaches.
+#+END_NOTES
+
+*** OS Kernel
+    :PROPERTIES:
+    :CUSTOM_ID: kernel
+    :END:
+    #+INDEX: Kernel!Explanation (Introduction)
+    - OS runs as code on CPU
+      - Just as any other program
+    - *Kernel* contains central part of OS
+      #+ATTR_REVEAL: :frag (appear)
+      - Provides *API* for OS services via system calls (next slide)
+      - Code and data of kernel typically main memory resident
+      - Kernel functionality runs in kernel mode of CPU, reacts to
+        system calls and interrupts
+	- Details in [[file:Operating-Systems-Interrupts.org][next presentation]]
+      - Variants (previous slide)
+	- Monolithic (“large,” all OS related services)
+	- Micro kernel (“small,” only necessary services)
+	- “Best” design subject to research
+	  - Provable security only with micro kernels (seL4)
+
+*** System Calls
+    :PROPERTIES:
+    :CUSTOM_ID: system-calls
+    :END:
+    #+INDEX: System call!Definition (Introduction)
+    - System call = function = part of kernel API
+      - Implementation of OS service
+	- E.g., process execution, main memory allocation,
+          hardware resource access (e.g., keyboard, network, disk, graphics
+          card)
+    - Different OSs offer different system calls (i.e., offer
+      incompatible APIs)
+      - With different implementations
+      - With different calling conventions
+
+* Multitasking
+
+** Multitasking
+   :PROPERTIES:
+   :CUSTOM_ID: multitasking
+   :END:
+   #+INDEX: Multitasking (Introduction)
+   #+INDEX: Scheduling (Introduction)
+   #+ATTR_REVEAL: :frag (appear)
+   - Fundamental OS service: *Multitasking*
+     - Manage *multiple computations* going on *at the same time*
+     - E.g., surf on Web while Java project is built and music plays
+   - OS supports multitasking via *scheduling*
+     - Decide what computation to execute when on what CPU core
+       - [[file:Operating-Systems-Overview.org::#os-plan][Recall]]:
+         Frequently per second, time-sliced, beyond human perception
+   - Multitasking introduces *concurrency*
+     - (Details and challenges in upcoming sessions)
+     - [[file:Operating-Systems-Overview.org::#os-plan][Recall]]:
+       Even with single CPU core, illusion of “simultaneous” or
+       “parallel” computations
+       - (Later presentation: Advantages include
+         [[file:Operating-Systems-Threads.org::#thread-reasons][improved responsiveness and improved resource usage]])
+
+** Computations
+   :PROPERTIES:
+   :CUSTOM_ID: computations-processes-threads
+   :END:
+   #+INDEX: Process!Initial explanation (Introduction)
+   #+INDEX: Thread!Initial explanation (Introduction)
+   - Various technical terms for “computations”: Jobs, tasks, processes,
+     threads, …
+     #+ATTR_REVEAL: :frag (appear)
+     - We use only *thread* and *process*
+     - *Process*
+       - Container for related threads and their resources
+       - Created upon start of program and by programs (child processes)
+       - Unit of management and protection (threads from different
+         processes are isolated from another)
+     - *Thread*
+       - Unit of scheduling and concurrency
+       - Sequence of instructions (to be executed on CPU core)
+       - Single process may contain just one or several threads, e.g.:
+	 - Online game: different threads with different code for game
+           AI, GUI events, network handling
+	 - Web server handling requests from different clients in
+           different threads sharing same code
+
+*** Threads!
+    :PROPERTIES:
+    :CUSTOM_ID: drawing-threads
+    :END:
+    #+INDEX: Thread!Drawing (Introduction)
+    {{{revealimg("./figures/threads.meta",t,"50vh")}}}
+
+* Conclusions
+** Summary
+   - OS is Software
+     - that *uses hardware* resources of a computer system
+     - to provide support for the *execution of other software*.
+       - Computations are performed by threads.
+       - Threads are grouped into processes.
+   - OS kernel
+     - provides interface for applications and
+     - manages resources.
+
+* Introduction
+
+** Today’s Core Questions
+   - What exactly are threads?
+     - Why and for what are they used?
+     - How can I inspect them?
+     - How are they created in Java?
+     - What impact does blocking or non-blocking I/O have on the use
+       of threads?
+     - How does switching between threads work?
+
+** Learning Objectives
+   - Explain thread concept, thread switching, and multitasking
+     - Including reasons for threads
+       - With learning objectives for [[file:Operating-Systems-Introduction.org::#battlethreads][BattleThreads]],
+         rephrased from cite:HRB+03
+	 - Explain distinctions between threads and processes
+	 - Explain advantages of a multithreaded organization in
+	   structuring applications and in performance
+     - Including states (after upcoming presentation)
+   - Inspect threads on your system
+   - Create threads in Java
+   - Discuss differences between and use cases for blocking and
+     non-blocking I/O
+
+
+*** Previously on OS …
+    #+ATTR_REVEAL: :frag (appear)
+    - What is a thread?
+      {{{revealimg("./figures/threads.meta",t,"40vh","figure fragment appear")}}}
+    - What are [[file:Operating-Systems-Introduction.org::#multitasking][multitasking and scheduling]]?
+
+* Threads
+** Thread Terminology
+   :PROPERTIES:
+   :CUSTOM_ID: thread-terminology
+   :END:
+   - concurrency
+   - Thread preemption
+   - I/O bound vs CPU bound threads
+
+*** Parallelism
+    :PROPERTIES:
+    :CUSTOM_ID: parallelism
+    :END:
+    #+INDEX: Parallelism (Threads)
+    - *Parallelism* = *simultaneous* execution
+      - E.g., multi-core
+      - Potential speedup for computations!
+	- (Limited by
+          [[https://en.wikipedia.org/wiki/Amdahl%27s_law][Amdahl’s law]])
+    - Note
+      - Processors contain more and more cores
+      - Individual cores do not become much faster any longer
+	- Recall CS part about [[https://en.wikipedia.org/wiki/Moore%27s_law][Moore’s law]]
+      - Consequence: Need parallel programming to take advantage of
+	current hardware
+
+*** Concurrency
+    :PROPERTIES:
+    :CUSTOM_ID: concurrency
+    :END:
+    #+INDEX: Concurrency (Threads)
+    - Concurrency is *more general* term than parallelism
+      - Concurrency includes
+	#+ATTR_REVEAL: :frag (appear)
+	- *Parallel* threads (on multiple CPU cores)
+          {{{reveallicense("./figures/3-threads-parallel.meta","10vh",nil,t)}}}
+	  - (Executing different code in general)
+	- *Interleaved* threads (taking turns on single CPU core)
+	  - With gaps on single core!
+            {{{reveallicense("./figures/3-threads-interleaved.meta","10vh",nil,t)}}}
+      #+ATTR_REVEAL: :frag appear
+      - Challenges and solutions for concurrency apply to parallel
+        and interleaved executions
+	- Topics covered in upcoming presentations
+          ([[file:Operating-Systems-MX.org][mutual exclusion (MX)]],
+          [[file:Operating-Systems-MX-Java.org][MX in Java]],
+          [[file:Operating-Systems-MX-Challenges.org][MX challenges]])
+
+*** Thread Preemption
+    :PROPERTIES:
+    :CUSTOM_ID: preemption
+    :END:
+    #+INDEX: Preemption (Threads)
+    - *Preemption* = temporary removal of thread from CPU by OS
+      - Before thread is finished (with later continuation)
+	- To allow others to continue after *scheduling* decision by OS
+      - Typical technique in modern OSs
+	- Run lots of threads for brief intervals per second; creates
+          illusion of parallel executions, even on single-core CPU
+    - Later slides: Cooperative vs
+      preemptive multitasking
+    - Upcoming presentation: [[file:Operating-Systems-Scheduling.org][Thread scheduling]]
+
+*** Thread Classification
+    :PROPERTIES:
+    :CUSTOM_ID: classification
+    :END:
+    - *I/O bound*
+      - Threads spending most time submitting and waiting for I/O
+	requests
+      - Run frequently by OS, but only for short periods of time
+	- Until next I/O operation
+	- E.g., virus scanner
+    - *CPU bound*
+      - Threads spending most time executing code
+      - Run for longer periods of time
+	- Until preempted by scheduler
+	- E.g., graph rendering
+
+* Reasons for Threads
+** Main Reasons
+   :PROPERTIES:
+   :CUSTOM_ID: thread-reasons
+   :END:
+   - *Resource utilization*
+     - Keep most of the hardware resources busy most of the time, e.g.:
+       - While one thread is waiting for external event (e.g., disk
+         or network I/O), allow other threads to continue
+	 - Next slide
+       - Keep multiple cores busy
+	 - E.g., OS housekeeping such as zeroing of memory on second core
+   - *Responsiveness*
+     - Use separate threads to react quickly to external events
+       - Think of game AI vs GUI
+       - Other example on later slide: Web server
+   - More *modular design*
+
+** Interleaved Execution Example
+   :PROPERTIES:
+   :CUSTOM_ID: interleaved
+   :END:
+   #+INDEX: Interleaved execution (Threads)
+   {{{reveallicense("./figures/hail_f0206.svg.meta","50vh",nil,nil,t)}}}
+#+BEGIN_NOTES
+This figure illustrates the benefit of improved resource utilization
+resulting from multithreading, which leads to higher overall throughput.
+Consider two threads and their resource demands, each taking 1h to finish.
+The first thread, shown on the left, is I/O bound, in this case a
+virus scanner, which uses the CPU only for brief periods of time,
+whereas it mostly waits for new data to arrive from disk.
+In contrast, the other thread, shown to the right, is CPU bound,
+performing complex graph rendering; it doesn’t need the disk at all.
+Clearly, the sequential execution of both threads, which takes 2h,
+is a waste of resources, namely a waste of CPU time.
+
+In fact, an OS that is equipped with a scheduling mechanism might be
+able to schedule the 2nd thread whenever the 1st one is idle waiting for
+new data to arrive from disk.  In that case, both threads can be executed
+in an interleaved fashion on a single CPU core, keeping the core busy
+all the time.  In the example shown here, both threads now finish
+after 1.5h.
+
+Note that the total time of 1.5h is an arbitrary example,
+without underlying calculation.  The point is that idle times of the
+virus scanner can now be used for real work, which leads to a total
+time of less than 2h.  Of course, both threads could also finish at
+different points in time (but earlier than 2h).
+#+END_NOTES
+
+
+* Thread Switching
+** Thread Switching
+   :PROPERTIES:
+   :CUSTOM_ID: thread-switching
+   :END:
+   #+INDEX: Thread!Switching (Threads)
+   #+INDEX: Context switch (Threads)
+   - With multiple threads, OS needs to decide which to execute when
+     → Scheduling ([[file:Operating-Systems-Scheduling.org][later lecture]])
+     - (Similar to machine scheduling for industrial production, which
+       you may know from operations management)
+     - [[file:Operating-Systems-Introduction.org::#multitasking][Recall multitasking]]
+       - OS may use time-slicing to schedule threads for short
+         intervals, illusion of parallelism on single CPU core
+   - After that decision, a *context switch* (thread switch) takes place
+     - Remove thread A from CPU
+       - *Remember A's state* (instruction pointer/program counter,
+	 register contents, stack, …)
+     - *Dispatch* thread B to CPU
+       - *Restore B's state*
+   #+begin_notes
+Recall how code is executed on the CPU (e.g., with Hack).  A special
+register, the program counter, specifies what instruction to execute
+next, and instructions may modify CPU registers.  You may think of one
+assembly language program as being executed in one thread.
+
+Recall that with
+[[file:Operating-Systems-Introduction.org::#multitasking][multitasking]],
+the OS manages multiple threads and schedules them for execution on
+CPU cores, usually with time-slicing.
+
+If the time slice for thread A ends, A is usually in the middle of
+some computation.  The state of that computation is defined by the
+current value of the program counter, by values stored in registers,
+and other information.  To resume this computation later on, the OS
+needs to save the state of thread A somewhere, before another thread B
+can be executed.  Similarly, thread B may be in the middle of its own
+computation, whose state was saved previously by the OS.
+
+The switch from thread A via the OS to thread B with saving of A’s and
+restoring of B’s state is called a /context switch/.  Subsequent
+slides provide more details how such context switches happen.
+   #+end_notes
+
+*** Thread Switching with ~yield~
+    :PROPERTIES:
+    :CUSTOM_ID: yielding
+    :END:
+    #+INDEX: Thread!Yield (Threads)
+    #+INDEX: Yielding (Threads)
+    In the following
+    - First, simplified setting of voluntary switch from thread A to
+      thread B
+      - Function ~switchFromTo()~ on next slide
+	- For details, see Sec. 2.4 in cite:Hai19
+      - Leaving the CPU voluntarily is called *yielding*; ~yield()~ may
+	really be an OS system call
+    - Afterwards, the real thing: *Preemption* by the OS
+
+** Interleaved Instruction Sequence
+   :PROPERTIES:
+   :CUSTOM_ID: interleaved-instructions
+   :END:
+
+   {{{revealimg("./figures/3-interleaved-executions.meta",t,"50vh")}}}
+
+** Thread Control Blocks (TCBs)
+   :PROPERTIES:
+   :CUSTOM_ID: tcb
+   :END:
+   #+INDEX: Thread control block (TCB) (Threads)
+   #+INDEX: Stack!TCB (Threads)
+   - All threads share the same CPU registers
+     - Obviously, register values need to be *saved* somewhere to avoid
+       incorrect results when switching threads
+     - Also, each thread has its own
+       - *stack*; current position given by *stack pointer (SP)*
+       - *instruction pointer (IP)*; where to execute next machine instruction
+     - Besides: priority, scheduling information, blocking events (if any)
+   - OS uses block of memory for housekeeping,
+     called *thread control block* (TCB)
+     - One for each thread
+       - Storing register contents, stack pointer, instruction
+         pointer, …
+     - Arguments of ~switchFromTo()~ are really (pointers to) TCBs
+
+** Cooperative Multitasking
+   :PROPERTIES:
+   :CUSTOM_ID: cooperative-mt
+   :END:
+   #+INDEX: Multitasking!Cooperative (Threads)
+   - Approach based on ~switchFromTo()~ is *cooperative*
+     - Thread A decides to yield CPU (voluntarily)
+       - A hands over to B
+   - Disadvantages
+     - Inflexible: A and B are hard-coded
+     - No parallelism, just interleaved execution
+     - What if A contains a bug and enters an infinite loop?
+   - Advantages
+     - Programmed, so full control over when and where of switches
+     - Programmed, so usable even in restricted environments/OSs
+       without support for multitasking/preemption
+
+** Preemptive Multitasking
+   :PROPERTIES:
+   :CUSTOM_ID: preemptive-mt
+   :END:
+   #+INDEX: Multitasking!Preemptive (Threads)
+   #+INDEX: Thread!Preemption (Threads)
+   - Preemption: OS removes thread *forcefully* (but only
+     temporarily) from CPU
+     - Housekeeping on stacks to allow seamless continuation later on
+       similar to cooperative approach
+     - OS schedules different thread for execution afterwards
+   - Additional mechanism: Timer interrupts
+     - OS defines *time slice* (*quantum*), e.g., 30ms
+     - Interrupt fires every 30ms
+       - Interrupt handler invokes OS scheduler to determine next thread
+	 - [[file:Operating-Systems-Scheduling.org][Upcoming presentation]]
+
+** Multitasking Overhead
+   :PROPERTIES:
+   :CUSTOM_ID: multitasking-overhead
+   :END:
+   #+INDEX: Multitasking!Overhead (Threads)
+   #+INDEX: Overhead (Threads)
+   - OS performs scheduling, which takes time
+   - Thread switching creates *overhead*
+     - Minor sources: Scheduling costs, saving and restoring state
+     - Major sources: Cache pollution, [[https://en.wikipedia.org/wiki/Cache_coherence][cache coherence protocols]]
+       - After a context switch, the CPU’s cache quite likely misses
+         necessary data
+	 - Necessary data needs to be fetched from RAM
+       - Accessing data in RAM takes hundreds of clock cycles
+	 - See [[https://stackoverflow.com/questions/4087280/approximate-cost-to-access-various-caches-and-main-memory][estimates on Stack Overflow]]
+
+
+* Conclusions
+** Summary
+   - Threads represent individual instruction execution sequences
+   - Multithreading improves
+     - Resource utilization
+     - Responsiveness
+     - Modular design in presence of concurrency
+   - Preemptive multithreading with housekeeping by OS
+     - Thread switching with overhead
+   - Design choices: I/O blocking or not, servers with multiple
+     threads or not
+
+
+* Introduction
+
+*** CPU Scheduling
+    :PROPERTIES:
+    :CUSTOM_ID: drawing-scheduling
+    :END:
+    #+INDEX: Scheduling!Drawing (Scheduling)
+    {{{revealimg("./figures/scheduling.meta",t,"50vh")}}}
+
+** Today’s Core Questions
+   - How does the OS manage the shared resource CPU?  What goals are pursued?
+   - How does the OS distinguish threads that could run on the CPU
+     from those that cannot (i.e., that are blocked)?
+   - How does the OS schedule threads for execution?
+
+** Learning Objectives
+   - Explain thread concept (continued)
+     - Including states and priorities
+   - Explain scheduling mechanisms and their goals
+   - Apply scheduling algorithms
+     - FCFS, Round Robin
+
+* Scheduling
+** CPU Scheduling
+   :PROPERTIES:
+   :CUSTOM_ID: cpu-scheduling
+   :END:
+   #+INDEX: Scheduling!Definition (Scheduling)
+   #+INDEX: Scheduling!Preemption (Scheduling)
+   #+INDEX: Preemption (Scheduling)
+   - With multitasking, lots of threads *share resources*
+     - Focus here: CPU
+   - *Scheduling* (planning) and *dispatching* (allocation) of CPU via OS
+     #+ATTR_REVEAL: :frag (appear)  
+     - *Non-preemptive*, e.g., FIFO scheduling
+       - Thread on CPU until [[file:Operating-Systems-Threads.org::#yielding][yield]],
+         termination, or [[file:Operating-Systems-Interrupts.org::#blocking][blocking]]
+     - *Preemptive*, e.g., Round Robin scheduling
+       - Typical case for desktop OSs
+         1. Among all threads, schedule and dispatch one, say T_0
+         2. Allow T_0 to execute on CPU for some time, then preempt it
+         3. Repeat step (1)
+   #+ATTR_REVEAL: :frag appear
+   - (Similar decisions take place in industrial production, which you may know from
+     operations management)
+   #+begin_notes
+Scheduling is the planning of resource allocations.  Here, we just
+consider the allocation of the resource CPU among multiple threads.
+
+Concerning wording, the planning itself is called *scheduling*, while
+the allocation is called *dispatching*.  Thus, after making a scheduling
+decision, the OS dispatches one thread to run on the CPU.
+
+Two major scheduling variants are non-preemptive and preemptive ones.
+With non-preemptive scheduling, the OS allows the currently executing
+thread to continue as long as it wants.  The bullet point names some
+situations when a thread might stop, which is when the next scheduling
+decision takes place.
+
+With preemptive scheduling, the OS may pause, or preempt, a thread in
+the middle of its execution although it could continue with more
+useful work on the CPU.  Here, the OS uses a timer to define the
+length of some time slice, for which the dispatched thread is allowed
+to run at most.  If the thread executes a blocking system call or
+terminates before the timer runs out, the OS cancels the timer and
+makes the next scheduling decision.  When the timer runs out, it
+triggers an interrupt, causing the interrupt handler to run on the CPU
+for the next scheduling decision.
+   #+end_notes
+
+** Scheduling Goals
+   - Fairness (e.g., equal CPU shares per thread)
+   - Response time
+   - Throughput
+   - Efficient resource usage
+
+   Note: Above goals have *trade-offs* (discussed subsequently)
+
+* Thread States
+  :PROPERTIES:
+  :CUSTOM_ID: sec-thread-states
+  :END:
+
+** Reasons to Distinguish States
+   - Recall: Some threads may be waiting (synonym: be blocked)
+     - E.g., wait for I/O operation to finish or ~sleep~ system call
+       (recall [[file:Operating-Systems-Threads.org::#Simpler2Threads][Simpler2Threads]])
+       - More generally, threads may perform [[file:Operating-Systems-Interrupts.org::#blocking][blocking]] system calls
+     - [[file:Operating-Systems-Interrupts.org::#polling-pro-con][Busy waiting]]
+       would be a waste of CPU resources
+       - If other threads could run on CPU
+   #+ATTR_REVEAL: :frag appear
+   - OS distinguishes thread states to tell threads apart that might
+     perform useful computations (runnable) on the CPU from those that
+     do not (blocked/waiting)
+     - Scheduler does not need to consider waiting threads
+     - Scheduler considers runnable threads, selects one, dispatches
+       that for execution on CPU (which is then running)
+
+** OS Thread States
+   :PROPERTIES:
+   :CUSTOM_ID: thread-states
+   :END:
+   #+INDEX: Thread states!Definition (Scheduling)
+   #+INDEX: Running thread (Scheduling)
+   #+INDEX: Blocked thread (Scheduling)
+   #+INDEX: Waiting thread (Scheduling)
+   - Different OSs distinguish different sets of states; typically:
+     - *Running*: Thread(s) currently executing on CPU (cores)
+     - *Runnable*: Threads ready to perform computations
+     - *Waiting* or *blocked*: Threads waiting for some event to occur
+   #+ATTR_REVEAL: :frag appear
+   - OS manages states via [[https://en.wikipedia.org/wiki/Queue_(abstract_data_type)][queues]]
+     (with suitable data structures)
+     - *Run queue(s)*: Potentially per CPU core
+       - Containing runnable threads, input for scheduler
+     - *Wait queue(s)*: Potentially per event (type)
+       - Containing waiting threads
+         - OS inserts running thread here upon blocking system call
+         - OS moves thread from here to run queue when event occurs
+
+** Thread State Transitions
+   :PROPERTIES:
+   :CUSTOM_ID: state-transitions
+   :END:
+   #+INDEX: Thread states!Transitions (Scheduling)
+   {{{revealimg("./figures/hail_f0303.pdf.meta",t,"50vh")}}}
+#+BEGIN_NOTES
+This diagram shows typical state transitions caused by actions of
+threads, decisions of the OS, and external I/O events.  State changes
+are always managed by the OS.
+
+Newly created threads, such as the ones you created in Java, are Runnable.
+When the CPU is idle, the OS’ scheduler executes a selection algorithm
+among the Runnable threads and dispatches one to run on the CPU.  When
+that thread yields or is preempted, the OS remembers that thread as
+Runnable.
+
+If the thread invokes a blocking system call, the OS changes its
+state to Waiting.  Once the event for which the thread waits has
+happened (e.g., a key pressed or some data has been transferred from
+disk to RAM), the OS changes the state from Waiting to Runnable.
+At some later point in time, that thread may be selected by the
+scheduler to run on the CPU again.
+
+In addition, an outgoing arc Termination is shown from state Running,
+which indicates that a thread has completed its computations (e.g.,
+the main function in Java ends).  Actually, threads may also be
+terminated in states Runnable and Waiting, which is not shown here,
+but which can happen if a thread is killed (e.g., you end a program or
+shut down the machine).
+#+END_NOTES
+
+
+* Scheduling Goals
+** Goal Overview
+   :PROPERTIES:
+   :CUSTOM_ID: scheduling-goals
+   :END:
+  - Performance
+    - *Throughput*
+      - Number of completed threads (computations, jobs) per time unit
+      - More important for service providers than users
+    - *Response time*
+      - Time from thread start or interaction to useful reaction
+  #+ATTR_REVEAL: :frag appear 
+  - User control
+    - *Resource allocation*
+    - Mechanisms for urgency or importance, e.g., *priorities*
+  #+begin_notes
+As computer users, we expect different goals from scheduling
+mechanisms, for which subsequent slides contain some details: First,
+we are usually interested in high performance in the senses of
+throughput and response time.
+
+Second, we may want to exert some control to influence the scheduling
+decisions.  For example, when you think of rented compute capacity,
+where you share resources with other customers, the resources
+allocated to you (including CPU time) depend on the amount of money
+you pay.
+
+Besides, programmers can assign priorities to threads to indicate
+their relative urgency or importance.
+  #+end_notes
+
+*** Throughput
+    - To increase throughput, avoid idle times of CPU
+      - Thus, reassign CPU when currently running thread needs to wait
+      - Context switching necessary
+    - Recall: Context switching comes with [[file:Operating-Systems-Threads.org::#multitasking-overhead][overhead]]
+      - Overhead reduces throughput
+
+*** Response Time
+    - Frequent context switches may help for small response time
+      - However, their overhead hurts throughput
+    - Responding quickly to one thread may slow down another one
+      - May use priorities to indicate preferences
+
+*** Resource Allocation
+    - What fraction of resources for what purpose?
+    #+ATTR_REVEAL: :frag appear
+    - *Proportional share scheduling*
+      - E.g., multi-user machine: Different users obtain same share
+        of CPU time every second
+        - (Unless one pays more: Larger share for that user)
+    #+ATTR_REVEAL: :frag appear
+    - *Group scheduling*: Assign threads to groups, each of which
+      receives its proportional share
+      @@html:<br>@@ → Linux scheduler later on
+
+** Priorities in Practice
+   :PROPERTIES:
+   :CUSTOM_ID: priority-practice
+   :END:
+   #+INDEX: Priority (Scheduling)
+   #+INDEX: Thread!Priority (Scheduling)
+   - Different OSs (and execution environments such as Java) provide
+     different means to express priority
+     - E.g., numerical priority, so-called niceness value, deadline, …
+     - Upon thread creation, its priority can be specified (by the
+       programmer, with default value)
+       - Priority recorded in [[file:Operating-Systems-Threads.org::#tcb][TCB]]
+       - Sometimes, administrator privileges are necessary for “high”
+         priorities
+       - Also, OS tools may allow to change priorities at runtime
+
+* Scheduling Mechanisms
+** Three Families of Schedulers
+#+BEGIN_leftcol
+- Fixed thread priorities
+- Dynamically adjusted thread priorities
+- Controlling proportional shares of processing time
+#+END_leftcol
+#+BEGIN_rightcol
+{{{reveallicense("./figures/4-scheduling-mechanisms.meta","50vh",nil,none)}}}
+#+END_rightcol
+
+*** Notes on Scheduling
+    - For scheduling with pen and paper, you need to know
+      *arrival times* and *service times* for threads
+      - Arrival time: Point in time when thread created
+      - Service time: CPU time necessary to complete thread
+        - (For simplicity, blocking I/O is not considered; otherwise,
+          you would also need to know frequency and duration of I/O
+          operations)
+    #+ATTR_REVEAL: :frag appear
+    - OS does not know either ahead of time
+      - OS creates threads (so, knowledge of arrival time is not an
+        issue) and inserts them into necessary data structures during
+        normal operation
+      - When threads terminate, OS again participates
+        - Thus, OS can compute service time after the fact
+        - (Some scheduling algorithms require service time for
+          scheduling decisions; then threads need to declare that upon
+          start.  Not considered here.)
+
+** Fixed-Priority Scheduling
+   :PROPERTIES:
+   :CUSTOM_ID: fixed-priority
+   :END:
+   #+INDEX: Scheduling!Fixed-priority (Scheduling)
+   #+INDEX: Fixed-priority scheduling (Scheduling)
+   - Use *fixed*, numerical *priority* per thread
+     - Threads with higher priority preferred over others
+       - Smaller or higher numbers may indicate higher priority:
+         OS dependent
+   #+ATTR_REVEAL: :frag appear
+   - Implementation alternatives
+     - Single queue ordered by priority
+     - Or one queue per priority
+       - OS schedules threads from highest-priority non-empty queue
+   #+ATTR_REVEAL: :frag appear
+   - Scheduling whenever CPU idle or some thread becomes runnable
+     - Dispatch thread of highest priority
+       - In case of ties: Run one until end (FIFO) or
+         serve all Round Robin
+
+*** Warning on Fixed-Priority Scheduling
+    :PROPERTIES:
+    :CUSTOM_ID: priority-starvation
+    :END:
+    #+INDEX: Starvation (Scheduling)
+    - *Starvation* of low-priority threads possible
+      - Starvation = continued denial of resource
+        - Here, low-priority threads do not receive resource CPU as
+          long as threads with higher priority exist
+      - Careful design necessary
+        - E.g., for hard-real-time systems (such as cars, aircrafts,
+          power plants)
+        - (Beware of [[file:Operating-Systems-MX-Challenges.org::#priority-inversion][priority inversion]],
+          a topic for a later presentation!)
+
+*** FIFO/FCFS Scheduling
+    :PROPERTIES:
+    :CUSTOM_ID: fifo
+    :END:
+    #+INDEX: Scheduling!FIFO (Scheduling)
+    #+INDEX: FIFO scheduling (Scheduling)
+    - FIFO = First in, first out
+      - (= FCFS = first come, first served)
+      - Think of queue in supermarket
+    - Non-preemptive strategy: Run first thread until completed (or blocked)
+      - For threads of equal priority
+
+*** Round Robin Scheduling
+    :PROPERTIES:
+    :CUSTOM_ID: roundrobin
+    :END:
+    #+INDEX: Scheduling!Round robin (Scheduling)
+    #+INDEX: Round robin scheduling (Scheduling)
+    #+INDEX: Time slice (Scheduling)
+    #+INDEX: Quantum (Scheduling)
+    #+INDEX: Queue (Scheduling)
+    - Key ingredients
+      - *Time slice* (quantum, q)
+        - Timer with interrupt, e.g., every 30ms
+      - *Queue(s)* for runnable threads
+        - Newly created thread inserted at end
+      #+ATTR_REVEAL: :frag appear
+      - Scheduling when (1) timer interrupt triggered or (2) thread ends
+        or is blocked
+        #+ATTR_REVEAL: :frag (appear)
+        1. Timer interrupt: *Preempt* running thread
+           - Move previously running thread to end of runnable queue (for
+             its priority)
+           - Dispatch thread at head of queue (for highest priority) to CPU
+             - With new timer for full time slice
+        2. Thread ends or is blocked
+           - Cancel its timer, dispatch thread at head of queue (for full
+             time slice)
+
+
+** Dynamic-Priority Scheduling
+   :PROPERTIES:
+   :CUSTOM_ID: dynamic-priority
+   :END:
+   #+INDEX: Scheduling!Dynamic-priority (Scheduling)
+   #+INDEX: Dynamic-priority scheduling (Scheduling)
+   - With dynamic strategies, OS can adjust thread priorities during execution
+   - Sample strategies
+     - *Earliest deadline first*
+       - For tasks with deadlines — discussed in cite:Hai19, not part of
+         learning objectives
+     - *Decay Usage Scheduling*
+
+*** Decay Usage Scheduling
+    :PROPERTIES:
+    :CUSTOM_ID: decay-usage
+    :END:
+    #+INDEX: Scheduling!Decay usage (Scheduling)
+    #+INDEX: Decay usage scheduling (Scheduling)
+    - General intuition:
+      [[file:Operating-Systems-Threads.org::#classification][I/O bound]]
+      threads are at unfair disadvantage.  (Why?)
+      #+ATTR_REVEAL: :frag appear
+      - *Decrease* priority of threads in *running state*
+      - *Increase* priority of threads in *waiting state*
+        - Allows quick reaction to I/O completion (e.g, user interaction)
+    #+ATTR_REVEAL: :frag appear
+    - Technically, threads have a *base priority* that is adjusted by OS
+      - Use Round Robin scheduling after priority adjustments
+    - OS may manage one queue of threads per priority
+      - Threads move between queues when priorities change
+        - Falls under more general pattern of [[https://en.wikipedia.org/wiki/Multilevel_feedback_queue][multilevel feedback queue]]
+          schedulers
+
+*** Decay Usage Scheduling in Mac OS X
+    - OS keeps track of CPU *usage*
+      - Usage increases linearly for time spent on CPU
+        - Usage recorded when thread leaves CPU (yield or preempt)
+      - Usage *decays* exponentially while thread is waiting
+    - Priority adjusted downward based on CPU usage
+      - Higher adjustments for threads with higher usage
+        - Those threads’ priorities will be lower than others
+
+*** Variant in MS Windows
+    - Increase of priority when thread leaves waiting state
+      - Priority *boosting*
+      - Amount of boost depends on wait reason
+        - More for interactive I/O (keyboard, mouse) then other types
+    - After boost, priority decreases linearly with increasing CPU
+      usage
+
+** Proportional-Share Scheduling
+   :PROPERTIES:
+   :CUSTOM_ID: proportional-share
+   :END:
+   #+INDEX: Scheduling!Proportional-share (Scheduling)
+   #+INDEX: Scheduling!Weighted round robin (Scheduling)
+   #+INDEX: Scheduling!Weighted fair queuing (Scheduling)
+   #+INDEX: Proportional-share scheduling (Scheduling)
+   #+INDEX: Weighted round robin (WRR) (Scheduling)
+   #+INDEX: Weighted fair queuing (WFQ) (Scheduling)
+   - Simple form: *Weighted* Round Robin (WRR)
+     - Weight per thread is factor for length of time slice
+     - Discussion
+       - Con: Threads with high weight lead to long delays for others
+       - Pro: Fewer context switches than following alternative
+   #+ATTR_REVEAL: :frag appear
+   - Alternative: *Weighted fair queuing* (WFQ)
+     - Uniform time slice
+     - Threads with lower weight “sit out” some iterations
+
+*** WRR vs WFQ with sample Gantt Charts
+    - Threads T1, T2, T3 with weights 3, 2, 1; q = 10ms
+      - Supposed order of arrival: T1 first, T2 second, T3 third
+      - If threads are not done after shown sequence, start over with T1
+
+    {{{reveallicense("./figures/4-wrr.meta","10vh",nil,t)}}}
+
+    {{{reveallicense("./figures/4-wfq.meta","10vh",nil,t)}}}
+
+** CFS in Linux
+   :PROPERTIES:
+   :CUSTOM_ID: cfs
+   :END:
+   #+INDEX: Scheduling!Completely fair (Scheduling)
+   #+INDEX: Completely fair scheduler (CFS) (Scheduling)
+   - CFS = Completely fair scheduler
+     - Actually, variant of WRR above
+       - Weights determined via so-called *niceness* values
+         - (Lower niceness means higher priority)
+   - *Core idea*
+     #+ATTR_REVEAL: :frag (appear)
+     - Keep track of how much threads were on CPU
+       - Scaled according to weight
+       - Called *virtual runtime*
+         - Represented efficiently via [[https://en.wikipedia.org/wiki/Red%E2%80%93black_tree][red-black tree]]
+     - Schedule thread that is furthest behind
+       - Until preempted or time slice runs out
+     - (Some details in cite:Hai19)
+
+* Conclusions
+** Summary
+   - OS performs scheduling for shared resources
+     - Focus here: CPU scheduling
+     - Subject to conflicting goals
+   - CPU scheduling based on thread states and priorities
+     - Fixed vs dynamic priorities vs proportional share
+     - CFS as example for proportional share scheduling
+
+* Introduction
+
+** Today’s Core Questions
+   - What can go wrong with concurrent computations?
+     - What is a race condition?
+   - How to avoid subtle programming bugs related to timing issues?
+     - What mechanisms does the OS provide to help?
+
+** Learning Objectives
+   - Recognize and explain race conditions
+     - (Playing [[https://deadlockempire.github.io/][Deadlock Empire]] helps)
+   - Explain notions of critical section and mutual exclusion
+   - Use mutexes and semaphores (and monitors after upcoming lectures)
+     to enforce mutual exclusion
+
+* Race Conditions
+** Central Challenge: Races
+   :PROPERTIES:
+   :reveal_data_state: no-toc-progress
+   :END:
+   {{{reveallicense("./figures/race-crash-cc-by-2.0.meta")}}}
+
+** Races (1/2)
+   :PROPERTIES:
+   :CUSTOM_ID: race-condition
+   :END:
+   #+INDEX: Race condition (MX I)
+   - *Race (condition)*: a technical term
+     - Multiple *activities* access *shared resources*
+       - At least one writes, in [[file:Operating-Systems-Threads.org::#concurrency][parallel or concurrently]]
+     - Overall outcome depends on *subtle timing* differences
+       - “Nondeterminism” (recall [[file:Operating-Systems-Interrupts.org::#dijkstra][Dijkstra on interrupts]])
+       - Missing synchronization
+       - *Bug*!
+   - Previous picture
+     - *Cars* are activities
+     - *Street segments* represent shared resources
+     - Timing determines whether a *crash* occurs or not
+     - Crash = misjudgment = missing synchronization
+
+** Races (2/2)
+   - OS
+     - *Threads* are activities
+     - *Variables, memory, files* are shared resources
+     - Missing synchronization is a *bug*, leading to anomalies just as
+       in database systems
+
+** Non-Atomic Executions
+   :PROPERTIES:
+   :CUSTOM_ID: atomicity
+   :END:
+   #+INDEX: Atomic execution (MX I)
+   - Races generally result from non-atomic executions
+     #+ATTR_REVEAL: :frag (appear)
+     - Even “single” instructions such as ~i += 1~ are *not atomic*
+       - Execution via *sequences of machine instructions*
+	 - Load variable's value from RAM
+	 - Perform add in ALU
+	 - Write result to RAM
+     - A context switch may happen after any of these machine instructions,
+       i.e., “in the middle” of a high-level instruction
+       - Intermediate results accessible elsewhere
+         - *No isolation* in the sense of ACID transactions: races, dirty reads, lost updates
+       - Demo: Play a game as instructed previously
+#+BEGIN_NOTES
+This slide highlights that even simple statements of high-level
+programming languages are not executed atomically, which may be the source
+of race conditions.
+
+Note that the word “atomic” is used in its literal sense here.
+So, an execution is *not* atomic if is really consists of multiple steps.
+
+Be careful not to confuse this with the notion of atomicity of ACID
+transactions.  In the ACID context, atomicity means that transactions
+appear to be either executed entirely or not at all;
+whether they consist of multiple steps or not is not an issue.
+#+END_NOTES
+
+
+* Critical Sections and Mutual Exclusion
+** Goal and Solutions (1/2)
+   :PROPERTIES:
+   :CUSTOM_ID: mx-goal
+   :END:
+   #+INDEX: Mutual exclusion!Definition (MX I)
+   #+INDEX: Critical section!Definition (MX I)
+   - Goal
+     - Concurrent executions that access *shared resources* should be
+       *isolated* from one another
+       - Cf. *I* in ACID transactions
+   #+ATTR_REVEAL: :frag appear
+   - Conceptual solution
+     - Declare *critical sections* (CSs)
+       - CS = Block of code with potential for
+         race conditions on shared resources
+	 - Cf. transaction as sequence of operations on shared data
+     - Enforce *mutual exclusion* (MX) on CSs
+       - At most one thread inside CS at any point in time
+         - This avoids race conditions
+	 - Cf. serializability for transactions
+
+** MX with CSs: Ticket example
+   :PROPERTIES:
+   :CUSTOM_ID: dispense-mx
+   :END:
+   {{{reveallicense("./figures/5-dispense-mx.meta","50vh",nil,nil,t)}}}
+#+BEGIN_NOTES
+0. The animation on this slide illustrates the effect of mutual
+   exclusion on interleaved executions to avoid races based on a
+   previously shown code fragment to sell tickets for seats.
+   If you did not think about the JiTT assignment for that code fragment
+   yet, please do so now and come back afterwards.  Actually, this
+   animation may also help you solving the JiTT assignment.
+
+   Consider two threads that simultaneously try to obtain seats, and
+   suppose that the code fragment is executed as critical section
+   under mutual exclusion.  How MX can actually be enforced via
+   locking, semaphores, or monitors is the topic of later slides.
+
+1. T1 enters the CS first.  Suppose its time slice runs out after the
+   check that seats are still remaining.  Now the OS dispatches T2,
+   which wants to execute the same CS.  However, as T1 is currently
+   executing inside that CS and as MX is enforced for that CS, T2 is
+   blocked by the OS.  Thus, the OS schedules another thread for
+   execution, say T1.
+
+2. Consequently, T1 can finish the CS without intermediate modifications
+   by any other thread.
+
+3. Afterwards, T2 can enter the CS, check whether seats are still
+   available etc.  In essence, MX enforces the serial execution of
+   CSs.
+   On the one hand, serial executions are good as they avoids races;
+   on the other, they inhibit parallelism, which is generally bad for
+   performance.
+#+END_NOTES
+
+** Goal and Solutions (2/2)
+   :PROPERTIES:
+   :CUSTOM_ID: mx-goal-solution
+   :END:
+   #+INDEX: Mutual exclusion!Solutions (MX I)
+   - New goal
+     - Implementations/mechanisms for MX on CS
+   - Solutions
+     - *Locks*, also called *mutexes*
+       - Cf. 2PL for database transactions
+       - Acquire lock/mutex at start of CS, release it at end
+         - Choices: Busy waiting (spinning) or blocking when lock/mutex not
+           free?
+     - *Semaphores*
+       - Abstract datatype, generalization of locks, blocking, signaling
+     - *Monitors*
+       - Abstract datatype, think of Java class, methods as CS with MX
+       - Keyword ~synchronized~ turns Java method into CS with MX!
+
+** Challenges
+   :PROPERTIES:
+   :CUSTOM_ID: mx-challenges
+   :END:
+   #+INDEX: Mutual exclusion!Challenges (MX I)
+   #+INDEX: Starvation (MX I)
+   #+INDEX: Deadlock (MX I)
+   - Above solutions restrict entry to CS
+     - Thus, they restrict access to the resource CPU
+   - Major synchronization challenges arise
+     - *Starvation*
+       - Thread never enters CS
+         - (More generally: never receives some resource, e.g.,
+           [[file:Operating-Systems-Scheduling.org::#priority-starvation][CPU under scheduling]])
+     - *Deadlock* (discussed [[file:Operating-Systems-MX-Challenges.org][in later presentation]])
+       - Set of threads is stuck
+       - Circular wait for additional
+         locks/semaphores/resources/messages
+     - In addition, programming errors
+       - Difficult to locate, time-dependent
+       - Difficult to reproduce, “non-determinism”
+
+
+* Locking
+  :PROPERTIES:
+  :CUSTOM_ID: locking
+  :END:
+
+** Mutexes
+   :PROPERTIES:
+   :CUSTOM_ID: drawing-mutex
+   :END:
+   #+INDEX: Mutex!Drawing (MX I)
+   {{{revealimg("./figures/mutexes.meta",t,"50vh")}}}
+
+** Locks and Mutexes
+   :PROPERTIES:
+   :CUSTOM_ID: locks-mutexes
+   :END:
+   #+INDEX: Mutex!Definition (MX I)
+   #+INDEX: Locking (MX I)
+   - Lock = mutex = object with methods
+     - ~lock()~ or ~acquire()~: Lock/acquire/take the object
+       - A lock can only be ~lock()~'ed by one thread at a time
+       - Further threads trying to ~lock()~ need to wait for ~unlock()~
+     - ~unlock()~ or ~release()~: Unlock/release the object
+       - Can be ~lock()~'ed again afterwards
+     - E.g., interface [[https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/concurrent/locks/Lock.html][java.util.concurrent.locks.Lock]] in Java.
+
+   {{{reveallicense("./figures/hail_f0404.pdf.meta","20vh")}}}
+#+BEGIN_NOTES
+First of all, note that the terms “lock” and “mutex” are synonyms.
+
+Locks (and mutexes) are special-purpose objects, which essentially
+have two states, namely Unlocked and Locked, which you can see in the
+figure here, along with possible state transitions when the lock’s
+methods lock() and unlock() are invoked.  These methods are explained
+in the bullet points.
+
+When mutual exclusion (MX) is necessary to prevent races for a
+critical section (CS), a lock object shared by the racing threads can
+be used, for example seatlock on the next slide.  To enforce MX,
+method lock() needs to be invoked on the lock object at the beginning
+of the CS, and unlock() at the end.
+
+When the first thread executes lock(), the locks’s state changes from
+Unlocked to Locked.  If other threads try to execute lock() in state
+Locked, these threads get blocked until the first thread executes
+unlock(), which changes the lock’s state to Unlocked and which allows
+the blocked threads to continue their locking attempts; of course,
+only one of them will be successful.
+
+The question whether the lock really changes its state from Locked to
+Unlocked upon unlock() or whether it is immediately reassigned to one of
+the blocked threads (e.g., in FIFO order) is a design decision, which
+will be revisited later in the context of the so-called convoy problem.
+#+END_NOTES
+
+** Use of Locks/Mutexes
+   :PROPERTIES:
+   :CUSTOM_ID: lock-usage
+   :END:
+  - Programming discipline *required* to prevent races
+    - Create one (shared) lock for each shared data structure
+    - Take lock before operating on shared data structure
+    - Release lock afterwards
+  - See cite:Hai19 for sample code following POSIX standard
+  - Ticket example modified (leading to MX behavior):
+
+#+BEGIN_SRC java
+seatlock.lock();
+if (seatsRemaining > 0) {
+   dispenseTicket();
+   seatsRemaining = seatsRemaining - 1;
+} else displaySorrySoldOut();
+seatlock.unlock();
+#+END_SRC
+
+** Starvation
+   :PROPERTIES:
+   :CUSTOM_ID: starvation
+   :END:
+   #+INDEX: Starvation!Definition (MX III)
+   - A thread *starves* if its resource requests are repeatedly denied
+   - Examples in previous presentations
+     - [[file:Operating-Systems-Interrupts.org::#starvation][Interrupt livelock]]
+     - [[file:Operating-Systems-Scheduling.org::#priority-starvation][Thread with low priority in presence of high priority threads]]
+     - [[file:Operating-Systems-MX.org::#mx-challenges][Thread which cannot enter CS]]
+       - Famous illustration: Dining philosophers (next slide)
+       - No simple solutions
+   #+begin_notes
+The term *starvation* occurred on several occasions already, where
+threads could not continue their execution as expected but were
+preempted or blocked frequently or for prolonged periods of time.
+When locking is involved, avoidance of starvation is a hard problem
+without simple solutions as illustrated next.
+   #+end_notes
+
+*** Dining Philosophers
+    :PROPERTIES:
+    :CUSTOM_ID: dining-philosophers
+    :END:
+    #+INDEX: Starvation!Dining philosphers (MX III)
+    - MX problem proposed by Dijkstra
+    - Philosophers sit in circle; *eat* and think repeatedly
+      - Two *forks* required for eating
+	- *MX* for forks
+
+   {{{revealimg("./figures/hail_f0420.60.meta","Dining Philosophers","40vh")}}}
+   #+begin_notes
+A famous illustration of starvation, which alludes to the literal
+meaning of the word, goes back to Dijkstra.  Here, philosophers need
+forks to eat, and forks are protected by some MX mechanism.  If the
+underlying algorithm to protect and reassign forks does not prevent
+starvation, one or more philosophers may die from hunger as they do
+not receive forks frequently enough.
+
+Lots of textbooks on OS include algorithms for the dining philosophers
+to explain MX, deadlocks, and starvation.  Inspired by an exercise in
+cite:Sta01, the following slide shows a sequence of events that can
+happen for the deadlock-free algorithm presented in cite:Tan01,
+leading to starvation of a philosopher.
+
+Apparently, avoidance of starvation is no simple task.
+   #+end_notes
+
+* Conclusions
+** Summary
+   - Parallelism is a fact of life
+     - Multi-core, multi-threaded programming
+     - Race conditions arise
+     - Synchronization is necessary
+   - Mutual exclusion for critical section
+     - Locking
+     - Monitors
+     - Semaphores
+
+* Introduction
+
+
+** Today’s Core Questions
+   - What is virtual memory?
+     - How can RAM be (de-) allocated flexibly under multitasking?
+     - How does the OS keep track for each process what data resides
+       where in RAM?
+
+** Learning Objectives
+   - Explain mechanisms and uses for virtual memory
+     - Including principle of locality and page fault handling
+     - Including access of data on disk
+   - Explain and perform address translation with page tables
+
+** Previously on OS …
+*** Retrieval Practice
+    - How are
+      [[file:Operating-Systems-Introduction.org::#computations-processes-threads][processes and threads]]
+      related?
+    - Why were threads in
+      [[file:Operating-Systems-Introduction.org::#battlethreads][BattleThreads]]
+      more successful?
+    - What [[file:Operating-Systems-Overview.org::#virtual-address-space][layer of abstraction]]
+      do OSs use to manage RAM?
+    - What happens when an [[file:Operating-Systems-Interrupts.org::#irq-idea][interrupt]]
+      is triggered (e.g., a [[file:Operating-Systems-Interrupts.org::#terminology][page fault]])?
+
+*** Recall: RAM in Hack
+    :PROPERTIES:
+    :CUSTOM_ID: hack-ram
+    :END:
+#+REVEAL_HTML: <script data-quiz="quizHackRAM" src="./quizzes/Hack-RAM.js"></script>
+
+
+** Big Picture
+   :PROPERTIES:
+   :CUSTOM_ID: big-picture
+   :END:
+   #+INDEX: Virtual memory big picture (Memory I)
+   {{{reveallicense("./figures/vm.meta","50vh",nil,none)}}}
+#+BEGIN_NOTES
+The key idea of virtual memory management is to provide a layer of
+abstraction that hides allocation of the shared hardware resource RAM
+to individual processes.  Thus, processes (and their threads) do not
+need to care or know whether or where their data structures reside in RAM.
+
+Physical memory consists of RAM and secondary storage devices such as
+SSDs or HDDs.  Typically, the OS uses dedicated portions of secondary
+storage as so-called swap or paging areas to enlarge physical memory
+beyond the size of RAM.  Again, processes need neither care nor know
+about this fact, which is handled by OS in the background.
+
+Each process has its own individual virtual address space, starting at
+address 0, consisting of equal-sized blocks called pages (e.g., 4 KiB
+in size each).  Each of those pages may or may not be present in RAM.
+RAM in turn is split into frames (of the size of pages).  The OS
+loads pages into frames and keeps track what pages of virtual address
+spaces are located where in physical memory.
+
+Here you see a process with a virtual address space consisting of 10
+pages (numbered 0 to 9, implying that the virtual address space has a
+size of 10*4 KiB = 40 KiB), while RAM consists of 8 frames (numbered 0 to
+7, implying that RAM has a size of 8*4 KiB = 32 KiB).
+For example, page 0 is located in frame 6, while page 3 is located on
+disk, and frames 2, 3, and 7 are not allocated to the process under
+consideration.
+
+Notice that neighboring pages in the virtual address space may be
+allocated in arbitrary order in physical memory.  As processes and
+threads just use virtual addresses, they do not need to know about
+such details of physical memory.
+
+Code of threads just uses virtual addresses within machine
+instructions, and it is the OS’s task to locate the corresponding
+physical addresses in RAM or to bring data from secondary storage to
+RAM in the first place.
+#+END_NOTES
+
+** Different Learning Styles
+   - The bullet point style may be particularly challenging for this
+     presentation
+   - You may prefer [[file:texts/virtual-addressing.pdf][this 5-page introduction]]
+     - It provides an alternative view on
+       - Topics of Introduction and
+         Main Concepts
+       - Topics of section Paging
+     - After working through that text, you may want to jump directly
+       to the corresponding
+       JiTT assignment
+       to check your understanding
+       - Afterwards, come back here to look at the slides, in
+         particular work through section
+         Uses for Virtual Memory (not covered in the text)
+   - Besides, Chapter 6 of cite:Hai19 is about virtual memory
+
+** Table of Contents
+   :PROPERTIES:
+   :UNNUMBERED: notoc
+   :END:
+#+REVEAL_TOC: headlines 1
+
+* Main Concepts
+  :PROPERTIES:
+  :CUSTOM_ID: main-concepts
+  :END:
+
+** Modern Computers
+   - RAM is *byte*-addressed (1 byte = 8 bits)
+     - Each ~address~ selects a byte (not a word as in Hack)
+       - (Machine instructions typically operate on words (= multiple
+         bytes), though)
+   - *Physical* vs *virtual* addresses
+     - Physical: Addresses used on memory bus
+       - Hack ~address~
+     - Virtual: Addresses used by threads and CPU
+       - Do not exist in Hack
+
+** Virtual Addresses
+   :PROPERTIES:
+   :CUSTOM_ID: virtual-address
+   :END:
+   #+INDEX: Virtual addresses (Memory I)
+   - Additional layer of *abstraction* provided by OS
+     - Programmers do not need to worry about physical memory
+       locations at all
+     - Pieces of data (and instructions) are identified by virtual addresses
+       - At different points in time, the same piece of data
+         (identified by its virtual address) may reside at
+         different locations in RAM (identified by different physical
+         addresses) or may not be present in RAM at all
+   - OS keeps track of *(virtual) address spaces*:
+     What (virtual address) is located where (physical address)
+     - Supported by hardware, *memory management unit* (*MMU*)
+       - Translation of virtual into physical addresses (see next
+         slide)
+
+*** Memory Management Unit
+    :PROPERTIES:
+    :CUSTOM_ID: mmu
+    :END:
+    #+INDEX: Memory management unit (MMU) (Memory I)
+    {{{reveallicense("./figures/hail_f0604.pdf.meta","40vh")}}}
+#+BEGIN_NOTES
+When the CPU executes machine instructions, only virtual addresses
+occur in those instructions, which need to be translated into physical
+RAM addresses to be used on the address bus.  A piece of hardware
+called memory management unit (MMU) performs that translation, before
+resulting physical addresses are used on the memory’s address bus
+to access RAM contents, i.e., data.
+
+As explained in detail later on, the OS manages data structures called
+page tables to keep track of what virtual addresses correspond to what
+physical addresses, and the MMU uses those page tables during address
+translation.  Also, as discussed in the next presentation but not
+shown here, the MMU uses a special cache called translation lookaside
+buffer (TLB) to speed up address translation.
+#+END_NOTES
+** Processes
+   :PROPERTIES:
+   :CUSTOM_ID: processes
+   :END:
+   #+INDEX: Process!Process with virtual address space (Memory I)
+   - OS manages running programs via *processes*
+     - More details in [[file:Operating-Systems-Processes.org][upcoming presentation]]
+   - For now: *Process* ≈ group of threads that share a virtual
+     address space
+     #+ATTR_REVEAL: :frag (appear)
+     - Each process has its *own* address space
+       - Starting at virtual address 0, mapped
+         per process to RAM by the OS, e.g.:
+	 - Virtual address 0 of process P1 located at physical address 0
+	 - Virtual address 0 of process P2 located at physical address 16384
+	 - Virtual address 0 of process P3 not located in RAM at all
+       - Processes may *share* data (with OS permission), e.g.:
+	 - ~BoundedBuffer~ located at RAM address 42
+	 - Identified by virtual address 42 in P1, by 4138 in P3
+     - Address space of process is *shared by its threads*
+       - E.g., for all threads of P2, virtual address 0 is associated
+         with physical address 16384
+
+** Pages and Page Tables
+   :PROPERTIES:
+   :CUSTOM_ID: page-page-table
+   :END:
+   #+INDEX: Frame (Memory I)
+   #+INDEX: Page!Definition (Memory I)
+   #+INDEX: Page table!Approximate definition (Memory I)
+   - Mapping between virtual and physical addresses does *not* happen at
+     level of bytes
+     - Instead, larger *blocks* of memory, say 4 [[https://en.wikipedia.org/wiki/Binary_prefix#kibi][KiB]]
+       - Blocks of virtual memory are called *pages*
+       - Blocks of physical memory (RAM) are called *(page) frames*
+   #+ATTR_REVEAL: :frag appear
+   - OS manages a *page table* per process
+     - One entry per page
+       - In what frame is page located (if present in RAM)
+       - Additional information: Is page read-only, executable, or
+	 modified (from an on-disk version)?
+
+*** Page Fault Handler
+    :PROPERTIES:
+    :CUSTOM_ID: page-fault-handler
+    :END:
+    #+INDEX: Page!Page fault (Memory I)
+    #+INDEX: Page!Page fault handler (Memory I)
+    #+INDEX: Page!Page hit (Memory I)
+    #+INDEX: Page!Page miss (Memory I)
+    - Pages may or may not be present in RAM
+      - Access of virtual address whose page is in RAM is called
+        *page hit*
+	- (Access = CPU executes machine instruction referring to that
+          address)
+      - Otherwise, *page miss*
+    #+ATTR_REVEAL: :frag (appear)
+    - Upon page miss, a *page fault* is triggered
+      - Special type of [[file:Operating-Systems-Interrupts.org::#irq-idea][interrupt]]
+      - *Page fault handler* of OS responsible for disk transfers
+	and page table updates
+	- OS [[file:Operating-Systems-Scheduling.org::#thread-states][blocks]] corresponding thread and manages transfer of
+          page to RAM
+	- (Thread runnable after transfer complete)
+
+** Drawing for Page Tables
+   :PROPERTIES:
+   :CUSTOM_ID: drawing-page-table
+   :END:
+   #+INDEX: Page table!Drawing (Memory I)
+   {{{revealimg("./figures/pagetable.meta",t,"50vh")}}}
+
+* Uses for Virtual Memory
+  :PROPERTIES:
+  :CUSTOM_ID: vm-uses
+  :END:
+
+** Private Storage
+   - Each process has its own address space, *isolated* from others
+     #+ATTR_REVEAL: :frag (appear)
+     - *Autonomous use* of virtual addresses
+       - Recall: Virtual address 0 used differently in every process
+     - Underlying *data protected* from accidental and malicious
+       modifications by other processes
+       - OS allocates frames exclusively to processes (leading to
+         disjoint portions of RAM for different processes)
+       - Unless frames are explicitly shared between processes
+	 - Next slide
+   #+ATTR_REVEAL: :frag appear
+   - Processes may partition address space
+     - Read-only region holding machine instructions, called *text*
+     - Writable region(s) holding rest (data, stack, heap)
+
+** Controlled Sharing
+   :PROPERTIES:
+   :CUSTOM_ID: shared-memory
+   :END:
+   - OS may map limited portion of RAM into multiple address spaces
+     - Multiple page tables contain entries for the *same frames* then
+       - See ~smem~ demo later on
+   - Shared code
+     - If same program runs multiple times, processes can share text
+     - If multiple programs use same libraries (libXYZ.so under
+       GNU/Linux, DLLs under Windows), processes can share them
+
+*** Copy-On-Write Drawing
+    :PROPERTIES:
+    :CUSTOM_ID: drawing-cow
+    :END:
+    #+INDEX: Copy-on-write!Drawing (Memory I)
+    {{{revealimg("./figures/copyonwrite.meta",t,"50vh")}}}
+
+*** Copy-On-Write (COW)
+    :PROPERTIES:
+    :CUSTOM_ID: copy-on-write
+    :END:
+    #+INDEX: Copy-on-write!Definition (Memory I)
+    #+ATTR_REVEAL: :frag (appear)
+    - Technique to create a copy of data for second process
+      - Data may or may not be modified subsequently
+    - Pages *not* copied initially, but marked as *read-only* with
+      access by second process
+      - Entries in page tables of both processes point to original frames
+      - Fast, no data is copied
+    - If process tries to *write* read-only data, MMU triggers interrupt
+      - Handler of OS *copies* corresponding frames, which then
+        become writable
+	- *Copy* only takes place *on write*
+      - Afterwards, write operation on (now) writable data
+
+** Flexible Memory Allocation
+   - Allocation of RAM does not need to be contiguous
+     - Large portions of RAM can be allocated via individual frames
+       - Which may or may not be contiguous
+       - See next slide or big picture
+     - The virtual address space can be contiguous, though
+
+*** Non-Contiguous Allocation
+    {{{reveallicense("./figures/hail_f0609.pdf.meta","40vh")}}}
+
+# *** Excursion: Fragmentation
+#     - Fragmentation = situation where free regions of RAM cannot be used
+#       - *External fragmentation*: free regions arise over time which are
+# 	too small to be useful
+# 	- Cannot happen with paging
+# 	- (Only possible with memory allocation schemes, where units
+#           of different size are (de-) allocated)
+#       - *Internal fragmentation*: allocated regions remain (partially) unused
+# 	- Can happen with paging
+# 	- OS allocates entire frames
+# 	  - Even if process needs just a couple of bytes
+# 	  - “Free” portion of frame unusable for other processes
+#     - (Fragmentation on disk: data stored non-contiguously such that the
+#       disk’s head needs to move frequently)
+
+# ** Sparse Address Spaces
+#    - Consider some program with large, growing data structures
+#      - Process can allocate virtual address space for each data
+#        structure that is large enough for future growth (include gaps)
+#        - While only currently used part is kept in RAM
+#    - OS does not provide physical address mappings for virtual
+#      addresses in gaps
+
+** Persistence
+   :PROPERTIES:
+   :CUSTOM_ID: mapped-file
+   :END:
+   #+INDEX: Persistence (Memory I)
+   #+INDEX: Memory mapped file (Memory I)
+   - Data kept persistently in files on secondary storage
+   - When process opens file, file can be *mapped* into
+     virtual address space
+     #+ATTR_REVEAL: :frag appear 
+     - Initially without loading data into RAM
+       - See ~page 3~ in big picture
+     - Page accesses in that file trigger *page faults*
+       - Handled by OS by loading those pages into RAM
+	 - Marked read-only and *clean*
+     #+ATTR_REVEAL: :frag appear 
+     - Upon write, MMU triggers interrupt, OS makes page writable and
+       remembers it as *dirty* (changed from *clean*)
+       - Typically with MMU hardware support via *dirty bit* in page table
+       - Dirty = to be written to secondary storage at some point in time
+	 - After being written, marked as clean and read-only
+#+BEGIN_NOTES
+Typical OSs offer file systems for the persistent storage of data on
+disks, where persistent means that (in contrast to RAM) such data
+remains safely in place even if the machine is powered down.
+Different OSs offer different system calls for file access, and this
+slide focuses on a technique called memory-mapped files.  Here, the
+file is simply mapped into the virtual address space of the process
+containing the thread, which invokes the system call.  “Mapping” means
+that afterwards the file’s bytes are available starting at a virtual
+address returned by the system call.
+
+Initially, no data needs to be loaded into RAM at all.  If the thread
+now tries to access a byte belonging to the file, a page fault occurs,
+and the thread gets blocked.  The page fault handler then triggers the
+transfer of the corresponding block of disk data to RAM (using
+metadata about the file system for address calculations).  The
+completion of that transfer is indicated by an interrupt, in
+response to which the page table is updated and the corresponding page
+is marked as read-only and clean, where clean indicates that the page
+is identical to the copy stored on disk.  Also, the thread accessing
+the file is made runnable and can access its data.
+
+While read accesses just return the requested data, write accesses
+trigger another interrupt as the page is marked read-only.  Now, the
+interrupt handler marks the page as writable and dirty.  Being
+writable implies that further write accesses succeed without further
+interrupts, and being dirty indicates that the version in RAM now
+differs from the version on disk.  Thus, when a thread requests to
+write data back to the file, dirty pages need to be written to
+disk.  Afterwards, the file’s pages are marked as clean and read-only
+again.
+#+END_NOTES
+
+** Demand-Driven Program Loading
+   :PROPERTIES:
+   :CUSTOM_ID: demand-loading
+   :END:
+   #+INDEX: Demand loading (Memory I)
+   - Start of program is *special case* of previous slide
+     - Map executable file into virtual memory
+     - Jump to first instruction
+       - Page faults automatically trigger loading of necessary pages
+       - No need to load entire program upon start
+	 - Faster than loading everything at once
+	 - Reduced memory requirements
+
+*** Working Set
+    :PROPERTIES:
+    :CUSTOM_ID: working-set
+    :END:
+    #+INDEX: Working set (Memory I)
+    #+INDEX: Principle of locality (Memory I)
+    #+INDEX: Locality principle (Memory I)
+    #+ATTR_REVEAL: :frag (appear) 
+    - OS loads part of program into main memory
+      - *Resident set*: Pages currently in main memory
+      - At least current instruction (and required data) necessary in main memory
+    - *Principle of locality*
+      - Memory references typically close to each other
+      - Few pages sufficient for some interval
+    - *Working set*: Necessary pages for some interval
+      - Aim: Keep working set in resident set
+	- [[file:Operating-Systems-Memory-II.org::#replacement-policy][Replacement policies]] in next presentation
+#+BEGIN_NOTES
+As discussed so far, typically not all pages of a process are located
+in RAM.  Those that are located in RAM comprise the resident set.  For
+von Neumann machines at least the currently executing instruction and
+its required data need to be present in RAM, and demand-driven loading
+is a technique to provide that data on the fly.
+
+As data is transferred in pages, one can hope that a newly loaded page
+does not only contain one useful instruction or one useful byte of
+data but lots of them.  Indeed, if you think of a typical program it is
+reasonable to expect that the program counter is often just
+incremented or changed by small amounts, e.g., in case of sequential
+statements, loops, or local function calls.  Similarly, references to
+data also often touch neighboring locations in short sequence, e.g.,
+in case of arrays or objects.  This reasoning is known as principle of
+locality, which implies that frequently only few pages in RAM are
+sufficient to allow prolonged progress for a thread without page
+faults.
+
+Please take a moment to convince yourself that without the principle of
+locality caching, i.e., the transfer of some set of data from a large
+and slow storage area to a smaller and faster storage area, would not
+be effective; neither the form of caching seen here, where RAM serves
+as cache for disk data, nor CPU caches for RAM data.
+
+The so-called working set (for some given time interval) of a thread T
+is that set of pages which allows T to execute without page faults
+throughout the interval.  Clearly, once in a while new pages are added
+to the working set while other pages are removed since their contents
+are not necessary any longer.  Note that the working set is a hypothetical
+construct, whose precise shape and evolution is unknown to the OS.
+However, the goal of memory management is to manage the resident
+set in such a way that is contains the working set (and ideally not
+much else).  Page replacement policies, to be discussed in the
+next presentation, work towards that goal.
+#+END_NOTES
+
+* Paging
+  :PROPERTIES:
+  :CUSTOM_ID: paging
+  :END:
+
+** Major Ideas
+   :PROPERTIES:
+   :CUSTOM_ID: page-offset
+   :END:
+   #+INDEX: Paging (Memory I)
+   - Virtual address spaces split into *pages*, RAM into *frames*
+     #+ATTR_REVEAL: :frag (appear)
+     - Page is *unit of transfer* by OS
+       - Between RAM and secondary storage (e.g., disks)
+     - Each virtual ~address~ can be interpreted in two ways
+       1. Integer number (~address~ as binary number, as in Hack)
+       2. Hierarchical object consisting of page number and offset
+	  - *Page number*, determined by most significant bits of ~address~
+	  - *Offset*, remaining bits of ~address~ = byte number within its page
+	    - (Detailed example follows)
+   #+ATTR_REVEAL: :frag appear
+   - *Page tables* keep track of RAM locations for pages
+     - If CPU uses virtual address whose page is not present in RAM, the
+       Page fault handler takes over
+
+** Sample Memory Allocation
+   :PROPERTIES:
+   :CUSTOM_ID: fig-6.10
+   :END:
+   - Sample allocation of frames to some process
+     {{{reveallicense("./figures/hail_f0610.pdf.meta","50vh")}}}
+#+BEGIN_NOTES
+Several subsequent slides will refer to this example, which shows a main
+memory situation with just four frames of main memory.  Clearly, that
+is an unrealistically small example, but it is sufficient to
+demonstrate the main points.
+Here, a process with a virtual address space of 8 pages is shown, some
+of which are allocated to frames as indicated by arrows.  Note that
+neighboring  pages can (a) be mapped to frames in arbitrary order or
+(b) not be mapped to RAM at all.
+The Xs indicate that no frame is assigned to hold pages 2-5 or page 7.
+Frame 2 is unused.
+#+END_NOTES
+
+** Page Tables
+   :PROPERTIES:
+   :CUSTOM_ID: page-table-definition
+   :END:
+   #+INDEX: Page table!Definition (Memory I)
+   - Page Table = Data structure managed by OS
+     - *Per process*
+   - Table contains one entry per page of virtual address space
+     - Each entry contains
+       - Frame number for page in RAM (if present in RAM)
+       - Control bits (not standardized, e.g., valid, read-only,
+         dirty, executable)
+       - Note: Page tables do not contain page numbers
+         as they are implicitly given by row numbers (starting from 0)
+     - Note on following sample page table
+       - “0” as valid bit indicates that page is not present in RAM, so
+	 value under “Frame#” does not matter and is shown as “X”
+
+*** Sample Page Table
+    :PROPERTIES:
+    :CUSTOM_ID: sample-page-table
+    :END:
+    #+INDEX: Page table!Example (Memory I)
+    - Consider previously shown RAM allocation (Fig. 6.10)
+      {{{reveallicense("./figures/hail_f0610.pdf.meta","50vh")}}}
+      #+ATTR_REVEAL: :frag appear
+      - Page table for that situation (Fig. 6.11)
+        |-------+--------|
+        | Valid | Frame# |
+        |-------+--------|
+        | <l>   | <c>    |
+        | 1     | 1      |
+        | 1     | 0      |
+        | 0     | X      |
+        | 0     | X      |
+        | 0     | X      |
+        | 0     | X      |
+        | 1     | 3      |
+        | 0     | X      |
+        |-------+--------|
+
+*** Address Translation Example (1/3)
+    :PROPERTIES:
+    :CUSTOM_ID: ex-translation
+    :END:
+    #+INDEX: Address translation example (Memory I)
+    #+INDEX: Virtual address translation example (Memory I)
+    - Task: Translate virtual address to physical address
+      - Subtask: Translate bits for page number to bits for frame number
+    #+ATTR_REVEAL: :frag appear
+    - Suppose
+      - [[color:darkgreen][Pages]] and [[color:sienna][frames]] have a size of 1 KiB (= 1024 B)
+      - 15-bit addresses, as in Hack
+    #+ATTR_REVEAL: :frag appear
+    - Consequently
+      - Size of address space: 2^{15} B = 32 KiB
+      - 10 bits are used for offsets (as 2^{10} B = 1024 B)
+      - The remaining 5 bits enumerate 2^5 = 32 pages
+
+*** Address Translation Example (2/3)
+    - Hierarchical interpretation of 15-bit addresses
+      - Virtual address: [[color:darkgreen][5 bits for page number]] \nbsp
+        [[color:darkblue][10 bits for offset]]
+      - Physical address: [[color:sienna][5 bits for frame number]] \nbsp
+        [[color:darkblue][10 bits for offset]]
+    - Based on page table
+      - [[color:darkgreen][Page 0]] is located in [[color:sienna][frame 1]]
+    - [[color:darkgreen][Page 0]] contains virtual addresses
+      between 0 and 1023, [[color:sienna][frame 1]] physical
+      addresses between 1024 and 2047
+      - Consider virtual address 42
+	- 42 = [[color:darkgreen][00000]] [[color:darkblue][0000101010]]
+	  - [[color:darkgreen][Page number]] = [[color:darkgreen][00000]] = [[color:darkgreen][0]]
+	  - [[color:darkblue][Offset]] = [[color:darkblue][0000101010]] = [[color:darkblue][42]]
+	- 42 is located at physical address
+	  [[color:sienna][00001]] [[color:darkblue][0000101010]]
+	  = 1066 (= 1024 + 42)
+
+*** Address Translation Example (3/3)
+    - Based on page table
+      - [[color:darkgreen][Page 6]] is located in [[color:sienna][frame 3]]
+    - [[color:darkgreen][Page 6]] contains addresses
+      between 6*1024 = 6144 and 6*1024+1023 = 7167
+      - Consider virtual address 7042
+	- 7042 = [[color:darkgreen][00110]] [[color:darkblue][1110000010]]
+	  - [[color:darkgreen][Page number]] = [[color:darkgreen][00110]] = [[color:darkgreen][6]]
+	  - [[color:darkblue][Offset]] = [[color:darkblue][1110000010]] = [[color:darkblue][898]]
+	- In general, address translation exchanges
+          [[color:darkgreen][page number]] with
+          [[color:sienna][frame number]]
+	  - Here, [[color:darkgreen][6]] with [[color:sienna][3]]
+	- 7042 is located at physical address
+	  [[color:sienna][00011]] [[color:darkblue][1110000010]] =
+          3970 (= 3*1024 + 898)
+
+** Challenge: Page Table Sizes
+   :PROPERTIES:
+   :CUSTOM_ID: page-table-sizes
+   :END:
+   #+INDEX: Page table!Size (Memory I)
+   - E.g., 32-bit addresses with page size of 4 KiB (2^{12} B)
+     - Virtual address space consists of up to 2^{32} B = 4 GiB = 2^{20} pages
+       - Every page with entry in page table
+       - If 4 bytes per entry, then *4 MiB* (2^{22} B) per page table
+	 - Page table itself needs 2^{10} pages/frames! *Per process*!
+     - Much worse for 64-bit addresses
+   #+ATTR_REVEAL: :frag appear 
+   - Solutions to reduce amount of RAM for page tables
+     - Multilevel (or *hierarchical*)
+       page tables (2 or more levels)
+       - Tree-like structure, efficiently representing large unused areas
+       - Root, called *page directory*
+	 - 4 KiB with 2^{10} entries for page tables
+	 - Each entry represents 4 MiB of address space
+     - [[file:Operating-Systems-Memory-II.org::#inverted-page-tables][Inverted]]
+       page tables in next presentation
+#+BEGIN_NOTES
+While the sample pages tables shown so far may seem simple to manage,
+pages tables can be huge in practice.  As page tables are used to
+locate data in RAM, a naïve implementation might require the page
+tables themselves to be located in RAM in the first place.  Let’s see
+how large page tables might get.
+
+With 32-bit addresses, you see a calculation on this slide, showing
+that the page table for every process requires up to 4 MiB of RAM.
+Note that those 4 MiB are pure OS overhead, unusable for applications.
+So, after you booted your system half a GB of RAM may already be gone.
+
+Although this result is already pretty bad, for 64-bit systems the
+situation is much worse, even if current PC processors do not use all
+64 bits for addressing.  Suppose 48 bits are used for virtual
+addresses, again with 4 KiB pages.  Then 2^{36} pages may exist per
+process, now maybe with 8 B per entry in the page table, leading to
+2^{39} B = 2^9 GiB = 512 GiB.  In words: A single page table might
+occupy 512 GiB of RAM, quite likely more than you’ve got.
+
+Solutions to reduce the amount of RAM for page tables fall into two
+classes, namely multilevel page tables and inverted page tables.
+
+The key idea of multilevel page tables is that large portions of the
+theoretically possible virtual address space remain unused, and such
+unused portions do not need to be represented in the page table.  To
+efficiently represent smaller (used) and larger (unused) portions, the
+page table is represented and traversed as a tree-like structure with
+multiple levels.  The root of that tree-like structure is always
+located in RAM and is called page directory.  Each entry in that page
+directory represents a large portion of the address space, in case of
+32-bit addresses and two levels (as on subsequent slides) each entry
+represents 1024 pages with a total size of 4 MiB.  If such a 4 MiB
+region is not used at all, no data needs to be allocated in lower
+levels of the tree like structure.  Details are presented on
+subsequent slides.
+
+The key idea of inverted page tables is that RAM is limited and
+typically smaller than the virtual address space.  Instead of storing
+each allocated frame per page as discussed so far, with inverted page
+tables one entry exists per frame of RAM, recording what page of what
+process is currently located in that frame (if any).  Note that only
+one such inverted page table needs to be maintained, whereas page
+tables exist per process.  Also note that the number of entries of the
+inverted table is determined by the number of frames in RAM, instead
+of the (potentially much larger) number of pages of virtual address
+space.  You will see how address translation works with inverted page
+tables on later slides.  Right now, you may want to think about that
+yourself.  Starting again from a page number for which the
+corresponding frame number is necessary, how do you locate the
+appropriate entry in the inverted page table?  Clearly, a linear
+search is too slow.
+#+END_NOTES
+
+* Multilevel Page Tables
+  :PROPERTIES:
+  :CUSTOM_ID: multilevel-page-tables
+  :END:
+
+** Core Idea
+   - So far: Virtual address is hierarchical object consisting of page
+     number and offset
+   - Now multilevel page tables: Interpret page table as tree with
+     fixed depth, i.e., a fixed number of multiple levels
+     - (Visualizations on next two slides)
+     - For depth /n/, split page number into /n/ smaller parts
+       - Two-level: Split 20 bits into two parts with 10 bits each
+     - To traverse page table (tree), use one part on each level
+   - Aside: On 64-bit machines, Linux uses 5-level tables by default
+     [[https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=18ec1eaf58fbf2d9009a752a102a3d8e0d905a0f][since 2019-09-16]]
+
+** Two-Level Page Table
+   :PROPERTIES:
+   :CUSTOM_ID: fig-6.13
+   :END:
+   #+INDEX: Page table!Two-level (Memory I)
+   {{{reveallicense("./figures/hail_f0613_with_embedded_frame_nos.meta","50vh")}}}
+
+   #+ATTR_HTML: :class smaller
+   Note: /Page table/ contains entries of an ordinary page table.
+   Previously, valid bit and page frame numbers were shown in columns;
+   here, they are shown in rows.
+#+BEGIN_NOTES
+This figure shows a two-level page table as used in Intel’s 32-bit
+processor architecture IA-32.
+The entry point to this two-level page table is called page directory
+and can point to 1024 chunks of the page table, each of which can
+point to 1024 page frames.  Note that with 1024 entries of 4 B each, the
+page directory as well as chunks of the page table fit exactly into
+pages and frames of 4 KiB.
+The leftmost pointer leading from the leftmost chunk of the
+page table points to the frame holding page 0.
+Each entry can also be marked invalid, indicated by an X in this
+diagram.  For example, the second entry in the first chunk of the page
+table is invalid, showing that no frame holds page 1.  The same
+principle applies at the page directory level as well; in this example, no
+frames hold pages 1024-2047, so the second page directory entry is
+marked invalid.
+#+END_NOTES
+
+*** Two-Level Address Translation
+    :PROPERTIES:
+    :CUSTOM_ID: fig-6.14
+    :END:
+     {{{reveallicense("./figures/hail_f0614.pdf.meta","50vh")}}}
+#+BEGIN_NOTES
+This diagram shows the core of IA-32 paged address mapping.
+As explained previously, virtual addresses are understood as
+hierarchical objects which are divided into a 20-bit page number and
+12-bit offset within the page; the latter 12 bits are left unchanged
+by the translation process.
+Due to the two-level nature of the page table, the 20-bit page number
+is subdivided into a 10-bit page directory index and a 10-bit page
+table index.
+Each index is multiplied by 4, the number of bytes in each entry, and
+then added to the base physical address of the corresponding data
+structure, producing a physical memory address from which the entry is
+loaded.  The base address of the page directory comes from a special
+register, whereas the base address of the page table comes from the page
+directory entry.
+#+END_NOTES
+
+* Looking at Memory
+** Linux Kernel: ~/proc/<pid>/~
+   :PROPERTIES:
+   :CUSTOM_ID: proc
+   :END:
+   #+INDEX: /proc!Filesystem (Memory I)
+   - ~/proc~ is a pseudo-filesystem
+     - See http://man7.org/linux/man-pages/man5/proc.5.html
+       - (Specific to Linux kernel; incomplete or missing elsewhere)
+     - “Pseudo”: Look and feel of any other filesystem
+       - Sub-directories and files
+       - However, files are no “real” files but meta-data
+     - Interface to internal *kernel data structures*
+       - One sub-directory per process ID
+       - OS identifies process by integer number
+       - Here and elsewhere, ~<pid>~ is meant as *placeholder* for such a number
+
+*** Video about ~/proc~
+    :PROPERTIES:
+    :CUSTOM_ID: video-proc
+    :END:
+    @@html:<video controls width="1280" height="720" data-src="./videos/proc-smaps.mp4"></video>@@
+    #+begin_notes
+This video, “Looking at /proc” by
+[[https://lechten.gitlab.io/#me][Jens Lechtenbörger]],
+shares the presentation’s license terms, namely
+[[https://creativecommons.org/licenses/by-sa/4.0/][CC BY-SA 4.0]].
+
+The video shows some aspects of the ~/proc~ filesystem related to
+memory management, which are described in more abstract form on
+subsequent slides.
+    #+end_notes
+
+*** Drawing about ~/proc~
+    :PROPERTIES:
+    :CUSTOM_ID: drawing-proc
+    :END:
+    #+INDEX: /proc!Drawing (Memory I)
+    {{{revealimg("./figures/proc.meta",t,"50vh")}}}
+
+*** Drawing about ~man~ pages
+    {{{revealimg("./figures/man.meta",t,"50vh")}}}
+
+** Linux Kernel Memory Interface
+   :PROPERTIES:
+   :CUSTOM_ID: proc-memory
+   :END:
+   #+INDEX: /proc!Memory allocation (Memory I)
+   - Memory allocation (and much more) visible under ~/proc/<pid>~
+   - E.g.:
+     - ~/proc/<pid>/pagemap~: One 64-bit value per virtual page
+       - Mapping to RAM or swap area
+     - ~/proc/<pid>/maps~: Mapped memory regions
+     - ~/proc/<pid>/smaps~: Memory usage for mapped regions
+   - Notice: Memory regions include *shared* libraries that are used by
+     lots of processes
+
+** GNU/Linux Reporting: ~smem~
+   :PROPERTIES:
+   :CUSTOM_ID: smem
+   :END:
+   #+INDEX: GNU/Linux!Tools!smem (Memory I)
+   - User space tool to read ~smaps~ files: ~smem~
+     - See https://linoxide.com/tools/memory-usage-reporting-smem/
+   - Terminology
+     - *Virtual set size* (VSS): Size of virtual address space
+     - *Resident set size* (RSS): Allocated main memory
+       - Standard notion, yet overestimates memory usage as lots of
+         memory is shared between processes
+	 - Shared memory is added to the RSS of every sharing process
+     - *Unique set size* (USS): memory allocated exclusively to process
+       - That much would be returned upon process’ termination
+     - *Proportional set size* (PSS): USS plus “fair share” of shared pages
+       - If page shared by 5 processes, each gets a fifth of a page
+         added to its PSS
+
+*** Sample ~smem~ Output
+#+BEGIN_SRC bash
+$ smem -c "pid command uss pss rss vss" -P "bash|xinit|emacs"
+  PID Command                          USS      PSS      RSS      VSS
+  765 /usr/bin/xinit /etc/X11/Xse      220      285     2084    15952
+ 1390 /bin/bash -c libreoffice5.3      240      510     2936    13188
+  826 /bin/bash /usr/bin/qubes-se      256      524     3008    13204
+  750 -su -c /usr/bin/xinit /etc/      316      587     3368    21636
+ 1251 bash                            4864     5136     7900    26024
+ 2288 /usr/bin/python /usr/bin/sm     5272     6035     9432    24688
+ 1145 emacs                          90876    93224   106568   662768
+#+END_SRC
+
+*** Sample ~smem~ Graph
+    {{{revealimg("./figures/smem.meta","~smem --bar pid -c \"uss pss rss\" -P \"bash|xinit\"~","70vh")}}}
+
+* Conclusions
+** Summary
+   - Virtual memory provides abstraction over RAM and secondary storage
+     - Paging as fundamental mechanism
+       - Isolation of processes
+       - Stable virtual addresses, translated at runtime
+   - Page tables managed by OS
+     - Address translation at runtime
+     - Hardware support via MMU with TLB
+     - Multilevel page tables represent unallocated regions in compact form
+
+#+INCLUDE: "postamble.org"

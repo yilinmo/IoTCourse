@@ -1,0 +1,11 @@
+; Note that the corresponding svg figure contains meta data.
+((filename . "figures/raw/3-threads-parallel.png")
+ (licenseurl . "https://creativecommons.org/publicdomain/zero/1.0/")
+ (licensetext . "CC0 1.0")
+ (cc:attributionName . "Jens Lechtenbörger")
+ (cc:attributionURL . "https://lechten.gitlab.io/#me")
+ (dc:source . "https://gitlab.com/oer/figures/blob/master/OS/3-threads-parallel.svg")
+ (sourcetext . "GitLab")
+ (dc:title . "Parallel threads")
+ (texwidth . 0.5)
+)

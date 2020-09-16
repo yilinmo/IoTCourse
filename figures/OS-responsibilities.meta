@@ -1,0 +1,7 @@
+((filename . "figures/raw/os-responsibilities.svg")
+ (copyright . "© 2016 Julia Evans, all rights reserved")
+ (permit . "Displayed here with personal permission.")
+ (dc:source . "https://drawings.jvns.ca/os-responsibilities/")
+ (sourcetext . "julia's drawings")
+ (dc:title . "What does your OS even do?")
+)
