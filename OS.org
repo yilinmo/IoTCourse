@@ -14,17 +14,233 @@
     :END:
     {{{revealimg("./figures/OS-responsibilities.meta",t,"50vh")}}}
 
-*** Definition of Operating System
+** Learning Objectives
+   :PROPERTIES:
+   :CUSTOM_ID: learning-objectives-os
+   :END:
+   - Explain notion of Operating System and its goals
+     - Explain notion of kernel with system call API
+       - (More details in [[file:Operating-Systems-Interrupts.org][next presentation]])
+   - Explain notions and relationships of process, thread, multitasking
+#+INCLUDE: "~/.emacs.d/oer-reveal-org/learning-objectives-notes.org"
+
+
+
+** Today’s Core Questions
+   - What exactly are threads?
+     - Why and for what are they used?
+     - How can I inspect them?
+     - How does switching between threads work?
+
+** Learning Objectives
+   - Explain thread concept, thread switching, and multitasking
+     - Including reasons for threads
+       - With learning objectives for [[file:Operating-Systems-Introduction.org::#battlethreads][BattleThreads]],
+         rephrased from cite:HRB+03
+	 - Explain distinctions between threads and processes
+	 - Explain advantages of a multithreaded organization in
+	   structuring applications and in performance
+     - Including states (after upcoming presentation)
+   - Discuss differences between and use cases for blocking and non-blocking I/O
+
+
+*** Previously on OS …
+    #+ATTR_REVEAL: :frag (appear)
+    - What is a thread?
+      {{{revealimg("./figures/threads.meta",t,"40vh","figure fragment appear")}}}
+    - What are [[file:Operating-Systems-Introduction.org::#multitasking][multitasking and scheduling]]?
+
+
+
+
+*** CPU Scheduling
     :PROPERTIES:
-    :CUSTOM_ID: os-definition
+    :CUSTOM_ID: drawing-scheduling
     :END:
-    - Definition from cite:Hai19: *Software*
-      - that *uses hardware* resources of a computer system
-      - to provide support for the *execution of other software*.
+    #+INDEX: Scheduling!Drawing (Scheduling)
+    {{{revealimg("./figures/scheduling.meta",t,"50vh")}}}
 
-    {{{reveallicense("./figures/hail_f0101.pdf.meta","35vh")}}}
+** Today’s Core Questions
+   - How does the OS manage the shared resource CPU?  What goals are pursued?
+   - How does the OS distinguish threads that could run on the CPU
+     from those that cannot (i.e., that are blocked)?
+   - How does the OS schedule threads for execution?
 
+** Learning Objectives
+   - Explain thread concept (continued)
+     - Including states and priorities
+   - Explain scheduling mechanisms and their goals
+   - Apply scheduling algorithms
+     - FCFS, Round Robin
+
+
+** Today’s Core Questions
+   - What can go wrong with concurrent computations?
+     - What is a race condition?
+   - How to avoid subtle programming bugs related to timing issues?
+     - What mechanisms does the OS provide to help?
+
+** Learning Objectives
+   - Recognize and explain race conditions
+     - (Playing [[https://deadlockempire.github.io/][Deadlock Empire]] helps)
+   - Explain notions of critical section and mutual exclusion
+   - Use mutexes and semaphores (and monitors after upcoming lectures)
+     to enforce mutual exclusion
+
+** Today’s Core Questions
+   - What is virtual memory?
+     - How can RAM be (de-) allocated flexibly under multitasking?
+     - How does the OS keep track for each process what data resides
+       where in RAM?
+
+** Learning Objectives
+   - Explain mechanisms and uses for virtual memory
+     - Including principle of locality and page fault handling
+     - Including access of data on disk
+   - Explain and perform address translation with page tables
+
+** Previously on OS …
+*** Retrieval Practice
+    - How are
+      [[file:Operating-Systems-Introduction.org::#computations-processes-threads][processes and threads]]
+      related?
+    - Why were threads in
+      [[file:Operating-Systems-Introduction.org::#battlethreads][BattleThreads]]
+      more successful?
+    - What [[file:Operating-Systems-Overview.org::#virtual-address-space][layer of abstraction]]
+      do OSs use to manage RAM?
+    - What happens when an [[file:Operating-Systems-Interrupts.org::#irq-idea][interrupt]]
+      is triggered (e.g., a [[file:Operating-Systems-Interrupts.org::#terminology][page fault]])?
+
+** Big Picture
+   :PROPERTIES:
+   :CUSTOM_ID: big-picture
+   :END:
+   #+INDEX: Virtual memory big picture (Memory I)
+   {{{reveallicense("./figures/vm.meta","50vh",nil,none)}}}
+#+BEGIN_NOTES
+The key idea of virtual memory management is to provide a layer of
+abstraction that hides allocation of the shared hardware resource RAM
+to individual processes.  Thus, processes (and their threads) do not
+need to care or know whether or where their data structures reside in RAM.
+
+Physical memory consists of RAM and secondary storage devices such as
+SSDs or HDDs.  Typically, the OS uses dedicated portions of secondary
+storage as so-called swap or paging areas to enlarge physical memory
+beyond the size of RAM.  Again, processes need neither care nor know
+about this fact, which is handled by OS in the background.
+
+Each process has its own individual virtual address space, starting at
+address 0, consisting of equal-sized blocks called pages (e.g., 4 KiB
+in size each).  Each of those pages may or may not be present in RAM.
+RAM in turn is split into frames (of the size of pages).  The OS
+loads pages into frames and keeps track what pages of virtual address
+spaces are located where in physical memory.
+
+Here you see a process with a virtual address space consisting of 10
+pages (numbered 0 to 9, implying that the virtual address space has a
+size of 10*4 KiB = 40 KiB), while RAM consists of 8 frames (numbered 0 to
+7, implying that RAM has a size of 8*4 KiB = 32 KiB).
+For example, page 0 is located in frame 6, while page 3 is located on
+disk, and frames 2, 3, and 7 are not allocated to the process under
+consideration.
+
+Notice that neighboring pages in the virtual address space may be
+allocated in arbitrary order in physical memory.  As processes and
+threads just use virtual addresses, they do not need to know about
+such details of physical memory.
+
+Code of threads just uses virtual addresses within machine
+instructions, and it is the OS’s task to locate the corresponding
+physical addresses in RAM or to bring data from secondary storage to
+RAM in the first place.
+#+END_NOTES
+
+** Different Learning Styles
+   - The bullet point style may be particularly challenging for this
+     presentation
+   - You may prefer [[file:texts/virtual-addressing.pdf][this 5-page introduction]]
+     - It provides an alternative view on
+       - Topics of Introduction and
+         Main Concepts
+       - Topics of section Paging
+     - After working through that text, you may want to jump directly
+       to the corresponding
+       JiTT assignment
+       to check your understanding
+       - Afterwards, come back here to look at the slides, in
+         particular work through section
+         Uses for Virtual Memory (not covered in the text)
+   - Besides, Chapter 6 of cite:Hai19 is about virtual memory
+
+** Table of Contents
+   :PROPERTIES:
+   :UNNUMBERED: notoc
+   :END:
+#+REVEAL_TOC: headlines 1
+
+* Operating Systems
+** TODO Sample Modern Operating Systems
+   :PROPERTIES:
+   :CUSTOM_ID: modern-oss
+   :END:
+   #+INDEX: Operating system!Examples (Introduction)
+   - Different systems for different scenarios
+     - Mainframes
+       - [[https://en.wikipedia.org/wiki/BS2000][BS2000/OSD]],
+         [[https://en.wikipedia.org/wiki/General_Comprehensive_Operating_System][GCOS]],
+         [[https://en.wikipedia.org/wiki/Z/OS][z/OS]]
+     - PCs
+       - [[https://en.wikipedia.org/wiki/MS-DOS][MS-DOS]],
+         [[https://en.wikipedia.org/wiki/GNU%2FLinux_naming_controversy][GNU/Linux]],
+         [[https://en.wikipedia.org/wiki/MacOS][MacOS]],
+         [[https://www.redox-os.org][Redox]],
+         [[https://en.wikipedia.org/wiki/Microsoft_Windows][Windows]]
+     - Mobile devices
+       - Variants of other OSs
+       - Separate developments, e.g.,
+         BlackBerry
+         ([[https://en.wikipedia.org/wiki/BlackBerry_10][BlackBerry 10]]
+         based on QNX, abandoned),
+	 [[https://en.wikipedia.org/wiki/Google_Fuchsia][Google Fuchsia]],
+         [[https://en.wikipedia.org/wiki/Symbian][Symbian]] (Nokia, most popular smartphone OS until
+         2010, now replaced)
+     - Gaming devices
+     - Real-time OS
+       - Embedded systems
+       - QNX,
+         [[https://en.wikipedia.org/wiki/VxWorks][VxWorks]]
+#+BEGIN_NOTES
+There is a vast variety of OSs for different devices and usage
+scenarios, of which this slide shows a selection.
+
+The goal of the OS sessions is not to turn you into an expert for any
+specific OS, but to teach you major concepts and techniques that are shared by
+most modern OSs.  As [[file:Operating-Systems-Motivation.org][explained previously]]
+my hope is that you can apply your knowledge on the one hand when
+designing, analyzing, or implementing information systems and on the
+other when taking control of your own devices.
+
+Based on my personal beliefs, I will not teach you anything about
+non-free OSs (except maybe first steps to get away from them).  In
+particular, examples shown in presentations and in class will be based
+on the [[file:Operating-Systems-Motivation.org::#free-software][free]] OS
+[[file:Operating-Systems-Motivation.org::#gnu-linux][GNU/Linux]].  As GNU/Linux is
+free, you can experiment with it at any level of detail yourself.
+#+END_NOTES
+
+** Definition of Operating System
+   :PROPERTIES:
+   :CUSTOM_ID: os-definition
+   :END:
+   #+INDEX: Operating system!Definition (Introduction)
+   - Definition from cite:Hai19: *Software*
+     - that *uses hardware* resources of a computer system
+     - to provide support for the *execution of other software*.
+
+   {{{reveallicense("./figures/hail_f0101.pdf.meta","35vh")}}}
    #+begin_notes
+   
 Although the Hack computer does not have an OS, it
 will help to recall briefly how you interact with that machine.
 On Hack, you are able to run a single program, where you access
@@ -109,86 +325,8 @@ To sum up, this figure visualizes
 
 Note that some parts of this figure are hyperlinked to other
 presentations, which the mouse pointer should indicate.
-   #+end_notes
-
-   
 
 
-* Introduction
-** Learning Objectives
-   :PROPERTIES:
-   :CUSTOM_ID: learning-objectives-os
-   :END:
-   - Explain notion of Operating System and its goals
-     - Explain notion of kernel with system call API
-       - (More details in [[file:Operating-Systems-Interrupts.org][next presentation]])
-   - Explain notions and relationships of process, thread, multitasking
-#+INCLUDE: "~/.emacs.d/oer-reveal-org/learning-objectives-notes.org"
-
-*** OS Responsibilities
-    {{{revealimg("./figures/OS-responsibilities.meta",t,"50vh")}}}
-
-* Operating Systems
-** Sample Modern Operating Systems
-   :PROPERTIES:
-   :CUSTOM_ID: modern-oss
-   :END:
-   #+INDEX: Operating system!Examples (Introduction)
-   - Different systems for different scenarios
-     - Mainframes
-       - [[https://en.wikipedia.org/wiki/BS2000][BS2000/OSD]],
-         [[https://en.wikipedia.org/wiki/General_Comprehensive_Operating_System][GCOS]],
-         [[https://en.wikipedia.org/wiki/Z/OS][z/OS]]
-     - PCs
-       - [[https://en.wikipedia.org/wiki/MS-DOS][MS-DOS]],
-         [[https://en.wikipedia.org/wiki/GNU%2FLinux_naming_controversy][GNU/Linux]],
-         [[https://en.wikipedia.org/wiki/MacOS][MacOS]],
-         [[https://www.redox-os.org][Redox]],
-         [[https://en.wikipedia.org/wiki/Microsoft_Windows][Windows]]
-     - Mobile devices
-       - Variants of other OSs
-       - Separate developments, e.g.,
-         BlackBerry
-         ([[https://en.wikipedia.org/wiki/BlackBerry_10][BlackBerry 10]]
-         based on QNX, abandoned),
-	 [[https://en.wikipedia.org/wiki/Google_Fuchsia][Google Fuchsia]],
-         [[https://en.wikipedia.org/wiki/Symbian][Symbian]] (Nokia, most popular smartphone OS until
-         2010, now replaced)
-     - Gaming devices
-     - Real-time OS
-       - Embedded systems
-       - QNX,
-         [[https://en.wikipedia.org/wiki/VxWorks][VxWorks]]
-#+BEGIN_NOTES
-There is a vast variety of OSs for different devices and usage
-scenarios, of which this slide shows a selection.
-
-The goal of the OS sessions is not to turn you into an expert for any
-specific OS, but to teach you major concepts and techniques that are shared by
-most modern OSs.  As [[file:Operating-Systems-Motivation.org][explained previously]]
-my hope is that you can apply your knowledge on the one hand when
-designing, analyzing, or implementing information systems and on the
-other when taking control of your own devices.
-
-Based on my personal beliefs, I will not teach you anything about
-non-free OSs (except maybe first steps to get away from them).  In
-particular, examples shown in presentations and in class will be based
-on the [[file:Operating-Systems-Motivation.org::#free-software][free]] OS
-[[file:Operating-Systems-Motivation.org::#gnu-linux][GNU/Linux]].  As GNU/Linux is
-free, you can experiment with it at any level of detail yourself.
-#+END_NOTES
-
-** Definition of Operating System
-   :PROPERTIES:
-   :CUSTOM_ID: os-definition
-   :END:
-   #+INDEX: Operating system!Definition (Introduction)
-   - Definition from cite:Hai19: *Software*
-     - that *uses hardware* resources of a computer system
-     - to provide support for the *execution of other software*.
-
-   {{{reveallicense("./figures/hail_f0101.pdf.meta","35vh")}}}
-   #+begin_notes
 Part (a) of the figure shows the situation of a computer without an OS.
 Here, applications (and programmers) need to interact with hardware
 directly at a low level of abstraction.  This is what you did on
@@ -318,7 +456,6 @@ approaches.
       - Code and data of kernel typically main memory resident
       - Kernel functionality runs in kernel mode of CPU, reacts to
         system calls and interrupts
-	- Details in [[file:Operating-Systems-Interrupts.org][next presentation]]
       - Variants (previous slide)
 	- Monolithic (“large,” all OS related services)
 	- Micro kernel (“small,” only necessary services)
@@ -339,6 +476,8 @@ approaches.
       incompatible APIs)
       - With different implementations
       - With different calling conventions
+
+*** TODO POSIX
 
 * Multitasking
 
@@ -395,55 +534,13 @@ approaches.
     #+INDEX: Thread!Drawing (Introduction)
     {{{revealimg("./figures/threads.meta",t,"50vh")}}}
 
-* Conclusions
-** Summary
-   - OS is Software
-     - that *uses hardware* resources of a computer system
-     - to provide support for the *execution of other software*.
-       - Computations are performed by threads.
-       - Threads are grouped into processes.
-   - OS kernel
-     - provides interface for applications and
-     - manages resources.
-
-* Introduction
-
-** Today’s Core Questions
-   - What exactly are threads?
-     - Why and for what are they used?
-     - How can I inspect them?
-     - How are they created in Java?
-     - What impact does blocking or non-blocking I/O have on the use
-       of threads?
-     - How does switching between threads work?
-
-** Learning Objectives
-   - Explain thread concept, thread switching, and multitasking
-     - Including reasons for threads
-       - With learning objectives for [[file:Operating-Systems-Introduction.org::#battlethreads][BattleThreads]],
-         rephrased from cite:HRB+03
-	 - Explain distinctions between threads and processes
-	 - Explain advantages of a multithreaded organization in
-	   structuring applications and in performance
-     - Including states (after upcoming presentation)
-   - Inspect threads on your system
-   - Create threads in Java
-   - Discuss differences between and use cases for blocking and
-     non-blocking I/O
-
-
-*** Previously on OS …
-    #+ATTR_REVEAL: :frag (appear)
-    - What is a thread?
-      {{{revealimg("./figures/threads.meta",t,"40vh","figure fragment appear")}}}
-    - What are [[file:Operating-Systems-Introduction.org::#multitasking][multitasking and scheduling]]?
-
 * Threads
 ** Thread Terminology
    :PROPERTIES:
    :CUSTOM_ID: thread-terminology
    :END:
-   - concurrency
+   - Parallelism 
+   - Concurrency
    - Thread preemption
    - I/O bound vs CPU bound threads
 
@@ -460,7 +557,7 @@ approaches.
     - Note
       - Processors contain more and more cores
       - Individual cores do not become much faster any longer
-	- Recall CS part about [[https://en.wikipedia.org/wiki/Moore%27s_law][Moore’s law]]
+	- [[https://en.wikipedia.org/wiki/Moore%27s_law][Moore’s law]] is slowing down
       - Consequence: Need parallel programming to take advantage of
 	current hardware
 
@@ -497,9 +594,6 @@ approaches.
       - Typical technique in modern OSs
 	- Run lots of threads for brief intervals per second; creates
           illusion of parallel executions, even on single-core CPU
-    - Later slides: Cooperative vs
-      preemptive multitasking
-    - Upcoming presentation: [[file:Operating-Systems-Scheduling.org][Thread scheduling]]
 
 *** Thread Classification
     :PROPERTIES:
@@ -510,32 +604,27 @@ approaches.
 	requests
       - Run frequently by OS, but only for short periods of time
 	- Until next I/O operation
-	- E.g., virus scanner
+	- E.g., reading sensors, transmitting data 
     - *CPU bound*
       - Threads spending most time executing code
       - Run for longer periods of time
 	- Until preempted by scheduler
-	- E.g., graph rendering
+	- E.g., video compression
 
-* Reasons for Threads
-** Main Reasons
+** Main Reasons for Threads
    :PROPERTIES:
    :CUSTOM_ID: thread-reasons
    :END:
    - *Resource utilization*
      - Keep most of the hardware resources busy most of the time, e.g.:
-       - While one thread is waiting for external event (e.g., disk
-         or network I/O), allow other threads to continue
-	 - Next slide
+       - While one thread is waiting for external event (e.g., waiting for sensor reading/transmission to finish), allow other threads to continue
        - Keep multiple cores busy
 	 - E.g., OS housekeeping such as zeroing of memory on second core
    - *Responsiveness*
      - Use separate threads to react quickly to external events
-       - Think of game AI vs GUI
-       - Other example on later slide: Web server
    - More *modular design*
 
-** Interleaved Execution Example
+** TODO Interleaved Execution Example
    :PROPERTIES:
    :CUSTOM_ID: interleaved
    :END:
@@ -567,8 +656,6 @@ time of less than 2h.  Of course, both threads could also finish at
 different points in time (but earlier than 2h).
 #+END_NOTES
 
-
-* Thread Switching
 ** Thread Switching
    :PROPERTIES:
    :CUSTOM_ID: thread-switching
@@ -576,12 +663,11 @@ different points in time (but earlier than 2h).
    #+INDEX: Thread!Switching (Threads)
    #+INDEX: Context switch (Threads)
    - With multiple threads, OS needs to decide which to execute when
-     → Scheduling ([[file:Operating-Systems-Scheduling.org][later lecture]])
+     → Scheduling 
      - (Similar to machine scheduling for industrial production, which
        you may know from operations management)
      - [[file:Operating-Systems-Introduction.org::#multitasking][Recall multitasking]]
-       - OS may use time-slicing to schedule threads for short
-         intervals, illusion of parallelism on single CPU core
+       - OS may use time-slicing to schedule threads for short intervals, illusion of parallelism on single CPU core
    - After that decision, a *context switch* (thread switch) takes place
      - Remove thread A from CPU
        - *Remember A's state* (instruction pointer/program counter,
@@ -589,23 +675,11 @@ different points in time (but earlier than 2h).
      - *Dispatch* thread B to CPU
        - *Restore B's state*
    #+begin_notes
-Recall how code is executed on the CPU (e.g., with Hack).  A special
-register, the program counter, specifies what instruction to execute
-next, and instructions may modify CPU registers.  You may think of one
-assembly language program as being executed in one thread.
+Recall how code is executed on the CPU (e.g., with Hack).  A special register, the program counter, specifies what instruction to execute next, and instructions may modify CPU registers.  You may think of one assembly language program as being executed in one thread.
 
-Recall that with
-[[file:Operating-Systems-Introduction.org::#multitasking][multitasking]],
-the OS manages multiple threads and schedules them for execution on
-CPU cores, usually with time-slicing.
+Recall that with [[file:Operating-Systems-Introduction.org::#multitasking][multitasking]], the OS manages multiple threads and schedules them for execution on CPU cores, usually with time-slicing.
 
-If the time slice for thread A ends, A is usually in the middle of
-some computation.  The state of that computation is defined by the
-current value of the program counter, by values stored in registers,
-and other information.  To resume this computation later on, the OS
-needs to save the state of thread A somewhere, before another thread B
-can be executed.  Similarly, thread B may be in the middle of its own
-computation, whose state was saved previously by the OS.
+If the time slice for thread A ends, A is usually in the middle of some computation.  The state of that computation is defined by the current value of the program counter, by values stored in registers, and other information.  To resume this computation later on, the OS needs to save the state of thread A somewhere, before another thread B can be executed.  Similarly, thread B may be in the middle of its own computation, whose state was saved previously by the OS.
 
 The switch from thread A via the OS to thread B with saving of A’s and
 restoring of B’s state is called a /context switch/.  Subsequent
@@ -686,7 +760,6 @@ slides provide more details how such context switches happen.
      - OS defines *time slice* (*quantum*), e.g., 30ms
      - Interrupt fires every 30ms
        - Interrupt handler invokes OS scheduler to determine next thread
-	 - [[file:Operating-Systems-Scheduling.org][Upcoming presentation]]
 
 ** Multitasking Overhead
    :PROPERTIES:
@@ -703,42 +776,6 @@ slides provide more details how such context switches happen.
 	 - Necessary data needs to be fetched from RAM
        - Accessing data in RAM takes hundreds of clock cycles
 	 - See [[https://stackoverflow.com/questions/4087280/approximate-cost-to-access-various-caches-and-main-memory][estimates on Stack Overflow]]
-
-
-* Conclusions
-** Summary
-   - Threads represent individual instruction execution sequences
-   - Multithreading improves
-     - Resource utilization
-     - Responsiveness
-     - Modular design in presence of concurrency
-   - Preemptive multithreading with housekeeping by OS
-     - Thread switching with overhead
-   - Design choices: I/O blocking or not, servers with multiple
-     threads or not
-
-
-* Introduction
-
-*** CPU Scheduling
-    :PROPERTIES:
-    :CUSTOM_ID: drawing-scheduling
-    :END:
-    #+INDEX: Scheduling!Drawing (Scheduling)
-    {{{revealimg("./figures/scheduling.meta",t,"50vh")}}}
-
-** Today’s Core Questions
-   - How does the OS manage the shared resource CPU?  What goals are pursued?
-   - How does the OS distinguish threads that could run on the CPU
-     from those that cannot (i.e., that are blocked)?
-   - How does the OS schedule threads for execution?
-
-** Learning Objectives
-   - Explain thread concept (continued)
-     - Including states and priorities
-   - Explain scheduling mechanisms and their goals
-   - Apply scheduling algorithms
-     - FCFS, Round Robin
 
 * Scheduling
 ** CPU Scheduling
@@ -764,28 +801,13 @@ slides provide more details how such context switches happen.
    - (Similar decisions take place in industrial production, which you may know from
      operations management)
    #+begin_notes
-Scheduling is the planning of resource allocations.  Here, we just
-consider the allocation of the resource CPU among multiple threads.
+Scheduling is the planning of resource allocations.  Here, we just consider the allocation of the resource CPU among multiple threads.
 
-Concerning wording, the planning itself is called *scheduling*, while
-the allocation is called *dispatching*.  Thus, after making a scheduling
-decision, the OS dispatches one thread to run on the CPU.
+Concerning wording, the planning itself is called *scheduling*, while the allocation is called *dispatching*.  Thus, after making a scheduling decision, the OS dispatches one thread to run on the CPU.
 
-Two major scheduling variants are non-preemptive and preemptive ones.
-With non-preemptive scheduling, the OS allows the currently executing
-thread to continue as long as it wants.  The bullet point names some
-situations when a thread might stop, which is when the next scheduling
-decision takes place.
+Two major scheduling variants are non-preemptive and preemptive ones. With non-preemptive scheduling, the OS allows the currently executing thread to continue as long as it wants.  The bullet point names some situations when a thread might stop, which is when the next scheduling decision takes place.
 
-With preemptive scheduling, the OS may pause, or preempt, a thread in
-the middle of its execution although it could continue with more
-useful work on the CPU.  Here, the OS uses a timer to define the
-length of some time slice, for which the dispatched thread is allowed
-to run at most.  If the thread executes a blocking system call or
-terminates before the timer runs out, the OS cancels the timer and
-makes the next scheduling decision.  When the timer runs out, it
-triggers an interrupt, causing the interrupt handler to run on the CPU
-for the next scheduling decision.
+With preemptive scheduling, the OS may pause, or preempt, a thread in the middle of its execution although it could continue with more useful work on the CPU.  Here, the OS uses a timer to define the length of some time slice, for which the dispatched thread is allowed to run at most.  If the thread executes a blocking system call or terminates before the timer runs out, the OS cancels the timer and makes the next scheduling decision.  When the timer runs out, it triggers an interrupt, causing the interrupt handler to run on the CPU for the next scheduling decision.
    #+end_notes
 
 ** Scheduling Goals
@@ -846,31 +868,14 @@ for the next scheduling decision.
    #+INDEX: Thread states!Transitions (Scheduling)
    {{{revealimg("./figures/hail_f0303.pdf.meta",t,"50vh")}}}
 #+BEGIN_NOTES
-This diagram shows typical state transitions caused by actions of
-threads, decisions of the OS, and external I/O events.  State changes
-are always managed by the OS.
+This diagram shows typical state transitions caused by actions of threads, decisions of the OS, and external I/O events.  State changes are always managed by the OS.
 
-Newly created threads, such as the ones you created in Java, are Runnable.
-When the CPU is idle, the OS’ scheduler executes a selection algorithm
-among the Runnable threads and dispatches one to run on the CPU.  When
-that thread yields or is preempted, the OS remembers that thread as
-Runnable.
+Newly created threads, such as the ones you created in Java, are Runnable. When the CPU is idle, the OS’ scheduler executes a selection algorithm among the Runnable threads and dispatches one to run on the CPU.  When that thread yields or is preempted, the OS remembers that thread as Runnable.
 
-If the thread invokes a blocking system call, the OS changes its
-state to Waiting.  Once the event for which the thread waits has
-happened (e.g., a key pressed or some data has been transferred from
-disk to RAM), the OS changes the state from Waiting to Runnable.
-At some later point in time, that thread may be selected by the
-scheduler to run on the CPU again.
+If the thread invokes a blocking system call, the OS changes its state to Waiting.  Once the event for which the thread waits has happened (e.g., a key pressed or some data has been transferred from disk to RAM), the OS changes the state from Waiting to Runnable. At some later point in time, that thread may be selected by the scheduler to run on the CPU again.
 
-In addition, an outgoing arc Termination is shown from state Running,
-which indicates that a thread has completed its computations (e.g.,
-the main function in Java ends).  Actually, threads may also be
-terminated in states Runnable and Waiting, which is not shown here,
-but which can happen if a thread is killed (e.g., you end a program or
-shut down the machine).
+In addition, an outgoing arc Termination is shown from state Running, which indicates that a thread has completed its computations (e.g., the main function in Java ends).  Actually, threads may also be terminated in states Runnable and Waiting, which is not shown here, but which can happen if a thread is killed (e.g., you end a program or shut down the machine).
 #+END_NOTES
-
 
 * Scheduling Goals
 ** Goal Overview
@@ -1150,30 +1155,6 @@ their relative urgency or importance.
        - Until preempted or time slice runs out
      - (Some details in cite:Hai19)
 
-* Conclusions
-** Summary
-   - OS performs scheduling for shared resources
-     - Focus here: CPU scheduling
-     - Subject to conflicting goals
-   - CPU scheduling based on thread states and priorities
-     - Fixed vs dynamic priorities vs proportional share
-     - CFS as example for proportional share scheduling
-
-* Introduction
-
-** Today’s Core Questions
-   - What can go wrong with concurrent computations?
-     - What is a race condition?
-   - How to avoid subtle programming bugs related to timing issues?
-     - What mechanisms does the OS provide to help?
-
-** Learning Objectives
-   - Recognize and explain race conditions
-     - (Playing [[https://deadlockempire.github.io/][Deadlock Empire]] helps)
-   - Explain notions of critical section and mutual exclusion
-   - Use mutexes and semaphores (and monitors after upcoming lectures)
-     to enforce mutual exclusion
-
 * Race Conditions
 ** Central Challenge: Races
    :PROPERTIES:
@@ -1206,59 +1187,7 @@ their relative urgency or importance.
      - Missing synchronization is a *bug*, leading to anomalies just as
        in database systems
 
-** Non-Atomic Executions
-   :PROPERTIES:
-   :CUSTOM_ID: atomicity
-   :END:
-   #+INDEX: Atomic execution (MX I)
-   - Races generally result from non-atomic executions
-     #+ATTR_REVEAL: :frag (appear)
-     - Even “single” instructions such as ~i += 1~ are *not atomic*
-       - Execution via *sequences of machine instructions*
-	 - Load variable's value from RAM
-	 - Perform add in ALU
-	 - Write result to RAM
-     - A context switch may happen after any of these machine instructions,
-       i.e., “in the middle” of a high-level instruction
-       - Intermediate results accessible elsewhere
-         - *No isolation* in the sense of ACID transactions: races, dirty reads, lost updates
-       - Demo: Play a game as instructed previously
-#+BEGIN_NOTES
-This slide highlights that even simple statements of high-level
-programming languages are not executed atomically, which may be the source
-of race conditions.
 
-Note that the word “atomic” is used in its literal sense here.
-So, an execution is *not* atomic if is really consists of multiple steps.
-
-Be careful not to confuse this with the notion of atomicity of ACID
-transactions.  In the ACID context, atomicity means that transactions
-appear to be either executed entirely or not at all;
-whether they consist of multiple steps or not is not an issue.
-#+END_NOTES
-
-
-* Critical Sections and Mutual Exclusion
-** Goal and Solutions (1/2)
-   :PROPERTIES:
-   :CUSTOM_ID: mx-goal
-   :END:
-   #+INDEX: Mutual exclusion!Definition (MX I)
-   #+INDEX: Critical section!Definition (MX I)
-   - Goal
-     - Concurrent executions that access *shared resources* should be
-       *isolated* from one another
-       - Cf. *I* in ACID transactions
-   #+ATTR_REVEAL: :frag appear
-   - Conceptual solution
-     - Declare *critical sections* (CSs)
-       - CS = Block of code with potential for
-         race conditions on shared resources
-	 - Cf. transaction as sequence of operations on shared data
-     - Enforce *mutual exclusion* (MX) on CSs
-       - At most one thread inside CS at any point in time
-         - This avoids race conditions
-	 - Cf. serializability for transactions
 
 ** MX with CSs: Ticket example
    :PROPERTIES:
@@ -1296,6 +1225,66 @@ whether they consist of multiple steps or not is not an issue.
    performance.
 #+END_NOTES
 
+** Non-Atomic Executions
+   :PROPERTIES:
+   :CUSTOM_ID: atomicity
+   :END:
+   #+INDEX: Atomic execution (MX I)
+   - Races generally result from non-atomic executions
+     #+ATTR_REVEAL: :frag (appear)
+     - Even “single” instructions such as ~i += 1~ are *not atomic*
+       - Execution via *sequences of machine instructions*
+	 - Load variable's value from RAM
+	 - Perform add in ALU
+	 - Write result to RAM
+     - A context switch may happen after any of these machine instructions,
+       i.e., “in the middle” of a high-level instruction
+       - Intermediate results accessible elsewhere
+         - *No isolation* in the sense of ACID transactions: races, dirty reads, lost updates
+       - Demo: Play a game as instructed previously
+#+BEGIN_NOTES
+This slide highlights that even simple statements of high-level
+programming languages are not executed atomically, which may be the source
+of race conditions.
+
+Note that the word “atomic” is used in its literal sense here.
+So, an execution is *not* atomic if is really consists of multiple steps.
+
+Be careful not to confuse this with the notion of atomicity of ACID
+transactions.  In the ACID context, atomicity means that transactions
+appear to be either executed entirely or not at all;
+whether they consist of multiple steps or not is not an issue.
+#+END_NOTES
+
+** Atomic actions
+   An *atomic action* is one that appears to take place as a single indivisible operation:
+   #+ATTR_REVEAL: :frag (appear)
+- a process switch can’t happen during an atomic action, so
+- no other action can be interleaved with an atomic action; and
+- no other process can interfere with the manipulation of data by an atomic action
+
+* Critical Sections and Mutual Exclusion
+** Goal and Solutions (1/2)
+   :PROPERTIES:
+   :CUSTOM_ID: mx-goal
+   :END:
+   #+INDEX: Mutual exclusion!Definition (MX I)
+   #+INDEX: Critical section!Definition (MX I)
+   - Goal
+     - Concurrent executions that access *shared resources* should be
+       *isolated* from one another
+       - Cf. *I* in ACID transactions
+   #+ATTR_REVEAL: :frag appear
+   - Conceptual solution
+     - Declare *critical sections* (CSs)
+       - CS = Block of code with potential for
+         race conditions on shared resources
+	 - Cf. transaction as sequence of operations on shared data
+     - Enforce *mutual exclusion* (MX) on CSs
+       - At most one thread inside CS at any point in time
+         - This avoids race conditions
+	 - Cf. serializability for transactions
+
 ** Goal and Solutions (2/2)
    :PROPERTIES:
    :CUSTOM_ID: mx-goal-solution
@@ -1314,28 +1303,6 @@ whether they consist of multiple steps or not is not an issue.
      - *Monitors*
        - Abstract datatype, think of Java class, methods as CS with MX
        - Keyword ~synchronized~ turns Java method into CS with MX!
-
-** Challenges
-   :PROPERTIES:
-   :CUSTOM_ID: mx-challenges
-   :END:
-   #+INDEX: Mutual exclusion!Challenges (MX I)
-   #+INDEX: Starvation (MX I)
-   #+INDEX: Deadlock (MX I)
-   - Above solutions restrict entry to CS
-     - Thus, they restrict access to the resource CPU
-   - Major synchronization challenges arise
-     - *Starvation*
-       - Thread never enters CS
-         - (More generally: never receives some resource, e.g.,
-           [[file:Operating-Systems-Scheduling.org::#priority-starvation][CPU under scheduling]])
-     - *Deadlock* (discussed [[file:Operating-Systems-MX-Challenges.org][in later presentation]])
-       - Set of threads is stuck
-       - Circular wait for additional
-         locks/semaphores/resources/messages
-     - In addition, programming errors
-       - Difficult to locate, time-dependent
-       - Difficult to reproduce, “non-determinism”
 
 
 * Locking
@@ -1362,7 +1329,7 @@ whether they consist of multiple steps or not is not an issue.
        - Further threads trying to ~lock()~ need to wait for ~unlock()~
      - ~unlock()~ or ~release()~: Unlock/release the object
        - Can be ~lock()~'ed again afterwards
-     - E.g., interface [[https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/util/concurrent/locks/Lock.html][java.util.concurrent.locks.Lock]] in Java.
+     - E.g., interface threading.lock in Python.
 
    {{{reveallicense("./figures/hail_f0404.pdf.meta","20vh")}}}
 #+BEGIN_NOTES
@@ -1393,25 +1360,26 @@ the blocked threads (e.g., in FIFO order) is a design decision, which
 will be revisited later in the context of the so-called convoy problem.
 #+END_NOTES
 
-** Use of Locks/Mutexes
+** Challenges
    :PROPERTIES:
-   :CUSTOM_ID: lock-usage
+   :CUSTOM_ID: mx-challenges
    :END:
-  - Programming discipline *required* to prevent races
-    - Create one (shared) lock for each shared data structure
-    - Take lock before operating on shared data structure
-    - Release lock afterwards
-  - See cite:Hai19 for sample code following POSIX standard
-  - Ticket example modified (leading to MX behavior):
-
-#+BEGIN_SRC java
-seatlock.lock();
-if (seatsRemaining > 0) {
-   dispenseTicket();
-   seatsRemaining = seatsRemaining - 1;
-} else displaySorrySoldOut();
-seatlock.unlock();
-#+END_SRC
+   #+INDEX: Mutual exclusion!Challenges (MX I)
+   #+INDEX: Starvation (MX I)
+   #+INDEX: Deadlock (MX I)
+   - Above solutions restrict entry to CS
+     - Thus, they restrict access to the resource CPU
+   - Major synchronization challenges arise
+     - *Starvation*
+       - Thread never enters CS
+         - More generally: never receives some resource, e.g.,
+     - *Deadlock* 
+       - Set of threads is stuck
+       - Circular wait for additional
+         locks/resources/...
+     - In addition, programming errors
+       - Difficult to locate, time-dependent
+       - Difficult to reproduce, “non-determinism”
 
 ** Starvation
    :PROPERTIES:
@@ -1460,119 +1428,6 @@ leading to starvation of a philosopher.
 
 Apparently, avoidance of starvation is no simple task.
    #+end_notes
-
-* Conclusions
-** Summary
-   - Parallelism is a fact of life
-     - Multi-core, multi-threaded programming
-     - Race conditions arise
-     - Synchronization is necessary
-   - Mutual exclusion for critical section
-     - Locking
-     - Monitors
-     - Semaphores
-
-* Introduction
-
-
-** Today’s Core Questions
-   - What is virtual memory?
-     - How can RAM be (de-) allocated flexibly under multitasking?
-     - How does the OS keep track for each process what data resides
-       where in RAM?
-
-** Learning Objectives
-   - Explain mechanisms and uses for virtual memory
-     - Including principle of locality and page fault handling
-     - Including access of data on disk
-   - Explain and perform address translation with page tables
-
-** Previously on OS …
-*** Retrieval Practice
-    - How are
-      [[file:Operating-Systems-Introduction.org::#computations-processes-threads][processes and threads]]
-      related?
-    - Why were threads in
-      [[file:Operating-Systems-Introduction.org::#battlethreads][BattleThreads]]
-      more successful?
-    - What [[file:Operating-Systems-Overview.org::#virtual-address-space][layer of abstraction]]
-      do OSs use to manage RAM?
-    - What happens when an [[file:Operating-Systems-Interrupts.org::#irq-idea][interrupt]]
-      is triggered (e.g., a [[file:Operating-Systems-Interrupts.org::#terminology][page fault]])?
-
-*** Recall: RAM in Hack
-    :PROPERTIES:
-    :CUSTOM_ID: hack-ram
-    :END:
-#+REVEAL_HTML: <script data-quiz="quizHackRAM" src="./quizzes/Hack-RAM.js"></script>
-
-
-** Big Picture
-   :PROPERTIES:
-   :CUSTOM_ID: big-picture
-   :END:
-   #+INDEX: Virtual memory big picture (Memory I)
-   {{{reveallicense("./figures/vm.meta","50vh",nil,none)}}}
-#+BEGIN_NOTES
-The key idea of virtual memory management is to provide a layer of
-abstraction that hides allocation of the shared hardware resource RAM
-to individual processes.  Thus, processes (and their threads) do not
-need to care or know whether or where their data structures reside in RAM.
-
-Physical memory consists of RAM and secondary storage devices such as
-SSDs or HDDs.  Typically, the OS uses dedicated portions of secondary
-storage as so-called swap or paging areas to enlarge physical memory
-beyond the size of RAM.  Again, processes need neither care nor know
-about this fact, which is handled by OS in the background.
-
-Each process has its own individual virtual address space, starting at
-address 0, consisting of equal-sized blocks called pages (e.g., 4 KiB
-in size each).  Each of those pages may or may not be present in RAM.
-RAM in turn is split into frames (of the size of pages).  The OS
-loads pages into frames and keeps track what pages of virtual address
-spaces are located where in physical memory.
-
-Here you see a process with a virtual address space consisting of 10
-pages (numbered 0 to 9, implying that the virtual address space has a
-size of 10*4 KiB = 40 KiB), while RAM consists of 8 frames (numbered 0 to
-7, implying that RAM has a size of 8*4 KiB = 32 KiB).
-For example, page 0 is located in frame 6, while page 3 is located on
-disk, and frames 2, 3, and 7 are not allocated to the process under
-consideration.
-
-Notice that neighboring pages in the virtual address space may be
-allocated in arbitrary order in physical memory.  As processes and
-threads just use virtual addresses, they do not need to know about
-such details of physical memory.
-
-Code of threads just uses virtual addresses within machine
-instructions, and it is the OS’s task to locate the corresponding
-physical addresses in RAM or to bring data from secondary storage to
-RAM in the first place.
-#+END_NOTES
-
-** Different Learning Styles
-   - The bullet point style may be particularly challenging for this
-     presentation
-   - You may prefer [[file:texts/virtual-addressing.pdf][this 5-page introduction]]
-     - It provides an alternative view on
-       - Topics of Introduction and
-         Main Concepts
-       - Topics of section Paging
-     - After working through that text, you may want to jump directly
-       to the corresponding
-       JiTT assignment
-       to check your understanding
-       - Afterwards, come back here to look at the slides, in
-         particular work through section
-         Uses for Virtual Memory (not covered in the text)
-   - Besides, Chapter 6 of cite:Hai19 is about virtual memory
-
-** Table of Contents
-   :PROPERTIES:
-   :UNNUMBERED: notoc
-   :END:
-#+REVEAL_TOC: headlines 1
 
 * Main Concepts
   :PROPERTIES:
@@ -2288,7 +2143,18 @@ $ smem -c "pid command uss pss rss vss" -P "bash|xinit|emacs"
 *** Sample ~smem~ Graph
     {{{revealimg("./figures/smem.meta","~smem --bar pid -c \"uss pss rss\" -P \"bash|xinit\"~","70vh")}}}
 
+
 * Conclusions
+** Summary
+   - OS is Software
+     - that *uses hardware* resources of a computer system
+     - to provide support for the *execution of other software*.
+       - Computations are performed by threads.
+       - Threads are grouped into processes.
+   - OS kernel
+     - provides interface for applications and
+     - manages resources.
+
 ** Summary
    - Virtual memory provides abstraction over RAM and secondary storage
      - Paging as fundamental mechanism
@@ -2300,3 +2166,32 @@ $ smem -c "pid command uss pss rss vss" -P "bash|xinit|emacs"
      - Multilevel page tables represent unallocated regions in compact form
 
 #+INCLUDE: "postamble.org"
+
+** Summary
+   - Threads represent individual instruction execution sequences
+   - Multithreading improves
+     - Resource utilization
+     - Responsiveness
+     - Modular design in presence of concurrency
+   - Preemptive multithreading with housekeeping by OS
+     - Thread switching with overhead
+   - Design choices: I/O blocking or not, servers with multiple
+     threads or not
+
+** Summary
+   - OS performs scheduling for shared resources
+     - Focus here: CPU scheduling
+     - Subject to conflicting goals
+   - CPU scheduling based on thread states and priorities
+     - Fixed vs dynamic priorities vs proportional share
+     - CFS as example for proportional share scheduling
+
+** Summary
+   - Parallelism is a fact of life
+     - Multi-core, multi-threaded programming
+     - Race conditions arise
+     - Synchronization is necessary
+   - Mutual exclusion for critical section
+     - Locking
+     - Monitors
+     - Semaphores
