@@ -4,6 +4,7 @@ Percentage, 71.8,  22.9,  20.4,  19.9,  10.5,  8.8,  7.2,  6.1,  5.2,  3.6,  3.0
 <!--
 {
 "options": {
+"plugins": {"colorschemes": {"scheme": "brewer.Paired6"},
 "title": {
 "display": true,
 "text": "Which operating system(s) do you use for your IoT devices?"

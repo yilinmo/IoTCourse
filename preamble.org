@@ -12,6 +12,7 @@
 
 #+HTML_HEAD: <script src="./reveal.js/plugin/chart/Chart.min.js"></script>
 #+HTML_HEAD: <script src="./reveal.js/plugin/chart/plugin.js"></script>
+#+HTML_HEAD: <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
 #+OPTIONS: html5-fancy:t
 
 #+HTML_HEAD: <script src="./reveal.js/plugin/chalkboard/plugin.js"></script>

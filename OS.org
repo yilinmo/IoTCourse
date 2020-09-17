@@ -1,6 +1,6 @@
 #+INCLUDE: "preamble.org"
 
-#+TITLE: Operating Systems
+#+TITLE: Operating Systems for Intelligent Networked System
 #+AUTHOR: Mo, Yilin
 #+DATE: Sept 2020 
 
@@ -522,7 +522,7 @@ int main()
     :CUSTOM_ID: drawing-cow
     :END:
     #+INDEX: Copy-on-write!Drawing (Memory I)
-    {{{reveallicense("./figures/hail_f0607.pdf.meta","40vh")}}}
+    {{{reveallicense("./figures/hail_f0607.pdf.meta","60vh")}}}
     
 *** Flexible Memory Allocation
    - Allocation of RAM does not need to be contiguous
@@ -651,7 +651,7 @@ Frame 2 is unused.
     :END:
     #+INDEX: Address translation example (Memory I)
     #+INDEX: Virtual address translation example (Memory I)
-    {{{reveallicense("./figures/hail_f0612.pdf.meta","40vh")}}}
+    {{{reveallicense("./figures/hail_f0612.pdf.meta","60vh")}}}
     
 ** GNU/Linux Reporting: ~smem~
    :PROPERTIES:
@@ -676,7 +676,7 @@ Frame 2 is unused.
    
    #+ATTR_REVEAL: :frag (appear)
    - It depends!
-   - Tiny OS (cite:TinyOS)
+   - TinyOS (cite:TinyOS)
     
     /The language(NeS) does *NOT* support dynamic memory allocation; components statically declare all of a program’s state, which prevents memory fragmentation as well as runtime allocation failures. The restriction sounds more onerous than it is in practice; the component abstraction eliminates many of the needs for dynamic allocation. In the few rare instances that it is truly needed (e.g., TinyDB ), a memory pool component can be shared by a set of cooperating components./
 
@@ -998,7 +998,7 @@ slides provide more details how such context switches happen.
        - Thread on CPU until yield, termination, or blocking
        - Scheduler for TinyOS
      - *Preemptive*, e.g., Round Robin scheduling
-       - Examples: Linux, RTOS 
+       - Examples: RTOS 
          1. Among all threads, schedule and dispatch one, say T_0
          2. Allow T_0 to execute on CPU for some time, then preempt it
          3. Repeat step (1)
@@ -1072,25 +1072,6 @@ their relative urgency or importance.
 #+BEGIN_rightcol
 {{{reveallicense("./figures/4-scheduling-mechanisms.meta","50vh",nil,none)}}}
 #+END_rightcol
-
-*** Notes on Scheduling
-    - For scheduling with pen and paper, you need to know
-      *arrival times* and *service times* for threads
-      - Arrival time: Point in time when thread created
-      - Service time: CPU time necessary to complete thread
-        - (For simplicity, blocking I/O is not considered; otherwise,
-          you would also need to know frequency and duration of I/O
-          operations)
-    #+ATTR_REVEAL: :frag appear
-    - OS does not know either ahead of time
-      - OS creates threads (so, knowledge of arrival time is not an
-        issue) and inserts them into necessary data structures during
-        normal operation
-      - When threads terminate, OS again participates
-        - Thus, OS can compute service time after the fact
-        - (Some scheduling algorithms require service time for
-          scheduling decisions; then threads need to declare that upon
-          start.  Not considered here.)
 
 *** Fixed-Priority Scheduling
    :PROPERTIES:
@@ -1177,8 +1158,7 @@ their relative urgency or importance.
    - With dynamic strategies, OS can adjust thread priorities during execution
    - Sample strategies
      - *Earliest deadline first*
-       - For tasks with deadlines — discussed in cite:Hai19, not part of
-         learning objectives
+       - For tasks with deadlines — discussed in cite:Hai19 
      - *Decay Usage Scheduling*
 
 *** Proportional-Share Scheduling
@@ -1229,7 +1209,7 @@ their relative urgency or importance.
      - Schedule thread that is furthest behind
        - Until preempted or time slice runs out
      - (Some details in cite:Hai19)
-
+       
 * Synchronizations
 ** Race Conditions
 *** Central Challenge for Concurrency: Races
@@ -1275,7 +1255,6 @@ their relative urgency or importance.
 What if we use the following ~increment_global~ function:
 #+begin_src python :eval never-export :export code
 def increment_global():
-
    global x
    x += 1
 #+end_src
@@ -1490,19 +1469,147 @@ leading to starvation of a philosopher.
 Apparently, avoidance of starvation is no simple task.
    #+end_notes
 
-** TODO Event-based Concurrency
-* TODO Embedded OS
+* Embedded OS
 
-** Tiny OS
+
+** TinyOS
+- System configuration consists of 
+  - a Tiny scheduler; and 
+  - a Graph of components
+- Event-driven architecture 
+- Single shared stack 
+- *NO* process/memory management, virtual memory
+- Written in NesC (Network Embedded Systems C), which is an extension of C
+
+*** TinyOS: Application
+- Application SurgeC:
+  - periodically (TimerC) acquires light sensor readings (Photo), and
+  - sends them back to a base station using multi-hop routing (Multihop)
+   {{{revealimg("figures/SurgeC.meta","SurgeC","70vh",nil,'none)}}}
    
-** Free RTOS
+*** TinyOS: Component
+- A Component has:
+  - Frame (internal state)
+    - One per component 
+    - Statically allocated 
+    - Allows to know the memory requirements of a component at compile time
+    - Prevents memory/execution time overhead with dynamic allocation
+  - Tasks (computation) 
+  - Interface (events, commands) 
+- Commands and Events are function calls 
+- Application: linking/glueing interfaces (events, commands)
+
+*** TinyOS: Command
+- Commands:
+ - E.g., Leds.led1Toggle, Timer.startPeriodic, Sensor.Read
+ - are non-blocking 
+ - postpone time consuming work by posting a task 
+ - can be called by event, tasks, or higher-level command
+ - can call lower-level commands, post tasks
+
+*** TinyOS: Event
+- Events:
+  - E.g., Timer.fired, Read.readDone, Boot.booted
+  - Events are signaled by hardware interrupt, or lower-level event
+  - Commands cannot signal events
+  - An event handler can post tasks, signal higher-level events or call lower-level commands.
+  - A hardware event triggers a fountain of processing that goes upward through events and can bend downward through commands
+ 
+*** TinyOS: Tasks
+- Tasks:
+  - FIFO scheduling when not preempted by other events
+  - Perform low priority/time consuming work
+  - Can be posted by other events or commands
+  - Run to completion
+
+
+*** TinyOS: Example
+
+#+NAME: nesc
+#+begin_src C :eval never-export :export code
+module BlinkTaskC
+{
+  uses interface Timer<TMilli> as Timer0;
+  uses interface Leds;
+  uses interface Boot;
+}
+implementation
+{
+  task void toggle() {
+    call Leds.led0Toggle();
+  }
+
+  event void Boot.booted() {
+    call Timer0.startPeriodic( 1000 );
+  }
+
+  event void Timer0.fired() {
+    post toggle();
+  }
+}
+#+end_src
+
+*** TinyOS: Reactive Concurrency
+- Two-level scheduling: events and tasks
+- Scheduler is simple FIFO
+    - a task cannot preempt another task
+    - events preempt tasks (higher priority)
+    - event may preempt another event
+- Use task to make event/command smaller
+   {{{revealimg("figures/tinyscheduler.meta","Two-Level Scheduling","40vh",nil,'none)}}}
+   
+*** TinyOS: Synchronization
+- *Race-Free Invariant*: Any update to shared state is 
+  - either done only by tasks (CANNOT be preempted by other tasks), or
+  - occurs in an atomic section (by disabling CPU interrupt).
+- Invariance is enforced during compilation.
+
+*** Advantages of TinyOS
+- Small Overhead: E.g., 15kB for SurgeC
+- Low Power Consumption
+- Reactive Concurrency: 
+  - Race detection at compilation
+  - Minimal context switch(FIFO for tasks) 
+  - Real-time response (for event)
+- Flexible from component based design 
+
+** FreeRTOS
+   #+BEGIN_leftcol
+   - Small and Portable
+     - Kernel contains only 3 files: tasks.c, list.c, queue.c
+   - Well supported
+     - has been ported to over 35 micro-controller platforms
+     - integration with Amazon Web Service
+   - Modular
+   #+END_leftcol
+
+   #+BEGIN_rightcol
+{{{revealimg("figures/freertos.meta","FreeRTOS Architecture","70vh",nil,'none)}}}
+   #+END_rightcol
+ 
+*** FreeRTOS: Memory Management
+Support:
+- Fully static allocation.
+- Dynamic Allocation
+  -  allocate only;
+  -  allocate and free with a very simple, fast, algorithm;
+  -  a more complex but fast allocate and free algorithm with memory coalescence;
+  -  an alternative to the more complex scheme that includes memory coalescence that allows a heap to be broken across multiple memory areas.
+  -  and C library allocate and free with some mutual exclusion protection.
+
+*** FreeRTOS: Multitasking
+  - Round-robin scheduling with priority 
+    - Time slice duration set by the user (usually 1ms to 10ms)
+    - Real-time guarantees
+  - Support mutex and semaphores
+   {{{revealimg("figures/freertosscheduler.meta","FreeRTOS Scheduler","40vh",nil,'none)}}}
    
 ** Comparison 
-|                 | Bare Metal    | Tiny OS                 | Free RTOS                | Linux                          |
-| Overhead        | None          | Small                   | Small                    | Large                          |
-| Scheduler       | Single Thread | Event-Based, FIFO       | Round-Robin, Real-time   | CFS                            |
-| Synchornization | None          | Resolved at Compilation | MX, Semaphores           | Multiple Locking Types         |
-| Memory          | Static        | Static                  | 5 Dynamic Memory Schemes | Full fledged Memory Management |
+|                 | Bare Metal    | TinyOS                  | FreeRTOS                    | Linux                          |
+| Overhead        | None          | Small                   | Small                       | Large                          |
+| Scheduler       | Single Thread | FIFO + Interrupt        | Round-Robin, Real-time      | CFS, *NOT* real-time           |
+| Synchronization | None          | Resolved at Compilation | Mutex, Semaphores           | Multiple Locking Types         |
+| Memory          | Static        | Static                  | Static or 5 Dynamic schemes | Full fledged Memory Management |
 
 * Conclusions
   
@@ -1552,3 +1659,9 @@ Apparently, avoidance of starvation is no simple task.
      - Monitors
      - Semaphores
 
+* Bibliography
+  :PROPERTIES:
+  :CUSTOM_ID: bibliography
+  :END:
+
+  printbibliography:references.bib

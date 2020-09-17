@@ -8,6 +8,7 @@ Year,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030
 "datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
 },
 "options": {
+"plugins": {"colorschemes": {"scheme": "brewer.Paired6"},
 "title": {
 "display": true,
 "text": "Number of Connected Devices v.s. Human Population"

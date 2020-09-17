@@ -1,36 +1,4 @@
-# Local IspellDict: en
-#+STARTUP: showeverything
-#+SPDX-FileCopyrightText: 2017-2020 Mo, Yilin <https://yilinmo.github.io>
-#+SPDX-License-Identifier: CC-BY-SA-4.0
-# Apply standard settings of oer-reveal.
-#+INCLUDE: "~/.emacs.d/oer-reveal-org/config.org"
-
-# Use custom title slide.
-#+REVEAL_TITLE_SLIDE: title-slide.html
-
-#+HTML_HEAD: <style type="text/css"> div.flushright{text-align:right;} </style>
-
-#+HTML_HEAD: <script src="./reveal.js/plugin/chart/Chart.min.js"></script>
-#+HTML_HEAD: <script src="./reveal.js/plugin/chart/plugin.js"></script>
-#+OPTIONS: html5-fancy:t
-
-#+HTML_HEAD: <script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
-#+HTML_HEAD: <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-
-# Generate bibliography with LaTeX
-#+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
-#+LATEX_HEADER: \addbibresource{references.bib}
-
-#+LATEX_HEADER: \usepackage{xeCJK}
-#+LATEX_HEADER: \setCJKmainfont{Noto Sans CJK SC}
-#+LATEX_HEADER: \xeCJKsetup{PunctStyle=kaiming,CJKspace=true,CheckSingle=true} 
-#+LATEX_COMPILER: xelatex
-#+LATEX_HEADER: \newenvironment{canvas}{}{}
-#+LATEX_HEADER: \newenvironment{r-stack}{}{}
-
-#+REVEAL_EXTERNAL_PLUGINS: ((spotlight . "{src:'%splugin/spotlight/spotlight.js'}") (wordcloud . "{src: '%splugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } }"))
-#+REVEAL_INIT_SCRIPT: plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {67: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1
+#+INCLUDE: "preamble.org"
 
 #+TITLE: Introduction to Intelligent Networked System
 #+AUTHOR: Mo, Yilin
@@ -336,9 +304,9 @@ Cons:
 ** The Many-Sidedness of Internet of Things & CPS
    
 #+BEGIN_r-stack
-#+ATTR_HTML: :class fragment fade-out :data-fragment-index 0 :style "max-height:60vh"
+#+ATTR_HTML: :class fragment fade-out :data-fragment-index 0 :style max-height:60vh
 [[./figures/raw/iot.png]]
-#+ATTR_HTML: :class fragment :data-fragment-index 0 :style "max-height:60vh"
+#+ATTR_HTML: :class fragment :data-fragment-index 0 :style max-height:60vh
 [[./figures/raw/blindmenandelephant.jpg]]
 #+END_r-stack
  
@@ -472,7 +440,4 @@ Cons:
 
   printbibliography:references.bib
 
-  # Local Variables:
-  # indent-tabs-mode: nil
-  # org-src-preserve-indentation: t
-  # End:
+

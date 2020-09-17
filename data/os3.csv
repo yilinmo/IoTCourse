@@ -4,6 +4,7 @@ Percentage, 64.1,  14.9,  6.1,  5.0,  2.2,  2.2,  2.2,  1.9,  1.7,  1.7,  1.4,  
 <!--
 {
 "options": {
+"plugins": {"colorschemes": {"scheme": "brewer.Paired6"},
 "title": {
 "display": true,
 "text": "Which operating system(s) do you use for your IoT Gateway/Edge?"
