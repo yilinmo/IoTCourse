@@ -524,6 +524,25 @@ int main()
     #+INDEX: Copy-on-write!Drawing (Memory I)
     {{{reveallicense("./figures/hail_f0607.pdf.meta","60vh")}}}
     
+*** GNU/Linux Reporting: ~smem~
+   :PROPERTIES:
+   :CUSTOM_ID: smem
+   :END:
+   #+INDEX: GNU/Linux!Tools!smem (Memory I)
+   - User space tool to read ~smaps~ files: ~smem~
+     - See https://linoxide.com/tools/memory-usage-reporting-smem/
+   - Terminology
+     - *Virtual set size* (VSS): Size of virtual address space
+     - *Resident set size* (RSS): Allocated main memory
+       - Standard notion, yet overestimates memory usage as lots of
+         memory is shared between processes
+	 - Shared memory is added to the RSS of every sharing process
+     - *Unique set size* (USS): memory allocated exclusively to process
+       - That much would be returned upon process’ termination
+     - *Proportional set size* (PSS): USS plus “fair share” of shared pages
+       - If page shared by 5 processes, each gets a fifth of a page
+         added to its PSS
+
 *** Flexible Memory Allocation
    - Allocation of RAM does not need to be contiguous
      - Large portions of RAM can be allocated via individual frames
@@ -653,25 +672,6 @@ Frame 2 is unused.
     #+INDEX: Virtual address translation example (Memory I)
     {{{reveallicense("./figures/hail_f0612.pdf.meta","60vh")}}}
     
-** GNU/Linux Reporting: ~smem~
-   :PROPERTIES:
-   :CUSTOM_ID: smem
-   :END:
-   #+INDEX: GNU/Linux!Tools!smem (Memory I)
-   - User space tool to read ~smaps~ files: ~smem~
-     - See https://linoxide.com/tools/memory-usage-reporting-smem/
-   - Terminology
-     - *Virtual set size* (VSS): Size of virtual address space
-     - *Resident set size* (RSS): Allocated main memory
-       - Standard notion, yet overestimates memory usage as lots of
-         memory is shared between processes
-	 - Shared memory is added to the RSS of every sharing process
-     - *Unique set size* (USS): memory allocated exclusively to process
-       - That much would be returned upon process’ termination
-     - *Proportional set size* (PSS): USS plus “fair share” of shared pages
-       - If page shared by 5 processes, each gets a fifth of a page
-         added to its PSS
-
 ** Is complex memory management scheme necessary?  
    
    #+ATTR_REVEAL: :frag (appear)

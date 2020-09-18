@@ -1,0 +1,34 @@
+* Serial Communication
+
+** UART
+** I2C
+** SPI
+   
+* Sensors Basics
+** cmu slides begin
+
+** ADC   
+
+* Basic Sensors
+
+* Camera basics 
+
+** ccd vs cmos 
+
+** color basics
+   
+** depth
+   
+* Advanced sensors 
+  
+** optical microcavity
+   
+** time to flight sensor
+   
+** ultrasonic
+
+* Energy management
+  
+** Energy harvest
+   
+** Energy storage

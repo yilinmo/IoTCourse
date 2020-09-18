@@ -15,34 +15,6 @@
 *** What is Intelligent Networked System
    {{{revealimg("figures/ins2.meta","Search Results for 智能网联系统","70vh",nil,'none)}}}
 
-*** Intelligent Networked System 
-   #+ATTR_HTML: :class stretch :wordcloud ""
-   30 Internet of Things
-   30 Informatization
-   20 Data Analytics
-   15 Cyber-Physical System
-   15 Wireless Sensor Network
-   15 Smart Algorithms
-   12 Cloud Computing
-   12 Embedded Devices
-   12 5G
-   10 RFID
-   10 LPWAN
-   10 802.15
-   10 TLS
-   10 Linux
-   8 RTOS
-   8 Python
-   8 C/C++
-   8 Java
-   5 MQTT
-   5 CoAP
-   5 Bluetooth
-   5 Zigbee
-   5 Wifi
-   5 OFDMA
-   4 Mesh
-   
 ** Wireless Sensor Networks
  /Wireless sensor network (WSN) refers to a group of spatially dispersed and dedicated sensors for monitoring and recording the physical conditions of the environment and organizing the collected data at a central location./
    #+BEGIN_flushright 
@@ -107,7 +79,8 @@ Cons:
 | Deployment | Vehicle-placed, air drop | Hand placed                 | Embedded, “scattered” leave behind |
 
 ** Internet of Things
-   /Internet of things (IoT) is the inter-networking of physical devices, vehicles (also referred to as "connected devices" and "smart devices"), buildings, and other items embedded with electronics, software, sensors, actuators, and network connectivity which enable these objects to collect and exchange data./ 
+   
+   /The *Internet of things* (IoT) describes the network of physical objects, i.e., things, such as vehicles, buildings, and other items, that are embedded with sensors, software, and other technologies for the purpose of connecting and exchanging data with other devices and systems over the Internet./ 
    #+BEGIN_flushright 
    [[https://en.wikipedia.org/wiki/Internet_of_things][Wikipedia]]
    #+END_flushright 
@@ -191,6 +164,36 @@ Cons:
    Your browser does not support the video tag.
    #+END_video
  
+
+** Intelligent Networked System 
+   #+ATTR_HTML: :class stretch :wordcloud ""
+   30 Internet of Things
+   30 Informatization
+   20 Data Analytics
+   15 Cyber-Physical System
+   15 Wireless Sensor Network
+   15 Smart Algorithms
+   12 Cloud Computing
+   12 Embedded Devices
+   12 5G
+   10 RFID
+   10 LPWAN
+   10 802.15
+   10 TLS
+   10 Linux
+   8 RTOS
+   8 Python
+   8 C/C++
+   8 Java
+   5 MQTT
+   5 CoAP
+   5 Bluetooth
+   5 Zigbee
+   5 Wifi
+   5 OFDMA
+   4 Mesh
+   
+
 * Applications
    
 ** Manufacturing  
