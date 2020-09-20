@@ -1,0 +1,3218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Operating Systems for Intelligent Networked System</title>
+<meta name="author" content="Mo, Yilin"/>
+<meta name="description" content="OS for iot course"/>
+<meta name="keywords" content="operating systems"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/oer-reveal.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/accessibility/helper.css"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/toc-progress/toc-progress.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/toc-style.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/fonts/source-sans-pro/source-sans-pro.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<style type="text/css"> div.flushright{text-align:right;} </style>
+<script src="./reveal.js/plugin/chart/Chart.min.js"></script>
+<script src="./reveal.js/plugin/chart/plugin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+<script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body prefix="dc: http://purl.org/dc/elements/1.1/ dcterms: http://purl.org/dc/terms/ dcmitype: http://purl.org/dc/dcmitype/ cc: http://creativecommons.org/ns#" typeof="dcmitype:InteractiveResource">
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-state="no-toc-progress">
+<!-- The following copyright information only applies to the title slide. -->
+<!-- SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger -->
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+<!-- This is an HTML template for the title slide. -->
+<!-- Embed logos as necessary. -->
+<!-- <a class="nooutlink" href="url"><img class="state-background your-logo-class" src="whatever.png" alt="Whatever" /></a> -->
+
+<div class="talk-title">
+    <h1 class="no-toc-progress">Operating Systems for Intelligent Networked System</h1>
+</div>
+<div class="talk-subtitle">
+    <p></p>
+</div>
+<div class="keyboard-usage">
+    <p>(Press <code>?</code> for help, <code>n</code> and <code>p</code> for next and previous slide; <a href="https://oer.gitlab.io/hints.html">usage hints</a>)</p>
+</div>
+<div class="talk-author">
+  <p>Mo, Yilin <br />
+  Sept 2020</p>
+</div>
+
+    <a class="nooutlink" href="http://www.au.tsinghua.edu.cn/"><img class="da-logo" src="./figures/raw/logo.png" alt="Logo of Dept. Automation" /></a>
+
+</section>
+
+<section>
+<section id="slide-org27f9acf">
+<h2 id="org27f9acf">Introduction</h2>
+<div class="outline-text-2" id="text-org27f9acf">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb1cd9a9">
+<h3 id="orgb1cd9a9">Core Questions</h3>
+<ul>
+<li>What is OS and Kernel?</li>
+<li>What is virtual memory?
+<ul>
+<li>How can RAM be (de-) allocated flexibly for multitasking?</li>
+
+</ul></li>
+<li>How does the OS manage the shared resource CPU?  What goals are pursued?
+<ul>
+<li>What exactly are threads?</li>
+<li>How does the OS schedule threads for execution?</li>
+
+</ul></li>
+<li>What can go wrong with concurrent computations?
+<ul>
+<li>What is a race condition?</li>
+
+</ul></li>
+<li>What is the difference between bare metal, embedded OS and full-fledged OS?</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-learning-objectives-os">
+<h3 id="learning-objectives-os">Learning Objectives</h3>
+<ul>
+<li>Explain notion of Operating System and its goals
+<ul>
+<li>Explain notion of kernel with system call API</li>
+<li>Explain different between various OS / bare metal options</li>
+
+</ul></li>
+<li>Explain mechanisms and uses for virtual memory</li>
+<li>Explain notions of process, thread, multitasking
+<ul>
+<li>Explain race condition, mutual exclusion</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgda7237e">
+<h3 id="orgda7237e">Table of Contents</h3>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#slide-org27f9acf">Introduction</a></li>
+<li><a href="#slide-orga42a09a">What is an OS?</a></li>
+<li><a href="#slide-main-concepts">Memory Management</a></li>
+<li><a href="#slide-org649c0bc">Multitasking</a></li>
+<li><a href="#slide-org7053ab4">Synchronizations</a></li>
+<li><a href="#slide-org68c8893">Embedded OS</a></li>
+<li><a href="#slide-orgb8855f7">Conclusions</a></li>
+<li><a href="#slide-bibliography">Bibliography</a></li>
+</ul>
+</div>
+
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orga42a09a">
+<h2 id="orga42a09a">What is an OS?</h2>
+<div class="outline-text-2" id="text-orga42a09a">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb53fc2d">
+<h3 id="orgb53fc2d">&ldquo;Hello World!&rdquo; on Bare Metal</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C" id="helloworld"><span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">main</span>()
+{
+    <span style="color: #5f615c;">// </span><span style="color: #5f615c;">set up serial console</span>
+    uart_init();
+
+    <span style="color: #5f615c;">// </span><span style="color: #5f615c;">say hello</span>
+    uart_puts(<span style="color: #5c3566;">"Hello World!\n"</span>);
+
+    <span style="color: #5f615c;">// </span><span style="color: #5f615c;">echo everything back</span>
+    <span style="color: #346604;">while</span>(1) {
+        uart_send(uart_getc());
+    }
+}
+</pre>
+</div>
+
+<p>
+Source code from <a href="https://github.com/bztsrc/raspi3-tutorial">Github</a>
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd19d2c4">
+<h4 id="orgd19d2c4">UART Initialization</h4>
+<div class="org-src-container">
+
+<pre  class="src src-C" id="uart_init"><span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">uart_init</span>()
+{
+    <span style="color: #346604;">register</span> <span style="color: #204a87;">unsigned</span> <span style="color: #204a87;">int</span> <span style="color: #b35000;">r</span>;
+
+    <span style="color: #5f615c;">/* </span><span style="color: #5f615c;">initialize UART</span><span style="color: #5f615c;"> */</span>
+    *AUX_ENABLE |=1;       <span style="color: #5f615c;">// </span><span style="color: #5f615c;">enable UART1, AUX mini uart</span>
+    *AUX_MU_CNTL = 0;
+    *AUX_MU_LCR = 3;       <span style="color: #5f615c;">// </span><span style="color: #5f615c;">8 bits</span>
+    *AUX_MU_MCR = 0;
+    *AUX_MU_IER = 0;
+    *AUX_MU_IIR = 0xc6;    <span style="color: #5f615c;">// </span><span style="color: #5f615c;">disable interrupts</span>
+    *AUX_MU_BAUD = 270;    <span style="color: #5f615c;">// </span><span style="color: #5f615c;">115200 baud</span>
+    <span style="color: #5f615c;">/* </span><span style="color: #5f615c;">map UART1 to GPIO pins</span><span style="color: #5f615c;"> */</span>
+    r=*GPFSEL1;
+    r&amp;=~((7&lt;&lt;12)|(7&lt;&lt;15)); <span style="color: #5f615c;">// </span><span style="color: #5f615c;">gpio14, gpio15</span>
+    r|=(2&lt;&lt;12)|(2&lt;&lt;15);    <span style="color: #5f615c;">// </span><span style="color: #5f615c;">alt5</span>
+    *GPFSEL1 = r;
+    *GPPUD = 0;            <span style="color: #5f615c;">// </span><span style="color: #5f615c;">enable pins 14 and 15</span>
+    r=150; <span style="color: #346604;">while</span>(r--) { <span style="color: #346604;">asm</span> <span style="color: #346604;">volatile</span>(<span style="color: #5c3566;">"nop"</span>); }
+    *GPPUDCLK0 = (1&lt;&lt;14)|(1&lt;&lt;15);
+    r=150; <span style="color: #346604;">while</span>(r--) { <span style="color: #346604;">asm</span> <span style="color: #346604;">volatile</span>(<span style="color: #5c3566;">"nop"</span>); }
+    *GPPUDCLK0 = 0;        <span style="color: #5f615c;">// </span><span style="color: #5f615c;">flush GPIO setup</span>
+    *AUX_MU_CNTL = 3;      <span style="color: #5f615c;">// </span><span style="color: #5f615c;">enable Tx, Rx</span>
+}
+</pre>
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2b828c7">
+<h4 id="org2b828c7">UART Send Char and String</h4>
+<div class="org-src-container">
+
+<pre  class="src src-C" id="uart_send"><span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">uart_send</span>(<span style="color: #204a87;">unsigned</span> <span style="color: #204a87;">int</span> <span style="color: #b35000;">c</span>) {
+    <span style="color: #5f615c;">/* </span><span style="color: #5f615c;">wait until we can send</span><span style="color: #5f615c;"> */</span>
+    <span style="color: #346604;">do</span>{<span style="color: #346604;">asm</span> <span style="color: #346604;">volatile</span>(<span style="color: #5c3566;">"nop"</span>);}<span style="color: #346604;">while</span>(!(*AUX_MU_LSR&amp;0x20));
+    <span style="color: #5f615c;">/* </span><span style="color: #5f615c;">write the character to the buffer</span><span style="color: #5f615c;"> */</span>
+    *AUX_MU_IO=c;
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-C" id="uart_puts"><span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">uart_puts</span>(<span style="color: #204a87;">char</span> *<span style="color: #b35000;">s</span>) {
+    <span style="color: #346604;">while</span>(*s) {
+        <span style="color: #5f615c;">/* </span><span style="color: #5f615c;">convert newline to carrige return + newline</span><span style="color: #5f615c;"> */</span>
+        <span style="color: #346604;">if</span>(*s==<span style="color: #5c3566;">'\n'</span>)
+            uart_send(<span style="color: #5c3566;">'\r'</span>);
+        uart_send(*s++);
+    }
+}
+</pre>
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc398f80">
+<h4 id="orgc398f80">UART Get Char</h4>
+<div class="org-src-container">
+
+<pre  class="src src-C" id="uart_getc"><span style="color: #204a87;">char</span> <span style="color: #a40000; font-weight: bold;">uart_getc</span>() {
+    <span style="color: #204a87;">char</span> <span style="color: #b35000;">r</span>;
+    <span style="color: #5f615c;">/* </span><span style="color: #5f615c;">wait until something is in the buffer</span><span style="color: #5f615c;"> */</span>
+    <span style="color: #346604;">do</span>{<span style="color: #346604;">asm</span> <span style="color: #346604;">volatile</span>(<span style="color: #5c3566;">"nop"</span>);}<span style="color: #346604;">while</span>(!(*AUX_MU_LSR&amp;0x01));
+    <span style="color: #5f615c;">/* </span><span style="color: #5f615c;">read it and return</span><span style="color: #5f615c;"> */</span>
+    r=(<span style="color: #204a87;">char</span>)(*AUX_MU_IO);
+    <span style="color: #5f615c;">/* </span><span style="color: #5f615c;">convert carrige return to newline</span><span style="color: #5f615c;"> */</span>
+    <span style="color: #346604;">return</span> r==<span style="color: #5c3566;">'\r'</span>?<span style="color: #5c3566;">'\n'</span>:r;
+}
+</pre>
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb398c1f">
+<h4 id="orgb398c1f">Problem for Bare Metal Approach</h4>
+<ul>
+<li>What if we also need to read a sensor and send its measurement out?
+<ul>
+<li>Possible solution: interrupt, event-based, etc.</li>
+
+</ul></li>
+<li>What if we need to allocate memory dynamically?
+<ul>
+<li>E.g., storing all sensor readings for future inspection</li>
+<li>Possible solution: malloc/free (fragmentation), memory pool, etc.</li>
+
+</ul></li>
+<li>Need to manage device drivers
+<ul>
+<li>E.g., UART, network interfaces, sensors, actuators, etc.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-modern-oss">
+<h3 id="modern-oss">Popular operating System for IoT</h3>
+<canvas data-chart="bar" class="stretch">
+OS, Linux, Windows, FreeRTOS, No OS / Bare metal, Other, Mbed OS, Contiki, TinyOS, Riot OS, QNX, Vxworks, Zephyr, Micrium OS, Huawei LiteOS, KEIL RTXS
+Percentage, 71.8,  22.9,  20.4,  19.9,  10.5,  8.8,  7.2,  6.1,  5.2,  3.6,  3.0,  2.8,  1.9,  1.7,  1.1
+
+<!--
+{
+"options": {
+"plugins": {"colorschemes": {"scheme": "brewer.Paired6"},
+"title": {
+"display": true,
+"text": "Which operating system(s) do you use for your IoT devices?"
+}}}
+-->
+</canvas>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga127fe3">
+<h4 id="orga127fe3">Popular operating System for Endpoints</h4>
+<canvas data-chart="bar" class="stretch">
+OS, Linux, No OS / Bare metal, FreeRTOS, Windows, Other, Mbed OS, Contiki, TinyOS, RIOT OS, QNX, Vxworks, Zephyr, Huawei LiteOS, Micrium OS, KEIL RTXS
+Percentage, 38.7,  19.6,  19.3,  14.1,  8.0,  7.7,  6.1,  5.5,  4.7,  3.0,  2.2,  1.4,  1.1,  1.1,  0.8
+
+<!--
+{
+"options": {
+"plugins": {"colorschemes": {"scheme": "brewer.Paired6"},
+"title": {
+"display": true,
+"text": "Which operating system(s) do you use for your IoT Endpoints?"
+}}}
+-->
+</canvas>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org8d65a19">
+<h4 id="org8d65a19">Popular operating System for Gateways/Edge</h4>
+<canvas data-chart="bar" class="stretch">
+OS, Linux, Windows, Other, FreeRTOS, TinyOS, Mbed OS, Contiki, QNX, Zephyr, RIOT OS, Vxworks, Micrium OS, No OS / Bare metal, KEIL RTXS, Huawei LiteOS
+Percentage, 64.1,  14.9,  6.1,  5.0,  2.2,  2.2,  2.2,  1.9,  1.7,  1.7,  1.4,  1.1,  0.8,  0.8
+
+<!--
+{
+"options": {
+"plugins": {"colorschemes": {"scheme": "brewer.Paired6"},
+"title": {
+"display": true,
+"text": "Which operating system(s) do you use for your IoT Gateway/Edge?"
+}}}
+-->
+</canvas>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-os-definition">
+<h3 id="os-definition">Definition of Operating System</h3>
+<ul>
+<li>Definition from <a class="org-ref-reference" href="#slide-bibliography">[Hai19]</a>: <b>Software</b>
+<ul>
+<li>that <b>uses hardware</b> resources of a computer system</li>
+<li>to provide support for the <b>execution of other software</b>.</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+ </p><div about="figures/raw/hail_f0101.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0101.pdf.png" alt="Figure 1.1 of cite:Hai17" style="max-height:35vh" /></p><p></p><p style="max-width:35vh">&ldquo;<span property="dcterms:title">Figure 1.1 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0101.pdf">GitHub</a></p></div><p>
+</p>
+<aside class="notes">
+<p>
+   
+Although the Hack computer does not have an OS, it
+will help to recall briefly how you interact with that machine.
+On Hack, you are able to run a single program, where you access
+hardware directly.  E.g., reading from the keyboard requires access to
+a special memory location that represents the state of the underlying
+hardware device.
+</p>
+
+<p>
+With OSs, applications no longer have direct access to hardware.
+Instead OSs manages applications and their use of hardware.
+You will learn that the core part of OSs is called
+<a href="Operating-Systems-Introduction.html#slide-kernel">kernel</a>,
+and each vendor’s kernel comes with a specific interface to provide
+functionality to applications, usually in the form of so-called
+<a href="Operating-Systems-Introduction.html#slide-system-calls">system calls</a>.
+E.g., when you use <code>System.in</code> in Java to read keyboard input,
+the Java runtime executes a system call to ask the OS for
+keyboard input.
+</p>
+
+<p>
+Starting from system calls, we will look into techniques for
+<a href="Operating-Systems-Interrupts.html">input/output processing</a>
+(I/O for short) such as access to the keyboard.  Recall that in Hack
+you programmed a loop to wait for keyboard input.  Clearly, such a
+loop keeps the CPU busy even if no key is pressed, wasting the
+resource CPU if other application could perform useful computations.
+Hence, I/O is usually paired with
+<a href="Operating-Systems-Interrupts.html#slide-irq-big-picture">interrupt processing</a>,
+which does not exist in Hack.  Briefly, interrupts indicate the
+occurrence of external events, and OSs come with
+<a href="Operating-Systems-Interrupts.html#slide-idt">interrupt handlers</a>.
+Then, for example, keyboard processing code only needs to be executed
+when a key was pressed.
+</p>
+
+<p>
+In contrast to Hack, OSs manage the execution of several applications,
+and each application might contain several so-called
+<a href="Operating-Systems-Threads.html">threads</a> of execution.  It is
+up to application programmers to decide how many threads to use for a
+single application (and you will create
+<a href="Operating-Systems-Threads.html#slide-java-threads">threads in
+Java</a>).
+</p>
+
+<p>
+The OS manages all those threads and their
+<a href="Operating-Systems-Scheduling.html">scheduling</a> for execution
+on the CPU (or their parallel execution on multiple CPU cores).
+Usually, scheduling mechanisms involve
+[<a href="Operating-Systems-Scheduling.html">time slicing</a>, which means
+that each thread runs for a brief amount of time before the OS
+schedules a different thread for execution.  Such scheduling happens
+in intervals of about 10-50ms, creating the illusion of parallelism
+even if just a single CPU core exists.  Such time-sliced or parallel
+executions are also called
+<a href="Operating-Systems-Threads.html#slide-concurrency">concurrent</a> executions.
+</p>
+
+<p>
+If shared resources are accessed in concurrent executions, subtle bugs
+may arise, a special case of which are update anomalies in database
+systems.  The notion of
+<a href="Operating-Systems-MX.html">mutual exclusion (MX)</a>
+generalizes several synchronization mechanisms to overcome concurrency
+challenges, and we will look at typical related OS mechanisms and
+their use in Java.
+</p>
+
+<p>
+Just as in Hack, instructions and code of applications need to be
+stored in memory.  Differently from Hack with its Harvard
+architecture, code and instructions are stored uniformly in RAM in our
+Von Neumann machines, and the OS manages the allocation of RAM.
+Importantly, mainstream OSs provide support for
+<a href="Operating-Systems-Memory-I.html">virtual</a> memory,
+which does not exist in Hack, but for which we will see advantages
+such as isolation and flexibility.
+</p>
+
+<p>
+Furthermore, mainstream OSs offer a
+<a href="Operating-Systems-Processes.html#slide-process-control-block">process</a>
+concept as abstraction for applications, under which several related
+and cooperating threads share resources (such as virtual memory or
+files).  Finally, OSs offer various
+<a href="Operating-Systems-Security.html#slide-safety-security">security</a>
+mechanisms for processes and applications, a selection of which will
+be topics for the final presentation.
+</p>
+
+<p>
+To sum up, this figure visualizes
+</p>
+<ul>
+<li>what OS topics will be discussed when and</li>
+<li>how topics build upon each other.</li>
+
+</ul>
+
+<p>
+Note that some parts of this figure are hyperlinked to other
+presentations, which the mouse pointer should indicate.
+</p>
+
+
+<p>
+Part (a) of the figure shows the situation of a computer without an OS.
+Here, applications (and programmers) need to interact with hardware
+directly at a low level of abstraction.  This is what you did on
+Hack.  E.g., you needed to know a specific memory location to access
+the keyboard.
+</p>
+
+<p>
+Part (b) illustrates typical services provided by an OS to shield
+applications (and programmers) from hardware-specific details.  E.g.,
+multiple applications may run concurrently, interact as parts of
+distributed systems with networking functionality, or share persistent
+storage at the abstraction of file systems (without needing to worry
+about, say, specifics of particular keyboards, disks, or network cards
+and their interfaces).
+</p>
+
+<p>
+What you see here is a typical example of layering to hide lower-layer
+details with the abstractions of an interface in software engineering:
+The OS provides an API (see next slide) of functions that
+application programmers can invoke to access OS services, in
+particular to access underlying hardware.  As
+explained later, that API is provided by a core part
+of the OS, which is called kernel and whose functions are
+called system calls.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgaadc5aa">
+<h4 id="orgaadc5aa">OS Services</h4>
+<ul>
+<li>A full-fledged OS services/features/functionality includes
+<ul>
+<li class="fragment appear">Dynamically <b>allocate/free memory</b></li>
+<li class="fragment appear">Support for <b>multiple concurrent</b> computations
+<ul>
+<li>Run programs, divide hardware, manage state</li>
+
+</ul></li>
+<li class="fragment appear"><b>Control interactions</b> between concurrent computations
+<ul>
+<li>E.g., locking, private memory</li>
+
+</ul></li>
+<li class="fragment appear">Also, <b>networking, file system, device drivers(even GUI)</b> support</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+ </p><div about="figures/raw/hail_f0101.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0101.pdf.png" alt="Figure 1.1 of cite:Hai17" style="max-height:25vh" /></p><p></p><p style="max-width:25vh">&ldquo;<span property="dcterms:title">Figure 1.1 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0101.pdf">GitHub</a></p></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-os-boundary">
+<h3 id="os-boundary">Kernel</h3>
+<ul>
+<li class="fragment appear">Boundary between OS and applications is fuzzy</li>
+<li class="fragment appear"><b>Kernel</b> is fundamental, core part of OS</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-kernel-variants">
+<h4 id="kernel-variants">OS Architecture and Kernel Variants</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/1280px-OS-structure2.svg.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/1280px-OS-structure2.svg.png" alt="Monolith-, Micro- and a "hybrid" kernel" style="max-height:35vh" /></p><p>Monolith-, Micro- and a "hybrid" kernel</p><p style="max-width:35vh"> under <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>; from <a rel="dcterms:source" href="https://commons.wikimedia.org/wiki/File:OS-structure2.svg">Wikimedia Commons</a></p></div></div><p>
+</p>
+<p>
+See <a href="http://www.makelinux.net/kernel_map/">this map of the Linux kernel</a>
+for a real-life monolithic example
+</p>
+<aside class="notes">
+<p>
+This figure shows different approaches towards layering and modularization
+in the context of OS kernels.  First of all, note the common layers,
+namely applications at the top and hardware at the bottom.
+</p>
+
+<p>
+In between are different layers related to what we think of as OS
+functionality.  Note that this OS functionality is marked with a red
+(left) and yellow (middle and right) background labeled “kernel mode”
+and “user mode”, respectively.  These modes refer to different
+CPU privilege levels, which will be discussed in the
+<a href="Operating-Systems-Interrupts.html#slide-kernel-mode">next presentation</a>;
+for now it is sufficient to know that code running in kernel mode has
+full control over the underlying hardware, while code running in user
+mode is restricted and needs to invoke lower layers (that run in kernel
+mode) for certain functionality.
+</p>
+
+<p>
+At one extreme, shown in the middle here, are so-called <i>micro kernels</i>,
+which just provide the minimal functionality and services as
+foundation for full-fledged OSs.  Typical functionality that we expect
+from OSs, such as file services or hardware independent network
+access, is then <i>not</i> implemented in the kernel but in user mode
+processes or servers.  The L4 family mentioned later on as
+well as Fuchsia provide examples for micro kernels.
+</p>
+
+<p>
+The other extreme is made up of so-called <i>monolithic kernels</i>, which
+provide (almost) everything that we expect from OSs.  For
+modularization, such kernels may be structured in a sequence of
+layers, where the top layer provides the system call API to be
+explained on subsequent slides, while the bottom layer implements
+device driver abstractions to hide hardware peculiarities.
+Intermediate layers offer levels of abstraction on the way from
+hardware to application facing functionality.  GNU/Linux and Windows
+come with monolithic kernels.
+</p>
+
+<p>
+Finally, <a href="https://en.wikipedia.org/wiki/Hybrid_kernel">hybrid kernels</a>
+(e.g., Windows NT) can be built as trade-off between both extreme
+approaches.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-kernel">
+<h4 id="kernel">OS Kernel</h4>
+<ul>
+<li>OS runs as code on CPU
+<ul>
+<li>Just as any other program</li>
+
+</ul></li>
+<li><b>Kernel</b> contains central part of OS
+<ul>
+<li class="fragment appear">Provides <b>API</b> for OS services via system calls (next slide)</li>
+<li class="fragment appear">Code and data of kernel typically main memory resident</li>
+<li class="fragment appear">Kernel functionality runs in kernel mode of CPU, reacts to
+system calls and interrupts</li>
+<li class="fragment appear">Variants (previous slide)
+<ul>
+<li>Monolithic (“large,” all OS related services)</li>
+<li>Micro kernel (“small,” only necessary services)</li>
+<li>“Best” design depends on application
+<ul>
+<li>Provable security only with micro kernels (seL4)</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-system-calls">
+<h3 id="system-calls">Interacting with Kernel: System Calls</h3>
+<ul>
+<li>System call = function = part of kernel API
+<ul>
+<li>Implementation of OS service
+<ul>
+<li>E.g., process execution, main memory allocation,
+hardware resource access (e.g., keyboard, network, disk, graphics
+card)</li>
+
+</ul></li>
+
+</ul></li>
+<li>Different OSs may offer different system calls (i.e., offer incompatible APIs)
+<ul>
+<li>With different implementations</li>
+<li>With different calling conventions</li>
+
+</ul></li>
+<li>The Portable Operating System Interface (*POSIX is a family of standards specified by the IEEE Computer Society for maintaining compatibility between operating systems.
+<ul>
+<li>Many OS are POSIX-complaint: Linux, Android</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-main-concepts">
+<h2 id="main-concepts">Memory Management</h2>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-big-picture">
+<h3 id="big-picture">Virtual Memory</h3>
+<p>
+ </p><div about="figures/raw/vm.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/vm.png" alt="Big picture for virtual memory" style="max-height:50vh" /></p><p></p></div><p>
+</p>
+<aside class="notes">
+<p>
+The key idea of virtual memory management is to provide a layer of abstraction that hides allocation of the shared hardware resource RAM to individual processes.  Thus, processes (and their threads) do not need to care or know whether or where their data structures reside in RAM.
+</p>
+
+<p>
+Physical memory consists of RAM and secondary storage devices such as SSDs or HDDs.  Typically, the OS uses dedicated portions of secondary storage as so-called swap or paging areas to enlarge physical memory beyond the size of RAM.  Again, processes need neither care nor know about this fact, which is handled by OS in the background.
+</p>
+
+<p>
+Each process has its own individual virtual address space, starting at address 0, consisting of equal-sized blocks called pages (e.g., 4 KiB in size each).  Each of those pages may or may not be present in RAM. RAM in turn is split into frames (of the size of pages).  The OS loads pages into frames and keeps track what pages of virtual address spaces are located where in physical memory.
+</p>
+
+<p>
+Here you see a process with a virtual address space consisting of 10 pages (numbered 0 to 9, implying that the virtual address space has a size of 10*4 KiB = 40 KiB), while RAM consists of 8 frames (numbered 0 to 7, implying that RAM has a size of 8*4 KiB = 32 KiB). For example, page 0 is located in frame 6, while page 3 is located on disk, and frames 2, 3, and 7 are not allocated to the process under consideration.
+</p>
+
+<p>
+Notice that neighboring pages in the virtual address space may be allocated in arbitrary order in physical memory.  As processes and threads just use virtual addresses, they do not need to know about such details of physical memory.
+</p>
+
+<p>
+Code of threads just uses virtual addresses within machine instructions, and it is the OS’s task to locate the corresponding physical addresses in RAM or to bring data from secondary storage to RAM in the first place.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5961c8a">
+<h4 id="org5961c8a">Physical vs virtual addresses</h4>
+<ul>
+<li>Physical: Addresses used on memory bus
+<ul>
+<li>RAM is <b>byte</b>-addressed (1 byte = 8 bits)</li>
+<li>Each <code>address</code> selects a byte (not a word as in Hack)</li>
+<li>(Machine instructions typically operate on words (= multiple bytes), though)</li>
+
+</ul></li>
+<li>Virtual: Addresses used by processes(running programs)</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-virtual-address">
+<h4 id="virtual-address">Virtual Addresses</h4>
+<ul>
+<li>Additional layer of <b>abstraction</b> provided by OS
+<ul>
+<li>Programmers do not need to worry about physical memory locations at all</li>
+<li>Pieces of data (and instructions) are identified by virtual addresses
+<ul>
+<li>At different points in time, the same piece of data (identified by its virtual address) may reside at different locations in RAM (identified by different physical addresses) or may not be present in RAM at all</li>
+
+</ul></li>
+
+</ul></li>
+<li>OS keeps track of <b>(virtual) address spaces</b>:
+What (virtual address) is located where (physical address)
+<ul>
+<li>Supported by hardware, <b>memory management unit</b> (<b>MMU</b>)
+<ul>
+<li>Translation of virtual into physical addresses (see next slide)</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-processes">
+<h3 id="processes">Processes</h3>
+<ul>
+<li>OS manages running programs via <b>processes</b> (Other names: tasks, … )</li>
+<li><b>Process</b> ≈ a running program occupying a virtual address space
+<ul>
+<li><p>
+Web browser may open multiple processes
+</p></li>
+
+</ul></li>
+<li>Each process has its <b>own</b> virtual address space
+<ul>
+<li>Starting at virtual address 0, mapped per process to RAM by the OS, e.g.:
+<ul>
+<li>Virtual address 0 of process P1 located at physical address 0</li>
+<li>Virtual address 0 of process P2 located at physical address 16384</li>
+<li>Virtual address 0 of process P3 not located in RAM at all</li>
+
+</ul></li>
+<li>Processes may <b>share</b> data (with OS permission), e.g.:
+<ul>
+<li><code>BoundedBuffer</code> located at RAM address 42</li>
+<li>Identified by virtual address 42 in P1, by 4138 in P3</li>
+
+</ul></li>
+
+</ul></li>
+<li>Address space of process is <b>shared by its threads</b>
+<ul>
+<li>E.g., for all threads of P2, virtual address 0 is associated with physical address 16384</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgac336a9">
+<h4 id="orgac336a9">Memory Layout for a C program</h4>
+<div class="leftcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/stack.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/stack.png" alt="Figure" style="max-height:70vh" /></p><p>Memory Layout for a C program</p></div></div><p>
+</p>
+
+</div>
+
+<div class="rightcol">
+<p>
+
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-c" id="helloworld2"><span style="color: #75507b;">#include</span> <span style="color: #5c3566;">&lt;stdio.h&gt;</span>
+<span style="color: #75507b;">#include</span> <span style="color: #5c3566;">&lt;malloc.h&gt;</span>
+
+<span style="color: #346604;">const</span> <span style="color: #204a87;">char</span> *<span style="color: #b35000;">hello</span> = <span style="color: #5c3566;">"Hello world!\n"</span>;
+<span style="color: #204a87;">int</span> <span style="color: #b35000;">b</span>;
+
+<span style="color: #204a87;">int</span> <span style="color: #a40000; font-weight: bold;">main</span>()
+{
+    <span style="color: #204a87;">int</span> <span style="color: #b35000;">a</span> = 1;
+    b = 2;
+    <span style="color: #204a87;">void</span> *<span style="color: #b35000;">p</span> = malloc(1000);
+    printf(hello);
+    <span style="color: #346604;">return</span> 0;
+}
+</pre>
+</div>
+
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-vm-uses">
+<h3 id="vm-uses">Uses for Virtual Memory</h3>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgdbf2923">
+<h4 id="orgdbf2923">Private Storage</h4>
+<ul>
+<li>Each process has its own address space, <b>isolated</b> from others
+<ul>
+<li class="fragment appear"><b>Autonomous use</b> of virtual addresses
+<ul>
+<li>Recall: Virtual address 0 used differently in every process</li>
+
+</ul></li>
+<li class="fragment appear">Underlying <b>data protected</b> from accidental and malicious modifications by other processes
+<ul>
+<li>OS allocates frames exclusively to processes (leading to disjoint portions of RAM for different processes)</li>
+<li>Unless frames are explicitly shared between processes</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>Processes may partition address space
+<ul>
+<li>Read-only region holding machine instructions, called <b>text</b></li>
+<li>Writable region(s) holding rest (data, stack, heap)</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-shared-memory">
+<h4 id="shared-memory">Controlled Sharing</h4>
+<ul>
+<li>OS may map limited portion of RAM into multiple address spaces
+<ul>
+<li>Multiple page tables contain entries for the <b>same frames</b> then
+<ul>
+<li>See <code>smem</code> demo later on</li>
+
+</ul></li>
+
+</ul></li>
+<li>Shared code
+<ul>
+<li>If same program runs multiple times, processes can share text</li>
+<li>If multiple programs use same libraries (libXYZ.so under GNU/Linux, DLLs under Windows), processes can share them</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-drawing-cow">
+<h4 id="drawing-cow">Copy-On-Write Drawing</h4>
+<p>
+ </p><div about="figures/raw/hail_f0607.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0607.pdf.png" alt="Figure 6.4 of cite:Hai17" style="max-height:60vh" /></p><p></p><p style="max-width:60vh">&ldquo;<span property="dcterms:title">Figure 6.4 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0604.pdf">GitHub</a></p></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-smem">
+<h4 id="smem">GNU/Linux Reporting: <code>smem</code></h4>
+<ul>
+<li>User space tool to read <code>smaps</code> files: <code>smem</code>
+<ul>
+<li>See <a href="https://linoxide.com/tools/memory-usage-reporting-smem/">https://linoxide.com/tools/memory-usage-reporting-smem/</a></li>
+
+</ul></li>
+<li>Terminology
+<ul>
+<li><b>Virtual set size</b> (VSS): Size of virtual address space</li>
+<li><b>Resident set size</b> (RSS): Allocated main memory
+<ul>
+<li>Standard notion, yet overestimates memory usage as lots of
+memory is shared between processes
+<ul>
+<li>Shared memory is added to the RSS of every sharing process</li>
+
+</ul></li>
+
+</ul></li>
+<li><b>Unique set size</b> (USS): memory allocated exclusively to process
+<ul>
+<li>That much would be returned upon process’ termination</li>
+
+</ul></li>
+<li><b>Proportional set size</b> (PSS): USS plus “fair share” of shared pages
+<ul>
+<li>If page shared by 5 processes, each gets a fifth of a page
+added to its PSS</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7918e91">
+<h4 id="org7918e91">Flexible Memory Allocation</h4>
+<ul>
+<li>Allocation of RAM does not need to be contiguous
+<ul>
+<li>Large portions of RAM can be allocated via individual frames
+<ul>
+<li>Which may or may not be contiguous</li>
+
+</ul></li>
+<li>The virtual address space can be contiguous, though</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga71acea">
+<h4 id="orga71acea">Non-Contiguous Allocation</h4>
+<p>
+ </p><div about="figures/raw/hail_f0609.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0609.pdf.png" alt="Figure 6.9 of cite:Hai17" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">Figure 6.9 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0609.pdf">GitHub</a></p></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-mapped-file">
+<h4 id="mapped-file">Persistence</h4>
+<ul>
+<li>Data kept persistently in files on secondary storage</li>
+<li><p>
+When process opens file, file can be <b>mapped</b> into virtual address space
+</p>
+<ul class="fragment appear">
+<li>Initially without loading data into RAM</li>
+<li>Page accesses in that file trigger <b>page faults</b>
+<ul>
+<li>Handled by OS by loading those pages into RAM
+<ul>
+<li>Marked read-only and <b>clean</b></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>Upon write, MMU triggers interrupt, OS makes page writable and
+remembers it as <b>dirty</b> (changed from <b>clean</b>)
+<ul>
+<li>Typically with MMU hardware support via <b>dirty bit</b> in page table</li>
+<li>Dirty = to be written to secondary storage at some point in time
+<ul>
+<li>After being written, marked as clean and read-only</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<p>
+Typical OSs offer file systems for the persistent storage of data on disks, where persistent means that (in contrast to RAM) such data remains safely in place even if the machine is powered down. Different OSs offer different system calls for file access, and this slide focuses on a technique called memory-mapped files.  Here, the file is simply mapped into the virtual address space of the process containing the thread, which invokes the system call.  “Mapping” means that afterwards the file’s bytes are available starting at a virtual address returned by the system call.
+</p>
+
+<p>
+Initially, no data needs to be loaded into RAM at all.  If the thread now tries to access a byte belonging to the file, a page fault occurs, and the thread gets blocked.  The page fault handler then triggers the transfer of the corresponding block of disk data to RAM (using metadata about the file system for address calculations).  The completion of that transfer is indicated by an interrupt, in response to which the page table is updated and the corresponding page is marked as read-only and clean, where clean indicates that the page is identical to the copy stored on disk.  Also, the thread accessing the file is made runnable and can access its data.
+</p>
+
+<p>
+While read accesses just return the requested data, write accesses trigger another interrupt as the page is marked read-only.  Now, the interrupt handler marks the page as writable and dirty.  Being writable implies that further write accesses succeed without further interrupts, and being dirty indicates that the version in RAM now differs from the version on disk.  Thus, when a thread requests to write data back to the file, dirty pages need to be written to disk.  Afterwards, the file’s pages are marked as clean and read-only again.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-paging">
+<h3 id="paging">Paging</h3>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-page-page-table">
+<h4 id="page-page-table">Pages and Page Tables</h4>
+<ul>
+<li>Mapping between virtual and physical addresses does <b>not</b> happen at
+level of bytes
+<ul>
+<li>Instead, larger <b>blocks</b> of memory, say 4 <a href="https://en.wikipedia.org/wiki/Binary_prefix#kibi">KiB</a>
+<ul>
+<li>Blocks of virtual memory are called <b>pages</b></li>
+<li>Blocks of physical memory (RAM) are called <b>(page) frames</b></li>
+
+</ul></li>
+
+</ul></li>
+<li>Virtual address spaces split into <b>pages</b>, RAM into <b>frames</b>
+<ul>
+<li>Page is <b>unit of transfer</b> by OS</li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>OS manages a <b>page table</b> per process
+<ul>
+<li>One entry per page
+<ul>
+<li>In what frame is page located (if present in RAM)</li>
+<li>Additional information: Is page read-only, executable, or modified (from an on-disk version)?</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-fig-6.10">
+<h4 id="fig-6.10">Sample Memory Allocation</h4>
+<ul>
+<li><p>
+Sample allocation of frames to some process
+ </p><div about="figures/raw/hail_f0610.60.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0610.60.png" alt="Figure 6.10 of cite:Hai17" style="max-height:50vh" /></p><p></p><p style="max-width:50vh">&ldquo;<span property="dcterms:title">Figure 6.10 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0610.pdf">GitHub</a></p></div><p>
+</p></li>
+
+</ul>
+
+<aside class="notes">
+<p>
+Several subsequent slides will refer to this example, which shows a main
+memory situation with just four frames of main memory.  Clearly, that
+is an unrealistically small example, but it is sufficient to
+demonstrate the main points.
+Here, a process with a virtual address space of 8 pages is shown, some
+of which are allocated to frames as indicated by arrows.  Note that
+neighboring  pages can (a) be mapped to frames in arbitrary order or
+(b) not be mapped to RAM at all.
+The Xs indicate that no frame is assigned to hold pages 2-5 or page 7.
+Frame 2 is unused.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-page-table-definition">
+<h4 id="page-table-definition">Page Tables</h4>
+<ul>
+<li>Page Table = Data structure managed by OS
+<ul>
+<li><b>Per process</b></li>
+
+</ul></li>
+<li>Table contains one entry per page of virtual address space
+<ul>
+<li>Each entry contains
+<ul>
+<li>Frame number for page in RAM (if present in RAM)</li>
+<li>Control bits (not standardized, e.g., valid, read-only,
+dirty, executable)</li>
+<li>Note: Page tables do not contain page numbers
+as they are implicitly given by row numbers (starting from 0)</li>
+
+</ul></li>
+<li>Note on following sample page table
+<ul>
+<li>“0” as valid bit indicates that page is not present in RAM, so
+value under “Frame#” does not matter and is shown as “X”</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-sample-page-table">
+<h4 id="sample-page-table">Sample Page Table</h4>
+<ul>
+<li><p>
+Consider previously shown RAM allocation (Fig. 6.10)
+ </p><div about="figures/raw/hail_f0610.60.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0610.60.png" alt="Figure 6.10 of cite:Hai17" style="max-height:50vh" /></p><p></p><p style="max-width:50vh">&ldquo;<span property="dcterms:title">Figure 6.10 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0610.pdf">GitHub</a></p></div><p>
+</p>
+<ul class="fragment appear">
+<li><p>
+Page table for that situation (Fig. 6.11)
+</p>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-center">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Valid</th>
+<th scope="col" class="org-center">Frame#</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">1</td>
+<td class="org-center">1</td>
+</tr>
+
+<tr>
+<td class="org-left">1</td>
+<td class="org-center">0</td>
+</tr>
+
+<tr>
+<td class="org-left">0</td>
+<td class="org-center">X</td>
+</tr>
+
+<tr>
+<td class="org-left">0</td>
+<td class="org-center">X</td>
+</tr>
+
+<tr>
+<td class="org-left">0</td>
+<td class="org-center">X</td>
+</tr>
+
+<tr>
+<td class="org-left">0</td>
+<td class="org-center">X</td>
+</tr>
+
+<tr>
+<td class="org-left">1</td>
+<td class="org-center">3</td>
+</tr>
+
+<tr>
+<td class="org-left">0</td>
+<td class="org-center">X</td>
+</tr>
+</tbody>
+</table></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-ex-translation">
+<h4 id="ex-translation">Address Translation Example</h4>
+<p>
+ </p><div about="figures/raw/hail_f0612.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0612.pdf.png" alt="Figure 6.4 of cite:Hai17" style="max-height:60vh" /></p><p></p><p style="max-width:60vh">&ldquo;<span property="dcterms:title">Figure 6.4 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0604.pdf">GitHub</a></p></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0ce0bb9">
+<h3 id="org0ce0bb9">Is complex memory management scheme necessary?</h3>
+<ul>
+<li class="fragment appear">It depends!</li>
+<li class="fragment appear"><p class="forwardlink">
+TinyOS (<a class="org-ref-reference" href="#slide-bibliography">[TinyOS]</a>)
+</p>
+
+<p>
+<i>The language(NeS) does <b>NOT</b> support dynamic memory allocation; components statically declare all of a program’s state, which prevents memory fragmentation as well as runtime allocation failures. The restriction sounds more onerous than it is in practice; the component abstraction eliminates many of the needs for dynamic allocation. In the few rare instances that it is truly needed (e.g., TinyDB ), a memory pool component can be shared by a set of cooperating components.</i>
+</p></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org649c0bc">
+<h2 id="org649c0bc">Multitasking</h2>
+<div class="outline-text-2" id="text-org649c0bc">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-multitasking">
+<h3 id="multitasking">Multitasking</h3>
+<ul>
+<li class="fragment appear">Fundamental OS service: <b>Multitasking</b>
+<ul>
+<li>Manage <b>multiple computations</b> going on <b>at the same time</b></li>
+<li>E.g., reading multiples sensor and transceiving data via Wifi/Ethernet</li>
+
+</ul></li>
+<li class="fragment appear">OS supports multitasking via <b>scheduling</b>
+<ul>
+<li>Decide what computation to execute when on what CPU core
+<ul>
+<li>Recall: Frequently per second, time-sliced, beyond human perception</li>
+
+</ul></li>
+
+</ul></li>
+<li class="fragment appear">Multitasking introduces <b>concurrency</b>
+<ul>
+<li>(Details and challenges in upcoming sessions)</li>
+<li>Recall: Even with single CPU core, illusion of “simultaneous” or “parallel” computations
+<ul>
+<li>(Later presentation: Advantages include improved responsiveness and improved resource usage)</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgfe4cf41">
+<h3 id="orgfe4cf41">Thread</h3>
+<div class="outline-text-3" id="text-orgfe4cf41">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-computations-processes-threads">
+<h4 id="computations-processes-threads">Process vs Thread</h4>
+<ul>
+<li>Various technical terms for “computations”: Jobs, tasks, processes, threads, …
+<ul>
+<li class="fragment appear">We use only <b>thread</b> and <b>process</b></li>
+<li class="fragment appear"><b>Process</b>
+<ul>
+<li>Container for related threads and their resources</li>
+<li>Created upon start of program and by programs (child processes)</li>
+<li>Unit of management and protection (threads from different processes are isolated from another)</li>
+
+</ul></li>
+<li class="fragment appear"><b>Thread</b>
+<ul>
+<li>Unit of scheduling and concurrency</li>
+<li>Sequence of instructions (to be executed on CPU core)</li>
+<li>Single process may contain just one or several threads, e.g.:
+<ul>
+<li>Endpoints reading multiple sensors and transceiving data via network interfaces</li>
+<li>Web server handling requests from different clients in different threads sharing same code</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-drawing-threads">
+<h4 id="drawing-threads">Threads!</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/threads.svg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/threads.svg" alt="Threads!" style="max-height:50vh" /></p><p>Threads!</p><p style="max-width:50vh">© 2016 Julia Evans, all rights reserved; from <a rel="dcterms:source" href="https://drawings.jvns.ca/threads/">julia's drawings</a>. Displayed here with personal permission.</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-thread-terminology">
+<h4 id="thread-terminology">Thread Terminology</h4>
+<ul>
+<li>Parallelism</li>
+<li>Concurrency</li>
+<li>Thread preemption</li>
+<li>I/O bound vs CPU bound threads</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-parallelism">
+<h4 id="parallelism">Parallelism</h4>
+<ul>
+<li><b>Parallelism</b> = <b>simultaneous</b> execution
+<ul>
+<li>E.g., multi-core</li>
+<li>Potential speedup for computations!
+<ul>
+<li>(Limited by
+<a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">Amdahl’s law</a>)</li>
+
+</ul></li>
+
+</ul></li>
+<li>Note
+<ul>
+<li>Processors contain more and more cores</li>
+<li>Individual cores do not become much faster any longer
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore’s law</a> is slowing down</li>
+
+</ul></li>
+<li>Consequence: Need parallel programming to take advantage of current hardware</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-concurrency">
+<h4 id="concurrency">Concurrency</h4>
+<ul>
+<li><p>
+Concurrency is <b>more general</b> term than parallelism
+</p>
+<ul>
+<li>Concurrency includes
+<ul>
+<li class="fragment appear"><p>
+<b>Parallel</b> threads (on multiple CPU cores)
+ </p><div about="figures/raw/3-threads-parallel.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/3-threads-parallel.png" alt="Parallel threads" style="max-height:10vh" /></p><p></p><p style="max-width:10vh"><a rel="dcterms:source" href="https://gitlab.com/oer/figures/blob/master/OS/3-threads-parallel.svg">Figure</a> under <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a></p></div><p>
+</p>
+<ul>
+<li>(Executing different code in general)</li>
+
+</ul></li>
+<li class="fragment appear"><p>
+<b>Interleaved</b> threads (taking turns on single CPU core)
+</p>
+<ul>
+<li>With gaps on single core!
+ </p><div about="figures/raw/3-threads-interleaved.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/3-threads-interleaved.png" alt="Interleaved threads" style="max-height:10vh" /></p><p></p><p style="max-width:10vh"><a rel="dcterms:source" href="https://gitlab.com/oer/figures/blob/master/OS/3-threads-interleaved.svg">Figure</a> under <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a></p></div><p></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<ul class="fragment appear">
+<li>Challenges and solutions for concurrency apply to parallel and interleaved executions</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-preemption">
+<h4 id="preemption">Thread Preemption</h4>
+<ul>
+<li><b>Preemption</b> = temporary removal of thread from CPU by OS
+<ul>
+<li>Before thread is finished (with later continuation)
+<ul>
+<li>To allow others to continue after <b>scheduling</b> decision by OS</li>
+
+</ul></li>
+<li>Typical technique in modern OSs
+<ul>
+<li>Run lots of threads for brief intervals per second; creates
+illusion of parallel executions, even on single-core CPU</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-classification">
+<h4 id="classification">Thread Classification</h4>
+<ul>
+<li><b>I/O bound</b>
+<ul>
+<li>Threads spending most time submitting and waiting for I/O
+requests</li>
+<li>Run frequently by OS, but only for short periods of time
+<ul>
+<li>Until next I/O operation</li>
+<li>E.g., reading sensors, transmitting data</li>
+
+</ul></li>
+
+</ul></li>
+<li><b>CPU bound</b>
+<ul>
+<li>Threads spending most time executing code</li>
+<li>Run for longer periods of time
+<ul>
+<li>Until preempted by scheduler</li>
+<li>E.g., video compression</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-thread-states">
+<h4 id="thread-states">OS Thread States</h4>
+<ul>
+<li>Different OSs distinguish different sets of states; typically:
+<ul>
+<li><b>Running</b>: Thread(s) currently executing on CPU (cores)</li>
+<li><b>Runnable</b>: Threads ready to perform computations</li>
+<li><b>Waiting</b> or <b>blocked</b>: Threads waiting for some event to occur</li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>OS manages states via <a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)">queues</a>
+(with suitable data structures)
+<ul>
+<li><b>Run queue(s)</b>: Potentially per CPU core
+<ul>
+<li>Containing runnable threads, input for scheduler</li>
+
+</ul></li>
+<li><b>Wait queue(s)</b>: Potentially per event (type)
+<ul>
+<li>Containing waiting threads
+<ul>
+<li>OS inserts running thread here upon blocking system call</li>
+<li>OS moves thread from here to run queue when event occurs</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-state-transitions">
+<h4 id="state-transitions">Thread State Transitions</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/hail_f0303.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0303.pdf.png" alt="Figure 3.3 of cite:Hai17" style="max-height:50vh" /></p><p>Figure 3.3 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></p><p style="max-width:50vh">by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0303.pdf">GitHub</a></p></div></div><p>
+</p>
+<aside class="notes">
+<p>
+This diagram shows typical state transitions caused by actions of threads, decisions of the OS, and external I/O events.  State changes are always managed by the OS.
+</p>
+
+<p>
+Newly created threads, such as the ones you created in Java, are Runnable. When the CPU is idle, the OS’ scheduler executes a selection algorithm among the Runnable threads and dispatches one to run on the CPU.  When that thread yields or is preempted, the OS remembers that thread as Runnable.
+</p>
+
+<p>
+If the thread invokes a blocking system call, the OS changes its state to Waiting.  Once the event for which the thread waits has happened (e.g., a key pressed or some data has been transferred from disk to RAM), the OS changes the state from Waiting to Runnable. At some later point in time, that thread may be selected by the scheduler to run on the CPU again.
+</p>
+
+<p>
+In addition, an outgoing arc Termination is shown from state Running, which indicates that a thread has completed its computations (e.g., the main function in Java ends).  Actually, threads may also be terminated in states Runnable and Waiting, which is not shown here, but which can happen if a thread is killed (e.g., you end a program or shut down the machine).
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-thread-reasons">
+<h3 id="thread-reasons">Main Reasons for Threads</h3>
+<ul>
+<li><b>Resource utilization</b>
+<ul>
+<li>Keep most of the hardware resources busy most of the time, e.g.:
+<ul>
+<li>While one thread is waiting for external event (e.g., waiting for sensor reading/transmission to finish), allow other threads to continue</li>
+<li>Keep multiple cores busy
+<ul>
+<li>E.g., OS housekeeping such as zeroing of memory on second core</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul></li>
+<li><b>Responsiveness</b>
+<ul>
+<li>Use separate threads to react quickly to external events</li>
+
+</ul></li>
+<li>More <b>modular design</b></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-interleaved">
+<h4 id="interleaved">Interleaved Execution Example</h4>
+<p>
+ </p><div about="figures/raw/hail_f0206.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0206.pdf.png" alt="Interleaved execution example" style="max-height:50vh" /></p><p></p></div><p>
+</p>
+<aside class="notes">
+<p>
+This figure illustrates the benefit of improved resource utilization
+resulting from multithreading, which leads to higher overall throughput.
+Consider two threads and their resource demands, each taking 1h to finish.
+The first thread, shown on the left, is I/O bound, in this case a
+virus scanner, which uses the CPU only for brief periods of time,
+whereas it mostly waits for new data to arrive from disk.
+In contrast, the other thread, shown to the right, is CPU bound,
+performing complex graph rendering; it doesn’t need the disk at all.
+Clearly, the sequential execution of both threads, which takes 2h,
+is a waste of resources, namely a waste of CPU time.
+</p>
+
+<p>
+In fact, an OS that is equipped with a scheduling mechanism might be
+able to schedule the 2nd thread whenever the 1st one is idle waiting for
+new data to arrive from disk.  In that case, both threads can be executed
+in an interleaved fashion on a single CPU core, keeping the core busy
+all the time.  In the example shown here, both threads now finish
+after 1.5h.
+</p>
+
+<p>
+Note that the total time of 1.5h is an arbitrary example,
+without underlying calculation.  The point is that idle times of the
+virus scanner can now be used for real work, which leads to a total
+time of less than 2h.  Of course, both threads could also finish at
+different points in time (but earlier than 2h).
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-thread-switching">
+<h3 id="thread-switching">Thread Switching</h3>
+<ul>
+<li>With multiple threads, OS needs to decide which to execute when
+→ Scheduling 
+<ul>
+<li>(Similar to machine scheduling for industrial production, which
+you may know from operations management)</li>
+<li><a href="Operating-Systems-Introduction.html#slide-multitasking">Recall multitasking</a>
+<ul>
+<li>OS may use time-slicing to schedule threads for short intervals, illusion of parallelism on single CPU core</li>
+
+</ul></li>
+
+</ul></li>
+<li>After that decision, a <b>context switch</b> (thread switch) takes place
+<ul>
+<li>Remove thread A from CPU
+<ul>
+<li><b>Remember A&rsquo;s state</b> (instruction pointer/program counter,
+register contents, stack, …)</li>
+
+</ul></li>
+<li><b>Dispatch</b> thread B to CPU
+<ul>
+<li><b>Restore B&rsquo;s state</b></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<p>
+Recall how code is executed on the CPU (e.g., with Hack).  A special register, the program counter, specifies what instruction to execute next, and instructions may modify CPU registers.  You may think of one assembly language program as being executed in one thread.
+</p>
+
+<p>
+Recall that with <a href="Operating-Systems-Introduction.html#slide-multitasking">multitasking</a>, the OS manages multiple threads and schedules them for execution on CPU cores, usually with time-slicing.
+</p>
+
+<p>
+If the time slice for thread A ends, A is usually in the middle of some computation.  The state of that computation is defined by the current value of the program counter, by values stored in registers, and other information.  To resume this computation later on, the OS needs to save the state of thread A somewhere, before another thread B can be executed.  Similarly, thread B may be in the middle of its own computation, whose state was saved previously by the OS.
+</p>
+
+<p>
+The switch from thread A via the OS to thread B with saving of A’s and
+restoring of B’s state is called a <i>context switch</i>.  Subsequent
+slides provide more details how such context switches happen.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-yielding">
+<h4 id="yielding">Thread Switching with <code>yield</code></h4>
+<p>
+In the following
+</p>
+<ul>
+<li>First, simplified setting of voluntary switch from thread A to
+thread B
+<ul>
+<li>Function <code>switchFromTo()</code> on next slide
+<ul>
+<li>For details, see Sec. 2.4 in <a class="org-ref-reference" href="#slide-bibliography">[Hai19]</a></li>
+
+</ul></li>
+<li>Leaving the CPU voluntarily is called <b>yielding</b>; <code>yield()</code> may
+really be an OS system call</li>
+
+</ul></li>
+<li>Afterwards, the real thing: <b>Preemption</b> by the OS</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-interleaved-instructions">
+<h4 id="interleaved-instructions">Interleaved Instruction Sequence</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/3-interleaved-executions.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/3-interleaved-executions.png" alt="Interleaved execution of threads.  Based on [[https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/][Figure 2.7 of book by Max Hailperin]], CC BY-SA 3.0." style="max-height:50vh" /></p><p>Interleaved execution of threads.  Based on <a href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/">Figure 2.7 of book by Max Hailperin</a>, CC BY-SA 3.0.</p><p style="max-width:50vh">by <a rel="cc:attributionURL dcterms:creator" href="https://lechten.gitlab.io/#me" property="cc:attributionName">Jens Lechtenbörger</a> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; from <a rel="dcterms:source" href="https://gitlab.com/oer/figures/blob/master/OS/3-interleaved-executions.svg">GitLab</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-cooperative-mt">
+<h4 id="cooperative-mt">Cooperative Multitasking</h4>
+<ul>
+<li>Approach based on <code>switchFromTo()</code> is <b>cooperative</b>
+<ul>
+<li>Thread A decides to yield CPU (voluntarily)
+<ul>
+<li>A hands over to B</li>
+
+</ul></li>
+
+</ul></li>
+<li>Disadvantages
+<ul>
+<li>Inflexible: A and B are hard-coded</li>
+<li>No parallelism, just interleaved execution</li>
+<li>What if A contains a bug and enters an infinite loop?</li>
+
+</ul></li>
+<li>Advantages
+<ul>
+<li>Programmed, so full control over when and where of switches</li>
+<li>Programmed, so usable even in restricted environments/OSs
+without support for multitasking/preemption</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-preemptive-mt">
+<h4 id="preemptive-mt">Preemptive Multitasking</h4>
+<ul>
+<li>Preemption: OS removes thread <b>forcefully</b> (but only
+temporarily) from CPU
+<ul>
+<li>Housekeeping on stacks to allow seamless continuation later on
+similar to cooperative approach</li>
+<li>OS schedules different thread for execution afterwards</li>
+
+</ul></li>
+<li>Additional mechanism: Timer interrupts
+<ul>
+<li>OS defines <b>time slice</b> (<b>quantum</b>), e.g., 30ms</li>
+<li>Interrupt fires every 30ms
+<ul>
+<li>Interrupt handler invokes OS scheduler to determine next thread</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-multitasking-overhead">
+<h4 id="multitasking-overhead">Multitasking Overhead</h4>
+<ul>
+<li>OS performs scheduling, which takes time</li>
+<li>Thread switching creates <b>overhead</b>
+<ul>
+<li>Minor sources: Scheduling costs, saving and restoring state</li>
+<li>Major sources: Cache pollution, <a href="https://en.wikipedia.org/wiki/Cache_coherence">cache coherence protocols</a>
+<ul>
+<li>After a context switch, the CPU’s cache quite likely misses
+necessary data
+<ul>
+<li>Necessary data needs to be fetched from RAM</li>
+
+</ul></li>
+<li>Accessing data in RAM takes hundreds of clock cycles
+<ul>
+<li>See <a href="https://stackoverflow.com/questions/4087280/approximate-cost-to-access-various-caches-and-main-memory">estimates on Stack Overflow</a></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-cpu-scheduling">
+<h3 id="cpu-scheduling">Scheduling</h3>
+<ul>
+<li>With multitasking, lots of threads <b>share resources</b>
+<ul>
+<li>Focus here: CPU</li>
+
+</ul></li>
+<li><b>Scheduling</b> (planning) and <b>dispatching</b> (allocation) of CPU via OS
+<ul>
+<li class="fragment appear"><b>Non-preemptive</b>, e.g., FIFO scheduling
+<ul>
+<li>Thread on CPU until yield, termination, or blocking</li>
+<li>Scheduler for TinyOS</li>
+
+</ul></li>
+<li class="fragment appear"><b>Preemptive</b>, e.g., Round Robin scheduling
+<ul>
+<li>Examples: RTOS 
+<ol>
+<li>Among all threads, schedule and dispatch one, say T<sub>0</sub></li>
+<li>Allow T<sub>0</sub> to execute on CPU for some time, then preempt it</li>
+<li>Repeat step (1)</li>
+
+</ol></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>(Similar decisions take place in industrial production, which you may know from
+operations management)</li>
+
+</ul>
+<aside class="notes">
+<p>
+Scheduling is the planning of resource allocations.  Here, we just consider the allocation of the resource CPU among multiple threads.
+</p>
+
+<p>
+Concerning wording, the planning itself is called <b>scheduling</b>, while the allocation is called <b>dispatching</b>.  Thus, after making a scheduling decision, the OS dispatches one thread to run on the CPU.
+</p>
+
+<p>
+Two major scheduling variants are non-preemptive and preemptive ones. With non-preemptive scheduling, the OS allows the currently executing thread to continue as long as it wants.  The bullet point names some situations when a thread might stop, which is when the next scheduling decision takes place.
+</p>
+
+<p>
+With preemptive scheduling, the OS may pause, or preempt, a thread in the middle of its execution although it could continue with more useful work on the CPU.  Here, the OS uses a timer to define the length of some time slice, for which the dispatched thread is allowed to run at most.  If the thread executes a blocking system call or terminates before the timer runs out, the OS cancels the timer and makes the next scheduling decision.  When the timer runs out, it triggers an interrupt, causing the interrupt handler to run on the CPU for the next scheduling decision.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-scheduling-goals">
+<h4 id="scheduling-goals">Scheduling Goals</h4>
+<ul>
+<li>Performance
+<ul>
+<li><b>Throughput</b>
+<ul>
+<li>Number of completed threads (computations, jobs) per time unit</li>
+<li>More important for service providers than users</li>
+
+</ul></li>
+<li><b>Response time</b>
+<ul>
+<li>Time from thread start or interaction to useful reaction</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>User control
+<ul>
+<li><b>Resource allocation</b></li>
+<li>Mechanisms for urgency or importance, e.g., <b>priorities</b></li>
+
+</ul></li>
+<li><p>
+Other
+</p>
+<ul>
+<li>Fairness (e.g., equal CPU shares per thread)</li>
+<li>Energy Consumption for energy constrained devices</li>
+
+</ul>
+<p>
+Note: Above goals have <b>trade-offs</b> (discussed subsequently)
+</p></li>
+
+</ul>
+<aside class="notes">
+<p>
+As computer users, we expect different goals from scheduling
+mechanisms, for which subsequent slides contain some details: First,
+we are usually interested in high performance in the senses of
+throughput and response time.
+</p>
+
+<p>
+Second, we may want to exert some control to influence the scheduling
+decisions.  For example, when you think of rented compute capacity,
+where you share resources with other customers, the resources
+allocated to you (including CPU time) depend on the amount of money
+you pay.
+</p>
+
+<p>
+Besides, programmers can assign priorities to threads to indicate
+their relative urgency or importance.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5f76e99">
+<h4 id="org5f76e99">Throughput</h4>
+<ul>
+<li>To increase throughput, avoid idle times of CPU
+<ul>
+<li>Thus, reassign CPU when currently running thread needs to wait</li>
+<li>Context switching necessary</li>
+
+</ul></li>
+<li>Recall: Context switching comes with overhead
+<ul>
+<li>Overhead reduces throughput</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7f78196">
+<h4 id="org7f78196">Response Time</h4>
+<ul>
+<li>Frequent context switches may help for small response time
+<ul>
+<li>However, their overhead hurts throughput</li>
+
+</ul></li>
+<li>Responding quickly to one thread may slow down another one
+<ul>
+<li>May use priorities to indicate preferences</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7b0bb10">
+<h3 id="org7b0bb10">Scheduling Mechanisms</h3>
+<div class="outline-text-3" id="text-org7b0bb10">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org70ab95e">
+<h4 id="org70ab95e">Three Families of Schedulers</h4>
+<div class="leftcol">
+<ul>
+<li>Fixed thread priorities</li>
+<li>Dynamically adjusted thread priorities</li>
+<li>Controlling proportional shares of processing time</li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+ </p><div about="figures/raw/4-scheduling-mechanisms.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/4-scheduling-mechanisms.png" alt="Scheduling Mechanisms" style="max-height:50vh" /></p><p></p></div><p>
+</p>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-fixed-priority">
+<h4 id="fixed-priority">Fixed-Priority Scheduling</h4>
+<ul>
+<li>Use <b>fixed</b>, numerical <b>priority</b> per thread
+<ul>
+<li>Threads with higher priority preferred over others
+<ul>
+<li>Smaller or higher numbers may indicate higher priority:
+OS dependent</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>Implementation alternatives
+<ul>
+<li>Single queue ordered by priority</li>
+<li>Or one queue per priority
+<ul>
+<li>OS schedules threads from highest-priority non-empty queue</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>Scheduling whenever CPU idle or some thread becomes runnable
+<ul>
+<li>Dispatch thread of highest priority
+<ul>
+<li>In case of ties: Run one until end (FIFO) or
+serve all Round Robin</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-priority-starvation">
+<h4 id="priority-starvation">Warning on Fixed-Priority Scheduling</h4>
+<ul>
+<li><b>Starvation</b> of low-priority threads possible
+<ul>
+<li>Starvation = continued denial of resource
+<ul>
+<li>Here, low-priority threads do not receive resource CPU as
+long as threads with higher priority exist</li>
+
+</ul></li>
+<li>Careful design necessary
+<ul>
+<li>E.g., for hard-real-time systems (such as cars, aircrafts,
+power plants)</li>
+<li>(Beware of <a href="Operating-Systems-MX-Challenges.html#slide-priority-inversion">priority inversion</a>,
+a topic for a later presentation!)</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-fifo">
+<h4 id="fifo">FIFO/FCFS Scheduling</h4>
+<ul>
+<li>FIFO = First in, first out
+<ul>
+<li>(= FCFS = first come, first served)</li>
+<li>Think of queue in supermarket</li>
+
+</ul></li>
+<li>Non-preemptive strategy: Run first thread until completed (or blocked)
+<ul>
+<li>For threads of equal priority</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-roundrobin">
+<h4 id="roundrobin">Round Robin Scheduling</h4>
+<ul>
+<li><p>
+Key ingredients
+</p>
+<ul>
+<li><b>Time slice</b> (quantum, q)
+<ul>
+<li>Timer with interrupt, e.g., every 30ms</li>
+
+</ul></li>
+<li><b>Queue(s)</b> for runnable threads
+<ul>
+<li>Newly created thread inserted at end</li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>Scheduling when (1) timer interrupt triggered or (2) thread ends
+or is blocked
+<ol>
+<li class="fragment appear">Timer interrupt: <b>Preempt</b> running thread
+<ul>
+<li>Move previously running thread to end of runnable queue (for
+its priority)</li>
+<li>Dispatch thread at head of queue (for highest priority) to CPU
+<ul>
+<li>With new timer for full time slice</li>
+
+</ul></li>
+
+</ul></li>
+<li class="fragment appear">Thread ends or is blocked
+<ul>
+<li>Cancel its timer, dispatch thread at head of queue (for full
+time slice)</li>
+
+</ul></li>
+
+</ol></li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-dynamic-priority">
+<h4 id="dynamic-priority">Dynamic-Priority Scheduling</h4>
+<ul>
+<li>With dynamic strategies, OS can adjust thread priorities during execution</li>
+<li>Sample strategies
+<ul>
+<li><b>Earliest deadline first</b>
+<ul>
+<li>For tasks with deadlines — discussed in <a class="org-ref-reference" href="#slide-bibliography">[Hai19]</a></li>
+
+</ul></li>
+<li><b>Decay Usage Scheduling</b></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-proportional-share">
+<h4 id="proportional-share">Proportional-Share Scheduling</h4>
+<ul>
+<li>Simple form: <b>Weighted</b> Round Robin (WRR)
+<ul>
+<li>Weight per thread is factor for length of time slice</li>
+<li>Discussion
+<ul>
+<li>Con: Threads with high weight lead to long delays for others</li>
+<li>Pro: Fewer context switches than following alternative</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>Alternative: <b>Weighted fair queuing</b> (WFQ)
+<ul>
+<li>Uniform time slice</li>
+<li>Threads with lower weight “sit out” some iterations</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1892d3e">
+<h4 id="org1892d3e">WRR vs WFQ with sample Gantt Charts</h4>
+<ul>
+<li>Threads T1, T2, T3 with weights 3, 2, 1; q = 10ms
+<ul>
+<li>Supposed order of arrival: T1 first, T2 second, T3 third</li>
+<li>If threads are not done after shown sequence, start over with T1</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+ </p><div about="figures/raw/4-wrr.svg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/4-wrr.svg" alt="Sample Gantt chart for Weighted Round Robin (WRR) scheduling" style="max-height:10vh" /></p><p></p><p style="max-width:10vh"><a rel="dcterms:source" href="https://gitlab.com/oer/figures/blob/master/OS/4-wrr.svg">Figure</a> under <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a></p></div><p>
+</p>
+<p>
+ </p><div about="figures/raw/4-wfq.svg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/4-wfq.svg" alt="Sample Gantt chart for Weighted Fair Queuing (WFQ) scheduling" style="max-height:10vh" /></p><p></p><p style="max-width:10vh"><a rel="dcterms:source" href="https://gitlab.com/oer/figures/blob/master/OS/4-wfq.svg">Figure</a> under <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a></p></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-cfs">
+<h4 id="cfs">CFS in Linux</h4>
+<ul>
+<li>CFS = Completely fair scheduler
+<ul>
+<li>Actually, variant of WRR above
+<ul>
+<li>Weights determined via so-called <b>niceness</b> values
+<ul>
+<li>(Lower niceness means higher priority)</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul></li>
+<li><b>Core idea</b>
+<ul>
+<li class="fragment appear">Keep track of how much threads were on CPU
+<ul>
+<li>Scaled according to weight</li>
+<li>Called <b>virtual runtime</b>
+<ul>
+<li>Represented efficiently via <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red-black tree</a></li>
+
+</ul></li>
+
+</ul></li>
+<li class="fragment appear">Schedule thread that is furthest behind
+<ul>
+<li>Until preempted or time slice runs out</li>
+
+</ul></li>
+<li class="fragment appear">(Some details in <a class="org-ref-reference" href="#slide-bibliography">[Hai19]</a>)</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org7053ab4">
+<h2 id="org7053ab4">Synchronizations</h2>
+<div class="outline-text-2" id="text-org7053ab4">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7deef41">
+<h3 id="org7deef41">Race Conditions</h3>
+<div class="outline-text-3" id="text-org7deef41">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb31290d" data-state="no-toc-progress">
+<h4 id="orgb31290d">Central Challenge for Concurrency: Races</h4>
+<p>
+ </p><div about="figures/raw/race-crash-cc-by-2.0.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/race-crash-cc-by-2.0.jpg" alt="Ferrari Kiss" /></p><p></p><p>&ldquo;<span property="dcterms:title">Ferrari Kiss</span>&rdquo; by <a rel="cc:attributionURL dcterms:creator" href="https://www.flickr.com/photos/antoinevalentini/" property="cc:attributionName">Antoine Valentini</a> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>; from <a rel="dcterms:source" href="https://www.flickr.com/photos/antoinevalentini/9129393830/">flickr</a></p></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-race-condition">
+<h4 id="race-condition">Races (1/2)</h4>
+<ul>
+<li><b>Race (condition)</b>: a technical term
+<ul>
+<li>Multiple <b>activities</b> access <b>shared resources</b>
+<ul>
+<li>At least one writes, in <a href="Operating-Systems-Threads.html#slide-concurrency">parallel or concurrently</a></li>
+
+</ul></li>
+<li>Overall outcome depends on <b>subtle timing</b> differences
+<ul>
+<li>“Nondeterminism” (recall <a href="Operating-Systems-Interrupts.html#slide-dijkstra">Dijkstra on interrupts</a>)</li>
+<li>Missing synchronization</li>
+<li><b>Bug</b>!</li>
+
+</ul></li>
+
+</ul></li>
+<li>Previous picture
+<ul>
+<li><b>Cars</b> are activities</li>
+<li><b>Street segments</b> represent shared resources</li>
+<li>Timing determines whether a <b>crash</b> occurs or not</li>
+<li>Crash = misjudgment = missing synchronization</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgede32e7">
+<h4 id="orgede32e7">Races (2/2)</h4>
+<ul>
+<li>OS
+<ul>
+<li><b>Threads</b> are activities</li>
+<li><b>Variables, memory, files</b> are shared resources</li>
+<li>Missing synchronization is a <b>bug</b>, leading to anomalies just as
+in database systems</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgbb6bbbe">
+<h4 id="orgbb6bbbe">What happened in our Python program?</h4>
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">Time</td>
+<td class="org-left">Thread 1</td>
+<td class="org-left">Thread 2</td>
+<td class="org-left">Variables</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">c = x</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(x = 0, t1.c = 0, t2.c = 0\)</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">c += 1</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(x = 0, t1.c = 1, t2.c = 0\)</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">c = x</td>
+<td class="org-left">\(x = 0, t1.c = 1, t2.c = 0\)</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">x = c</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(x = 1, t1.c = 1, t2.c = 0\)</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">c += 1</td>
+<td class="org-left">\(x = 1, t1.c = 1, t2.c = 1\)</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">x = c</td>
+<td class="org-left">\(x = 1, t1.c = 1, t2.c = 1\)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+What if we use the following <code>increment_global</code> function:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #346604;">def</span> <span style="color: #a40000; font-weight: bold;">increment_global</span>():
+   <span style="color: #346604;">global</span> x
+   <span style="color: #b35000;">x</span> += 1
+</pre>
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd95dc26">
+<h3 id="orgd95dc26">Atomicity</h3>
+<p>
+An <b>atomic action</b> is one that appears to take place as a single indivisible operation:
+</p>
+<ul>
+<li class="fragment appear">a process switch can’t happen during an atomic action, so</li>
+<li class="fragment appear">no other action can be interleaved with an atomic action; and</li>
+<li class="fragment appear">no other process can interfere with the manipulation of data by an atomic action</li>
+<li class="fragment appear">some, but not all, machine instructions are atomic
+<ul>
+<li>E.g., increasing a register</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-atomicity">
+<h4 id="atomicity">Non-Atomic Executions</h4>
+<ul>
+<li>Races generally result from non-atomic executions
+<ul>
+<li class="fragment appear">Even “single” instructions such as <code>x += 1</code> are <b>not atomic</b>
+<ul>
+<li>Execution via <b>sequences of machine instructions</b>
+<ul>
+<li>Load variable&rsquo;s value from RAM</li>
+<li>Perform add in ALU</li>
+<li>Write result to RAM</li>
+
+</ul></li>
+
+</ul></li>
+<li class="fragment appear">A context switch may happen after any of these machine instructions, i.e., “in the middle” of a high-level instruction
+<ul>
+<li>Intermediate results accessible elsewhere</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<p>
+This slide highlights that even simple statements of high-level
+programming languages are not executed atomically, which may be the source
+of race conditions.
+</p>
+
+<p>
+Note that the word “atomic” is used in its literal sense here.
+So, an execution is <b>not</b> atomic if is really consists of multiple steps.
+</p>
+
+<p>
+Be careful not to confuse this with the notion of atomicity of ACID
+transactions.  In the ACID context, atomicity means that transactions
+appear to be either executed entirely or not at all;
+whether they consist of multiple steps or not is not an issue.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-dijkstra">
+<h4 id="dijkstra">Dijkstra on Interrupts</h4>
+<ul>
+<li><a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD13xx/EWD1303.html">“It was a great invention, but also a Box of Pandora. Because the exact moments of the interrupts were unpredictable and outside our control, the interrupt mechanism turned the computer into a nondeterministic machine with a nonreproducible behavior, and could we control such a beast?”</a></li>
+<li><a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD13xx/EWD1308.html">“When Loopstra and Scholten suggested this feature for the X1, our next machine, I got visions of my program causing irreproducible errors and I panicked.”</a></li>
+
+</ul>
+<aside class="notes">
+<p>
+In retrospect, adding interrupts to computers may sound simple to you
+given that they are around everywhere, essentially, but this slide shows
+two quotes by Dijkstra on what he thought when interrupts were about
+to be added to computers and that tells you that we really need to be
+careful. If you’re interrupted at some point in time, then of
+course the question is, how can you make sure that whatever you did
+while you were interrupted, can be resumed later on, once the
+interrupt has been properly treated?  For example, if right now an
+interrupt occurs raised by your mobile phone because some alert from
+some social message or whatever occurs, then it’s not really clear
+that you will be able afterwards to continue the thought, which was
+interrupted by your phone.  Therefore, I suggest that, while you are
+working your way through these slides, you switch off your mobile
+phone or at least you place it somewhere, where its interrupts cannot
+distract you.  Actually also CPUs have got a feature to turn off
+interrupts, which may be used by the operating system to make sure
+that it does not get interrupted, when it doesn’t want to.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org18c725b">
+<h3 id="org18c725b">Locking</h3>
+<div class="outline-text-3" id="text-org18c725b">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-mx-goal">
+<h4 id="mx-goal">Goal and Solutions (1/2)</h4>
+<ul>
+<li>Goal
+<ul>
+<li>Concurrent executions that access <b>shared resources</b> should be
+<b>isolated</b> from one another</li>
+
+</ul></li>
+
+</ul>
+<ul class="fragment appear">
+<li>Conceptual solution
+<ul>
+<li>Declare <b>critical sections</b> (CSs)
+<ul>
+<li>CS = Block of code with potential for
+race conditions on shared resources
+<ul>
+<li>Cf. transaction as sequence of operations on shared data</li>
+
+</ul></li>
+
+</ul></li>
+<li>Enforce <b>mutual exclusion</b> (MX) on CSs
+<ul>
+<li>At most one thread inside CS at any point in time
+<ul>
+<li>This avoids race conditions</li>
+<li>Cf. serializability for transactions</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-mx-goal-solution">
+<h4 id="mx-goal-solution">Goal and Solutions (2/2)</h4>
+<ul>
+<li>New goal
+<ul>
+<li>Implementations/mechanisms for MX on CS</li>
+
+</ul></li>
+<li>Solutions
+<ul>
+<li><b>Locks</b>, also called <b>mutexes</b>
+<ul>
+<li>Acquire lock/mutex at start of CS, release it at end
+<ul>
+<li>Choices: Busy waiting (spinning) or blocking when lock/mutex not free?</li>
+
+</ul></li>
+
+</ul></li>
+<li><b>Semaphores</b>
+<ul>
+<li>Abstract datatype, generalization of locks, blocking, signaling</li>
+
+</ul></li>
+<li><b>Monitors</b></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-locks-mutexes">
+<h4 id="locks-mutexes">Locks and Mutexes</h4>
+<ul>
+<li>Lock (mutex) = object with methods
+<ul>
+<li><code>lock()</code> or <code>acquire()</code>: Lock/acquire/take the object
+<ul>
+<li>A lock can only be <code>lock()</code>&rsquo;ed by one thread at a time</li>
+<li>Further threads trying to <code>lock()</code> need to wait for <code>unlock()</code></li>
+
+</ul></li>
+<li><code>unlock()</code> or <code>release()</code>: Unlock/release the object
+<ul>
+<li>Can be <code>lock()</code>&rsquo;ed again afterwards</li>
+
+</ul></li>
+<li>E.g., interface threading.lock in Python.</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+ </p><div about="figures/raw/hail_f0404.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0404.pdf.png" alt="Figure 4.4 of cite:Hai17" style="max-height:20vh" /></p><p></p><p style="max-width:20vh">&ldquo;<span property="dcterms:title">Figure 4.4 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0404.pdf">GitHub</a></p></div><p>
+</p>
+<aside class="notes">
+<p>
+First of all, note that the terms “lock” and “mutex” are synonyms.
+</p>
+
+<p>
+Locks (and mutexes) are special-purpose objects, which essentially
+have two states, namely Unlocked and Locked, which you can see in the
+figure here, along with possible state transitions when the lock’s
+methods lock() and unlock() are invoked.  These methods are explained
+in the bullet points.
+</p>
+
+<p>
+When mutual exclusion (MX) is necessary to prevent races for a
+critical section (CS), a lock object shared by the racing threads can
+be used, for example seatlock on the next slide.  To enforce MX,
+method lock() needs to be invoked on the lock object at the beginning
+of the CS, and unlock() at the end.
+</p>
+
+<p>
+When the first thread executes lock(), the locks’s state changes from
+Unlocked to Locked.  If other threads try to execute lock() in state
+Locked, these threads get blocked until the first thread executes
+unlock(), which changes the lock’s state to Unlocked and which allows
+the blocked threads to continue their locking attempts; of course,
+only one of them will be successful.
+</p>
+
+<p>
+The question whether the lock really changes its state from Locked to
+Unlocked upon unlock() or whether it is immediately reassigned to one of
+the blocked threads (e.g., in FIFO order) is a design decision, which
+will be revisited later in the context of the so-called convoy problem.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-mx-challenges">
+<h3 id="mx-challenges">Challenges</h3>
+<ul>
+<li>Above solutions restrict entry to CS
+<ul>
+<li>Thus, they restrict access to the resource CPU</li>
+
+</ul></li>
+<li>Major synchronization challenges arise
+<ul>
+<li><b>Starvation</b>
+<ul>
+<li>Thread never enters CS
+<ul>
+<li>More generally: never receives some resource, e.g.,</li>
+
+</ul></li>
+
+</ul></li>
+<li><b>Deadlock</b> 
+<ul>
+<li>Set of threads is stuck</li>
+<li>Circular wait for additional
+locks/semaphores/resources/…</li>
+
+</ul></li>
+<li>In addition, programming errors
+<ul>
+<li>Difficult to locate, time-dependent</li>
+<li>Difficult to reproduce, “non-determinism”</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-starvation">
+<h4 id="starvation">Starvation</h4>
+<ul>
+<li>A thread <b>starves</b> if its resource requests are repeatedly denied</li>
+<li>Examples in previous presentations
+<ul>
+<li>Thread with low priority in presence of high priority threads</li>
+<li>Thread which cannot enter CS
+<ul>
+<li>Famous illustration: Dining philosophers (next slide)</li>
+<li>No simple solutions</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+<p>
+The term <b>starvation</b> occurred on several occasions already, where
+threads could not continue their execution as expected but were
+preempted or blocked frequently or for prolonged periods of time.
+When locking is involved, avoidance of starvation is a hard problem
+without simple solutions as illustrated next.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-dining-philosophers">
+<h4 id="dining-philosophers">Dining Philosophers</h4>
+<ul>
+<li>MX problem proposed by Dijkstra</li>
+<li>Philosophers sit in circle; <b>eat</b> and think repeatedly
+<ul>
+<li>Two <b>forks</b> required for eating
+<ul>
+<li><b>MX</b> for forks</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/hail_f0420.60.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0420.60.png" alt="Figure 4.20 of cite:Hai17" style="max-height:40vh" /></p><p>Dining Philosophers</p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">Figure 4.20 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0420.pdf">GitHub</a></p></div></div><p>
+</p>
+<aside class="notes">
+<p>
+A famous illustration of starvation, which alludes to the literal
+meaning of the word, goes back to Dijkstra.  Here, philosophers need
+forks to eat, and forks are protected by some MX mechanism.  If the
+underlying algorithm to protect and reassign forks does not prevent
+starvation, one or more philosophers may die from hunger as they do
+not receive forks frequently enough.
+</p>
+
+<p>
+Lots of textbooks on OS include algorithms for the dining philosophers
+to explain MX, deadlocks, and starvation.  Inspired by an exercise in
+<a class="org-ref-reference" href="#slide-bibliography">[Sta01]</a>, the following slide shows a sequence of events that can
+happen for the deadlock-free algorithm presented in <a class="org-ref-reference" href="#slide-bibliography">[Tan01]</a>,
+leading to starvation of a philosopher.
+</p>
+
+<p>
+Apparently, avoidance of starvation is no simple task.
+</p>
+
+</aside>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org68c8893">
+<h2 id="org68c8893">Embedded OS</h2>
+<div class="outline-text-2" id="text-org68c8893">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org718f854">
+<h3 id="org718f854">TinyOS</h3>
+<ul>
+<li>System configuration consists of 
+<ul>
+<li>a Tiny scheduler; and</li>
+<li>a Graph of components</li>
+
+</ul></li>
+<li>Event-driven architecture</li>
+<li>Single shared stack</li>
+<li><b>NO</b> process/memory management, virtual memory</li>
+<li>Written in NesC (Network Embedded Systems C), which is an extension of C</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org884e9e0">
+<h4 id="org884e9e0">TinyOS: Application</h4>
+<ul>
+<li>Application SurgeC:
+<ul>
+<li>periodically (TimerC) acquires light sensor readings (Photo), and</li>
+<li>sends them back to a base station using multi-hop routing (Multihop)
+ </p><div class="imgcontainer"><div about="figures/raw/SurgeC.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/SurgeC.png" alt="Figure" style="max-height:70vh" /></p><p>SurgeC</p></div></div><p></li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc7264cd">
+<h4 id="orgc7264cd">TinyOS: Component</h4>
+<ul>
+<li>A Component has:
+<ul>
+<li>Frame (internal state)
+<ul>
+<li>One per component</li>
+<li>Statically allocated</li>
+<li>Allows to know the memory requirements of a component at compile time</li>
+<li>Prevents memory/execution time overhead with dynamic allocation</li>
+
+</ul></li>
+<li>Tasks (computation)</li>
+<li>Interface (events, commands)</li>
+
+</ul></li>
+<li>Commands and Events are function calls</li>
+<li>Application: linking/glueing interfaces (events, commands)</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org293547d">
+<h4 id="org293547d">TinyOS: Command</h4>
+<ul>
+<li>Commands:
+<ul>
+<li>E.g., Leds.led1Toggle, Timer.startPeriodic, Sensor.Read</li>
+<li>are non-blocking</li>
+<li>postpone time consuming work by posting a task</li>
+<li>can be called by event, tasks, or higher-level command</li>
+<li>can call lower-level commands, post tasks</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgbed007e">
+<h4 id="orgbed007e">TinyOS: Event</h4>
+<ul>
+<li>Events:
+<ul>
+<li>E.g., Timer.fired, Read.readDone, Boot.booted</li>
+<li>Events are signaled by hardware interrupt, or lower-level event</li>
+<li>Commands cannot signal events</li>
+<li>An event handler can post tasks, signal higher-level events or call lower-level commands.</li>
+<li>A hardware event triggers a fountain of processing that goes upward through events and can bend downward through commands</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org077c96d">
+<h4 id="org077c96d">TinyOS: Tasks</h4>
+<ul>
+<li>Tasks:
+<ul>
+<li>FIFO scheduling when not preempted by other events</li>
+<li>Perform low priority/time consuming work</li>
+<li>Can be posted by other events or commands</li>
+<li>Run to completion</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb2322d4">
+<h4 id="orgb2322d4">TinyOS: Example</h4>
+<div class="org-src-container">
+
+<pre  class="src src-C" id="nesc"><span style="color: #204a87;">module</span> <span style="color: #b35000;">BlinkTaskC</span>
+{
+  uses <span style="color: #204a87;">interface</span> <span style="color: #b35000;">Timer</span>&lt;TMilli&gt; as Timer0;
+  uses <span style="color: #204a87;">interface</span> <span style="color: #b35000;">Leds</span>;
+  uses <span style="color: #204a87;">interface</span> <span style="color: #b35000;">Boot</span>;
+}
+implementation
+{
+  task <span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">toggle</span>() {
+    <span style="color: #204a87;">call</span> <span style="color: #a40000; font-weight: bold;">Leds</span>.led0Toggle();
+  }
+
+  event <span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">Boot</span>.booted() {
+    <span style="color: #204a87;">call</span> <span style="color: #a40000; font-weight: bold;">Timer0</span>.startPeriodic( 1000 );
+  }
+
+  event <span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">Timer0</span>.fired() {
+    <span style="color: #204a87;">post</span> <span style="color: #a40000; font-weight: bold;">toggle</span>();
+  }
+}
+</pre>
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgdbe71c4">
+<h4 id="orgdbe71c4">TinyOS: Reactive Concurrency</h4>
+<ul>
+<li>Two-level scheduling: events and tasks</li>
+<li>Scheduler is simple FIFO
+<ul>
+<li>a task cannot preempt another task</li>
+<li>events preempt tasks (higher priority)</li>
+<li>event may preempt another event</li>
+
+</ul></li>
+<li>Use task to make event/command smaller
+ </p><div class="imgcontainer"><div about="figures/raw/tinyscheduler.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/tinyscheduler.png" alt="Figure" style="max-height:40vh" /></p><p>Two-Level Scheduling</p></div></div><p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc2bb13d">
+<h4 id="orgc2bb13d">TinyOS: Synchronization</h4>
+<ul>
+<li><b>Race-Free Invariant</b>: Any update to shared state is 
+<ul>
+<li>either done only by tasks (CANNOT be preempted by other tasks), or</li>
+<li>occurs in an atomic section (by disabling CPU interrupt).</li>
+
+</ul></li>
+<li>Invariance is enforced during compilation.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org4ffa639">
+<h4 id="org4ffa639">Advantages of TinyOS</h4>
+<ul>
+<li>Small Overhead: E.g., 15kB for SurgeC</li>
+<li>Low Power Consumption</li>
+<li>Reactive Concurrency: 
+<ul>
+<li>Race detection at compilation</li>
+<li>Minimal context switch(FIFO for tasks)</li>
+<li>Real-time response (for event)</li>
+
+</ul></li>
+<li>Flexible from component based design</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org51b015a">
+<h3 id="org51b015a">FreeRTOS</h3>
+<div class="leftcol">
+<ul>
+<li>Small and Portable
+<ul>
+<li>Kernel contains only 3 files: tasks.c, list.c, queue.c</li>
+
+</ul></li>
+<li>Well supported
+<ul>
+<li>has been ported to over 35 micro-controller platforms</li>
+<li>integration with Amazon Web Service</li>
+
+</ul></li>
+<li>Modular</li>
+
+</ul>
+
+</div>
+
+<div class="rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/freertos.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/freertos.png" alt="Figure" style="max-height:70vh" /></p><p>FreeRTOS Architecture</p></div></div><p>
+</p>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd5ee233">
+<h4 id="orgd5ee233">FreeRTOS: Memory Management</h4>
+<p>
+Support:
+</p>
+<ul>
+<li>Fully static allocation.</li>
+<li>Dynamic Allocation
+<ul>
+<li>allocate only;</li>
+<li>allocate and free with a very simple, fast, algorithm;</li>
+<li>a more complex but fast allocate and free algorithm with memory coalescence;</li>
+<li>an alternative to the more complex scheme that includes memory coalescence that allows a heap to be broken across multiple memory areas.</li>
+<li>and C library allocate and free with some mutual exclusion protection.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7e768be">
+<h4 id="org7e768be">FreeRTOS: Multitasking</h4>
+<ul>
+<li>Round-robin scheduling with priority 
+<ul>
+<li>Time slice duration set by the user (usually 1ms to 10ms)</li>
+<li>Real-time guarantees</li>
+
+</ul></li>
+<li>Support mutex and semaphores
+ </p><div class="imgcontainer"><div about="figures/raw/freertosscheduler.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/freertosscheduler.png" alt="Figure" style="max-height:40vh" /></p><p>FreeRTOS Scheduler</p></div></div><p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0f03af0">
+<h3 id="org0f03af0">Comparison</h3>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Bare Metal</td>
+<td class="org-left">TinyOS</td>
+<td class="org-left">FreeRTOS</td>
+<td class="org-left">Linux</td>
+</tr>
+
+<tr>
+<td class="org-left">Overhead</td>
+<td class="org-left">None</td>
+<td class="org-left">Small</td>
+<td class="org-left">Small</td>
+<td class="org-left">Large</td>
+</tr>
+
+<tr>
+<td class="org-left">Scheduler</td>
+<td class="org-left">Single Thread</td>
+<td class="org-left">FIFO + Interrupt</td>
+<td class="org-left">Round-Robin, Real-time</td>
+<td class="org-left">CFS, <b>NOT</b> real-time</td>
+</tr>
+
+<tr>
+<td class="org-left">Synchronization</td>
+<td class="org-left">None</td>
+<td class="org-left">Resolved at Compilation</td>
+<td class="org-left">Mutex, Semaphores</td>
+<td class="org-left">Multiple Locking Types</td>
+</tr>
+
+<tr>
+<td class="org-left">Memory</td>
+<td class="org-left">Static</td>
+<td class="org-left">Static</td>
+<td class="org-left">Static or 5 Dynamic schemes</td>
+<td class="org-left">Full fledged Memory Management</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orgb8855f7">
+<h2 id="orgb8855f7">Conclusions</h2>
+<div class="outline-text-2" id="text-orgb8855f7">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7e15a71">
+<h3 id="org7e15a71">Summary: OS</h3>
+<ul>
+<li>OS is Software
+<ul>
+<li>that <b>uses hardware</b> resources of a computer system</li>
+<li>to provide support for the <b>execution of other software</b>.
+<ul>
+<li>Computations are performed by threads.</li>
+<li>Threads are grouped into processes.</li>
+
+</ul></li>
+
+</ul></li>
+<li>OS kernel
+<ul>
+<li>provides interface for applications and</li>
+<li>manages resources.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org923be85">
+<h3 id="org923be85">Summary: Memory Management</h3>
+<ul>
+<li>Virtual memory provides abstraction over RAM and secondary storage
+<ul>
+<li>Paging as fundamental mechanism
+<ul>
+<li>Isolation of processes</li>
+<li>Stable virtual addresses, translated at runtime</li>
+
+</ul></li>
+
+</ul></li>
+<li>Page tables managed by OS
+<ul>
+<li>Address translation at runtime</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0c2f7a6">
+<h3 id="org0c2f7a6">Summary: Multitasking</h3>
+<ul>
+<li>Threads represent individual instruction execution sequences</li>
+<li>Multithreading improves
+<ul>
+<li>Resource utilization</li>
+<li>Responsiveness</li>
+<li>Modular design in presence of concurrency</li>
+
+</ul></li>
+<li>Preemptive multithreading with housekeeping by OS
+<ul>
+<li>Thread switching with overhead</li>
+
+</ul></li>
+<li>Design choices: I/O blocking or not, servers with multiple
+threads or not</li>
+<li>OS performs scheduling for shared resources
+<ul>
+<li>Focus here: CPU scheduling</li>
+<li>Subject to conflicting goals</li>
+
+</ul></li>
+<li>CPU scheduling based on thread states and priorities
+<ul>
+<li>Fixed vs dynamic priorities vs proportional share</li>
+<li>CFS as example for proportional share scheduling</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc30c597">
+<h3 id="orgc30c597">Summary: Synchronization</h3>
+<ul>
+<li>Parallelism is a fact of life
+<ul>
+<li>Multi-core, multi-threaded programming</li>
+<li>Race conditions arise</li>
+<li>Synchronization is necessary</li>
+
+</ul></li>
+<li>Mutual exclusion for critical section
+<ul>
+<li>Locking</li>
+<li>Monitors</li>
+<li>Semaphores</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-bibliography">
+<h2 id="bibliography">Bibliography</h2>
+<ul class='org-ref-bib'><li><a id="Hai19">[Hai19]</a> <a name="Hai19"></a>Hailperin, Operating Systems and Middleware – Supporting Controlled Interaction, revised edition 1.3.1, 2019. <a href="https://gustavus.edu/mcs/max/os-book/">https://gustavus.edu/mcs/max/os-book/</a></li>
+<li><a id="Sta01">[Sta01]</a> <a name="Sta01"></a>Stallings, Operating Systems: Internals and Design Principles, Prentice Hall, 2001. <a href=""></a></li>
+<li><a id="Tan01">[Tan01]</a> <a name="Tan01"></a>Tanenbaum, Modern Operating Systems, Prentice-Hall, 2001. <a href=""></a></li>
+<li><a id="TinyOS">[TinyOS]</a> <a name="TinyOS"></a>Levis, Madden, Polastre, Szewczyk, Whitehouse, Woo, Gay, Hill, Welsh, Brewer & Culler, TinyOS: An Operating System for Sensor Networks, Springer Berlin Heidelberg, 2005. <a href="https://doi.org/10.1007/3-540-27139-2\_7">https://doi.org/10.1007/3-540-27139-2\_7</a></li>
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/dist/reveal.js"></script>
+<script src="./reveal.js/plugin/notes/notes.js"></script>
+<script src="./reveal.js/plugin/search/search.js"></script>
+<script src="./reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: true,
+fragmentInURL: true,
+hashOneBasedIndex: false,
+pdfSeparateFragments: false,
+
+overview: true,
+
+transition: 'fade',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealNotes, RevealSearch, RevealZoom ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+{src:'./reveal.js/plugin/spotlight/spotlight.js'},
+{src: './reveal.js/plugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } },
+{ src: './reveal.js/plugin/audio-slideshow/audio-slideshow.js', condition: function( ) { return !!document.body.classList && !Reveal.isSpeakerNotes(); } },
+{ src: './reveal.js/plugin/anything/anything.js' },
+{ src: './reveal.js/plugin/toc-progress/toc-progress.js', async: true, callback: function() { toc_progress.initialize('reduce', 'rgba(120,138,130,0.2)', 'body'); toc_progress.create(); } },
+{ src: './reveal.js/plugin/jump/jump.js', async: true },
+{ src: './reveal.js/plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({preventUnanswered: true, skipStartButton: true}); } },
+{ src: './reveal.js/plugin/coursemod/coursemod.js', async: true },
+{ src: './reveal.js/plugin/accessibility/helper.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+,plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {84: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1,
+audioStartAtFragment: true,
+  audio: {
+    advance: -1, autoplay: false, defaultDuration: 0, defaultAudios: false, playerOpacity: 0.8, playerStyle: 'position: fixed; bottom: 9.5vh; left: 0%; width: 30%; height:30px; z-index: 33;' },
+anything: [
+        // Following initialization code for class animate from anything-demo.html.
+        // Copyright (c) 2016 Asvin Goel, under The MIT License (MIT).
+	{className: "animate",  initialize: (function(container, options){
+		Reveal.addEventListener( 'fragmentshown', function( event ) {
+			if (typeof event.fragment.beginElement === "function" ) {
+				event.fragment.beginElement();
+			}
+		});
+		Reveal.addEventListener( 'fragmenthidden', function( event ) {
+			if (event.fragment.hasAttribute('data-reverse') ) {
+				var reverse = event.fragment.parentElement.querySelector('[id=\"' + event.fragment.getAttribute('data-reverse') + '\"]');
+				if ( reverse && typeof reverse.beginElement === "function" ) {
+					reverse.beginElement();
+				}
+			}
+		});
+		if ( container.getAttribute("data-svg-src") ) {
+			var xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+				if (xhr.readyState === 4) {
+					var svg = container.querySelector('svg');
+					container.removeChild( svg );
+					container.innerHTML = xhr.responseText + container.innerHTML;
+					if ( svg ) {
+						container.querySelector('svg').innerHTML = container.querySelector('svg').innerHTML + svg.innerHTML;
+					}
+				}
+				else {
+					console.warn( "Failed to get file. ReadyState: " + xhr.readyState + ", Status: " + xhr.status);
+				}
+			};
+			xhr.open( 'GET', container.getAttribute("data-svg-src"), true );
+			xhr.send();
+		}
+	}) },
+	{className: "randomPic",
+	 defaults: {imgalt: "Dummy alt text",
+		    imgcaption: "Image by {name}",
+		    choices: [ {name: "dummyname", path: "dummypath"} ]},
+	 initialize: (function(container, options){
+	     var choice = Math.trunc( Math.random()*(options.choices.length) );
+	     var img = "<img src='" + options.choices[choice].path + "' alt='" + options.choices[choice].imgalt + "' />";
+	     var caption = options.imgcaption.replace(new RegExp('\{name\}', 'gm'), options.choices[choice].name);
+	     container.innerHTML = img + caption;
+	 }) },
+	{className: "notes",
+	 initialize: (function(container, options){
+	     container.addEventListener('click', function(e) { Reveal.getPlugins().notes.open(); });
+	 }) }
+],
+coursemod: { enabled: true, shown: false },
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   class="animate"
+   viewBox="0 0 681.30176 335.59024"
+   id="5-dispense"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="5-dispense-mx.svg"
+   width="100%"
+   height="100%">
+  <title
+     id="title3053">Interleaved execution of threads with MX for code from Sec. 4.2 of book &quot;Operating Systems and Middleware – Supporting Controlled Interaction&quot; by Max Hailperin, CC BY-SA 3.0.</title>
+  <defs
+     id="defs-5-dispense-mx">
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-5-dispense-mx"
+       style="overflow:visible">
+      <path
+         id="path3884"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.33"
+     inkscape:cx="213.08137"
+     inkscape:cy="242.85359"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1280"
+     inkscape:window-height="970"
+     inkscape:window-x="3"
+     inkscape:window-y="54"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3010"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       originx="-83.745114px"
+       originy="-545.40976px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Interleaved execution of threads with MX for code from Sec. 4.2 of book &quot;Operating Systems and Middleware – Supporting Controlled Interaction&quot; by Max Hailperin, CC BY-SA 3.0.</dc:title>
+        <dc:date>2017, 2018</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jens Lechtenbörger</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="https://creativecommons.org/licenses/by-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="https://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-83.745117,-171.36218)">
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="139.65517"
+       y="192.01736"
+       id="text2985"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2987"
+         x="139.65517"
+         y="192.01736"
+         style="font-size:20px">Thread T1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="410"
+       y="192.36218"
+       id="text2985-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2987-6"
+         x="410"
+         y="192.36218"
+         style="font-size:20px">Thread T2</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend-5-dispense-mx)"
+       d="m 100,172.36218 0,320"
+       id="path3101"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="432.36218"
+       y="-84"
+       id="text4501"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,1,-1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4503"
+         x="432.36218"
+         y="-84"
+         style="font-size:18px">time</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Layer2"
+     id="layer2"
+     opacity="0"
+     transform="translate(-0.50201375,5.4598678)">
+    <animate
+       class="fragment"
+       data-audio-src="./audio/5-mx-2.ogg"
+       data-reverse="5-dispense-mx-2"
+       begin="indefinite"
+       attributeName="opacity"
+       from="0"
+       to="1"
+       dur="0.1s"
+       fill="freeze"
+       repeatCount="1"
+       id="animate3006" />
+    <animate
+       id="5-dispense-mx-2"
+       begin="indefinite"
+       attributeName="opacity"
+       to="0"
+       from="1"
+       dur="0.1s"
+       fill="freeze"
+       repeatCount="1" />
+    <text
+       transform="translate(-83.243103,-176.82205)"
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="140"
+       y="222.36218"
+       id="text3012"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3014"
+         x="140"
+         y="222.36218"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace">⋮</tspan><tspan
+         sodipodi:role="line"
+         x="140"
+         y="242.31017"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3020">// T1 <tspan
+   style="fill:#008000"
+   id="tspan3112">enters CS with MX</tspan><tspan
+   style="fill:#0000ff"
+   id="tspan3070" /></tspan><tspan
+         sodipodi:role="line"
+         x="140"
+         y="262.31018"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3064">if (seatsRemaining &gt; 0)</tspan><tspan
+         sodipodi:role="line"
+         x="140"
+         y="282.31018"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3022">// T1 preempted</tspan><tspan
+         sodipodi:role="line"
+         x="140"
+         y="302.31018"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3024">// T2 dispatched</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Layer3"
+     id="layer3"
+     opacity="0"
+     transform="translate(-0.50201375,5.4598678)">
+    <animate
+       class="fragment"
+       data-audio-src="./audio/5-mx-3.ogg"
+       data-reverse="5-dispense-mx-3"
+       begin="indefinite"
+       attributeName="opacity"
+       from="0"
+       to="1"
+       dur="0.1s"
+       fill="freeze"
+       repeatCount="1"
+       id="animate3016" />
+    <animate
+       id="5-dispense-mx-3"
+       begin="indefinite"
+       attributeName="opacity"
+       to="0"
+       from="1"
+       dur="0.1s"
+       fill="freeze"
+       repeatCount="1" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="326.7569"
+       y="147.54013"
+       id="text3012-6"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="326.7569"
+         y="147.54013"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3020-9">// T2 tries to enter CS</tspan><tspan
+         sodipodi:role="line"
+         x="326.7569"
+         y="167.54013"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3066">// As <tspan
+   style="fill:#800000"
+   id="tspan3116">T1 in CS</tspan>, <tspan
+   style="fill:#800000"
+   id="tspan3118">T2 blocked by MX</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="326.7569"
+         y="187.54013"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3024-8">// OS dispatches other thread, say T1</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Layer4"
+     id="layer4"
+     opacity="0"
+     transform="translate(-0.50201375,5.4598678)">
+    <animate
+       class="fragment"
+       data-audio-src="./audio/5-mx-4.ogg"
+       data-reverse="5-dispense-mx-4"
+       begin="indefinite"
+       attributeName="opacity"
+       from="0"
+       to="1"
+       dur="0.1s"
+       fill="freeze"
+       repeatCount="1"
+       id="animate3025" />
+    <animate
+       id="5-dispense-mx-4"
+       begin="indefinite"
+       attributeName="opacity"
+       to="0"
+       from="1"
+       dur="0.1s"
+       fill="freeze"
+       repeatCount="1" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="56.756897"
+       y="207.54013"
+       id="text3012-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="56.756897"
+         y="207.54013"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3024-5">dispenseTicket();</tspan><tspan
+         sodipodi:role="line"
+         x="56.756897"
+         y="227.54013"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3034">seatsRemaining -= 1</tspan><tspan
+         sodipodi:role="line"
+         x="56.756897"
+         y="247.54013"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3069">// T1 finishes, <tspan
+   style="fill:#008000"
+   id="tspan3114">leaves CS</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="56.756897"
+         y="267.54013"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Monospace;-inkscape-font-specification:Monospace"
+         id="tspan3071">// T2 can continue</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Layer5"
+     opacity="0"
+     id="layer5">
+    <animate
+       class="fragment"
+       data-audio-src="./audio/5-mx-5.ogg"
+       data-reverse="5-dispense-mx-5"
+       begin="indefinite"
+       attributeName="opacity"
+       from="0"
+       to="1"
+       dur="0.1s"
+       fill="freeze"
+       repeatCount="1"
+       id="animate47" />
+    <animate
+       id="5-dispense-mx-5"
+       begin="indefinite"
+       attributeName="opacity"
+       to="0"
+       from="1"
+       dur="0.1s"
+       fill="freeze"
+       repeatCount="1" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="329.27924"
+       y="294.10587"
+       id="text3905"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="329.27924"
+         y="294.10587"
+         id="tspan3907"><tspan
+           x="329.27924"
+           y="294.10587"
+           style="font-size:16px"
+           id="tspan3909"
+           dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0">if (seatsRemaining &gt; 0)</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="329.27924"
+         y="314.10587"
+         id="tspan3913"><tspan
+           x="329.27924"
+           y="314.10587"
+           style="font-size:16px"
+           id="tspan3915"
+           dx="0 0">⋮</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="329.27924"
+         y="334.10587"
+         id="tspan3919"><tspan
+           x="329.27924"
+           y="334.10587"
+           style="font-size:16px"
+           id="tspan3921">// T2 finishes</tspan></tspan></text>
+  </g>
+</svg>

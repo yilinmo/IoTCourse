@@ -1,0 +1,35 @@
+{
+  "name": "wordcloud",
+  "version": "1.1.0",
+  "description": "Tag cloud/Wordle presentation on 2D canvas or HTML",
+  "homepage": "http://timdream.org/wordcloud2.js/",
+  "author": {
+    "name": "Timothy Guan-tin Chien",
+    "email": "timdream@gmail.com",
+    "url": "http://timdream.org/"
+  },
+  "keywords": [
+    "cloud",
+    "canvas",
+    "2D",
+    "html",
+    "Wordle",
+    "presentation",
+    "tag"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timdream/wordcloud2.js"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "main": "src/wordcloud2.js",
+  "devDependencies": {
+    "grunt": "^0.4.1",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-connect": "^0.7.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-shell": "^0.6.4"
+  }
+}

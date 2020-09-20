@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Introduction to Intelligent Networked System</title>
+<meta name="author" content="Mo, Yilin"/>
+<meta name="description" content="Concept of Intelligent Networked System, History of related concepts, Enabling Technologies"/>
+<meta name="keywords" content="Internet of Things, Wireless Sensors Network, Cyber Physical System"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/oer-reveal.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/accessibility/helper.css"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/toc-progress/toc-progress.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/toc-style.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/fonts/source-sans-pro/source-sans-pro.css"/>
+
+<link rel="stylesheet" href="figures/internal_grid_css/grid2.css"/>
+
+<link rel="stylesheet" href="figures/internal_grid_css/grid6.css"/>
+<style type="text/css"> div.flushright{text-align:right;} </style>
+<script src="./reveal.js/plugin/chart/Chart.min.js"></script>
+<script src="./reveal.js/plugin/chart/plugin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+<script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body prefix="dc: http://purl.org/dc/elements/1.1/ dcterms: http://purl.org/dc/terms/ dcmitype: http://purl.org/dc/dcmitype/ cc: http://creativecommons.org/ns#" typeof="dcmitype:InteractiveResource">
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-state="no-toc-progress">
+<!-- The following copyright information only applies to the title slide. -->
+<!-- SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger -->
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+<!-- This is an HTML template for the title slide. -->
+<!-- Embed logos as necessary. -->
+<!-- <a class="nooutlink" href="url"><img class="state-background your-logo-class" src="whatever.png" alt="Whatever" /></a> -->
+
+<div class="talk-title">
+    <h1 class="no-toc-progress">Introduction to Intelligent Networked System</h1>
+</div>
+<div class="talk-subtitle">
+    <p></p>
+</div>
+<div class="keyboard-usage">
+    <p>(Press <code>?</code> for help, <code>n</code> and <code>p</code> for next and previous slide; <a href="https://oer.gitlab.io/hints.html">usage hints</a>)</p>
+</div>
+<div class="talk-author">
+  <p>Mo, Yilin <br />
+  Sept 2020</p>
+</div>
+
+    <a class="nooutlink" href="http://www.au.tsinghua.edu.cn/"><img class="da-logo" src="./figures/raw/logo.png" alt="Logo of Dept. Automation" /></a>
+
+</section>
+
+<section>
+<section id="slide-orga1df786">
+<h2 id="orga1df786">Intelligent Networked System</h2>
+<div class="outline-text-2" id="text-orga1df786">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orged4475b">
+<h3 id="orged4475b">What is Intelligent Networked System</h3>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/ins1.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/ins1.png" alt="Figure" style="max-height:70vh" /></p><p>Search Results for Intelligent Networked System</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7420ac0">
+<h4 id="org7420ac0">What is Intelligent Networked System</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/ins2.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/ins2.png" alt="Figure" style="max-height:70vh" /></p><p>Search Results for 智能网联系统</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org3f0737c">
+<h3 id="org3f0737c">Wireless Sensor Networks</h3>
+<p>
+<i>Wireless sensor network (WSN) refers to a group of spatially dispersed and dedicated sensors for monitoring and recording the physical conditions of the environment and organizing the collected data at a central location.</i>
+</p>
+<div class="flushright">
+<p>
+<a href="https://en.wikipedia.org/wiki/Wireless_sensor_network">Wikipedia</a>
+</p>
+
+</div>
+<ul>
+<li>1997: <a href="https://en.wikipedia.org/wiki/Smartdust">Smart Dust Project</a> proposed by researchers from UCB</li>
+
+</ul>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/smartdust.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/smartdust.png" alt="Figure" style="max-height:40vh" /></p><p></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgada4e2f">
+<h4 id="orgada4e2f">Pros and Cons of Going Wireless</h4>
+<div class="leftcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/cable.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/cable.jpg" alt="Figure" style="max-height:80vh" /></p><p></p></div></div><p>
+</p>
+
+</div>
+<div class="fragment appear rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/wirelessfactory.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/wirelessfactory.jpg" alt="Figure" style="max-height:80vh" /></p><p></p></div></div><p>
+</p>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org29a357c">
+<h4 id="org29a357c">Pros and Cons of Going Wireless</h4>
+<div class="leftcol">
+<p>
+Pros:
+</p>
+<ul>
+<li>Increased Mobility</li>
+<li>Scalability</li>
+<li>Lower Cost</li>
+<li>Ease of Installation</li>
+<li>Wider Reach</li>
+
+</ul>
+
+</div>
+
+<div class="fragment appear rightcol">
+<p>
+Cons:
+</p>
+<ul>
+<li>Communication Issues:
+<ul>
+<li>Packet drop</li>
+<li>Low throughput</li>
+<li>High latency</li>
+
+</ul></li>
+<li>Energy Constraints</li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0dd01ca">
+<h4 id="org0dd01ca">Vision of Wireless Sensor Networks</h4>
+<ul>
+<li>Building Monitoring</li>
+
+</ul>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/firefly.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/firefly.png" alt="Figure" style="max-height:60vh" /></p><p></p></div></div><p>
+</p>
+<div class="slide-footer"><br></div>
+</section>
+<section>
+<ul>
+<li>Mine Monitoring</li>
+
+</ul>
+<p>
+ </p><div class="grid2"><div about="figures/raw/mine2.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid2-img1"><p><img data-src="figures/raw/mine2.jpg" alt="Figure" style="max-height:38.0vh" /></p><p></p></div> <div about="figures/raw/mine.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid2-img2"><p><img data-src="figures/raw/mine.jpg" alt="Figure" style="max-height:38.0vh" /></p><p></p></div></div><p>
+
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section>
+<ul>
+<li>Typical Sensor Nodes:</li>
+
+</ul>
+<p>
+ </p><div class="grid6"><div about="figures/raw/sensor1.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid6-img1"><p><img data-src="figures/raw/sensor1.jpg" alt="Figure" style="max-height:19.0vh" /></p><p></p></div> <div about="figures/raw/sensor2.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid6-img2"><p><img data-src="figures/raw/sensor2.jpg" alt="Figure" style="max-height:19.0vh" /></p><p></p></div> <div about="figures/raw/sensor3.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid6-img3"><p><img data-src="figures/raw/sensor3.jpg" alt="Figure" style="max-height:19.0vh" /></p><p></p></div> <div about="figures/raw/sensor4.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid6-img4"><p><img data-src="figures/raw/sensor4.jpg" alt="Figure" style="max-height:19.0vh" /></p><p></p></div> <div about="figures/raw/sensor5.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid6-img5"><p><img data-src="figures/raw/sensor5.jpg" alt="Figure" style="max-height:19.0vh" /></p><p></p></div> <div about="figures/raw/sensor6.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid6-img6"><p><img data-src="figures/raw/sensor6.jpg" alt="Figure" style="max-height:19.0vh" /></p><p></p></div></div><p>
+
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orge558732">
+<h4 id="orge558732">History of Wireless Sensor Networks</h4>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Gen 1 (80s-90s)</td>
+<td class="org-left">Gen 2 (1999-2006)</td>
+<td class="org-left">Gen 3 (2010 and beyond)</td>
+</tr>
+
+<tr>
+<td class="org-left">Size</td>
+<td class="org-left">Large shoe-box</td>
+<td class="org-left">Pack of cards</td>
+<td class="org-left">Dust particle</td>
+</tr>
+
+<tr>
+<td class="org-left">Weight</td>
+<td class="org-left">Kilograms</td>
+<td class="org-left">Grams</td>
+<td class="org-left">Negligible</td>
+</tr>
+
+<tr>
+<td class="org-left">Node</td>
+<td class="org-left">Separate sensing/comm</td>
+<td class="org-left">Semi-integrated</td>
+<td class="org-left">Fully integrated</td>
+</tr>
+
+<tr>
+<td class="org-left">Topology</td>
+<td class="org-left">Point-to-point, star</td>
+<td class="org-left">Client-server, peer-to-peer</td>
+<td class="org-left">P2P</td>
+</tr>
+
+<tr>
+<td class="org-left">Energy</td>
+<td class="org-left">Large batteries</td>
+<td class="org-left">AA batteries</td>
+<td class="org-left">Energy Harvesting</td>
+</tr>
+
+<tr>
+<td class="org-left">Life Time</td>
+<td class="org-left">hours/days/weeks</td>
+<td class="org-left">days to months</td>
+<td class="org-left">years</td>
+</tr>
+
+<tr>
+<td class="org-left">Deployment</td>
+<td class="org-left">Vehicle-placed, air drop</td>
+<td class="org-left">Hand placed</td>
+<td class="org-left">Embedded, “scattered” leave behind</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb9d8c21">
+<h3 id="orgb9d8c21">Internet of Things</h3>
+<p>
+<i>The <b>Internet of things</b> (IoT) describes the network of physical objects, i.e., things, such as vehicles, buildings, and other items, that are embedded with sensors, software, and other technologies for the purpose of connecting and exchanging data with other devices and systems over the Internet.</i> 
+</p>
+<div class="flushright">
+<p>
+<a href="https://en.wikipedia.org/wiki/Internet_of_things">Wikipedia</a>
+</p>
+
+</div>
+<p>
+<i>In the real world, things matter more than ideas.</i>
+</p>
+<div class="flushright">
+<p>
+<a class="org-ref-reference" href="#slide-bibliography">[Ashton]</a>, <i>&ldquo;That &lsquo;internet of things&rsquo; thing&rdquo;</i>, 2009
+</p>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgcdbc4b6">
+<h4 id="orgcdbc4b6">Internet of Things Paradigm</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/iot.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/iot.png" alt="Figure" style="max-height:60vh" /></p><p></p></div></div><p>
+</p>
+<div class="org-center">
+<p>
+Internet of Things Paradigm, <a class="org-ref-reference" href="#slide-bibliography">[IoT2018]</a>
+</p>
+</div>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6960b55">
+<h4 id="org6960b55">Early History of Internet of Things</h4>
+<ul>
+<li>1973: Mario W. Cardullo receives the patent for first RFID tag</li>
+<li>1982: Carnegie Mellon internet-connected soda machine</li>
+<li><p>
+1991: HP introduces HP LaserJet IIISi: First Ethernet-connected network printer </p><div about="figures/raw/hp.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hp.jpg" alt="Figure" style="max-height:20vh" /></p><p></p></div><p>
+</p></li>
+
+<li><p>
+1993: Internet-connected coffee pot at University of Cambridge (First Networked Camera)  </p><div about="figures/raw/xcoffee.gif" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/xcoffee.gif" alt="Figure" style="max-height:20vh" /></p><p></p></div><p>
+</p></li>
+
+<li>1999: The term <a href="https://en.wikipedia.org/wiki/Internet_of_things">Internet of Things</a> was coined</li>
+<li>2005: United Nation&rsquo;s International Telecommunications Union report predicting the rise of IoT for the first time</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org566efcc">
+<h4 id="org566efcc">Trends</h4>
+<ul>
+<li>Google Search Trends</li>
+
+</ul>
+<canvas data-chart="line" class="stretch">
+Month,Jan-04,Feb-04,Mar-04,Apr-04,May-04,Jun-04,Jul-04,Aug-04,Sep-04,Oct-04,Nov-04,Dec-04,Jan-05,Feb-05,Mar-05,Apr-05,May-05,Jun-05,Jul-05,Aug-05,Sep-05,Oct-05,Nov-05,Dec-05,Jan-06,Feb-06,Mar-06,Apr-06,May-06,Jun-06,Jul-06,Aug-06,Sep-06,Oct-06,Nov-06,Dec-06,Jan-07,Feb-07,Mar-07,Apr-07,May-07,Jun-07,Jul-07,Aug-07,Sep-07,Oct-07,Nov-07,Dec-07,Jan-08,Feb-08,Mar-08,Apr-08,May-08,Jun-08,Jul-08,Aug-08,Sep-08,Oct-08,Nov-08,Dec-08,Jan-09,Feb-09,Mar-09,Apr-09,May-09,Jun-09,Jul-09,Aug-09,Sep-09,Oct-09,Nov-09,Dec-09,Jan-10,Feb-10,Mar-10,Apr-10,May-10,Jun-10,Jul-10,Aug-10,Sep-10,Oct-10,Nov-10,Dec-10,Jan-11,Feb-11,Mar-11,Apr-11,May-11,Jun-11,Jul-11,Aug-11,Sep-11,Oct-11,Nov-11,Dec-11,Jan-12,Feb-12,Mar-12,Apr-12,May-12,Jun-12,Jul-12,Aug-12,Sep-12,Oct-12,Nov-12,Dec-12,Jan-13,Feb-13,Mar-13,Apr-13,May-13,Jun-13,Jul-13,Aug-13,Sep-13,Oct-13,Nov-13,Dec-13,Jan-14,Feb-14,Mar-14,Apr-14,May-14,Jun-14,Jul-14,Aug-14,Sep-14,Oct-14,Nov-14,Dec-14,Jan-15,Feb-15,Mar-15,Apr-15,May-15,Jun-15,Jul-15,Aug-15,Sep-15,Oct-15,Nov-15,Dec-15,Jan-16,Feb-16,Mar-16,Apr-16,May-16,Jun-16,Jul-16,Aug-16,Sep-16,Oct-16,Nov-16,Dec-16,Jan-17,Feb-17,Mar-17,Apr-17,May-17,Jun-17,Jul-17,Aug-17,Sep-17,Oct-17,Nov-17,Dec-17,Jan-18,Feb-18,Mar-18,Apr-18,May-18,Jun-18,Jul-18,Aug-18,Sep-18,Oct-18,Nov-18,Dec-18,Jan-19,Feb-19,Mar-19,Apr-19,May-19,Jun-19,Jul-19,Aug-19,Sep-19,Oct-19,Nov-19,Dec-19,Jan-20,Feb-20,Mar-20,Apr-20,May-20,Jun-20,Jul-20,Aug-20,Sep-20
+Internet of Things,1,1,1,1,1,2,1,1,3,1,1,2,2,1,1,1,2,2,1,0,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,2,1,1,1,2,2,2,2,2,2,3,3,2,3,2,2,2,2,3,2,2,2,2,2,3,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,5,7,7,6,10,10,11,12,11,11,13,13,15,16,15,13,18,19,20,19,19,19,18,18,20,20,20,18,18,20,19,19,18,16,16,16,18,23,23,17,19,19,19,18,17,16,14,14,17,18,19,16,18,16,16,15,15,13,13,14,15,16,14,12,12,14,14,13,13,13,13,12,15,14,14,12,12,14,12,12,11,11,10,11,13
+IoT,4,4,4,5,4,4,4,5,4,4,4,5,4,4,5,5,5,6,5,3,4,4,5,4,4,6,6,4,5,6,5,4,6,4,3,4,4,4,4,5,4,4,6,4,4,4,5,3,5,5,5,5,5,5,5,5,4,5,5,5,6,5,5,4,5,5,5,5,6,5,6,5,5,6,6,6,6,6,7,6,6,6,7,5,6,6,7,6,6,6,6,6,6,6,7,6,6,7,6,6,6,7,6,6,6,7,6,6,7,6,7,7,7,7,7,6,7,8,8,8,9,10,11,13,12,15,15,15,18,21,20,19,27,29,30,35,40,41,42,45,49,53,53,51,56,63,67,69,70,69,68,68,77,83,86,73,85,88,92,86,90,87,83,83,91,94,100,91,94,95,97,95,97,90,92,95,95,99,94,82,93,99,96,98,92,91,91,91,99,94,97,85,90,98,82,77,80,86,80,77,88
+<!--
+{
+"options": {
+"plugins": {"colorschemes": {"scheme": "brewer.Paired6"}}
+}
+-->
+</canvas>
+
+<div class="slide-footer"><br></div>
+</section>
+<section>
+<ul>
+<li>The Hype Cycle</li>
+
+</ul>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/hypecycle.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hypecycle.png" alt="Figure" style="max-height:80vh" /></p><p>Gartner Hype Cycle</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org8e6d584">
+<h4 id="org8e6d584">Metcalfe&rsquo;s law</h4>
+<p>
+<i>The value of a network goes up as the square of the number of users.</i>
+</p>
+
+<canvas data-chart="bar" class="stretch">
+Year,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030
+ Population (billion),7.33,7.41,7.49,7.57,7.64,7.72,7.79,7.86,7.94,8.01,8.08,8.14,8.21,8.28,8.34
+ Connected devices (billion),17.68,20.35,23.14,26.66,30.73,35.82,42.62,51.11,62.12,75.44,91.58,111.18,134.97,163.86,198.92
+
+<!--
+{
+"data" : {
+"datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
+},
+"options": {
+"plugins": {"colorschemes": {"scheme": "brewer.Paired6"},
+"title": {
+"display": true,
+"text": "Number of Connected Devices v.s. Human Population"
+}}}
+-->
+</canvas>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org73b0ee6">
+<h3 id="org73b0ee6">Cyber-Physical Systems</h3>
+<p>
+<i>CPSs refer to the next generation of engineered systems that require tight integration of <b>computing</b>, <b>communication</b>, and <b>control</b> technologies to achieve <b>stability</b>, <b>performance</b>, <b>reliability</b>, <b>robustness</b>, and <b>efficiency</b> in dealing with physical systems of many application domains.</i>
+</p>
+
+<div class="flushright">
+<p>
+<a class="org-ref-reference" href="#slide-bibliography">[Kumar]</a>, Proceedings of the IEEE, 2012
+</p>
+
+</div>
+
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/cps.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/cps.png" alt="Figure" style="max-height:40vh" /></p><p>Cyber-Physical System</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2a03245">
+<h4 id="org2a03245">Convergence of Computation and Control</h4>
+<ul>
+<li><p>
+1948: The term &ldquo;Cybernetics&rdquo; was coined by Norbert Wiener. </p><div about="figures/raw/wiener.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/wiener.jpg" alt="Figure" style="max-height:40vh" /></p><p></p></div><p>
+</p></li>
+
+<li>1970s: Real time system</li>
+<li>1990s: Hybrid system</li>
+<li>2006: The term &ldquo;Cyber-Physical System&rdquo; was coined by NSF.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org823f7b1">
+<h4 id="org823f7b1">Boeing 787 ZA002 Incident</h4>
+<div class="leftcol">
+<p>
+<i>The P100 panel is one of several power panels in the aft electronics bay. It receives power from the left engine and distributes it to an array of systems. <b>In the event of a failure of the P100 panel, backup power sources</b> – including <b>power from the right engine</b>, <b>the Ram Air Turbine</b>, the auxiliary power unit or the battery – <b>are designed to automatically engage to ensure that those systems needed for continued safe operation of the airplane are powered</b>.</i> 
+</p>
+
+</div>
+<div class="rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/RAT.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/RAT.png" alt="Figure" style="max-height:50vh" /></p><p></p></div></div><p>
+</p>
+
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6863a91">
+<h4 id="org6863a91">Convergence of Communication and Control</h4>
+<ul>
+<li>1971: <a href="https://en.wikipedia.org/wiki/ALOHAnet">ALOHAnet</a>, first public wireless packet data network</li>
+<li>1997: IEEE 802.11 (Wifi) was introduced</li>
+<li>2000: Panel on Future Directions in Control, Dynamics, and Systems, Control in an Information Rich World:</li>
+
+</ul>
+<p>
+<i>Networks of sensory or actuator nodes with computational capabilities, connected wirelessly or by wires, can form an orchestra which controls our physical environment.</i>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga7105b5">
+<h4 id="orga7105b5">Convergence of Communication and Control</h4>
+<video controls="controls" width="1280" height="720">
+<source src="./videos/nokia.mp4" type="video/mp4">
+<p>
+Your browser does not support the video tag.
+</p>
+</video>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org8bdfa3d">
+<h3 id="org8bdfa3d">Intelligent Networked System</h3>
+<p class="stretch" wordcloud="">
+30 Internet of Things
+30 Informatization
+20 Data Analytics
+15 Cyber-Physical System
+15 Wireless Sensor Network
+15 Smart Algorithms
+12 Cloud Computing
+12 Embedded Devices
+12 5G
+10 RFID
+10 LPWAN
+10 802.15
+10 TLS
+10 Linux
+8 RTOS
+8 Python
+8 C/C++
+8 Java
+5 MQTT
+5 CoAP
+5 Bluetooth
+5 Zigbee
+5 Wifi
+5 OFDMA
+4 Mesh
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orgdbf151a">
+<h2 id="orgdbf151a">Applications</h2>
+<div class="outline-text-2" id="text-orgdbf151a">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgffb780a">
+<h3 id="orgffb780a">Manufacturing</h3>
+<ul>
+<li>Use cases:
+<ul>
+<li>Preventative maintenance on new and pre-existing factory machinery</li>
+<li>Throughput increase through real-time demand</li>
+<li>Energy savings</li>
+<li>Safety systems such as thermal sensing, pressure sensing, and gas leaks</li>
+<li>Factory floor expert systems</li>
+
+</ul></li>
+<li>Goal: Improving yield, uptime, real-time response, and systems safety.</li>
+<li>Challenges: Real-time decision, Legacy system, Security</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5a829ef">
+<h3 id="org5a829ef">Consumer</h3>
+<ul>
+<li>Use cases:
+<ul>
+<li>Smart home gadgetry: Smart irrigation, smart garage doors, smart locks, smart lights, smart thermostats, and smart security.</li>
+<li>Wearables: Health and movement trackers, smart clothing/wearables.</li>
+<li>Pets: Pet location systems, smart dog doors.</li>
+
+</ul></li>
+<li>Goal: Improving quality of life</li>
+<li>Constraints: bifurcation of standards</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb93d6b6">
+<h3 id="orgb93d6b6">Retailing</h3>
+<ul>
+<li>Use cases:
+<ul>
+<li>Beaconing, such as proximity sensing customers, traffic patterns, and inter-arrival times as marketing analytics.</li>
+<li>Beaconing systems within entertainment venues, conferences, concerts, amusement parks, and museums.</li>
+<li>Targeted advertising, such as locating known or potential customers by proximity and providing sales information.</li>
+<li>Asset tracking, such as inventory control, loss control, and supply chain optimizations.</li>
+<li>Apply predictive analytics to food supply.</li>
+<li>Digital signage within retail, hospitality, or citywide.</li>
+
+</ul></li>
+<li>Goal: Lowering sales costs and Improving customer experience</li>
+<li>Constraints: Cost/benefit ratio</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgec3a3b7">
+<h3 id="orgec3a3b7">Healthcare</h3>
+<ul>
+<li>Use cases:
+<ul>
+<li>In-home patient care</li>
+<li>Learning models of predictive and preventative healthcare</li>
+<li>Dementia and elderly care and tracking</li>
+<li>Hospital equipment and supply asset tracking</li>
+<li>Pharmaceutical tracking and security</li>
+<li>Remote field medicine</li>
+<li>Drug research</li>
+<li>Patient fall indicators</li>
+
+</ul></li>
+<li>Goal: Improving the quality of life and reduce health costs</li>
+<li>Constraints: Government Regulation, Reliability, Zero downtime, Privacy</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf341ba0">
+<h3 id="orgf341ba0">Energy</h3>
+<ul>
+<li>Use cases:
+<ul>
+<li>Oil rig analysis of thousands of sensors and data points for efficiency gains</li>
+<li>Remote solar panel monitoring and maintenance</li>
+<li>Hazardous analysis of nuclear facilities</li>
+<li>Smart electric meters in a citywide deployment to monitor energy usage and demand</li>
+<li>Real-time blade adjustments as a function of weather on remote wind turbines</li>
+
+</ul></li>
+<li>Constraints: Real-time responsiveness, extreme environment</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb8f5036">
+<h3 id="orgb8f5036">Transportation</h3>
+<ul>
+<li>Use cases:
+<ul>
+<li>Fleet tracking and location awareness</li>
+<li>Railcar identification and tracking</li>
+<li>Asset and package tracking within fleets</li>
+<li>Preventative maintenance of vehicles on the road</li>
+
+</ul></li>
+<li>Goal: Safety, Minimize downtime</li>
+<li>Challenges: Mobility, Spatial data</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6983857">
+<h3 id="org6983857">Smart City</h3>
+<ul>
+<li>Use cases:
+<ul>
+<li>Pollution control and regulatory analysis through environmental sensing</li>
+<li>Microclimate weather predictions using citywide sensor networks</li>
+<li>Efficiency gains and improved costs through waste management service on demand</li>
+<li>Improved traffic flow and fuel economy through smart traffic light control and patterning</li>
+<li>Energy efficiency of city lighting on demand</li>
+<li>Smart snow plowing based on real-time road demand, weather conditions, and nearby plows</li>
+<li>Smart irrigation of parks and public spaces, depending on weather and current usage</li>
+<li>Smart cameras to watch for crime and real-time automated AMBER Alerts</li>
+<li>Smart parking lots to automatically find best space parking on demand</li>
+<li>Bridge, street, and infrastructure wear and usage monitors to improve longevity and service</li>
+
+</ul></li>
+<li>Challenges: Scale (<i>More is different</i>)</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orge285651">
+<h2 id="orge285651">Technology Stack</h2>
+<div class="outline-text-2" id="text-orge285651">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org113fbdb">
+<h3 id="org113fbdb">Enabling Technology</h3>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/enablingtech.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/enablingtech.png" alt="Figure" style="max-height:80vh" /></p><p>Enabling Technology</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org3163bf7">
+<h4 id="org3163bf7">Four Layer Model</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/4layer.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/4layer.png" alt="Figure" style="max-height:80vh" /></p><p>Four-Layer Model of Internet of Things</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0a24764">
+<h4 id="org0a24764">Enabling Technology</h4>
+<ul>
+<li>Node Level:
+<ul>
+<li>Embedded systems: Sensors, RFIDs</li>
+<li>Embedded operating systems: Linux, Windows IoT, Real-time OS</li>
+<li>Energy-harvesting</li>
+<li>Micro-Electro-Mechanical Systems (MEMs).</li>
+
+</ul></li>
+<li>Network Level:
+<ul>
+<li>Wireless communication: Cellular, LPWAN, IEEE 802.15</li>
+<li>Ad-Hoc network</li>
+<li>MQTT, CoAP</li>
+<li>Internet Security</li>
+
+</ul></li>
+<li>Service Level:
+<ul>
+<li>Clouding computing</li>
+<li>Big data, Data analytics, Machine learning</li>
+<li>Clock Synchronization</li>
+<li>Localization</li>
+
+</ul></li>
+<li>Applications</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5e47c73">
+<h3 id="org5e47c73">The Many-Sidedness of Internet of Things &amp; CPS</h3>
+<div class="r-stack">
+
+<figure>
+<img src="./figures/raw/iot.png" alt="iot.png" class="fragment fade-out" data-fragment-index="0" style="max-height:60vh">
+
+</figure>
+
+<figure>
+<img src="./figures/raw/blindmenandelephant.jpg" alt="blindmenandelephant.jpg" class="fragment" data-fragment-index="0" style="max-height:60vh">
+
+</figure>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org46aa6cd">
+<h3 id="org46aa6cd">Takeaway from the course</h3>
+<ul>
+<li>We <b>CANNOT</b> cover everything in details in this course.</li>
+<li>Look at the big picture:
+<ul>
+<li>What are we trying to solve?</li>
+<li>What are the key considerations?</li>
+<li>What is the fundamental limit?</li>
+<li>How to effectively trade off between X and Y based on specific application?</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org10d1aa1">
+<h4 id="org10d1aa1">Example: Physical Layer</h4>
+<ul>
+<li>What are we trying to solve?
+<ul>
+<li>Transmitting raw bits via a physical medium</li>
+
+</ul></li>
+<li>What are the key considerations?
+<ul>
+<li>Throughput, Range, Energy consumption</li>
+<li>Other considerations: Latency, Mobility, Cost</li>
+
+</ul></li>
+<li>What is the fundamental limit?
+<ul>
+<li>The Shannon Limit</li>
+<li>Free space path loss formula</li>
+
+</ul></li>
+<li>How to effectively trade off between X and Y based on specific application?
+<ul>
+<li>Surveillance camera: Wifi, 4G/5G, Wired</li>
+<li>Environmental monitoring: LoRa, NBIoT</li>
+<li>Smart home: Zigbee, Bluetooth</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org71da6eb">
+<h2 id="org71da6eb">Course Information</h2>
+<div class="outline-text-2" id="text-org71da6eb">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5f79419">
+<h3 id="org5f79419">Course Information</h3>
+<ul>
+<li>Pre-requisites:
+<ul>
+<li>计算机语言与程序设计</li>
+<li>计算机网络与应用</li>
+
+</ul></li>
+<li>Things that you will need for the lab/project:
+<ul>
+<li>Raspberry Pi: Most popular single board computer</li>
+<li>GNU/Linux: Most popular OS for IoT</li>
+<li>Using SSH to connect to RPi</li>
+<li>Writing short Python code (&lt;100 lines)</li>
+<li>Version control and collaborating with your teammate using Git</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org9209b79">
+<h3 id="org9209b79">Course Instructors</h3>
+<ul>
+<li>Mo, Yilin
+<ul>
+<li>Office: FIT Building 3-613</li>
+<li>Office Hour: Wednesday 14:00-17:00</li>
+<li>Phone: 62792438</li>
+<li>Email: ylmo@tsinghua.edu.cn</li>
+
+</ul></li>
+<li>Pei, Xin
+<ul>
+<li>Office: Central Main Building 809</li>
+<li>Office Hour: Wednesday 14:00-17:00</li>
+<li>Phone: 62795043</li>
+<li>Email: peixin@tsinghua.edu.cn</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5a8429b">
+<h3 id="org5a8429b">Teaching Assistant</h3>
+<ul>
+<li>Lu, Yiwen
+<ul>
+<li>Office: FIT Building 3-623</li>
+<li>Office Hour: Friday 14:00-17:00</li>
+<li>Phone: 62772430</li>
+<li>Email: luyw20n@mails.tsinghua.edu.cn</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org54205d8">
+<h3 id="org54205d8"><i>Tentative</i> Lecture Schedule</h3>
+<ul>
+<li>Lecturer: Mo, Yilin</li>
+
+</ul>
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">Lecture #</td>
+<td class="org-left">Date</td>
+<td class="org-left">Topics</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">9/18</td>
+<td class="org-left">Introduction, Sensor OS</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">9/25</td>
+<td class="org-left">Sensors, Actuators, Energy Harvesting</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left"><b>9/27</b></td>
+<td class="org-left">Lab 1: Raspberry Pi platform</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">10/9</td>
+<td class="org-left">Physical Layer</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">10/16</td>
+<td class="org-left">MAC Layer</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">10/23</td>
+<td class="org-left">Routing</td>
+</tr>
+
+<tr>
+<td class="org-right">7</td>
+<td class="org-left">10/30</td>
+<td class="org-left">Lab 2: Networking</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">11/6</td>
+<td class="org-left">Lab 3: Wireless Mesh Network</td>
+</tr>
+
+<tr>
+<td class="org-right">9</td>
+<td class="org-left">11/13</td>
+<td class="org-left">Security</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgca3d164">
+<h4 id="orgca3d164"><i>Tentative</i> Lecture Schedule</h4>
+<ul>
+<li>Lecturer: Pei, Xin</li>
+
+</ul>
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">Lecture #</td>
+<td class="org-left">Date</td>
+<td class="org-left">Topics</td>
+</tr>
+
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">11/20</td>
+<td class="org-left">Clock Synchronization</td>
+</tr>
+
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">11/27</td>
+<td class="org-left">Localization</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-left">12/4</td>
+<td class="org-left">Big Data, Cloud Computing</td>
+</tr>
+
+<tr>
+<td class="org-right">13</td>
+<td class="org-left">12/11</td>
+<td class="org-left">Smart Transportation System</td>
+</tr>
+
+<tr>
+<td class="org-right">14</td>
+<td class="org-left">12/18</td>
+<td class="org-left">Smart Cities</td>
+</tr>
+
+<tr>
+<td class="org-right">15</td>
+<td class="org-left">12/25</td>
+<td class="org-left">Lab 4: Project</td>
+</tr>
+
+<tr>
+<td class="org-right">16</td>
+<td class="org-left"><b>1/1</b></td>
+<td class="org-left">Project Demonstration</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org4c8c148">
+<h3 id="org4c8c148">Grading Criteria</h3>
+<ul>
+<li>Quizzes (4 total): 20%</li>
+<li>Lab Assignment: 20%</li>
+<li>Final Project: 60%
+<ul>
+<li>Demo: 20%</li>
+<li>Report: 40%</li>
+
+</ul></li>
+<li>Pass/Fail</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc71ba79">
+<h3 id="orgc71ba79">Quizzes</h3>
+<ul>
+<li><b>Four</b> in-class, closed-book quizzes</li>
+<li>Spread throughout the semester</li>
+<li>Announcement will be one week ahead of time (with <b>reading assignment</b>)</li>
+<li>The questions will be based on the reading assignment.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org59354d4">
+<h3 id="org59354d4">Lab Assignments</h3>
+<ul>
+<li><b>Three</b> lab assignments at the first half of the semester</li>
+<li>Location: <b>Central Main Building 510</b></li>
+<li>Goal: Get familiar with Raspberry Pi and networking protocols
+<ol>
+<li>Installing Raspberry Pi OS, SSH, Light Sensor, LED</li>
+<li>Distributed “Whack-a-Mole”</li>
+<li>Wireless Mesh Network</li>
+
+</ol></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf10d569">
+<h3 id="orgf10d569">Project</h3>
+<ul>
+<li>Carried out in teams of <b>3</b> students.
+<ul>
+<li>The code should be hosted on Tsinghua Gitlab Repo</li>
+<li>We will review everyone&rsquo;s contribution to the Repo</li>
+
+</ul></li>
+<li>Each group will be given 3 Raspberry Pis, Sensors + LED, SD cards and other accessories
+<ul>
+<li>Take good care of the equipment</li>
+
+</ul></li>
+<li>Buying additional hardware 
+<ul>
+<li>Write a proposal with a budget (Typically &lt; ¥1,000)</li>
+<li>We will review the proposal and buy the HW</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgbcf3020">
+<h4 id="orgbcf3020">Project</h4>
+<ul>
+<li>A sample project list will be presented later</li>
+<li>Example: 
+<ul>
+<li>Developing an ad-hoc sensor network of 5+ nodes via Wifi and a front-end to show the sensor readings</li>
+<li>Completing the tasks in Lab 2 while running RPI on bare metal</li>
+<li>&#x2026;</li>
+
+</ul></li>
+<li>You are encourage to propose your own project and discuss with us
+<ul>
+<li>Combining it with your final year project!</li>
+
+</ul></li>
+<li>Grading Criteria:
+<ul>
+<li>2/3: Final Report</li>
+<li>1/3: Demonstration</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-bibliography">
+<h2 id="bibliography">Bibliography</h2>
+<ul class='org-ref-bib'><li><a id="Ashton">[Ashton]</a> <a name="Ashton"></a>Kevin Ashton, That ‘internet of things’ thing, <i>RFID Journal 22</i>, 97-114 (2009). <a href=""></a></li>
+<li><a id="IoT2018">[IoT2018]</a> <a name="IoT2018"></a>Parry Lea, Internet of Things for Architects, Packt Publishing, 2018. <a href=""></a></li>
+<li><a id="Kumar">[Kumar]</a> <a name="Kumar"></a>Kim & Kumar, Cyber-physical systems: A perspective at the centennial, in: Proc. IEEE, 2012. <a href=""></a></li>
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/dist/reveal.js"></script>
+<script src="./reveal.js/plugin/notes/notes.js"></script>
+<script src="./reveal.js/plugin/search/search.js"></script>
+<script src="./reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: true,
+fragmentInURL: true,
+hashOneBasedIndex: false,
+pdfSeparateFragments: false,
+
+overview: true,
+
+transition: 'fade',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealNotes, RevealSearch, RevealZoom ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+{src:'./reveal.js/plugin/spotlight/spotlight.js'},
+{src: './reveal.js/plugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } },
+{ src: './reveal.js/plugin/audio-slideshow/audio-slideshow.js', condition: function( ) { return !!document.body.classList && !Reveal.isSpeakerNotes(); } },
+{ src: './reveal.js/plugin/anything/anything.js' },
+{ src: './reveal.js/plugin/toc-progress/toc-progress.js', async: true, callback: function() { toc_progress.initialize('reduce', 'rgba(120,138,130,0.2)', 'body'); toc_progress.create(); } },
+{ src: './reveal.js/plugin/jump/jump.js', async: true },
+{ src: './reveal.js/plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({preventUnanswered: true, skipStartButton: true}); } },
+{ src: './reveal.js/plugin/coursemod/coursemod.js', async: true },
+{ src: './reveal.js/plugin/accessibility/helper.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+,plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {84: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1,
+audioStartAtFragment: true,
+  audio: {
+    advance: -1, autoplay: false, defaultDuration: 0, defaultAudios: false, playerOpacity: 0.8, playerStyle: 'position: fixed; bottom: 9.5vh; left: 0%; width: 30%; height:30px; z-index: 33;' },
+anything: [
+        // Following initialization code for class animate from anything-demo.html.
+        // Copyright (c) 2016 Asvin Goel, under The MIT License (MIT).
+	{className: "animate",  initialize: (function(container, options){
+		Reveal.addEventListener( 'fragmentshown', function( event ) {
+			if (typeof event.fragment.beginElement === "function" ) {
+				event.fragment.beginElement();
+			}
+		});
+		Reveal.addEventListener( 'fragmenthidden', function( event ) {
+			if (event.fragment.hasAttribute('data-reverse') ) {
+				var reverse = event.fragment.parentElement.querySelector('[id=\"' + event.fragment.getAttribute('data-reverse') + '\"]');
+				if ( reverse && typeof reverse.beginElement === "function" ) {
+					reverse.beginElement();
+				}
+			}
+		});
+		if ( container.getAttribute("data-svg-src") ) {
+			var xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+				if (xhr.readyState === 4) {
+					var svg = container.querySelector('svg');
+					container.removeChild( svg );
+					container.innerHTML = xhr.responseText + container.innerHTML;
+					if ( svg ) {
+						container.querySelector('svg').innerHTML = container.querySelector('svg').innerHTML + svg.innerHTML;
+					}
+				}
+				else {
+					console.warn( "Failed to get file. ReadyState: " + xhr.readyState + ", Status: " + xhr.status);
+				}
+			};
+			xhr.open( 'GET', container.getAttribute("data-svg-src"), true );
+			xhr.send();
+		}
+	}) },
+	{className: "randomPic",
+	 defaults: {imgalt: "Dummy alt text",
+		    imgcaption: "Image by {name}",
+		    choices: [ {name: "dummyname", path: "dummypath"} ]},
+	 initialize: (function(container, options){
+	     var choice = Math.trunc( Math.random()*(options.choices.length) );
+	     var img = "<img src='" + options.choices[choice].path + "' alt='" + options.choices[choice].imgalt + "' />";
+	     var caption = options.imgcaption.replace(new RegExp('\{name\}', 'gm'), options.choices[choice].name);
+	     container.innerHTML = img + caption;
+	 }) },
+	{className: "notes",
+	 initialize: (function(container, options){
+	     container.addEventListener('click', function(e) { Reveal.getPlugins().notes.open(); });
+	 }) }
+],
+coursemod: { enabled: true, shown: false },
+});
+</script>
+</body>
+</html>

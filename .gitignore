@@ -1,7 +1,5 @@
 *.elc
 auto
-public
-public-*
 tests
 img
 figures.for-export

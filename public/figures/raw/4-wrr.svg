@@ -1,0 +1,160 @@
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="691.8291"
+   height="64.751221"
+   viewBox="0 0 692 65"
+   id="4-wrr">
+  <title
+     id="title3023">Sample Gantt chart for Weighted Round Robin (WRR) scheduling</title>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Sample Gantt chart for Weigthed Round Robin (WRR) scheduling</dc:title>
+        <dc:date>2017, 2018</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jens Lechtenbörger</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="https://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-60.714844,-550.36218)"
+     id="layer1">
+    <text
+       x="275.28745"
+       y="582.36218"
+       id="text2985"
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"><tspan
+         x="275.28745"
+         y="582.36218"
+         id="tspan2987">T1</tspan></text>
+    <rect
+       width="100"
+       height="40"
+       x="140"
+       y="264.09448"
+       transform="translate(0,308.2677)"
+       id="rect3759"
+       style="opacity:0;fill:#0a0ab4;fill-opacity:1;stroke:#000000;stroke-width:2.79999995;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <rect
+       width="180"
+       height="40"
+       x="140"
+       y="264.09448"
+       transform="translate(0,308.2677)"
+       id="rect3761"
+       style="opacity:0;fill:#0a0ab4;fill-opacity:1;stroke:#000000;stroke-width:3.9000001;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <rect
+       width="300"
+       height="40"
+       x="140"
+       y="244.09448"
+       transform="translate(0,308.2677)"
+       id="rect3763"
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <rect
+       width="200"
+       height="40"
+       x="440"
+       y="552.36218"
+       id="rect3763-3"
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <rect
+       width="100"
+       height="40"
+       x="640"
+       y="552.36218"
+       id="rect3763-3-6"
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <text
+       x="526"
+       y="582.36218"
+       id="text2985-7"
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"><tspan
+         x="526"
+         y="582.36218"
+         id="tspan2987-5">T2</tspan></text>
+    <text
+       x="676"
+       y="582.36218"
+       id="text2985-7-3"
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"><tspan
+         x="676"
+         y="582.36218"
+         id="tspan2987-5-5">T3</tspan></text>
+    <text
+       x="139.95496"
+       y="306.53418"
+       transform="translate(0,308.2677)"
+       id="text3846"
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
+         x="139.95496"
+         y="306.53418"
+         id="tspan3848"
+         style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans">0</tspan></text>
+    <text
+       x="426"
+       y="612.36218"
+       id="text3850"
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"><tspan
+         x="426"
+         y="612.36218"
+         id="tspan3852">30</tspan></text>
+    <text
+       x="626"
+       y="612.36218"
+       id="text3850-9"
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"><tspan
+         x="626"
+         y="612.36218"
+         id="tspan3852-1">50</tspan></text>
+    <text
+       x="726"
+       y="612.36218"
+       id="text3850-9-0"
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"><tspan
+         x="726"
+         y="612.36218"
+         id="tspan3852-1-9">60</tspan></text>
+    <text
+       x="60"
+       y="582.36218"
+       id="text2985-3"
+       xml:space="preserve"
+       style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"><tspan
+         x="60"
+         y="582.36218"
+         id="tspan2987-6"
+         style="font-size:24px;font-weight:bold;-inkscape-font-specification:Sans Bold">WRR</tspan></text>
+  </g>
+</svg>
