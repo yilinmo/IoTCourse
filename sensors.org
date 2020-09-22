@@ -1,15 +1,12 @@
-* Serial Communication
-
-** UART
-** I2C
-** SPI
-   
-* Sensors Basics
+* Sensors Overview
+  
 ** cmu slides begin
 
 ** ADC   
 
 * Basic Sensors
+
+** cmu slides
 
 * Camera basics 
 
@@ -19,16 +16,62 @@
    
 ** depth
    
+* Sensor to Endpoints Communication
+  
+** Serial Communication
+*** UART
+*** I2C
+*** SPI
+** Other Communication Method
+   
+- Parallel
+  - Infiband
+  - Ethernet
+  - Camera Interface
+  - USB 3.x
+  - ...
+- Wireless
+  - Will be covered later
+ 
 * Advanced sensors 
   
-** optical microcavity
    
 ** time to flight sensor
    
 ** ultrasonic
+   
+** optical microcavity
 
 * Energy management
-  
+
+- Active sensor power
+- Frequency of data collection
+- Wireless radio communication strength and power
+- Frequency of communication
+- Microprocessor or microcontroller power as a function of core frequency
+- Passive component power
+- Energy loss from leakage or power supply inefficiency
+- Power reserve for actuators and motors
+ 
+For example, the TI SensorTag C2650 has the following power characteristics:
+- Standby mode: 0.24 mA
+- Running with all sensors disabled: 0.33 mA
+- LEDs
+- All sensors on at 100 ms/sample data rate and broadcasting BLE: 5.5 mA:
+  - Temperature sensor: 0.84 mA
+  - Light sensor: 0.56 mA
+  - Accelerometer and gyros: 4.68 mA
+  - Barometric sensor: 0.5 mA
+The TI SensorTag uses a standard CR2032 coin cell battery rated at 240 mAh. Therefore, the maximum life is expected to be about 44 hours.
+
+Many power management practices are employed, such as
+- New material: clock gating components not being used in silicon
+- reducing the clock rates of processors or microcontrollers
+- adjusting the sensing frequency and broadcast frequency
+- back-off strategies to reduce communication strength
+- and various levels of sleep modes.
+ These techniques are widely used in the computing business as a general practice.
+ 
 ** Energy harvest
    
 ** Energy storage
