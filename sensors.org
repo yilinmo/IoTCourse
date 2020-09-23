@@ -1,21 +1,424 @@
-* Sensors Overview
+#+INCLUDE: "preamble.org"
+
+#+TITLE: Endpoints for Intelligent Networked System
+#+AUTHOR: Mo, Yilin
+#+DATE: Sept 2020 
+
+#+KEYWORDS: Endpoints, Sensors, Energy Management
+#+DESCRIPTION: endpoints for iot course
+
+
+* Introduction
   
-** cmu slides begin
+** TODO Core Questions
+   
+** TODO Learning Objectives
+   
+** Table of Contents
+   :PROPERTIES:
+   :UNNUMBERED: notoc
+   :END:
+#+REVEAL_TOC: headlines 1
 
-** ADC   
+* Sensors Overview
 
+** Basic Terms
+   
+- Transducer: a device which converts one form of energy to another
+- Sensor: a transducer that converts a physical phenomenon into an electrical signal.
+    – an interface from the physical world to the cyber world.
+- Actuator: a transducer that converts an electrical signal to a physical phenomenon
+    – an interface from the cyber world to the physical world.
+
+*** Classification of Sensors
+| Criterion      | Classes    | Example                  |
+| Power supply   | Modulating | Thermistor               |
+|                | Generating | Thermocouple             |
+| Output signal  | Analog     | Potentiometer            |
+|                | Digital    | Position encoder         |
+| Operating mode | Deflection | Deflection accelerometer |
+|                | Null       | Servo-accelerometer      |
+
+*** Power Supply
+- Modulating
+    – Also known as Active Sensors
+    – They need auxiliary power to perform functionality
+    – Sensitivity can be controlled
+- Self-Generating
+    – Also known as Passive Sensors
+    – They derive the power from the input
+
+*** Operating Mode
+- Deflection
+    – The measured quantity produces a physical effect
+    – Generates an apposing* effect which can be measured
+    – Faster
+- Null
+    – Applies a counter-force
+    – To balance the deflection from the null point (balance condition)
+    – Can be more accurate but slow
+ 
+*** Sensor-to-Signal Interface
+- Action of environment on a sensor causes it to generate an electrical signal directly
+    – voltage source 
+    – current or charge source
+- Action of environment on sensor changes an
+electrical parameter that we can measure
+    – resistance changes
+    – capacitance changes 
+    – inductance changes
+
+*** Electrical Phenomena
+- Resistive
+- Capacitive
+- Inductive
+- Piezo-electric
+
+*** TODO Resistance-based Devices
+Resistance
+- Resistance of the material depends on the length, area and resistivity as:
+\[R = \rho\frac{L}{A}.\]
+- If any one of the terms changes, it affects resistance
+- The most common circuit used to measure the change in resistance is a Wheatstone bridge
+
+*** TODO Capacitance-based Devices
+- A “Mousepad” or “touchpad” is now ubiquitous, reliable and stable
+- Same geometrical factors as resistive sensors (but remember that capacitance is defined “upside down”):
+\[V = L dI/dt + R I + Q/C\]
+- Actual approach is to measure distortion in “stray” capacitance
+Many geometries including some with “finger-like” curvatures
+μ 0 = 4π 10 -7 henry/m, ε 0 = μ 0 /c 2 = 8.85 10 -12 farad/m
+
+*** TODO Magnetic and Inductive Effects
+- Many prototypes, multi-generation developments or applications
+- Inductive devices are more-or-less miniature LVDTs
+    – Linear Variable Displacement Transducer: a displacement measuring instrument
+- Magnetic effects, e.g., magneto-resistance plausible
+    – recent development of “giant” and “colossal” magneto-resistance materials may hold some promise
+- Some slip-sensing potential with dipoles oriented within surface
+- Hall effect sensors may be the most plausible, as Hall effect switches are in common use in computer keyboards, etc
+
+*** Piezo- and Pyro-electric Devices
+- Piezo- (pressure) and pyro- (heat) electricity are always coupled
+    – due to separation of electrical charges in the material’s crystalline arrangement
+    – electric dipoles at the molecular level 
+    – high voltage poling to macroscopically align dipoles
+    – “electrets” made by poling various waxy mixtures
+- Can get very high voltages (enough to spark across ~ 1 mm) in response to impact
+- Sensor: Pressure to voltage 
+- Acutator: Voltage to deformation 
+- Due to leakage, effect is transient
+    – to stabilize, leakage is intentionally increased, making device respond effectively to dP/dt
+
+*** Practical Piezo-Electric Materials
+- Quartz (cut along particular crystal axes to maximize piezo- and minimize pyro- effects):
+    – the effect is small but very stable
+- Various ceramics, e.g., ZnO, PZT - Lead Zirconate Titanate (piezoelectric ceramic material)
+    – Esp. by deposition on micro- and mini- fabricated devices
+    - SAW (surface acoustic wave) devices
+- Plastics (e.g., polyvinylidene difluoride PDVF aka PVF 2 )
+    – (apparently) enormous quantities are used in
+submarine sonar transducers
+
+*** Example: Current-to-Voltage Conversion
+- Simple: \(I = V_{measured} / R_{known}\)
+- Better: Use an "op amp"
+
+*** Signal Conditioning
+- Filter for expected frequency regime
+- Subtract DC offset ("zeroing")
+- Amplify or attenuate signal ("scaling")
+- Linearize relationship between measurand and observed electrical parameter
+    – usually done in software after ADC
+
+    
+*** Analog-to-Digital Converter (ADC)
++ Many different principles
++ Often integrated with microcontrollers
+  - in some types, e.g., "successive approximation", the CPU participates in the conversion process
+  - Normally, want to avoid this
++ All involve trade-offs of speed (conversion time), resolution (number of bits) and cost
++ "Flash converter" is the fastest, has the lowest resolution and the highest cost
+    – required for video digitization
 * Basic Sensors
 
-** cmu slides
+** Pressure Sensors
+- Transduces pressure into electrical quantity
+- Pressure exerts force which can be converted to electrical voltage using various methods
+- Types
+  - Strain gauges
+  - Capacitive diaphragms
+  - Piezo-resistive or Silicon cell
+  - Bourdon tubes
+  - Glass feed-through with silicon cell
+ 
+*** Pressure Sensor Types (1 of 2)
++ Strain Gauges
+    – Based on the variation of resistance of a conductor or semiconductor when mechanical stress is applied
+    – Made of alloys like constantan, nichrome and also semiconductors
+    – Can be bonded or un-bonded
++ Capacitive diaphragms
+    – Diaphragm acts as one plate of capacitor
+    – The stress changes the space between capacitor plates
+    – Can be made of strain gauge or other metal
 
-* Camera basics 
+*** Pressure Sensor Types (2 of 2)
++ Piezo-resistive or Silicon Cell
+    – Micromachined silicon diaphragms
+    – Piezo-resistive strain gauges diffused into it
+    – Very sensitive to pressure
++ Tubes and Feed-Through Glass
+    – Glass feed-through and silicon cell-mounted on plastic housing
+    – Based on the pressure difference
 
-** ccd vs cmos 
+** Humidity Sensors
+- Humidity is defined as the water vapor content in the air (or other gases)
+- Absolute Humidity
+  - Ratio of the mass of water vapor to the volume of air or gas
+- Relative Humidity
+  - The ratio of the moisture content of air compared to the saturated moisture level at the same temperature or pressure
+- Dew Point
+  - Temperature and pressure at which gas begins to condense into liquids (like water vapor in air showing up as dew drops)
 
-** color basics
+*** Humidity Sensor Types (1 of 2)
+- Capacitive RH sensor
+  - Change in dielectric constant is directly proportional to the relative humidity in the environment
+  - Very low temperature effect
+  - 0.2-0.5 pF change in capacitance for 1% RH change
+- Resistive Humidity Sensors
+  - Measure the impedance change
+  - Inverse exponential relationship to humidity
+  - Mostly used are conductive polymer, salt etc.
+  - Ceramic-coated to avoid condensation effect
+
+*** Humidity Sensor Types (2 of 2)
+- Thermal Conductivity Humidity Sensors
+  - Measure absolute humidity
+  - Calculate the difference between dry air and air containing water vapor
+  - One thermistor sealed in dry nitrogen and another exposed to the environment
+  - Difference in current proportional to humidity
+- MEMS-based Humidity sensor
+  - Polymide-coated cantilever beam
+  - Provided with movable electrode
+  - Absorption causes increase in beam mass
+  - Deflection causes capacitance change
+
+** Temperature Sensors
+A temperature sensor detects a change in a physical parameter such as resistance or output voltage that corresponds to a temperature change.
+
+Type of Sensing:
+- Contact
+  - Sensor is in direct physical contact with the object to be sensed
+  - To monitor solids, liquids, gases over a wide range
+- Non-contact
+  - Interprets the radiant energy of a heat source to energy in electromagnetic spectrum
+  - Monitor non-reflective solids and liquids
+
+*** Contact sensing
+- Thermocouples
+- Thermistors
+- Resistance Temperature Detectors (RTD)
+- Semiconductor Temperature sensors
+- Liquid-in-Glass Thermometers
+- Bi-metallic Thermometers
+
+*** non-Contact sensing
+- Radiation Thermometers
+  - Infrared Thermal Imaging
+  - Scanners
+  - Spot Radiometers
+- Thermal Imagers
+- Ratio Thermometers
+
+** Microphone
+- A microphone is an acoustic to electric transducer that converts sound into an electrical signal.
+- Microphones capture sound waves with a thin, flexible diaphragm. The vibrations of this element are then converted by various methods into an electrical signal that is an analogue of the original sound.
+- Most microphones in use today use electromagnetic generation (dynamic microphones), capacitance change (condenser microphones) or piezo-electric generation to produce the signal from mechanical vibration .
+
+*** Condenser (or Capacitor) Microphones
+- In a condenser microphone, the diaphragm acts as one plate of a capacitor, and the vibrations produce changes in the distance between the plates.
+- Since the plates are biased with a fixed charge (\(Q\)), the voltage maintained across the capacitor plates changes with the vibrations in the air.
+
+*** Dynamic Microphones
+- In a dynamic microphone, a small movable induction coil, positioned in the magnetic field of a permanent magnet, is attached to the diaphragm.
+- When sound enters through the windscreen of the microphone, the sound wave vibrations move the diaphragm.
+- When the diaphragm vibrates, the coil moves in the magnetic field, producing a varying current in the coil through electromagnetic induction .
+
+*** Microphone Types (cont’d)
+- Carbon Microphone
+  - It consists of two metal plates separated by carbon granules
+  - When sound waves strike this plate, the pressure on the granules changes
+  - this in turn changes the electrical resistance between the plates.
+- Piezo Microphone
+  - A piezo microphone uses the phenomenon of piezo-electricity
+  - It is widely used to amplify acoustic instruments for live performance
+  - or to record sounds in unusual environments
+- Ribbon microphones
+  - Corrugated metal ribbon is suspended in a magnetic field.
+  - The ribbon is electrically connected to the microphone's output
+  - Vibration within the magnetic field generates the electrical signal. 
+
+** Accelerometer
+- Piezo-resistive
+  - Proof mass suspended with piezo-resistive beams
+  - Simple structure, fabrication, and readout (low impedance output)
+  - Large temp. sensitivity, smaller overall sensitivity than capacitance devices
+- Capacitive
+  - Acceleration is measured by the capacitance between a fixed plate and plate on the proof mass.
+  - Stable (temperature, drift)
+  - Can be susceptible to EMI .
+
+*** Piezoelectric Accelerometer
+- The principle is to sense the inertial force created by a seismic mass under an acceleration. 
+- This force is transformed into a bending moment applied on a piezoelectric bimorph.
+- The seismic mass displacement is sensed by two piezoelectric bridges
+- Z-axis acceleration is distinguished from x-axis by a differential measurement between these two sensors.
+
+** Motion Detector
    
-** depth
+- Photo Sensor
+    – Beam of light crossing the room near the door, and a photo sensor on the other side of the room. When the beam breaks, the photo sensor detects the change in the amount of light and rings a bell (or opens garage doors).
+- Microwave- Or Ultrasonic-based
+    – Burst of microwave radio energy and waits for the reflected energy to bounce back.
+    – When a person moves into the field of microwave energy, it changes the amount of reflected energy or the time it takes for the reflection to arrive.
+    – The same thing can be done with ultrasonic sound waves, bouncing them off a target and waiting for the echo.
+
+*** Pyro- electric Infrared Motion Detector
+- Humans, having a skin temperature of about 34℃, radiate infrared energy with a wavelength between 9 and 10 micrometers. Therefore, the sensors are typically sensitive in the range of 8 to 12 micrometers
+    – \(\lambda\) [microns] = 2900 / T [deg K]
+- The infrared light bumps electrons off a substrate, and these electrons can be detected and amplified into a signal.
+- When a person walks by, the amount of infrared energy in the field of view changes rapidly and is easily detected. An electronics package attached to the sensor is looking for a fairly rapid change in the amount of infrared energy it is seeing.
+- There is a single or sometimes two sensors inside looking for changes in infrared energy
+
+* Light and Image Sensing
+  
+** Light Sensing: Principles
+- Photo-chemistry
+  - Light renders silver halide grains in film “emulsion” “developable ”
+- Thermal physics
+  - Heating effect of incident light heats a sensor that basically measures temperature
+- Photo-physics
+  - Interaction of light with matter frees electrons or promotes them from valence to conduction band.
+
+*** Photoelectric effect
+- Einstein’s Nobel Prize in 1921 “for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect”
+
+*** Photodiode response function
+- For silicon photodiodes, usually linear, but:
+  - non-linear when potential well is saturated (over-exposure)
+  - non-linear near zero (due to noise)
+TODO: under/propoer/over
+*** Photodiode quantum efficiency (QE) 
+How many of the incident photons will the photodiode convert into electrons?
+\[QE = \frac{#electrons}{#photons}\]
+- Fundamental optical performance metric of imaging sensors.
+TODO: Wiki QE picture
+
+*** Two types of image sensors
+    
+#+BEGIN_leftcol
+Charged Coupled Device (CCD): converts electrons to voltage using readout circuitry separate from pixel
+- higher sensitivity
+- lower noise
+#+END_leftcol
+#+BEGIN_rightcol
+Complementary Metal Oxide Semiconductor (CMOS):
+converts electrons to voltage using per-pixel readout circuitry
+- faster read-out
+- lower cost
+#+END_rightcol
+
+*** CCD vs CMOS
+- Modern CMOS sensors have optical performance comparable to CCD sensors.
+- Most modern commercial and industrial cameras use CMOS sensors.
+
+*** CMOS sensor (very) simplified layout
+    
+*** Analog front end
+    
+analog amplifier (gain):
+- gets voltage in range needed by A/D converter.
+- accommodates ISO settings.
+- accounts for vignetting.
+
+analog-to-digital converter (ADC):
+- depending on sensor, output has 10-16 bits.
+- most often (?) 12 bits.
+
+look-up table (LUT):
+- corrects non-linearities in sensor’s response function (within proper exposure).
+- corrects defective pixels.
+
+** Color Primer
+
+TODO: dress
    
+Color is complicated!
+
+*** Color is an artifact of human perception
+  
+TODO: electromagnetic spectrum
+- “Color” is not an objective physical property of light (electromagnetic radiation).
+- Instead, light is characterized by its wavelength
+- What we call “color” is how we subjectively perceive a very small range of these wavelengths
+
+*** Spectral Power Distribution
+- Most types of light “contain” more than one wavelengths.
+- We can describe light based on the distribution of power over different wavelengths.
+TODO: light source SPD
+*** Spectral Sensitivity Function (SSF)
+- Any light sensor (digital or not) has different sensitivity to different wavelengths.
+- This is described by the sensor’s spectral sensitivity function
+- When measuring light of a some SPD \(\Phi(\lambda)\), the sensor produces a scalar response:
+\[R = \int_\lambda \Phi(\lambda)f(\lambda)d\lambda\]
+- Weighted combination of light’s SPD: light contributes more at wavelengths where the sensor has higher sensitivity.
+
+*** Spectral Sensitivity Function of Human Eye
+- The human eye is a collection of light sensors called cone cells.
+- There are three types of cells with different spectral sensitivity functions.
+- Human color perception is three-dimensional (tristimulus color)
+
+- "short": \(S = \int_\lambda \Phi(\lambda)S(\lambda)d\lambda\)
+- "medium": \(M = \int_\lambda \Phi(\lambda)M(\lambda)d\lambda\)
+- "long": \(L = \int_\lambda \Phi(\lambda)L(\lambda)d\lambda\)
+TODO: pic 
+
+*** Color filter arrays (CFA)
+- To measure color with a digital sensor, mimic cone cells of human vision system.
+- “Cones” correspond to pixels that are covered by different color filters, each with its own spectral sensitivity function
+TODO: pic
+
+*** Many different spectral sensitivity functions
+Each camera has its more or less unique, and most of the time secret, SSF.
+- Makes it very difficult to correctly reproduce the color of sensor measurements.
+- We will see more about this in the color lecture.
+
+TODO: SSF comparison
+
+*** The retinal color space
+
+*** Metamers
+- Distinct mixed beams can produce the same retinal color
+- These beams are called metamers
+- There is an infinity of metamers
+TODO: illuminant metamerism
+
+*** Chromaticity
+TODO: CIE xy
+
+*** Color gamuts
+
+** Depth Camera
+*** The camera as a coordinate transformation
+- A camera is a mapping from the 3D world to a 2D image
+
+
+*** Camera matrix
+
+*** Ames Room 
+    
+*** Triangulation
+    
 * Sensor to Endpoints Communication
   
 ** Serial Communication
@@ -36,14 +439,20 @@
 * Advanced sensors 
   
    
-** time to flight sensor
+** Time-of-flight imaging
+  
+- Conventional imaging: Measure all photons together regardless of time of travel.
+- Time-of-flight imaging: Measure photons separately based on time of travel.
+
+*** Time-of-flight imaging in nature
+    
+** Ultrasonic
    
-** ultrasonic
-   
-** optical microcavity
+** Optical Microcavity
 
 * Energy management
 
+*** Power Budget
 - Active sensor power
 - Frequency of data collection
 - Wireless radio communication strength and power
@@ -53,6 +462,7 @@
 - Energy loss from leakage or power supply inefficiency
 - Power reserve for actuators and motors
  
+*** Example: TI SensorTag C2650
 For example, the TI SensorTag C2650 has the following power characteristics:
 - Standby mode: 0.24 mA
 - Running with all sensors disabled: 0.33 mA
@@ -64,6 +474,7 @@ For example, the TI SensorTag C2650 has the following power characteristics:
   - Barometric sensor: 0.5 mA
 The TI SensorTag uses a standard CR2032 coin cell battery rated at 240 mAh. Therefore, the maximum life is expected to be about 44 hours.
 
+*** power management practices
 Many power management practices are employed, such as
 - New material: clock gating components not being used in silicon
 - reducing the clock rates of processors or microcontrollers
