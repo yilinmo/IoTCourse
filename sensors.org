@@ -532,12 +532,24 @@ TODO: CIE xy
 For example, the TI SensorTag C2650 has the following power characteristics:
 - Standby mode: 0.24 mA
 - Running with all sensors disabled: 0.33 mA
-- LEDs
-- All sensors on at 100 ms/sample data rate and broadcasting BLE: 5.5 mA:
+- Sensors enabled
   - Temperature sensor: 0.84 mA
   - Light sensor: 0.56 mA
   - Accelerometer and gyros: 4.68 mA
   - Barometric sensor: 0.5 mA
+- Bluetooth LE: 
+| State                               | Time [µs] | Current [mA] | Time * Current |
+| Wake Up & Pre-processing            |   1283.89 |         3.10 |        3981.68 |
+| Preparation for Recieve             |    394.22 |         3.58 |        1409.55 |
+| Recieve (RX)                        |    461.33 |         6.69 |        3085.90 |
+| RX to TX transition                 |    109.22 |         5.21 |         568.97 |
+| Transmit (TX)                       |     84.39 |         7.34 |         619.44 |
+| Post-Processing                     |    853.44 |         2.62 |        2239.63 |
+| Total time of connection event [µs] |           |              |        3186.50 |
+| Total time * current [µs*mA]        |           |              |        11905.2 |
+| Average Current draw [µA]           |           |              |         3736.1 |
+
+
 The TI SensorTag uses a standard CR2032 coin cell battery rated at 240 mAh. Therefore, the maximum life is expected to be about 44 hours.
 
 *** power management practices
