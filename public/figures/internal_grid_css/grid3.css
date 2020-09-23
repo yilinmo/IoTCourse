@@ -1,0 +1,13 @@
+.grid3-img1 { grid-area: ga1; }
+.grid3-img2 { grid-area: ga2; }
+.grid3-img3 { grid-area: ga3; }
+.grid3 {
+  display: grid;
+  height: 20vh;
+  max-width: 90%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-gap: 5px;
+  align-items: center;
+  grid-template-areas: "ga1 ga2 ga3"; }
+.grid-img img { }

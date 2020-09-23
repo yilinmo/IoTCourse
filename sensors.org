@@ -22,7 +22,8 @@
 
 * Sensors Overview
 
-** Basic Terms
+** Classification of Sensors
+*** Basic Terminology 
    
 - Transducer: a device which converts one form of energy to another
 - Sensor: a transducer that converts a physical phenomenon into an electrical signal.
@@ -41,32 +42,31 @@
 
 *** Power Supply
 - Modulating
-    – Also known as Active Sensors
-    – They need auxiliary power to perform functionality
-    – Sensitivity can be controlled
+    - Also known as Active Sensors
+    - They need auxiliary power to perform functionality
+    - Sensitivity can be controlled
 - Self-Generating
-    – Also known as Passive Sensors
-    – They derive the power from the input
+    - Also known as Passive Sensors
+    - They derive the power from the input
 
 *** Operating Mode
 - Deflection
-    – The measured quantity produces a physical effect
-    – Generates an apposing* effect which can be measured
-    – Faster
+    - The measured quantity produces a physical effect
+    - Generates an apposing effect which can be measured
+    - Faster
 - Null
-    – Applies a counter-force
-    – To balance the deflection from the null point (balance condition)
-    – Can be more accurate but slow
+    - Applies a counter-force
+    - To balance the deflection from the null point (balance condition)
+    - Can be more accurate but slow
  
-*** Sensor-to-Signal Interface
+** Sensor-to-Signal Interface
 - Action of environment on a sensor causes it to generate an electrical signal directly
-    – voltage source 
-    – current or charge source
-- Action of environment on sensor changes an
-electrical parameter that we can measure
-    – resistance changes
-    – capacitance changes 
-    – inductance changes
+    - voltage source 
+    - current or charge source
+- Action of environment on sensor changes an electrical parameter that we can measure
+    - resistance changes
+    - capacitance changes 
+    - inductance changes
 
 *** Electrical Phenomena
 - Resistive
@@ -74,63 +74,100 @@ electrical parameter that we can measure
 - Inductive
 - Piezo-electric
 
-*** TODO Resistance-based Devices
-Resistance
-- Resistance of the material depends on the length, area and resistivity as:
+*** Resistance-based Devices
+- Resistance of the material depends on the length, area and resistivity as: {{{reveallicense("./figures/wheatstone.meta","40vh")}}}
 \[R = \rho\frac{L}{A}.\]
 - If any one of the terms changes, it affects resistance
 - The most common circuit used to measure the change in resistance is a Wheatstone bridge
 
-*** TODO Capacitance-based Devices
-- A “Mousepad” or “touchpad” is now ubiquitous, reliable and stable
-- Same geometrical factors as resistive sensors (but remember that capacitance is defined “upside down”):
-\[V = L dI/dt + R I + Q/C\]
-- Actual approach is to measure distortion in “stray” capacitance
-Many geometries including some with “finger-like” curvatures
-μ 0 = 4π 10 -7 henry/m, ε 0 = μ 0 /c 2 = 8.85 10 -12 farad/m
+#+REVEAL: split
+- If voltage is \(0\), then {{{reveallicense("./figures/wheatstone.meta","40vh")}}}
+\[R_x = R_3 R_2 / R_1.\]
+- Otherwise if the resistance of the voltmeter is high, then
+\[V_G = \left(\frac{R_2}{R_1+R_2} - \frac{R_x}{R_x+R_3}\right)V_s. \]
 
-*** TODO Magnetic and Inductive Effects
-- Many prototypes, multi-generation developments or applications
+*** Capacitance-based Devices
+- For plate capacitor, the capacitance depends on the length, area and the permittivity of the dielectric material between the plates of the capacitor: {{{reveallicense("./figures/capacitor.meta","40vh")}}}
+\[C = \epsilon\frac{L}{A}.\]
+- For vacuum, \(\epsilon_0 = 8.85\times 10^{-12}F/m.\)
+- Same geometrical factors as resistive sensors 
+- "small capacitor" is ~ 100 pF (p = pico = \(10^{-12}\))
+
+*** Resistive vs Capacitive touchscreen
+- Capacitive touchscreen, which measures distortion in parasite capacitance, is now ubiquitous reliable and stable.
+#+BEGIN_leftcol
+    {{{revealimg("./figures/rtouchscreen.meta",t,"50vh")}}}
+#+END_leftcol
+#+BEGIN_rightcol
+    {{{revealimg("./figures/ctouchscreen.meta",t,"50vh")}}}
+#+END_rightcol
+
+*** Inductive Effects
 - Inductive devices are more-or-less miniature LVDTs
-    – Linear Variable Displacement Transducer: a displacement measuring instrument
-- Magnetic effects, e.g., magneto-resistance plausible
-    – recent development of “giant” and “colossal” magneto-resistance materials may hold some promise
-- Some slip-sensing potential with dipoles oriented within surface
-- Hall effect sensors may be the most plausible, as Hall effect switches are in common use in computer keyboards, etc
+  - Linear Variable Displacement Transducer: a displacement measuring instrument
+#+BEGIN_leftcol
+    {{{revealimg("./figures/LVDT.meta",t,"40vh")}}}
+#+END_leftcol
+#+BEGIN_rightcol
+    {{{revealimg("./figures/rvdt.meta",t,"40vh")}}}
+#+END_rightcol
+
+*** Magnetic Effects     
+- Magneto-resistance:
+  - recent development of “giant” and “colossal” magnetoresistance materials may hold some promise
+  - 2017 Nobel Prize in physics
+  - Potential use in hard drives
+#+BEGIN_leftcol
+    {{{revealimg("./figures/fert.meta",t,"40vh")}}}
+#+END_leftcol
+#+BEGIN_rightcol
+    {{{revealimg("./figures/pgruenberg.meta",t,"40vh")}}}
+#+END_rightcol
+
+#+REVEAL: split
+- Hall effect: the production of a voltage difference (*the Hall voltage*) across an electrical conductor, transverse to an electric current in the conductor and to an applied magnetic field perpendicular to the current. 
+  - Hall effect switches are in common use in computer keyboards
+   
+   #+ATTR_HTML: :controls controls :width 1280 :height 720
+   #+BEGIN_video
+   #+HTML: <source src="./videos/Hall_Sensor.webm" type="video/webm">
+   Your browser does not support the video tag.
+   #+END_video
 
 *** Piezo- and Pyro-electric Devices
 - Piezo- (pressure) and pyro- (heat) electricity are always coupled
-    – due to separation of electrical charges in the material’s crystalline arrangement
-    – electric dipoles at the molecular level 
-    – high voltage poling to macroscopically align dipoles
-    – “electrets” made by poling various waxy mixtures
+  - due to separation of electrical charges in the material’s crystalline arrangement
+  - electric dipoles at the molecular level 
+  - high voltage poling to macroscopically align dipoles
+  - “electrets” made by poling various waxy mixtures
+
+    {{{revealimg("figures/piezo.meta","Piezoelectricity","50vh",nil,'none)}}}
+
+#+REVEAL: split
 - Can get very high voltages (enough to spark across ~ 1 mm) in response to impact
+  - 1 cubic centimeter of quartz with 2 kN of correctly applied force can produce a voltage of 12500 V
 - Sensor: Pressure to voltage 
 - Acutator: Voltage to deformation 
 - Due to leakage, effect is transient
-    – to stabilize, leakage is intentionally increased, making device respond effectively to dP/dt
 
 *** Practical Piezo-Electric Materials
 - Quartz (cut along particular crystal axes to maximize piezo- and minimize pyro- effects):
-    – the effect is small but very stable
+  - the effect is small but very stable
 - Various ceramics, e.g., ZnO, PZT - Lead Zirconate Titanate (piezoelectric ceramic material)
-    – Esp. by deposition on micro- and mini- fabricated devices
-    - SAW (surface acoustic wave) devices
-- Plastics (e.g., polyvinylidene difluoride PDVF aka PVF 2 )
-    – (apparently) enormous quantities are used in
-submarine sonar transducers
+  - Esp. by deposition on micro- and mini- fabricated devices
+  - SAW (surface acoustic wave) devices
+- Plastics (e.g., polyvinylidene difluoride PDVF )
+  - (apparently) enormous quantities are used in submarine sonar transducers
 
-*** Example: Current-to-Voltage Conversion
-- Simple: \(I = V_{measured} / R_{known}\)
-- Better: Use an "op amp"
-
+** Signal Processing
+   
 *** Signal Conditioning
+- Signal conditioning is the manipulation of an analog signal in such a way that it meets the requirements of the next stage for further processing.     
 - Filter for expected frequency regime
 - Subtract DC offset ("zeroing")
 - Amplify or attenuate signal ("scaling")
 - Linearize relationship between measurand and observed electrical parameter
-    – usually done in software after ADC
-
+  - usually done in software after ADC
     
 *** Analog-to-Digital Converter (ADC)
 + Many different principles
@@ -138,8 +175,37 @@ submarine sonar transducers
   - in some types, e.g., "successive approximation", the CPU participates in the conversion process
   - Normally, want to avoid this
 + All involve trade-offs of speed (conversion time), resolution (number of bits) and cost
-+ "Flash converter" is the fastest, has the lowest resolution and the highest cost
-    – required for video digitization
+
+*** Flash A/D converter
+
+#+BEGIN_leftcol
+    {{{revealimg("./figures/flashadc.meta",t,"50vh")}}}
+#+END_leftcol
+#+BEGIN_rightcol
+Pros:
+- Fastest ADC
+- Suitable for applications that requires large bandwidth: image, video sensors
+Cons:
+- High power
+- Large die/high cost
+- Limited Resolution
+#+END_rightcol
+
+*** Successive Approximation A/D converter
+
+#+BEGIN_leftcol
+    {{{revealimg("./figures/saadc.meta",t,"50vh")}}}
+#+END_leftcol
+#+BEGIN_rightcol
+Pros:
+- High accuracy
+- Low power consumption
+- Low cost
+Cons:
+- Low speed
+#+END_rightcol
+
+
 * Basic Sensors
 
 ** Pressure Sensors
@@ -310,7 +376,7 @@ Type of Sensing:
 TODO: under/propoer/over
 *** Photodiode quantum efficiency (QE) 
 How many of the incident photons will the photodiode convert into electrons?
-\[QE = \frac{#electrons}{#photons}\]
+\[QE = \frac{\#electrons}{\#photons}\]
 - Fundamental optical performance metric of imaging sensors.
 TODO: Wiki QE picture
 

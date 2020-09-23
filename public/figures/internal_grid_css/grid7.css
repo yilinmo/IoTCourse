@@ -1,0 +1,12 @@
+.grid7-img1 { grid-area: ga1; }
+.grid7-img2 { grid-area: ga2; }
+.grid7 {
+  display: grid;
+  height: 50vh;
+  max-width: 90%;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 5px;
+  align-items: center;
+  grid-template-areas: "ga1" "ga2"; }
+.grid-img img { }
