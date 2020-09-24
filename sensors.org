@@ -343,11 +343,11 @@ Type of Sensing:
     - Or to record sounds in unusual environments, such as underwater under high pressure.
      
 ** Accelerometer
-- Piezo-resistive
+- Piezo-resistive {{{reveallicense("./figures/resistiveaccel.meta","20vh", nil, 'none)}}}
   - Proof mass suspended with piezo-resistive beams
   - Simple structure, fabrication, and readout (low impedance output)
   - Large temp. sensitivity, smaller overall sensitivity than capacitance devices
-- Capacitive
+- Capacitive{{{reveallicense("./figures/capacitiveaccel.meta","20vh", nil, 'none)}}}
   - Acceleration is measured by the capacitance between a fixed plate and plate on the proof mass.
   - Stable (temperature, drift)
   - Can be susceptible to EMI .
@@ -360,19 +360,27 @@ Type of Sensing:
 ** Motion Detector
    
 - Photo Sensor
-    – Beam of light crossing the room near the door, and a photo sensor on the other side of the room. When the beam breaks, the photo sensor detects the change in the amount of light and rings a bell (or opens garage doors).
+    - Beam of light crossing the room near the door, and a photo sensor on the other side of the room. When the beam breaks, the photo sensor detects the change in the amount of light and rings a bell (or opens garage doors).
 - Microwave- Or Ultrasonic-based
-    – Burst of microwave radio energy and waits for the reflected energy to bounce back.
-    – When a person moves into the field of microwave energy, it changes the amount of reflected energy or the time it takes for the reflection to arrive.
-    – The same thing can be done with ultrasonic sound waves, bouncing them off a target and waiting for the echo.
+    - Burst of microwave radio energy and waits for the reflected energy to bounce back.
+    - When a person moves into the field of microwave energy, it changes the amount of reflected energy or the time it takes for the reflection to arrive.
+    - The same thing can be done with ultrasonic sound waves, bouncing them off a target and waiting for the echo.
 
-*** Pyro- electric Infrared Motion Detector
+    
+*** Pyroelectric/Passive Infrared (PIR) Motion Detector
 - Humans, having a skin temperature of about 34℃, radiate infrared energy with a wavelength between 9 and 10 micrometers. Therefore, the sensors are typically sensitive in the range of 8 to 12 micrometers
-    – \(\lambda\) [microns] = 2900 / T [deg K]
+    - \(\lambda\) [microns] = 2900 / T [deg K]
 - The infrared light bumps electrons off a substrate, and these electrons can be detected and amplified into a signal.
-- When a person walks by, the amount of infrared energy in the field of view changes rapidly and is easily detected. An electronics package attached to the sensor is looking for a fairly rapid change in the amount of infrared energy it is seeing.
-- There is a single or sometimes two sensors inside looking for changes in infrared energy
-
+- When a person walks by, the amount of infrared energy in the field of view increases 
+- Pros: Low power consumption
+- Cons: 
+  - low sensitivity 
+  - does not operate when the ambient temperature is close to human temperature
+  - insensitive to very slow motion of the objects. 
+*** Pyroelectric/Passive Infrared (PIR) Motion Detector
+    
+    {{{revealimg("figures/pir.meta","Passive Infrared Motion Detector","50vh",nil,'none)}}}
+    
 * Light and Image Sensing
   
 ** Light Sensing: Principles
@@ -384,20 +392,43 @@ Type of Sensing:
   - Interaction of light with matter frees electrons or promotes them from valence to conduction band.
 
 *** Photoelectric effect
+    
+#+BEGIN_leftcol
+    {{{revealimg("./figures/einstein.meta",t,"50vh",nil,'none)}}}
+#+END_leftcol
+#+ATTR_REVEAL: :frag appear
+#+BEGIN_rightcol
+    {{{revealimg("./figures/photoelectric.meta",t,"50vh")}}}
 - Einstein’s Nobel Prize in 1921 “for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect”
+#+END_rightcol
+
 
 *** Photodiode response function
 - For silicon photodiodes, usually linear, but:
   - non-linear when potential well is saturated (over-exposure)
   - non-linear near zero (due to noise)
-TODO: under/propoer/over
+    {{{revealimg("./figures/photodioderesponse.meta",t,"50vh",nil,'none)}}}
+*** Underexposure Image Noise
+    :PROPERTIES:
+    :reveal_background: ./figures/raw/underexposure2.jpg
+    :END:   
+- Canon EOS 6D + EF35mm f/1.4L USM
+- f/1.4 1/8s ISO 12800
+- Captured at Sabah, Malaysia
+*** Underexposure Image Noise
+    :PROPERTIES:
+    :reveal_background: ./figures/raw/underexposure.jpg
+    :END:   
+- Canon EOS 6D + EF35mm f/1.4L USM
+- f/1.4 1/8s ISO 12800
+- Captured at Sabah, Malaysia
+
 *** Photodiode quantum efficiency (QE) 
 How many of the incident photons will the photodiode convert into electrons?
 \[QE = \frac{\#electrons}{\#photons}\]
 - Fundamental optical performance metric of imaging sensors.
-TODO: Wiki QE picture
-
-*** Two types of image sensors
+    {{{revealimg("./figures/qe.meta",t,"50vh")}}}
+** Image sensors
     
 #+BEGIN_leftcol
 Charged Coupled Device (CCD): converts electrons to voltage using readout circuitry separate from pixel
@@ -480,6 +511,21 @@ TODO: SSF comparison
 
 *** The retinal color space
 
+#+BEGIN_SRC python :eval never-export :export none
+  from colormath.color_objects import SepctralColor, XYZColor, RGBColor
+  from colormath.color_conversions import convert_color
+
+  colors=[]
+  for i in range(340, 840, 10):
+      s = 'tmp = SpectralColor(spec%dnm=1)' % i
+      exec(s)
+      colors.append(tmp)
+
+  for color in colors:
+
+#+END_SRC
+
+
 *** Metamers
 - Distinct mixed beams can produce the same retinal color
 - These beams are called metamers
@@ -494,7 +540,6 @@ TODO: CIE xy
 ** Depth Camera
 *** The camera as a coordinate transformation
 - A camera is a mapping from the 3D world to a 2D image
-
 
 *** Camera matrix
 

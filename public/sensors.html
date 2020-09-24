@@ -67,7 +67,11 @@
 </section>
 <section id="slide-org17f8d80">
 <h3 id="org17f8d80"><span class="todo TODO">TODO</span> Core Questions</h3>
+<ul>
+<li>What is a sensor?</li>
+<li>H</li>
 
+</ul>
 <div class="slide-footer"><br></div>
 </section>
 <section id="slide-org4fb5dbc">
@@ -99,9 +103,9 @@
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org6e91351">
-<h3 id="org6e91351">Classification of Sensors</h3>
-<div class="outline-text-3" id="text-org6e91351">
+<section id="slide-orgf4635e5">
+<h3 id="orgf4635e5">Classification of Sensors</h3>
+<div class="outline-text-3" id="text-orgf4635e5">
 </div>
 <div class="slide-footer"><br></div>
 </section>
@@ -118,8 +122,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org5ca2091">
-<h4 id="org5ca2091">Classification of Sensors</h4>
+<section id="slide-org7f3ffbf">
+<h4 id="org7f3ffbf">Classification of Sensors</h4>
 <table>
 
 
@@ -883,14 +887,18 @@ A piezo microphone uses the phenomenon of piezo-electricity </p><div about="figu
 <section id="slide-orgb3fba70">
 <h3 id="orgb3fba70">Accelerometer</h3>
 <ul>
-<li>Piezo-resistive
+<li><p>
+Piezo-resistive  </p><div about="figures/raw/resistiveaccel.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/resistiveaccel.jpg" alt="Figure" style="max-height:20vh" /></p><p></p></div><p>
+</p>
 <ul>
 <li>Proof mass suspended with piezo-resistive beams</li>
 <li>Simple structure, fabrication, and readout (low impedance output)</li>
 <li>Large temp. sensitivity, smaller overall sensitivity than capacitance devices</li>
 
 </ul></li>
-<li>Capacitive
+<li><p>
+Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/capacitiveaccel.jpg" alt="Figure" style="max-height:20vh" /></p><p></p></div><p>
+</p>
 <ul>
 <li>Acceleration is measured by the capacitance between a fixed plate and plate on the proof mass.</li>
 <li>Stable (temperature, drift)</li>
@@ -906,11 +914,13 @@ A piezo microphone uses the phenomenon of piezo-electricity </p><div about="figu
 <h4 id="orgae3caa3">Piezoelectric Accelerometer</h4>
 <ul>
 <li>The principle is to sense the inertial force created by a seismic mass under an acceleration.</li>
-<li>This force is transformed into a bending moment applied on a piezoelectric bimorph.</li>
-<li>The seismic mass displacement is sensed by two piezoelectric bridges</li>
-<li>Z-axis acceleration is distinguished from x-axis by a differential measurement between these two sensors.</li>
 
 </ul>
+
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/PiezoAccelTheory.gif" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/PiezoAccelTheory.gif" alt="Theory behind a piezoelectric accelerometer " style="max-height:60vh" /></p><p>Theory behind a piezoelectric accelerometer</p><p style="max-width:60vh">by <span property="cc:attributionName">Archiem</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/en/0/0e/PiezoAccelTheory.gif">Wikipedia</a></p></div></div><p>
+</p>
+
 
 <div class="slide-footer"><br></div>
 </section>
@@ -918,26 +928,51 @@ A piezo microphone uses the phenomenon of piezo-electricity </p><div about="figu
 <h3 id="org1de7714">Motion Detector</h3>
 <ul>
 <li>Photo Sensor
-– Beam of light crossing the room near the door, and a photo sensor on the other side of the room. When the beam breaks, the photo sensor detects the change in the amount of light and rings a bell (or opens garage doors).</li>
+<ul>
+<li>Beam of light crossing the room near the door, and a photo sensor on the other side of the room. When the beam breaks, the photo sensor detects the change in the amount of light and rings a bell (or opens garage doors).</li>
+
+</ul></li>
 <li>Microwave- Or Ultrasonic-based
-– Burst of microwave radio energy and waits for the reflected energy to bounce back.
-– When a person moves into the field of microwave energy, it changes the amount of reflected energy or the time it takes for the reflection to arrive.
-– The same thing can be done with ultrasonic sound waves, bouncing them off a target and waiting for the echo.</li>
+<ul>
+<li>Burst of microwave radio energy and waits for the reflected energy to bounce back.</li>
+<li>When a person moves into the field of microwave energy, it changes the amount of reflected energy or the time it takes for the reflection to arrive.</li>
+<li>The same thing can be done with ultrasonic sound waves, bouncing them off a target and waiting for the echo.</li>
+
+</ul></li>
 
 </ul>
+
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org2ba77e1">
-<h4 id="org2ba77e1">Pyro- electric Infrared Motion Detector</h4>
+<section id="slide-org9e89ae2">
+<h4 id="org9e89ae2">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
 <ul>
 <li>Humans, having a skin temperature of about 34℃, radiate infrared energy with a wavelength between 9 and 10 micrometers. Therefore, the sensors are typically sensitive in the range of 8 to 12 micrometers
-– \(\lambda\) [microns] = 2900 / T [deg K]</li>
+<ul>
+<li>\(\lambda\) [microns] = 2900 / T [deg K]</li>
+
+</ul></li>
 <li>The infrared light bumps electrons off a substrate, and these electrons can be detected and amplified into a signal.</li>
-<li>When a person walks by, the amount of infrared energy in the field of view changes rapidly and is easily detected. An electronics package attached to the sensor is looking for a fairly rapid change in the amount of infrared energy it is seeing.</li>
-<li>There is a single or sometimes two sensors inside looking for changes in infrared energy</li>
+<li>When a person walks by, the amount of infrared energy in the field of view increases</li>
+<li>Pros: Low power consumption</li>
+<li>Cons: 
+<ul>
+<li>low sensitivity</li>
+<li>does not operate when the ambient temperature is close to human temperature</li>
+<li>insensitive to very slow motion of the objects.</li>
+
+</ul></li>
 
 </ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2113e75">
+<h4 id="org2113e75">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/pir.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/pir.png" alt="Figure" style="max-height:50vh" /></p><p>Passive Infrared Motion Detector</p></div></div><p>
+</p>
+
 
 <div class="slide-footer"><br></div>
 </section>
@@ -974,10 +1009,23 @@ A piezo microphone uses the phenomenon of piezo-electricity </p><div about="figu
 </section>
 <section id="slide-org08dcd41">
 <h4 id="org08dcd41">Photoelectric effect</h4>
+<div class="leftcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/einstein.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/einstein.jpg" alt="Figure" style="max-height:50vh" /></p><p>Figure</p></div></div><p>
+</p>
+
+</div>
+<div class="fragment appear rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/photoelectric.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/photoelectric.png" alt="Photoelectric effect in a solid" style="max-height:50vh" /></p><p>Photoelectric effect in a solid</p><p style="max-width:50vh">by <span property="cc:attributionName">Ponor</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/a/a6/Photoelectric_effect_in_a_solid_-_diagram.svg">Wikipedia</a></p></div></div><p>
+</p>
 <ul>
 <li>Einstein’s Nobel Prize in 1921 “for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect”</li>
 
 </ul>
+
+</div>
+
 
 <div class="slide-footer"><br></div>
 </section>
@@ -992,9 +1040,27 @@ A piezo microphone uses the phenomenon of piezo-electricity </p><div about="figu
 </ul></li>
 
 </ul>
-<p>
-TODO: under/propoer/over
-</p>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb283762" data-background="./figures/raw/underexposure2.jpg">
+<h4 id="orgb283762">Underexposure Image Noise</h4>
+<ul>
+<li>Canon EOS 6D + EF35mm f/1.4L USM</li>
+<li>f/1.4 1/8s ISO 12800</li>
+<li>Captured at Sabah, Malaysia</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2ade3ab" data-background="./figures/raw/underexposure.jpg">
+<h4 id="org2ade3ab">Underexposure Image Noise</h4>
+<ul>
+<li>Canon EOS 6D + EF35mm f/1.4L USM</li>
+<li>f/1.4 1/8s ISO 12800</li>
+<li>Captured at Sabah, Malaysia</li>
+
+</ul>
+
 <div class="slide-footer"><br></div>
 </section>
 <section id="slide-org2d655cb">
@@ -1007,10 +1073,6 @@ How many of the incident photons will the photodiode convert into electrons?
 <li>Fundamental optical performance metric of imaging sensors.</li>
 
 </ul>
-<p>
-TODO: Wiki QE picture
-</p>
-
 <div class="slide-footer"><br></div>
 </section>
 <section id="slide-orga8f707d">
@@ -1236,7 +1298,6 @@ TODO: CIE xy
 <li>A camera is a mapping from the 3D world to a 2D image</li>
 
 </ul>
-
 
 <div class="slide-footer"><br></div>
 </section>
