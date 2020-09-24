@@ -696,7 +696,7 @@ Frame 2 is unused.
      - Decide what computation to execute when on what CPU core
        - Recall: Frequently per second, time-sliced, beyond human perception
    - Multitasking introduces *concurrency*
-     - (Details and challenges in upcoming sessions)
+     - (Details and challenges in the next section)
      - Recall: Even with single CPU core, illusion of “simultaneous” or “parallel” computations
        - (Later presentation: Advantages include improved responsiveness and improved resource usage)
 
@@ -1104,10 +1104,7 @@ their relative urgency or importance.
         - Here, low-priority threads do not receive resource CPU as
           long as threads with higher priority exist
       - Careful design necessary
-        - E.g., for hard-real-time systems (such as cars, aircrafts,
-          power plants)
-        - (Beware of [[file:Operating-Systems-MX-Challenges.org::#priority-inversion][priority inversion]],
-          a topic for a later presentation!)
+        - E.g., for hard-real-time systems (such as cars, aircrafts, power plants)
 
 *** FIFO/FCFS Scheduling
     :PROPERTIES:
@@ -1469,6 +1466,65 @@ leading to starvation of a philosopher.
 Apparently, avoidance of starvation is no simple task.
    #+end_notes
 
+*** Priority Inversion
+  :PROPERTIES:
+  :CUSTOM_ID: priority-inversion
+  :END:
+  #+INDEX: Priority inversion!General remarks (MX III)
+- In general, if threads with different priorities exist, the OS should run those with high priority in preference to those with lower priority.
+- “priority inversion” denotes phenomena, where low-priority threads hinder the progress of high-priority threads.
+  - intuitively this should not happen.
+#+BEGIN_NOTES
+In general, if threads with different priorities exist, the OS should run those with high priority in preference to those with lower priority.
+
+The technical term “priority inversion” denotes phenomena, where low-priority threads hinder the progress of high-priority threads, which intuitively should not happen.
+The next slides demonstrate such phenomena, first a weaker variant
+where MX is enforced with spinlocks, then the more usual variant with
+MX based on blocking.
+#+END_NOTES
+
+#+MACRO: T0   [[color:darkgreen][T_0]]
+#+MACRO: TM   [[color:darkorange][T_M]]
+#+MACRO: T1   [[color:red][T_1]]
+
+*** Example
+   :PROPERTIES:
+   :CUSTOM_ID: pi-spinlocks
+   :END:
+   #+INDEX: Priority inversion!With spinlocks (MX III)
+   - Example; single CPU core (visualization on next slide)
+     #+ATTR_REVEAL: :frag (appear)
+     1. Thread {{{T0}}} with low priority enters CS
+     2. {{{T0}}} preempted by OS for {{{T1}}} with high priority
+        - E.g., an [[color:red][important event]] occurs, to be handled by {{{T1}}}
+        - Note that {{{T0}}} is still inside CS, holds lock
+     3. {{{T1}}} tries to enter same CS and *spins* on lock held by {{{T0}}}
+
+   #+ATTR_REVEAL: :frag appear
+   - This is a variant of *priority inversion*
+     - High-priority thread {{{T1}}} cannot continue due to actions by low-priority thread
+       - If just one CPU core exists: Low-priority thread {{{T0}}}
+         cannot continue
+         - As CPU occupied by {{{T1}}}
+         - Deadlock 
+       - If multiple cores exist: Low-priority thread {{{T0}}} runs although thread with higher priority does not make progress
+
+*** Single Core
+    :PROPERTIES:
+    :CUSTOM_ID: pi-single-core
+    :reveal_extra_attr: data-audio-src="./audio/7-pi-spinning.ogg"
+    :END:
+    {{{revealimg("./figures/7-PI-spin-1.meta",nil,"60vh",nil,t)}}}
+
+    See [[#pi-spinlocks][previous slide]] or notes for explanations
+    #+begin_notes
+Green thread T0 executes on the single CPU core where is enters a CS,
+holding a lock, until the red thread T1 with higher priority arrives.
+At that point in time, T0 is preempted (still inside the CS, holding a
+lock), and T1 runs, wanting to enter the CS.  T1 now spins on the lock
+forever.
+    #+end_notes
+    
 * Embedded OS
 
 
@@ -1617,20 +1673,17 @@ Support:
    - OS is Software
      - that *uses hardware* resources of a computer system
      - to provide support for the *execution of other software*.
-       - Computations are performed by threads.
-       - Threads are grouped into processes.
    - OS kernel
      - provides interface for applications and
      - manages resources.
 
 ** Summary: Memory Management
    - Virtual memory provides abstraction over RAM and secondary storage
-     - Paging as fundamental mechanism
-       - Isolation of processes
-       - Stable virtual addresses, translated at runtime
+     - Isolation of processes
+     - Sharing of common code or data
+     - Flexible memory management
    - Page tables managed by OS
-     - Address translation at runtime
-
+     - Each process has its own page table
 
 ** Summary: Multitasking
    - Threads represent individual instruction execution sequences
@@ -1638,16 +1691,11 @@ Support:
      - Resource utilization
      - Responsiveness
      - Modular design in presence of concurrency
-   - Preemptive multithreading with housekeeping by OS
-     - Thread switching with overhead
-   - Design choices: I/O blocking or not, servers with multiple
-     threads or not
    - OS performs scheduling for shared resources
-     - Focus here: CPU scheduling
+     - CPU scheduling
      - Subject to conflicting goals
    - CPU scheduling based on thread states and priorities
      - Fixed vs dynamic priorities vs proportional share
-     - CFS as example for proportional share scheduling
 
 ** Summary: Synchronization
    - Parallelism is a fact of life

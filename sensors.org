@@ -1,6 +1,6 @@
 #+INCLUDE: "preamble.org"
 
-#+TITLE: Endpoints for Intelligent Networked System
+#+TITLE: Endpoints of Intelligent Networked System
 #+AUTHOR: Mo, Yilin
 #+DATE: Sept 2020 
 
@@ -10,11 +10,15 @@
 
 * Introduction
   
-** TODO Core Questions
-- What is a sensor?
-- H
-** TODO Learning Objectives
+** Core Questions
+- What is a transducer/sensor/actuator?
+- What is a passive/active sensor?
+- What types electrical phenomena can be leveraged for sensing purpose?
+** Learning Objectives
    
+   - Explain notion of transducer/sensors/actuator
+     - Explain self-generating/modulating sensors
+   - Explain the conversion of pressure/thermal energy/light into electrical phenomenon.
 ** Table of Contents
    :PROPERTIES:
    :UNNUMBERED: notoc
@@ -28,9 +32,9 @@
    
 - Transducer: a device which converts one form of energy to another
 - Sensor: a transducer that converts a physical phenomenon into an electrical signal.
-    – an interface from the physical world to the cyber world.
+    - an interface from the physical world to the cyber world.
 - Actuator: a transducer that converts an electrical signal to a physical phenomenon
-    – an interface from the cyber world to the physical world.
+    - an interface from the cyber world to the physical world.
 
 *** Classification of Sensors
 | Criterion      | Classes    | Example                  |
@@ -41,14 +45,6 @@
 | Operating mode | Deflection | Deflection accelerometer |
 |                | Null       | Servo-accelerometer      |
 
-*** Power Supply
-- Modulating
-    - Also known as Active Sensors
-    - They need auxiliary power to perform functionality
-    - Sensitivity can be controlled
-- Self-Generating
-    - Also known as Passive Sensors
-    - They derive the power from the input
 
 *** Operating Mode
 - Deflection
@@ -60,14 +56,23 @@
     - To balance the deflection from the null point (balance condition)
     - Can be more accurate but slow
  
-** Sensor-to-Signal Interface
-- Action of environment on a sensor causes it to generate an electrical signal directly
-    - voltage source 
-    - current or charge source
+*** Power Supply
+- Modulating
+    - Also known as Active Sensors
+    - They need auxiliary power to perform functionality
+    - Sensitivity can be controlled
+- Self-Generating
+    - Also known as Passive Sensors
+    - They derive the power from the input
+
+*** Sensor-to-Signal Interface
 - Action of environment on sensor changes an electrical parameter that we can measure
     - resistance changes
     - capacitance changes 
     - inductance changes
+- Action of environment on a sensor causes it to generate an electrical signal directly
+    - voltage source 
+    - current or charge source
 
 *** Electrical Phenomena
 - Resistive
@@ -88,8 +93,8 @@
 \[V_G = \left(\frac{R_2}{R_1+R_2} - \frac{R_x}{R_x+R_3}\right)V_s. \]
 
 *** Capacitance-based Devices
-- For plate capacitor, the capacitance depends on the length, area and the permittivity of the dielectric material between the plates of the capacitor: {{{reveallicense("./figures/capacitor.meta","40vh")}}}
-\[C = \epsilon\frac{L}{A}.\]
+- For plate capacitor, the capacitance depends on the length, area and the permittivity of the dielectric material between the plates of the capacitor: {{{reveallicense("./figures/capacitor.meta","30vh")}}}
+\[C = \epsilon\frac{A}{d}.\]
 - For vacuum, \(\epsilon_0 = 8.85\times 10^{-12}F/m.\)
 - Same geometrical factors as resistive sensors 
 - "small capacitor" is ~ 100 pF (p = pico = \(10^{-12}\))
@@ -252,61 +257,7 @@ Cons:
   - inexpensive
 + Cons:
   - cannot be used for truly static measurements
-    {{{revealimg("./figures/piezosensitivity.meta",t,"50vh")}}}
-** Humidity Sensors
-- Humidity is defined as the water vapor content in the air (or other gases)
-- Absolute Humidity
-  - Ratio of the mass of water vapor to the volume of air or gas
-- Relative Humidity
-  - The ratio of the moisture content of air compared to the saturated moisture level at the same temperature or pressure
-- Dew Point
-  - Temperature and pressure at which gas begins to condense into liquids (like water vapor in air showing up as dew drops)
-
-*** Relative Humidity Sensor
-- Capacitive RH sensor
-  - Common dielectric material, such as plastic or polymer, has a typical dielectric constant ranging from 2 to 15. the value of the capacitance.
-  - At normal room temperature, the dielectric constant of water vapor is about 80
-  - Change in dielectric constant is directly proportional to the relative humidity in the environment
-  - Very low temperature effect
-  - 0.2-0.5 pF change in capacitance for 1% RH change, (while the bulk capacitance is between 100 and 500 pF at 50% RH)
-- Resistive RH Sensors
-  - Measure the resistance change
-  - Inverse exponential relationship to relative humidity
-  - Mostly used are conductive polymer, salt etc.
-  - Less accurate but cheaper than capacitive sensor
-
-*** Absolute Humidity Sensor
-- Thermal Conductivity Humidity Sensors{{{reveallicense("./figures/thermohumidity.meta","40vh", nil, 'none)}}}
-  - Measure absolute humidity
-  - Calculate the difference between dry air and air containing water vapor
-  - One thermistor sealed in dry nitrogen and another exposed to the environment
-  - Difference in current proportional to humidity
-
-** Temperature Sensors
-A temperature sensor detects a change in a physical parameter such as resistance or output voltage that corresponds to a temperature change.
-
-Type of Sensing:
-- Contact
-  - Sensor is in direct physical contact with the object to be sensed
-  - To monitor solids, liquids, gases over a wide range
-- Non-contact
-  - Interprets the radiant energy of a heat source to energy in electromagnetic spectrum
-  - Monitor non-reflective solids and liquids
-
-*** Contact sensing
-- Thermocouples
-- Thermistors
-- Resistance Temperature Detectors (RTD)
-- Semiconductor Temperature sensors
-- Liquid-in-Glass Thermometers
-- Bi-metallic Thermometers
-
-*** Non-Contact sensing
-- Radiation Thermometers
-  - Infrared Thermal Imaging
-  - Scanners
-  - Spot Radiometers
-
+    {{{revealimg("./figures/piezosensitivity.meta",t,"40vh")}}}
 ** Microphone
 - A microphone is an acoustic to electric transducer that converts sound into an electrical signal.
 - Microphones capture sound waves with a thin, flexible diaphragm. The vibrations of this element are then converted by various methods into an electrical signal that is an analogue of the original sound.
@@ -327,6 +278,7 @@ Type of Sensing:
 - In a dynamic microphone, a small movable induction coil, positioned in the magnetic field of a permanent magnet, is attached to the diaphragm.
 - When sound enters through the windscreen of the microphone, the sound wave vibrations move the diaphragm.{{{reveallicense("./figures/dynamicmicrophone.meta","40vh",nil,'none)}}}
 - When the diaphragm vibrates, the coil moves in the magnetic field, producing a varying current in the coil through electromagnetic induction .
+#+REVEAL: split
 - Pros:
   - power producing
   - sturdy
@@ -357,6 +309,31 @@ Type of Sensing:
 
 {{{revealimg("./figures/PiezoAccelTheory.meta",t,"60vh")}}}
 
+** Temperature Sensors
+A temperature sensor detects a change in a physical parameter such as resistance or output voltage that corresponds to a temperature change.
+
+Type of Sensing:
+- Contact
+  - Sensor is in direct physical contact with the object to be sensed
+  - To monitor solids, liquids, gases over a wide range
+- Non-contact
+  - Interprets the radiant energy of a heat source to energy in electromagnetic spectrum
+  - Monitor non-reflective solids and liquids
+
+*** Contact sensing
+- Thermocouples
+- Thermistors
+- Resistance Temperature Detectors (RTD)
+- Semiconductor Temperature sensors
+- Liquid-in-Glass Thermometers
+- Bi-metallic Thermometers
+
+*** Non-Contact sensing
+- Radiation Thermometers
+  - Infrared Thermal Imaging
+  - Scanners
+  - Spot Radiometers
+
 ** Motion Detector
    
 - Photo Sensor
@@ -381,6 +358,35 @@ Type of Sensing:
     
     {{{revealimg("figures/pir.meta","Passive Infrared Motion Detector","50vh",nil,'none)}}}
     
+** Humidity Sensors
+- Humidity is defined as the water vapor content in the air (or other gases)
+- Absolute Humidity
+  - Ratio of the mass of water vapor to the volume of air or gas
+- Relative Humidity
+  - The ratio of the moisture content of air compared to the saturated moisture level at the same temperature or pressure
+- Dew Point
+  - Temperature and pressure at which gas begins to condense into liquids (like water vapor in air showing up as dew drops)
+
+*** Relative Humidity Sensor
+- Capacitive RH sensor
+  - Common dielectric material, such as plastic or polymer, has a typical dielectric constant ranging from 2 to 15. the value of the capacitance.
+  - At normal room temperature, the dielectric constant of water vapor is about 80
+  - Change in dielectric constant is directly proportional to the relative humidity in the environment
+  - Very low temperature effect
+  - 0.2-0.5 pF change in capacitance for 1% RH change, (while the bulk capacitance is between 100 and 500 pF at 50% RH)
+- Resistive RH Sensors
+  - Measure the resistance change
+  - Inverse exponential relationship to relative humidity
+  - Mostly used are conductive polymer, salt etc.
+  - Less accurate but cheaper than capacitive sensor
+
+*** Absolute Humidity Sensor
+- Thermal Conductivity Humidity Sensors{{{reveallicense("./figures/thermohumidity.meta","40vh", nil, 'none)}}}
+  - Measure absolute humidity
+  - Calculate the difference between dry air and air containing water vapor
+  - One thermistor sealed in dry nitrogen and another exposed to the environment
+  - Difference in current proportional to humidity
+
 * Light and Image Sensing
   
 ** Light Sensing: Principles
@@ -401,7 +407,6 @@ Type of Sensing:
     {{{revealimg("./figures/photoelectric.meta",t,"50vh")}}}
 - Einstein’s Nobel Prize in 1921 “for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect”
 #+END_rightcol
-
 
 *** Photodiode response function
 - For silicon photodiodes, usually linear, but:
@@ -427,7 +432,8 @@ Type of Sensing:
 How many of the incident photons will the photodiode convert into electrons?
 \[QE = \frac{\#electrons}{\#photons}\]
 - Fundamental optical performance metric of imaging sensors.
-    {{{revealimg("./figures/qe.meta",t,"50vh")}}}
+    {{{revealimg("./figures/qe.meta",t,"40vh")}}}
+
 ** Image sensors
     
 #+BEGIN_leftcol
@@ -547,6 +553,8 @@ TODO: CIE xy
     
 *** Triangulation
     
+#+BEGIN_COMMENT
+
 * Sensor to Endpoints Communication
   
 ** Serial Communication
@@ -626,3 +634,4 @@ Many power management practices are employed, such as
 ** Energy harvest
    
 ** Energy storage
+#+END_COMMENT’

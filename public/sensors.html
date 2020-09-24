@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>Endpoints for Intelligent Networked System</title>
+<title>Endpoints of Intelligent Networked System</title>
 <meta name="author" content="Mo, Yilin"/>
 <meta name="description" content="endpoints for iot course"/>
 <meta name="keywords" content="Endpoints, Sensors, Energy Management"/>
@@ -40,7 +40,7 @@
 <!-- <a class="nooutlink" href="url"><img class="state-background your-logo-class" src="whatever.png" alt="Whatever" /></a> -->
 
 <div class="talk-title">
-    <h1 class="no-toc-progress">Endpoints for Intelligent Networked System</h1>
+    <h1 class="no-toc-progress">Endpoints of Intelligent Networked System</h1>
 </div>
 <div class="talk-subtitle">
     <p></p>
@@ -59,37 +59,46 @@
 
 
 <section>
-<section id="slide-orgc44fab2">
-<h2 id="orgc44fab2">Introduction</h2>
-<div class="outline-text-2" id="text-orgc44fab2">
+<section id="slide-org8721080">
+<h2 id="org8721080">Introduction</h2>
+<div class="outline-text-2" id="text-org8721080">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org17f8d80">
-<h3 id="org17f8d80"><span class="todo TODO">TODO</span> Core Questions</h3>
+<section id="slide-orgbb1a03f">
+<h3 id="orgbb1a03f">Core Questions</h3>
 <ul>
-<li>What is a sensor?</li>
-<li>H</li>
+<li>What is a transducer/sensor/actuator?</li>
+<li>What is a passive/active sensor?</li>
+<li>What types electrical phenomena can be leveraged for sensing purpose?</li>
 
 </ul>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org4fb5dbc">
-<h3 id="org4fb5dbc"><span class="todo TODO">TODO</span> Learning Objectives</h3>
+<section id="slide-orgd576e8c">
+<h3 id="orgd576e8c">Learning Objectives</h3>
+<ul>
+<li>Explain notion of transducer/sensors/actuator
+<ul>
+<li>Explain self-generating/modulating sensors</li>
 
+</ul></li>
+<li>Explain the conversion of pressure/thermal energy/light into electrical phenomenon.</li>
+
+</ul>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgf5ddf6e">
-<h3 id="orgf5ddf6e">Table of Contents</h3>
+<section id="slide-org42b24b5">
+<h3 id="org42b24b5">Table of Contents</h3>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#slide-orgc44fab2">Introduction</a></li>
-<li><a href="#slide-orgd594771">Sensors Overview</a></li>
-<li><a href="#slide-orgc78f5c1">Basic Sensors</a></li>
-<li><a href="#slide-org7e09a25">Light and Image Sensing</a></li>
-<li><a href="#slide-orgbb21489">Sensor to Endpoints Communication</a></li>
-<li><a href="#slide-orgbef25ce">Advanced sensors</a></li>
-<li><a href="#slide-orgb10c1b5">Energy management</a></li>
+<li><a href="#slide-org8721080">Introduction</a></li>
+<li><a href="#slide-org72a182d">Sensors Overview</a></li>
+<li><a href="#slide-org8aafd6d">Basic Sensors</a></li>
+<li><a href="#slide-orgbe2dffa">Light and Image Sensing</a></li>
+<li><a href="#slide-org44ce3e0">Sensor to Endpoints Communication</a></li>
+<li><a href="#slide-org8d2be68">Advanced sensors</a></li>
+<li><a href="#slide-orgb803fa5">Energy management</a></li>
 </ul>
 </div>
 
@@ -97,33 +106,39 @@
 </section>
 </section>
 <section>
-<section id="slide-orgd594771">
-<h2 id="orgd594771">Sensors Overview</h2>
-<div class="outline-text-2" id="text-orgd594771">
+<section id="slide-org72a182d">
+<h2 id="org72a182d">Sensors Overview</h2>
+<div class="outline-text-2" id="text-org72a182d">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgf4635e5">
-<h3 id="orgf4635e5">Classification of Sensors</h3>
-<div class="outline-text-3" id="text-orgf4635e5">
+<section id="slide-org29551f6">
+<h3 id="org29551f6">Classification of Sensors</h3>
+<div class="outline-text-3" id="text-org29551f6">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org9eab1f8">
-<h4 id="org9eab1f8">Basic Terminology</h4>
+<section id="slide-org3652263">
+<h4 id="org3652263">Basic Terminology</h4>
 <ul>
 <li>Transducer: a device which converts one form of energy to another</li>
 <li>Sensor: a transducer that converts a physical phenomenon into an electrical signal.
-– an interface from the physical world to the cyber world.</li>
+<ul>
+<li>an interface from the physical world to the cyber world.</li>
+
+</ul></li>
 <li>Actuator: a transducer that converts an electrical signal to a physical phenomenon
-– an interface from the cyber world to the physical world.</li>
+<ul>
+<li>an interface from the cyber world to the physical world.</li>
+
+</ul></li>
 
 </ul>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7f3ffbf">
-<h4 id="org7f3ffbf">Classification of Sensors</h4>
+<section id="slide-orgfdaaa57">
+<h4 id="orgfdaaa57">Classification of Sensors</h4>
 <table>
 
 
@@ -179,31 +194,11 @@
 </tbody>
 </table>
 
-<div class="slide-footer"><br></div>
-</section>
-<section id="slide-orgd6572f3">
-<h4 id="orgd6572f3">Power Supply</h4>
-<ul>
-<li>Modulating
-<ul>
-<li>Also known as Active Sensors</li>
-<li>They need auxiliary power to perform functionality</li>
-<li>Sensitivity can be controlled</li>
-
-</ul></li>
-<li>Self-Generating
-<ul>
-<li>Also known as Passive Sensors</li>
-<li>They derive the power from the input</li>
-
-</ul></li>
-
-</ul>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orga959bbd">
-<h4 id="orga959bbd">Operating Mode</h4>
+<section id="slide-org18129ef">
+<h4 id="org18129ef">Operating Mode</h4>
 <ul>
 <li>Deflection
 <ul>
@@ -224,20 +219,20 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgd837934">
-<h3 id="orgd837934">Sensor-to-Signal Interface</h3>
+<section id="slide-org6682614">
+<h4 id="org6682614">Power Supply</h4>
 <ul>
-<li>Action of environment on a sensor causes it to generate an electrical signal directly
+<li>Modulating
 <ul>
-<li>voltage source</li>
-<li>current or charge source</li>
+<li>Also known as Active Sensors</li>
+<li>They need auxiliary power to perform functionality</li>
+<li>Sensitivity can be controlled</li>
 
 </ul></li>
-<li>Action of environment on sensor changes an electrical parameter that we can measure
+<li>Self-Generating
 <ul>
-<li>resistance changes</li>
-<li>capacitance changes</li>
-<li>inductance changes</li>
+<li>Also known as Passive Sensors</li>
+<li>They derive the power from the input</li>
 
 </ul></li>
 
@@ -245,8 +240,29 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org59f0d67">
-<h4 id="org59f0d67">Electrical Phenomena</h4>
+<section id="slide-org9d0b04b">
+<h4 id="org9d0b04b">Sensor-to-Signal Interface</h4>
+<ul>
+<li>Action of environment on sensor changes an electrical parameter that we can measure
+<ul>
+<li>resistance changes</li>
+<li>capacitance changes</li>
+<li>inductance changes</li>
+
+</ul></li>
+<li>Action of environment on a sensor causes it to generate an electrical signal directly
+<ul>
+<li>voltage source</li>
+<li>current or charge source</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org67f202d">
+<h4 id="org67f202d">Electrical Phenomena</h4>
 <ul>
 <li>Resistive</li>
 <li>Capacitive</li>
@@ -257,8 +273,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org1c6b876">
-<h4 id="org1c6b876">Resistance-based Devices</h4>
+<section id="slide-org6d11cb6">
+<h4 id="org6d11cb6">Resistance-based Devices</h4>
 <ul>
 <li><p>
 Resistance of the material depends on the length, area and resistivity as:  </p><div about="figures/raw/wheatstone.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/wheatstone.png" alt="Wheatstone Bridge" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">Wheatstone Bridge</span>&rdquo; by <span property="cc:attributionName">Rhdv</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/9/93/Wheatstonebridge.svg">Wikipedia</a></p></div><p>
@@ -298,17 +314,17 @@ If voltage is \(0\), then  </p><div about="figures/raw/wheatstone.png" typeof="d
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgd7d64a5">
-<h4 id="orgd7d64a5">Capacitance-based Devices</h4>
+<section id="slide-org88e5878">
+<h4 id="org88e5878">Capacitance-based Devices</h4>
 <ul>
 <li><p>
-For plate capacitor, the capacitance depends on the length, area and the permittivity of the dielectric material between the plates of the capacitor:  </p><div about="figures/raw/capacitor.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/capacitor.png" alt="Plate Capacitor" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">Plate Capacitor</span>&rdquo; by <span property="cc:attributionName">Fabian_R</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/2/20/Plate_CapacitorII.svg">Wikipedia</a></p></div><p>
+For plate capacitor, the capacitance depends on the length, area and the permittivity of the dielectric material between the plates of the capacitor:  </p><div about="figures/raw/capacitor.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/capacitor.png" alt="Plate Capacitor" style="max-height:30vh" /></p><p></p><p style="max-width:30vh">&ldquo;<span property="dcterms:title">Plate Capacitor</span>&rdquo; by <span property="cc:attributionName">Fabian_R</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/2/20/Plate_CapacitorII.svg">Wikipedia</a></p></div><p>
 </p></li>
 
 </ul>
 
 <p>
-\[C = \epsilon\frac{L}{A}.\]
+\[C = \epsilon\frac{A}{d}.\]
 </p>
 <ul>
 <li>For vacuum, \(\epsilon_0 = 8.85\times 10^{-12}F/m.\)</li>
@@ -319,8 +335,8 @@ For plate capacitor, the capacitance depends on the length, area and the permitt
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org27a595e">
-<h4 id="org27a595e">Resistive vs Capacitive touchscreen</h4>
+<section id="slide-org25c93f5">
+<h4 id="org25c93f5">Resistive vs Capacitive touchscreen</h4>
 <ul>
 <li>Capacitive touchscreen, which measures distortion in parasite capacitance, is now ubiquitous reliable and stable.</li>
 
@@ -340,8 +356,8 @@ For plate capacitor, the capacitance depends on the length, area and the permitt
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org9b18dcd">
-<h4 id="org9b18dcd">Inductive Effects</h4>
+<section id="slide-org02c89a3">
+<h4 id="org02c89a3">Inductive Effects</h4>
 <ul>
 <li>Inductive devices are more-or-less miniature LVDTs
 <ul>
@@ -365,8 +381,8 @@ For plate capacitor, the capacitance depends on the length, area and the permitt
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb85a061">
-<h4 id="orgb85a061">Magnetic Effects</h4>
+<section id="slide-org6cb48f7">
+<h4 id="org6cb48f7">Magnetic Effects</h4>
 <ul>
 <li>Magneto-resistance:
 <ul>
@@ -419,8 +435,8 @@ Your browser does not support the video tag.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org275cf66">
-<h4 id="org275cf66">Piezo- and Pyro-electric Devices</h4>
+<section id="slide-orgf737acc">
+<h4 id="orgf737acc">Piezo- and Pyro-electric Devices</h4>
 <ul>
 <li>Piezo- (pressure) and pyro- (heat) electricity are always coupled
 <ul>
@@ -455,8 +471,8 @@ Your browser does not support the video tag.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org0bee3da">
-<h4 id="org0bee3da">Practical Piezo-Electric Materials</h4>
+<section id="slide-org04d1278">
+<h4 id="org04d1278">Practical Piezo-Electric Materials</h4>
 <ul>
 <li>Quartz (cut along particular crystal axes to maximize piezo- and minimize pyro- effects):
 <ul>
@@ -479,14 +495,14 @@ Your browser does not support the video tag.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org50f07ed">
-<h3 id="org50f07ed">Signal Processing</h3>
-<div class="outline-text-3" id="text-org50f07ed">
+<section id="slide-org7073753">
+<h3 id="org7073753">Signal Processing</h3>
+<div class="outline-text-3" id="text-org7073753">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org72232cc">
-<h4 id="org72232cc">Signal Conditioning</h4>
+<section id="slide-orgb321ae2">
+<h4 id="orgb321ae2">Signal Conditioning</h4>
 <ul>
 <li>Signal conditioning is the manipulation of an analog signal in such a way that it meets the requirements of the next stage for further processing.</li>
 <li>Filter for expected frequency regime</li>
@@ -502,8 +518,8 @@ Your browser does not support the video tag.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgeb195e9">
-<h4 id="orgeb195e9">Analog-to-Digital Converter (ADC)</h4>
+<section id="slide-org73b5a4c">
+<h4 id="org73b5a4c">Analog-to-Digital Converter (ADC)</h4>
 <ul>
 <li>Many different principles</li>
 <li>Often integrated with microcontrollers
@@ -518,8 +534,8 @@ Your browser does not support the video tag.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org6d13fa0">
-<h4 id="org6d13fa0">Flash A/D converter</h4>
+<section id="slide-org2031846">
+<h4 id="org2031846">Flash A/D converter</h4>
 <div class="leftcol">
 <p>
  </p><div class="imgcontainer"><div about="figures/raw/flashadc.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/flashadc.png" alt="2-bit Flash ADC" style="max-height:50vh" /></p><p>2-bit Flash ADC</p><p style="max-width:50vh">by <span property="cc:attributionName">Jon Guerber</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/3/3a/Flash_ADC.png">Wikipedia</a></p></div></div><p>
@@ -549,8 +565,8 @@ Cons:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb1ec352">
-<h4 id="orgb1ec352">Successive Approximation A/D converter</h4>
+<section id="slide-org94ec58d">
+<h4 id="org94ec58d">Successive Approximation A/D converter</h4>
 <div class="leftcol">
 <p>
  </p><div class="imgcontainer"><div about="figures/raw/saadc.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/saadc.png" alt="Successive Approximation ADC" style="max-height:50vh" /></p><p>Successive Approximation ADC</p><p style="max-width:50vh">by <span property="cc:attributionName">White Flye</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/2.5/">CC BY-SA 2.5</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/6/61/SA_ADC_block_diagram.png">Wikipedia</a></p></div></div><p>
@@ -582,14 +598,14 @@ Cons:
 </section>
 </section>
 <section>
-<section id="slide-orgc78f5c1">
-<h2 id="orgc78f5c1">Basic Sensors</h2>
-<div class="outline-text-2" id="text-orgc78f5c1">
+<section id="slide-org8aafd6d">
+<h2 id="org8aafd6d">Basic Sensors</h2>
+<div class="outline-text-2" id="text-org8aafd6d">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgf38d27e">
-<h3 id="orgf38d27e">Pressure Sensors</h3>
+<section id="slide-org06f48a3">
+<h3 id="org06f48a3">Pressure Sensors</h3>
 <ul>
 <li>Transduces pressure into electrical quantity</li>
 <li>Pressure exerts force which can be converted to electrical voltage using various methods</li>
@@ -605,8 +621,8 @@ Cons:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgebf4a84">
-<h4 id="orgebf4a84">Piezo-resistive Strain Gauges</h4>
+<section id="slide-org2e5c34f">
+<h4 id="org2e5c34f">Piezo-resistive Strain Gauges</h4>
 <div class="leftcol">
 <ul>
 <li>Based on the variation of resistance of a material when mechanical stress is applied</li>
@@ -631,8 +647,8 @@ Cons:
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org3b1d35d">
-<h4 id="org3b1d35d">Capacitive Sensor</h4>
+<section id="slide-org3614d82">
+<h4 id="org3614d82">Capacitive Sensor</h4>
 <ul>
 <li>Capacitive diaphragms
 <ul>
@@ -652,8 +668,8 @@ Cons:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgcb20c26">
-<h4 id="orgcb20c26">Piezoelectric Sensor</h4>
+<section id="slide-org68f1964">
+<h4 id="org68f1964">Piezoelectric Sensor</h4>
 <ul>
 <li>Pros:
 <ul>
@@ -667,7 +683,7 @@ Cons:
 <ul>
 <li><p>
 cannot be used for truly static measurements
- </p><div class="imgcontainer"><div about="figures/raw/piezosensitivity.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/piezosensitivity.png" alt="Piezoelectric sensor frequency response" style="max-height:50vh" /></p><p>Piezoelectric sensor frequency response</p><p style="max-width:50vh">by <span property="cc:attributionName">Omegatron </span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/d/da/Piezoelectric_sensor_frequency_response.svg">Wikipedia</a></p></div></div><p>
+ </p><div class="imgcontainer"><div about="figures/raw/piezosensitivity.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/piezosensitivity.png" alt="Piezoelectric sensor frequency response" style="max-height:40vh" /></p><p>Piezoelectric sensor frequency response</p><p style="max-width:40vh">by <span property="cc:attributionName">Omegatron </span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/d/da/Piezoelectric_sensor_frequency_response.svg">Wikipedia</a></p></div></div><p>
 </p></li>
 
 </ul></li>
@@ -676,131 +692,8 @@ cannot be used for truly static measurements
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org288025f">
-<h3 id="org288025f">Humidity Sensors</h3>
-<ul>
-<li>Humidity is defined as the water vapor content in the air (or other gases)</li>
-<li>Absolute Humidity
-<ul>
-<li>Ratio of the mass of water vapor to the volume of air or gas</li>
-
-</ul></li>
-<li>Relative Humidity
-<ul>
-<li>The ratio of the moisture content of air compared to the saturated moisture level at the same temperature or pressure</li>
-
-</ul></li>
-<li>Dew Point
-<ul>
-<li>Temperature and pressure at which gas begins to condense into liquids (like water vapor in air showing up as dew drops)</li>
-
-</ul></li>
-
-</ul>
-
-<div class="slide-footer"><br></div>
-</section>
-<section id="slide-org5d974db">
-<h4 id="org5d974db">Relative Humidity Sensor</h4>
-<ul>
-<li>Capacitive RH sensor
-<ul>
-<li>Common dielectric material, such as plastic or polymer, has a typical dielectric constant ranging from 2 to 15. the value of the capacitance.</li>
-<li>At normal room temperature, the dielectric constant of water vapor is about 80</li>
-<li>Change in dielectric constant is directly proportional to the relative humidity in the environment</li>
-<li>Very low temperature effect</li>
-<li>0.2-0.5 pF change in capacitance for 1% RH change, (while the bulk capacitance is between 100 and 500 pF at 50% RH)</li>
-
-</ul></li>
-<li>Resistive RH Sensors
-<ul>
-<li>Measure the resistance change</li>
-<li>Inverse exponential relationship to relative humidity</li>
-<li>Mostly used are conductive polymer, salt etc.</li>
-<li>Less accurate but cheaper than capacitive sensor</li>
-
-</ul></li>
-
-</ul>
-
-<div class="slide-footer"><br></div>
-</section>
-<section id="slide-orgc683949">
-<h4 id="orgc683949">Absolute Humidity Sensor</h4>
-<ul>
-<li><p>
-Thermal Conductivity Humidity Sensors </p><div about="figures/raw/thermohumidity.gif" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/thermohumidity.gif" alt="Thermo Conductivity Sensor" style="max-height:40vh" /></p><p></p></div><p>
-</p>
-<ul>
-<li>Measure absolute humidity</li>
-<li>Calculate the difference between dry air and air containing water vapor</li>
-<li>One thermistor sealed in dry nitrogen and another exposed to the environment</li>
-<li>Difference in current proportional to humidity</li>
-
-</ul></li>
-
-</ul>
-
-<div class="slide-footer"><br></div>
-</section>
-<section id="slide-org6c99c5e">
-<h3 id="org6c99c5e">Temperature Sensors</h3>
-<p>
-A temperature sensor detects a change in a physical parameter such as resistance or output voltage that corresponds to a temperature change.
-</p>
-
-<p>
-Type of Sensing:
-</p>
-<ul>
-<li>Contact
-<ul>
-<li>Sensor is in direct physical contact with the object to be sensed</li>
-<li>To monitor solids, liquids, gases over a wide range</li>
-
-</ul></li>
-<li>Non-contact
-<ul>
-<li>Interprets the radiant energy of a heat source to energy in electromagnetic spectrum</li>
-<li>Monitor non-reflective solids and liquids</li>
-
-</ul></li>
-
-</ul>
-
-<div class="slide-footer"><br></div>
-</section>
-<section id="slide-org6ec823b">
-<h4 id="org6ec823b">Contact sensing</h4>
-<ul>
-<li>Thermocouples</li>
-<li>Thermistors</li>
-<li>Resistance Temperature Detectors (RTD)</li>
-<li>Semiconductor Temperature sensors</li>
-<li>Liquid-in-Glass Thermometers</li>
-<li>Bi-metallic Thermometers</li>
-
-</ul>
-
-<div class="slide-footer"><br></div>
-</section>
-<section id="slide-org8712a2e">
-<h4 id="org8712a2e">Non-Contact sensing</h4>
-<ul>
-<li>Radiation Thermometers
-<ul>
-<li>Infrared Thermal Imaging</li>
-<li>Scanners</li>
-<li>Spot Radiometers</li>
-
-</ul></li>
-
-</ul>
-
-<div class="slide-footer"><br></div>
-</section>
-<section id="slide-org670dd69">
-<h3 id="org670dd69">Microphone</h3>
+<section id="slide-orgbeed53d">
+<h3 id="orgbeed53d">Microphone</h3>
 <ul>
 <li>A microphone is an acoustic to electric transducer that converts sound into an electrical signal.</li>
 <li>Microphones capture sound waves with a thin, flexible diaphragm. The vibrations of this element are then converted by various methods into an electrical signal that is an analogue of the original sound.</li>
@@ -810,8 +703,8 @@ Type of Sensing:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org814e909">
-<h4 id="org814e909">Condenser (or Capacitor) Microphones</h4>
+<section id="slide-orgb84973b">
+<h4 id="orgb84973b">Condenser (or Capacitor) Microphones</h4>
 <ul>
 <li><p>
 In a condenser microphone, the diaphragm acts as one plate of a capacitor, and the vibrations produce changes in the distance between the plates.  </p><div about="figures/raw/condensermicrophone.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/condensermicrophone.png" alt="Figure" style="max-height:40vh" /></p><p></p></div><p>
@@ -836,8 +729,8 @@ In a condenser microphone, the diaphragm acts as one plate of a capacitor, and t
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org3cb76c9">
-<h4 id="org3cb76c9">Dynamic Microphones</h4>
+<section id="slide-org02da179">
+<h4 id="org02da179">Dynamic Microphones</h4>
 <ul>
 <li>In a dynamic microphone, a small movable induction coil, positioned in the magnetic field of a permanent magnet, is attached to the diaphragm.</li>
 <li><p>
@@ -845,6 +738,12 @@ When sound enters through the windscreen of the microphone, the sound wave vibra
 </p></li>
 
 <li>When the diaphragm vibrates, the coil moves in the magnetic field, producing a varying current in the coil through electromagnetic induction .</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section>
+<ul>
 <li>Pros:
 <ul>
 <li>power producing</li>
@@ -870,8 +769,8 @@ When sound enters through the windscreen of the microphone, the sound wave vibra
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org4de365a">
-<h4 id="org4de365a">Piezo Microphone</h4>
+<section id="slide-orgef37f5f">
+<h4 id="orgef37f5f">Piezo Microphone</h4>
 <ul>
 <li><p>
 A piezo microphone uses the phenomenon of piezo-electricity </p><div about="figures/raw/crym.gif" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/crym.gif" alt="Figure" style="max-height:40vh" /></p><p></p></div><p>
@@ -884,8 +783,8 @@ A piezo microphone uses the phenomenon of piezo-electricity </p><div about="figu
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb3fba70">
-<h3 id="orgb3fba70">Accelerometer</h3>
+<section id="slide-orgb38b6cd">
+<h3 id="orgb38b6cd">Accelerometer</h3>
 <ul>
 <li><p>
 Piezo-resistive  </p><div about="figures/raw/resistiveaccel.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/resistiveaccel.jpg" alt="Figure" style="max-height:20vh" /></p><p></p></div><p>
@@ -910,8 +809,8 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgae3caa3">
-<h4 id="orgae3caa3">Piezoelectric Accelerometer</h4>
+<section id="slide-org34125e9">
+<h4 id="org34125e9">Piezoelectric Accelerometer</h4>
 <ul>
 <li>The principle is to sense the inertial force created by a seismic mass under an acceleration.</li>
 
@@ -924,8 +823,64 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org1de7714">
-<h3 id="org1de7714">Motion Detector</h3>
+<section id="slide-orga409414">
+<h3 id="orga409414">Temperature Sensors</h3>
+<p>
+A temperature sensor detects a change in a physical parameter such as resistance or output voltage that corresponds to a temperature change.
+</p>
+
+<p>
+Type of Sensing:
+</p>
+<ul>
+<li>Contact
+<ul>
+<li>Sensor is in direct physical contact with the object to be sensed</li>
+<li>To monitor solids, liquids, gases over a wide range</li>
+
+</ul></li>
+<li>Non-contact
+<ul>
+<li>Interprets the radiant energy of a heat source to energy in electromagnetic spectrum</li>
+<li>Monitor non-reflective solids and liquids</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgdad0573">
+<h4 id="orgdad0573">Contact sensing</h4>
+<ul>
+<li>Thermocouples</li>
+<li>Thermistors</li>
+<li>Resistance Temperature Detectors (RTD)</li>
+<li>Semiconductor Temperature sensors</li>
+<li>Liquid-in-Glass Thermometers</li>
+<li>Bi-metallic Thermometers</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org180a4d8">
+<h4 id="org180a4d8">Non-Contact sensing</h4>
+<ul>
+<li>Radiation Thermometers
+<ul>
+<li>Infrared Thermal Imaging</li>
+<li>Scanners</li>
+<li>Spot Radiometers</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc0567e8">
+<h3 id="orgc0567e8">Motion Detector</h3>
 <ul>
 <li>Photo Sensor
 <ul>
@@ -945,8 +900,8 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org9e89ae2">
-<h4 id="org9e89ae2">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
+<section id="slide-orgf6cf81b">
+<h4 id="orgf6cf81b">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
 <ul>
 <li>Humans, having a skin temperature of about 34℃, radiate infrared energy with a wavelength between 9 and 10 micrometers. Therefore, the sensors are typically sensitive in the range of 8 to 12 micrometers
 <ul>
@@ -967,8 +922,8 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 </ul>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org2113e75">
-<h4 id="org2113e75">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
+<section id="slide-org300ac06">
+<h4 id="org300ac06">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
 <p>
  </p><div class="imgcontainer"><div about="figures/raw/pir.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/pir.png" alt="Figure" style="max-height:50vh" /></p><p>Passive Infrared Motion Detector</p></div></div><p>
 </p>
@@ -976,16 +931,83 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 
 <div class="slide-footer"><br></div>
 </section>
+<section id="slide-orga90bcab">
+<h3 id="orga90bcab">Humidity Sensors</h3>
+<ul>
+<li>Humidity is defined as the water vapor content in the air (or other gases)</li>
+<li>Absolute Humidity
+<ul>
+<li>Ratio of the mass of water vapor to the volume of air or gas</li>
+
+</ul></li>
+<li>Relative Humidity
+<ul>
+<li>The ratio of the moisture content of air compared to the saturated moisture level at the same temperature or pressure</li>
+
+</ul></li>
+<li>Dew Point
+<ul>
+<li>Temperature and pressure at which gas begins to condense into liquids (like water vapor in air showing up as dew drops)</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orge09385f">
+<h4 id="orge09385f">Relative Humidity Sensor</h4>
+<ul>
+<li>Capacitive RH sensor
+<ul>
+<li>Common dielectric material, such as plastic or polymer, has a typical dielectric constant ranging from 2 to 15. the value of the capacitance.</li>
+<li>At normal room temperature, the dielectric constant of water vapor is about 80</li>
+<li>Change in dielectric constant is directly proportional to the relative humidity in the environment</li>
+<li>Very low temperature effect</li>
+<li>0.2-0.5 pF change in capacitance for 1% RH change, (while the bulk capacitance is between 100 and 500 pF at 50% RH)</li>
+
+</ul></li>
+<li>Resistive RH Sensors
+<ul>
+<li>Measure the resistance change</li>
+<li>Inverse exponential relationship to relative humidity</li>
+<li>Mostly used are conductive polymer, salt etc.</li>
+<li>Less accurate but cheaper than capacitive sensor</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgda391a8">
+<h4 id="orgda391a8">Absolute Humidity Sensor</h4>
+<ul>
+<li><p>
+Thermal Conductivity Humidity Sensors </p><div about="figures/raw/thermohumidity.gif" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/thermohumidity.gif" alt="Thermo Conductivity Sensor" style="max-height:40vh" /></p><p></p></div><p>
+</p>
+<ul>
+<li>Measure absolute humidity</li>
+<li>Calculate the difference between dry air and air containing water vapor</li>
+<li>One thermistor sealed in dry nitrogen and another exposed to the environment</li>
+<li>Difference in current proportional to humidity</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
 </section>
 <section>
-<section id="slide-org7e09a25">
-<h2 id="org7e09a25">Light and Image Sensing</h2>
-<div class="outline-text-2" id="text-org7e09a25">
+<section id="slide-orgbe2dffa">
+<h2 id="orgbe2dffa">Light and Image Sensing</h2>
+<div class="outline-text-2" id="text-orgbe2dffa">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org414b6d9">
-<h3 id="org414b6d9">Light Sensing: Principles</h3>
+<section id="slide-org16443e8">
+<h3 id="org16443e8">Light Sensing: Principles</h3>
 <ul>
 <li>Photo-chemistry
 <ul>
@@ -1007,8 +1029,8 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org08dcd41">
-<h4 id="org08dcd41">Photoelectric effect</h4>
+<section id="slide-org6287225">
+<h4 id="org6287225">Photoelectric effect</h4>
 <div class="leftcol">
 <p>
  </p><div class="imgcontainer"><div about="figures/raw/einstein.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/einstein.jpg" alt="Figure" style="max-height:50vh" /></p><p>Figure</p></div></div><p>
@@ -1026,24 +1048,27 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 
 </div>
 
-
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgfd7f5b3">
-<h4 id="orgfd7f5b3">Photodiode response function</h4>
+<section id="slide-orgdd4c698">
+<h4 id="orgdd4c698">Photodiode response function</h4>
 <ul>
 <li>For silicon photodiodes, usually linear, but:
 <ul>
 <li>non-linear when potential well is saturated (over-exposure)</li>
-<li>non-linear near zero (due to noise)</li>
+<li><p>
+non-linear near zero (due to noise)
+ </p><div class="imgcontainer"><div about="figures/raw/photodioderesponse.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/photodioderesponse.png" alt="Figure" style="max-height:50vh" /></p><p>Figure</p></div></div><p>
+</p></li>
 
 </ul></li>
 
 </ul>
+
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb283762" data-background="./figures/raw/underexposure2.jpg">
-<h4 id="orgb283762">Underexposure Image Noise</h4>
+<section id="slide-org221e9b5" data-background="./figures/raw/underexposure2.jpg">
+<h4 id="org221e9b5">Underexposure Image Noise</h4>
 <ul>
 <li>Canon EOS 6D + EF35mm f/1.4L USM</li>
 <li>f/1.4 1/8s ISO 12800</li>
@@ -1052,8 +1077,8 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 </ul>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org2ade3ab" data-background="./figures/raw/underexposure.jpg">
-<h4 id="org2ade3ab">Underexposure Image Noise</h4>
+<section id="slide-org08fd459" data-background="./figures/raw/underexposure.jpg">
+<h4 id="org08fd459">Underexposure Image Noise</h4>
 <ul>
 <li>Canon EOS 6D + EF35mm f/1.4L USM</li>
 <li>f/1.4 1/8s ISO 12800</li>
@@ -1063,20 +1088,25 @@ Capacitive </p><div about="figures/raw/capacitiveaccel.jpg" typeof="dcmitype:Sti
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org2d655cb">
-<h4 id="org2d655cb">Photodiode quantum efficiency (QE)</h4>
+<section id="slide-org4cf2772">
+<h4 id="org4cf2772">Photodiode quantum efficiency (QE)</h4>
 <p>
 How many of the incident photons will the photodiode convert into electrons?
 \[QE = \frac{\#electrons}{\#photons}\]
 </p>
 <ul>
-<li>Fundamental optical performance metric of imaging sensors.</li>
+<li><p>
+Fundamental optical performance metric of imaging sensors.
+ </p><div class="imgcontainer"><div about="figures/raw/qe.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/qe.png" alt="Quantum efficiency of the CCD chip 'PC1' in the Hubble Space Telescope's Wide Field and Planetary Camera WFPC2" style="max-height:40vh" /></p><p>Quantum efficiency of the CCD chip 'PC1' in the Hubble Space Telescope's Wide Field and Planetary Camera WFPC2</p><p style="max-width:40vh">by <span property="cc:attributionName">Eric Bajart</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/d/d5/Quantum_efficiency_graph_for_WFPC2-en.svg">Wikipedia</a></p></div></div><p>
+</p></li>
 
 </ul>
+
+
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orga8f707d">
-<h4 id="orga8f707d">Two types of image sensors</h4>
+<section id="slide-org1b0f9ed">
+<h3 id="org1b0f9ed">Image sensors</h3>
 <div class="leftcol">
 <p>
 Charged Coupled Device (CCD): converts electrons to voltage using readout circuitry separate from pixel
@@ -1103,8 +1133,8 @@ converts electrons to voltage using per-pixel readout circuitry
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgdf3d7fe">
-<h4 id="orgdf3d7fe">CCD vs CMOS</h4>
+<section id="slide-orgd5772e1">
+<h4 id="orgd5772e1">CCD vs CMOS</h4>
 <ul>
 <li>Modern CMOS sensors have optical performance comparable to CCD sensors.</li>
 <li>Most modern commercial and industrial cameras use CMOS sensors.</li>
@@ -1113,13 +1143,13 @@ converts electrons to voltage using per-pixel readout circuitry
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgc3df216">
-<h4 id="orgc3df216">CMOS sensor (very) simplified layout</h4>
+<section id="slide-orga74e3d0">
+<h4 id="orga74e3d0">CMOS sensor (very) simplified layout</h4>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgf28fb60">
-<h4 id="orgf28fb60">Analog front end</h4>
+<section id="slide-orgb43efb5">
+<h4 id="orgb43efb5">Analog front end</h4>
 <p>
 analog amplifier (gain):
 </p>
@@ -1150,8 +1180,8 @@ look-up table (LUT):
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgfa97c73">
-<h3 id="orgfa97c73">Color Primer</h3>
+<section id="slide-org8ca530e">
+<h3 id="org8ca530e">Color Primer</h3>
 <p>
 TODO: dress
 </p>
@@ -1162,8 +1192,8 @@ Color is complicated!
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org22db55e">
-<h4 id="org22db55e">Color is an artifact of human perception</h4>
+<section id="slide-org527a0cd">
+<h4 id="org527a0cd">Color is an artifact of human perception</h4>
 <p>
 TODO: electromagnetic spectrum
 </p>
@@ -1176,8 +1206,8 @@ TODO: electromagnetic spectrum
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org4d072bf">
-<h4 id="org4d072bf">Spectral Power Distribution</h4>
+<section id="slide-org430ad3e">
+<h4 id="org430ad3e">Spectral Power Distribution</h4>
 <ul>
 <li>Most types of light “contain” more than one wavelengths.</li>
 <li>We can describe light based on the distribution of power over different wavelengths.</li>
@@ -1188,8 +1218,8 @@ TODO: light source SPD
 </p>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org4c6a0dc">
-<h4 id="org4c6a0dc">Spectral Sensitivity Function (SSF)</h4>
+<section id="slide-orgb441af5">
+<h4 id="orgb441af5">Spectral Sensitivity Function (SSF)</h4>
 <ul>
 <li>Any light sensor (digital or not) has different sensitivity to different wavelengths.</li>
 <li>This is described by the sensor’s spectral sensitivity function</li>
@@ -1206,8 +1236,8 @@ TODO: light source SPD
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org62e4678">
-<h4 id="org62e4678">Spectral Sensitivity Function of Human Eye</h4>
+<section id="slide-orgd6b4113">
+<h4 id="orgd6b4113">Spectral Sensitivity Function of Human Eye</h4>
 <ul>
 <li>The human eye is a collection of light sensors called cone cells.</li>
 <li>There are three types of cells with different spectral sensitivity functions.</li>
@@ -1224,8 +1254,8 @@ TODO: pic
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org52de6b4">
-<h4 id="org52de6b4">Color filter arrays (CFA)</h4>
+<section id="slide-org15efd37">
+<h4 id="org15efd37">Color filter arrays (CFA)</h4>
 <ul>
 <li>To measure color with a digital sensor, mimic cone cells of human vision system.</li>
 <li>“Cones” correspond to pixels that are covered by different color filters, each with its own spectral sensitivity function</li>
@@ -1237,8 +1267,8 @@ TODO: pic
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgf012c5b">
-<h4 id="orgf012c5b">Many different spectral sensitivity functions</h4>
+<section id="slide-org2aed34e">
+<h4 id="org2aed34e">Many different spectral sensitivity functions</h4>
 <p>
 Each camera has its more or less unique, and most of the time secret, SSF.
 </p>
@@ -1254,13 +1284,29 @@ TODO: SSF comparison
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org6067fb3">
-<h4 id="org6067fb3">The retinal color space</h4>
+<section id="slide-org6e29ae4">
+<h4 id="org6e29ae4">The retinal color space</h4>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #346604;">from</span> colormath.color_objects <span style="color: #346604;">import</span> SepctralColor, XYZColor, RGBColor
+<span style="color: #346604;">from</span> colormath.color_conversions <span style="color: #346604;">import</span> convert_color
+
+<span style="color: #b35000;">colors</span>=[]
+<span style="color: #346604;">for</span> i <span style="color: #346604;">in</span> <span style="color: #75507b;">range</span>(340, 840, 10):
+    <span style="color: #b35000;">s</span> = <span style="color: #5c3566;">'tmp = SpectralColor(spec%dnm=1)'</span> % i
+    <span style="color: #346604;">exec</span>(s)
+    colors.append(tmp)
+
+<span style="color: #346604;">for</span> color <span style="color: #346604;">in</span> colors:
+
+</pre>
+</div>
+
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgbfd9535">
-<h4 id="orgbfd9535">Metamers</h4>
+<section id="slide-org6740cfd">
+<h4 id="org6740cfd">Metamers</h4>
 <ul>
 <li>Distinct mixed beams can produce the same retinal color</li>
 <li>These beams are called metamers</li>
@@ -1273,27 +1319,27 @@ TODO: illuminant metamerism
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org37faccb">
-<h4 id="org37faccb">Chromaticity</h4>
+<section id="slide-orgf8aa7b5">
+<h4 id="orgf8aa7b5">Chromaticity</h4>
 <p>
 TODO: CIE xy
 </p>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org71b640e">
-<h4 id="org71b640e">Color gamuts</h4>
+<section id="slide-org592d41f">
+<h4 id="org592d41f">Color gamuts</h4>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org202757b">
-<h3 id="org202757b">Depth Camera</h3>
-<div class="outline-text-3" id="text-org202757b">
+<section id="slide-orgbd6d075">
+<h3 id="orgbd6d075">Depth Camera</h3>
+<div class="outline-text-3" id="text-orgbd6d075">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org19100ab">
-<h4 id="org19100ab">The camera as a coordinate transformation</h4>
+<section id="slide-org4844be9">
+<h4 id="org4844be9">The camera as a coordinate transformation</h4>
 <ul>
 <li>A camera is a mapping from the 3D world to a 2D image</li>
 
@@ -1301,49 +1347,52 @@ TODO: CIE xy
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org04707f5">
-<h4 id="org04707f5">Camera matrix</h4>
+<section id="slide-org1799dd2">
+<h4 id="org1799dd2">Camera matrix</h4>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org85f752a">
-<h4 id="org85f752a">Ames Room</h4>
+<section id="slide-org79abdbd">
+<h4 id="org79abdbd">Ames Room</h4>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org2b1189e">
-<h4 id="org2b1189e">Triangulation</h4>
+<section id="slide-orgd238c84">
+<h4 id="orgd238c84">Triangulation</h4>
+<p>
+#+BEGIN<sub>COMMENT</sub>
+</p>
 
 <div class="slide-footer"><br></div>
 </section>
 </section>
 <section>
-<section id="slide-orgbb21489">
-<h2 id="orgbb21489">Sensor to Endpoints Communication</h2>
-<div class="outline-text-2" id="text-orgbb21489">
+<section id="slide-org44ce3e0">
+<h2 id="org44ce3e0">Sensor to Endpoints Communication</h2>
+<div class="outline-text-2" id="text-org44ce3e0">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org5b9ff2b">
-<h3 id="org5b9ff2b">Serial Communication</h3>
-<div class="outline-text-3" id="text-org5b9ff2b">
+<section id="slide-orgcbbfb8a">
+<h3 id="orgcbbfb8a">Serial Communication</h3>
+<div class="outline-text-3" id="text-orgcbbfb8a">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgbc5a52a">
-<h4 id="orgbc5a52a">UART</h4>
+<section id="slide-org0356b87">
+<h4 id="org0356b87">UART</h4>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org0159641">
-<h4 id="org0159641">I2C</h4>
+<section id="slide-orgaa32e1c">
+<h4 id="orgaa32e1c">I2C</h4>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orga5fed81">
-<h4 id="orga5fed81">SPI</h4>
+<section id="slide-orga6ec9a4">
+<h4 id="orga6ec9a4">SPI</h4>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org1737d93">
-<h3 id="org1737d93">Other Communication Method</h3>
+<section id="slide-org69e7afa">
+<h3 id="org69e7afa">Other Communication Method</h3>
 <ul>
 <li>Parallel
 <ul>
@@ -1366,14 +1415,14 @@ TODO: CIE xy
 </section>
 </section>
 <section>
-<section id="slide-orgbef25ce">
-<h2 id="orgbef25ce">Advanced sensors</h2>
-<div class="outline-text-2" id="text-orgbef25ce">
+<section id="slide-org8d2be68">
+<h2 id="org8d2be68">Advanced sensors</h2>
+<div class="outline-text-2" id="text-org8d2be68">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org8f14d15">
-<h3 id="org8f14d15">Time-of-flight imaging</h3>
+<section id="slide-orgc64b864">
+<h3 id="orgc64b864">Time-of-flight imaging</h3>
 <ul>
 <li>Conventional imaging: Measure all photons together regardless of time of travel.</li>
 <li>Time-of-flight imaging: Measure photons separately based on time of travel.</li>
@@ -1382,31 +1431,31 @@ TODO: CIE xy
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgdcff8d9">
-<h4 id="orgdcff8d9">Time-of-flight imaging in nature</h4>
+<section id="slide-org20a5e66">
+<h4 id="org20a5e66">Time-of-flight imaging in nature</h4>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org0fcb5e8">
-<h3 id="org0fcb5e8">Ultrasonic</h3>
+<section id="slide-orged0ceb5">
+<h3 id="orged0ceb5">Ultrasonic</h3>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org92b4ea8">
-<h3 id="org92b4ea8">Optical Microcavity</h3>
+<section id="slide-orgeb7b846">
+<h3 id="orgeb7b846">Optical Microcavity</h3>
 
 <div class="slide-footer"><br></div>
 </section>
 </section>
 <section>
-<section id="slide-orgb10c1b5">
-<h2 id="orgb10c1b5">Energy management</h2>
-<div class="outline-text-2" id="text-orgb10c1b5">
+<section id="slide-orgb803fa5">
+<h2 id="orgb803fa5">Energy management</h2>
+<div class="outline-text-2" id="text-orgb803fa5">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgf67e805">
-<h4 id="orgf67e805">Power Budget</h4>
+<section id="slide-org5ec8018">
+<h4 id="org5ec8018">Power Budget</h4>
 <ul>
 <li>Active sensor power</li>
 <li>Frequency of data collection</li>
@@ -1421,8 +1470,8 @@ TODO: CIE xy
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org2d86a5c">
-<h4 id="org2d86a5c">Example: TI SensorTag C2650</h4>
+<section id="slide-orgc22e40a">
+<h4 id="orgc22e40a">Example: TI SensorTag C2650</h4>
 <p>
 For example, the TI SensorTag C2650 has the following power characteristics:
 </p>
@@ -1532,8 +1581,8 @@ The TI SensorTag uses a standard CR2032 coin cell battery rated at 240 mAh. Ther
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org6e27b5f">
-<h4 id="org6e27b5f">power management practices</h4>
+<section id="slide-orgcf44549">
+<h4 id="orgcf44549">power management practices</h4>
 <p>
 Many power management practices are employed, such as
 </p>
@@ -1549,13 +1598,16 @@ These techniques are widely used in the computing business as a general practice
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org48c7436">
-<h3 id="org48c7436">Energy harvest</h3>
+<section id="slide-orgc89710f">
+<h3 id="orgc89710f">Energy harvest</h3>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org2aa37a9">
-<h3 id="org2aa37a9">Energy storage</h3>
+<section id="slide-orgf5b301c">
+<h3 id="orgf5b301c">Energy storage</h3>
+<p>
+#+END<sub>COMMENT</sub>’
+</p>
 <div class="slide-footer"><br></div>
 </section>
 </section>
