@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="770.283" height="346" viewBox="0, 0, 770.283, 346"><link xmlns="" type="text/css" rel="stylesheet" id="dark-mode-general-link"/><link xmlns="" type="text/css" rel="stylesheet" id="dark-mode-custom-link"/><style xmlns="" type="text/css" id="dark-mode-custom-style"/>
+  <g id="Layer_1">
+    <path d="M287.672,99.173 L287.672,246.285" fill-opacity="0" stroke="#656565" stroke-width="2"/>
+    <path d="M370.122,135.613 L478.122,135.613 L478.122,208.137 L370.122,208.137 L370.122,135.613 z" fill="#A3A3A3"/>
+    <path d="M300.172,100.5 L300.172,53.5 L444.172,53.5 C468.172,53.5 491.172,79.5 491.172,100.5 L491.172,245.5 C491.172,267.5 466.172,292.5 443.172,293.5 L300.172,293.5 L300.172,245.5" fill-opacity="0" stroke="#000000" stroke-width="26"/>
+    <g>
+      <g>
+        <path d="M288.372,130.583 L371.706,130.583 L371.706,214.167 L288.372,214.167 L288.372,130.583 z" fill="#A1905E"/>
+        <path d="M288.372,130.583 L371.706,130.583 L371.706,214.167 L288.372,214.167 L288.372,130.583 z" fill-opacity="0" stroke="#656565" stroke-width="2"/>
+      </g>
+      <path d="M291.859,130.583 L291.859,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M301.193,130.583 L301.193,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M306.526,130.583 L306.526,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M311.776,130.583 L311.776,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M316.859,130.583 L316.859,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M321.859,130.583 L321.859,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M326.859,130.583 L326.859,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M331.526,130.583 L331.526,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M336.193,130.583 L336.193,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M340.526,130.583 L340.526,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M344.943,130.583 L344.943,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M349.609,130.583 L349.609,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M354.193,130.583 L354.193,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M358.859,130.583 L358.859,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M363.193,130.583 L363.193,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M367.526,130.583 L367.526,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+      <path d="M296.193,130.583 L296.193,214.167" fill-opacity="0" stroke="#736640" stroke-width="3"/>
+    </g>
+    <path d="M288.372,130.583 L440.16,110.659" fill-opacity="0" stroke="#656565" stroke-width="1"/>
+    <path d="M373.16,130.583 L440.16,114.909" fill-opacity="0" stroke="#656565" stroke-width="1"/>
+    <path d="M147.642,51.847 C213.703,117.909 212.886,225.833 145.816,292.903" fill-opacity="0" stroke="#D0D0D0" stroke-width="10"/>
+    <path d="M198.484,53.5 C264.545,119.561 263.728,227.485 196.658,294.555" fill-opacity="0" stroke="#D0D0D0" stroke-width="10"/>
+    <g>
+      <path d="M35.5,171.886 L152.7,171.886" fill-opacity="0" stroke="#DE787A" stroke-width="10"/>
+      <path d="M152.7,171.886 L147.1,180.286 L169.5,171.886 L147.1,163.486 z" fill="#DE787A" fill-opacity="1" stroke="#DE787A" stroke-width="10" stroke-opacity="1"/>
+    </g>
+    <g>
+      <path d="M588.203,89.886 L456.503,109.289" fill-opacity="0" stroke="#C81919" stroke-width="3"/>
+      <path d="M456.503,109.289 L458.661,104.726 L448.192,110.513 L459.885,113.036 z" fill="#C81919" fill-opacity="1" stroke="#C81919" stroke-width="3" stroke-opacity="1"/>
+    </g>
+    <g>
+      <path d="M588.203,165.886 L456.603,166.608" fill-opacity="0" stroke="#C81919" stroke-width="3"/>
+      <path d="M456.603,166.608 L459.38,162.392 L448.203,166.654 L459.426,170.792 z" fill="#C81919" fill-opacity="1" stroke="#C81919" stroke-width="3" stroke-opacity="1"/>
+    </g>
+    <g>
+      <path d="M588.203,225.886 L379.966,202.916" fill-opacity="0" stroke="#C81919" stroke-width="3"/>
+      <path d="M379.966,202.916 L383.209,199.049 L371.616,201.995 L382.288,207.398 z" fill="#C81919" fill-opacity="1" stroke="#C81919" stroke-width="3" stroke-opacity="1"/>
+    </g>
+    <g>
+      <path d="M588.203,276.886 L302.514,237.18" fill-opacity="0" stroke="#C81919" stroke-width="3"/>
+      <path d="M302.514,237.18 L305.865,233.405 L294.193,236.023 L304.709,241.725 z" fill="#C81919" fill-opacity="1" stroke="#C81919" stroke-width="3" stroke-opacity="1"/>
+    </g>
+    <text transform="matrix(1, 0, 0, 1, 652.993, 74.992)">
+      <tspan x="-97.2" y="-12.394" font-family="Avenir-Medium" font-size="30" fill="#656565">Wires carrying </tspan>
+      <tspan x="-48.63" y="28.606" font-family="Avenir-Medium" font-size="30" fill="#656565">current</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 652.993, 171.386)">
+      <tspan x="-52.77" y="5.606" font-family="Avenir-Medium" font-size="30" fill="#656565">Magnet</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 631.493, 232.531)">
+      <tspan x="-26.67" y="5.606" font-family="Avenir-Medium" font-size="30" fill="#656565">Coil</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 670.993, 280.924)">
+      <tspan x="-75.285" y="6" font-family="Avenir-Medium" font-size="30" fill="#656565">Diaphragm</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 113.71, 141.386)">
+      <tspan x="-88.935" y="6" font-family="Avenir-Medium" font-size="30" fill="#656565">Sound waves</tspan>
+    </text>
+  </g>
+</svg>

@@ -11,7 +11,8 @@
 * Introduction
   
 ** TODO Core Questions
-   
+- What is a sensor?
+- H
 ** TODO Learning Objectives
    
 ** Table of Contents
@@ -134,6 +135,10 @@
    Your browser does not support the video tag.
    #+END_video
 
+#+BEGIN_center
+    “Hall Effect Sensor” by  FraunhoferIIS under [[https://creativecommons.org/licenses/by-sa/4.0/][CC BY-SA 4.0]]; from Wikipedia
+#+END_center
+
 *** Piezo- and Pyro-electric Devices
 - Piezo- (pressure) and pyro- (heat) electricity are always coupled
   - due to separation of electrical charges in the material’s crystalline arrangement
@@ -212,31 +217,42 @@ Cons:
 - Transduces pressure into electrical quantity
 - Pressure exerts force which can be converted to electrical voltage using various methods
 - Types
-  - Strain gauges
-  - Capacitive diaphragms
-  - Piezo-resistive or Silicon cell
-  - Bourdon tubes
-  - Glass feed-through with silicon cell
+  - Piezo-resistive sensor
+  - Capacitive sensor
+  - Piezoelectric sensor
  
-*** Pressure Sensor Types (1 of 2)
-+ Strain Gauges
-    – Based on the variation of resistance of a conductor or semiconductor when mechanical stress is applied
-    – Made of alloys like constantan, nichrome and also semiconductors
-    – Can be bonded or un-bonded
+*** Piezo-resistive Strain Gauges
+#+BEGIN_leftcol
+- Based on the variation of resistance of a material when mechanical stress is applied
+- Made of alloys like constantan, nichrome and also semiconductors
+- Can be bonded or un-bonded
+- Pros: 
+  - Silicon strain gauges can be very sensitive to pressure changes (2kPa)
+  - Metal sensing element are more durable and can withstand high temperature
+- Cons: Consumes power 
+
+#+END_leftcol
+#+BEGIN_rightcol
+    {{{revealimg("./figures/straingauge.meta",t,"50vh")}}}
+#+END_rightcol
+*** Capacitive Sensor
 + Capacitive diaphragms
-    – Diaphragm acts as one plate of capacitor
-    – The stress changes the space between capacitor plates
-    – Can be made of strain gauge or other metal
+  - Diaphragm acts as one plate of capacitor
+  - The stress changes the space between capacitor plates
++ Pros: 
+  - Low power consumption, No DC current, Ideal for wireless sensors
+  - Mechanically simple, durable
++ Cons: need careful circuit design to minimize parasite capacitance
 
-*** Pressure Sensor Types (2 of 2)
-+ Piezo-resistive or Silicon Cell
-    – Micromachined silicon diaphragms
-    – Piezo-resistive strain gauges diffused into it
-    – Very sensitive to pressure
-+ Tubes and Feed-Through Glass
-    – Glass feed-through and silicon cell-mounted on plastic housing
-    – Based on the pressure difference
-
+*** Piezoelectric Sensor
++ Pros:
+  - durable, ruggedness, some material can withstand 1,000℃
+  - low power
+  - insensitive to electromagnetic interference
+  - inexpensive
++ Cons:
+  - cannot be used for truly static measurements
+    {{{revealimg("./figures/piezosensitivity.meta",t,"50vh")}}}
 ** Humidity Sensors
 - Humidity is defined as the water vapor content in the air (or other gases)
 - Absolute Humidity
@@ -246,28 +262,25 @@ Cons:
 - Dew Point
   - Temperature and pressure at which gas begins to condense into liquids (like water vapor in air showing up as dew drops)
 
-*** Humidity Sensor Types (1 of 2)
+*** Relative Humidity Sensor
 - Capacitive RH sensor
+  - Common dielectric material, such as plastic or polymer, has a typical dielectric constant ranging from 2 to 15. the value of the capacitance.
+  - At normal room temperature, the dielectric constant of water vapor is about 80
   - Change in dielectric constant is directly proportional to the relative humidity in the environment
   - Very low temperature effect
-  - 0.2-0.5 pF change in capacitance for 1% RH change
-- Resistive Humidity Sensors
-  - Measure the impedance change
-  - Inverse exponential relationship to humidity
+  - 0.2-0.5 pF change in capacitance for 1% RH change, (while the bulk capacitance is between 100 and 500 pF at 50% RH)
+- Resistive RH Sensors
+  - Measure the resistance change
+  - Inverse exponential relationship to relative humidity
   - Mostly used are conductive polymer, salt etc.
-  - Ceramic-coated to avoid condensation effect
+  - Less accurate but cheaper than capacitive sensor
 
-*** Humidity Sensor Types (2 of 2)
-- Thermal Conductivity Humidity Sensors
+*** Absolute Humidity Sensor
+- Thermal Conductivity Humidity Sensors{{{reveallicense("./figures/thermohumidity.meta","40vh", nil, 'none)}}}
   - Measure absolute humidity
   - Calculate the difference between dry air and air containing water vapor
   - One thermistor sealed in dry nitrogen and another exposed to the environment
   - Difference in current proportional to humidity
-- MEMS-based Humidity sensor
-  - Polymide-coated cantilever beam
-  - Provided with movable electrode
-  - Absorption causes increase in beam mass
-  - Deflection causes capacitance change
 
 ** Temperature Sensors
 A temperature sensor detects a change in a physical parameter such as resistance or output voltage that corresponds to a temperature change.
@@ -288,13 +301,11 @@ Type of Sensing:
 - Liquid-in-Glass Thermometers
 - Bi-metallic Thermometers
 
-*** non-Contact sensing
+*** Non-Contact sensing
 - Radiation Thermometers
   - Infrared Thermal Imaging
   - Scanners
   - Spot Radiometers
-- Thermal Imagers
-- Ratio Thermometers
 
 ** Microphone
 - A microphone is an acoustic to electric transducer that converts sound into an electrical signal.
@@ -302,28 +313,35 @@ Type of Sensing:
 - Most microphones in use today use electromagnetic generation (dynamic microphones), capacitance change (condenser microphones) or piezo-electric generation to produce the signal from mechanical vibration .
 
 *** Condenser (or Capacitor) Microphones
-- In a condenser microphone, the diaphragm acts as one plate of a capacitor, and the vibrations produce changes in the distance between the plates.
-- Since the plates are biased with a fixed charge (\(Q\)), the voltage maintained across the capacitor plates changes with the vibrations in the air.
-
+- In a condenser microphone, the diaphragm acts as one plate of a capacitor, and the vibrations produce changes in the distance between the plates. {{{reveallicense("./figures/condensermicrophone.meta","40vh",nil,'none)}}}
+- Pros:
+  - Low mass of the diaphragm 
+  - flat and extended frequency response
+  - higher sensitivity and lower noise 
+- Cons:
+  - Requires power
+  - Sensitive to noise 
+  - Easy to break
+   
 *** Dynamic Microphones
 - In a dynamic microphone, a small movable induction coil, positioned in the magnetic field of a permanent magnet, is attached to the diaphragm.
-- When sound enters through the windscreen of the microphone, the sound wave vibrations move the diaphragm.
+- When sound enters through the windscreen of the microphone, the sound wave vibrations move the diaphragm.{{{reveallicense("./figures/dynamicmicrophone.meta","40vh",nil,'none)}}}
 - When the diaphragm vibrates, the coil moves in the magnetic field, producing a varying current in the coil through electromagnetic induction .
+- Pros:
+  - power producing
+  - sturdy
+  - frequency response peaks around 2.5kHz, could be desirable for human voice/music instrument
+- Cons:
+  - Large inertia, low pass
 
-*** Microphone Types (cont’d)
-- Carbon Microphone
-  - It consists of two metal plates separated by carbon granules
-  - When sound waves strike this plate, the pressure on the granules changes
-  - this in turn changes the electrical resistance between the plates.
-- Piezo Microphone
-  - A piezo microphone uses the phenomenon of piezo-electricity
-  - It is widely used to amplify acoustic instruments for live performance
-  - or to record sounds in unusual environments
-- Ribbon microphones
-  - Corrugated metal ribbon is suspended in a magnetic field.
-  - The ribbon is electrically connected to the microphone's output
-  - Vibration within the magnetic field generates the electrical signal. 
+#+REVEAL: split
+    {{{revealimg("./figures/humanear.meta",t,"80vh")}}}
 
+*** Piezo Microphone
+    - A piezo microphone uses the phenomenon of piezo-electricity{{{reveallicense("./figures/crym.meta","40vh",nil,'none)}}}
+    - Piezoelectric transducers are often used as contact microphones, e.g., amplifying sound from acoustic musical instruments.
+    - Or to record sounds in unusual environments, such as underwater under high pressure.
+     
 ** Accelerometer
 - Piezo-resistive
   - Proof mass suspended with piezo-resistive beams
@@ -336,9 +354,8 @@ Type of Sensing:
 
 *** Piezoelectric Accelerometer
 - The principle is to sense the inertial force created by a seismic mass under an acceleration. 
-- This force is transformed into a bending moment applied on a piezoelectric bimorph.
-- The seismic mass displacement is sensed by two piezoelectric bridges
-- Z-axis acceleration is distinguished from x-axis by a differential measurement between these two sensors.
+
+{{{revealimg("./figures/PiezoAccelTheory.meta",t,"60vh")}}}
 
 ** Motion Detector
    
