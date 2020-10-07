@@ -612,13 +612,11 @@ Baud rates can be just about any value within reason. The only requirement is th
 
 The higher a baud rate goes, the faster data is sent/received, but there are limits to how fast data can be transferred. You usually won't see speeds exceeding 115200 - that's fast for most microcontrollers. Get too high, and you'll begin to see errors on the receiving end, as clocks and sampling periods just can't keep up.
 
-** SPI
-   
 ** I2C
 - Feature 3 wire
-  - GND 
   - SCL(clock) 
   - SDA(data) 
+  - GND 
 - All slaves share the same bus wire 
 - Speed 
   - Standard: 100 Kbps
@@ -677,24 +675,47 @@ class adafruit_apds9960.apds9960.APDS9960(i2c, *, interrupt_pin=None, address=57
 *** Master read operation
   {{{revealimg("figures/i2cread.meta","Master Read","50vh",nil,'none)}}}
 
+** SPI
+   
+#+BEGIN_leftcol
+
+- Feature 5+ wire
+  - SCLK(clock)
+  - MOSI(Master out Slave in)
+  - MISO(Master in Slave out)
+  - SS(Slave Select)
+  - GND 
+- Typical Speed: 50 Mbps
+
+#+END_leftcol
+#+BEGIN_rightcol
+  {{{revealimg("figures/spisingle.meta",t,"50vh")}}}
+#+END_rightcol
+
+*** Time Diagram
+  {{{revealimg("figures/spitime.meta",t,"70vh")}}}
+  
+*** Multiple Slaves
+  {{{revealimg("figures/spimultislaves.meta",t,"70vh")}}}
     
 ** Comparison between UART/I2C/SPI
-      | UART                  | I2C            | SPI                            |
-      | Single Slave          | Multiple Slave | Multiple Salve                 |
-      | Full Duplex           | Half Duplex    | Full Duplex                    |
-      | Tx, Rx                | SDA, SCL       | SCLK, MOSI, MISO, SS(mutilple) |
-      | Baud rate upto 115.2k  | 3.4 Mbsp       |                                |
+
+      | UART         | I2C             | SPI                            |
+      | Single Slave | Multiple Slaves | Multiple Salves                |
+      | Full Duplex  | Half Duplex     | Full Duplex                    |
+      | Tx, Rx       | SDA, SCL        | SCLK, MOSI, MISO, SS(mutilple) |
+      | Upto 115.2k  | 3.4 Mbsp        | Typical 50 Mbps                |
 
 ** Other Communication Method
    
 - Parallel
-  - Infiband
-  - Ethernet
+  - Infiband (up to 1000G for 4-link XDR)
+  - USB 3.x (up to 20G for USB 3.2 Gen 2x2)
+  - Ethernet (10M/100M/1G/10G)
   - Camera Interface
-  - USB 3.x
   - ...
 - Wireless
-  - Will be covered later
+  - Will be covered in the next lecture
  
 * Advanced sensors 
   

@@ -112,9 +112,9 @@
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org797aec8">
-<h3 id="org797aec8">Classification of Sensors</h3>
-<div class="outline-text-3" id="text-org797aec8">
+<section id="slide-org6a2c26b">
+<h3 id="org6a2c26b">Classification of Sensors</h3>
+<div class="outline-text-3" id="text-org6a2c26b">
 </div>
 <div class="slide-footer"><br></div>
 </section>
@@ -137,8 +137,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org189c8fe">
-<h4 id="org189c8fe">Classification of Sensors</h4>
+<section id="slide-orgadc351d">
+<h4 id="orgadc351d">Classification of Sensors</h4>
 <table>
 
 
@@ -900,8 +900,8 @@ Type of Sensing:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org0f4592b">
-<h4 id="org0f4592b">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
+<section id="slide-orgaf96cc7">
+<h4 id="orgaf96cc7">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
 <ul>
 <li>Humans, having a skin temperature of about 34℃, radiate infrared energy with a wavelength between 9 and 10 micrometers. Therefore, the sensors are typically sensitive in the range of 8 to 12 micrometers
 <ul>
@@ -922,8 +922,8 @@ Type of Sensing:
 </ul>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org32dae1f">
-<h4 id="org32dae1f">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
+<section id="slide-org16756de">
+<h4 id="org16756de">Pyroelectric/Passive Infrared (PIR) Motion Detector</h4>
 <p>
  </p><div class="imgcontainer"><div about="figures/raw/pir.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/pir.png" alt="Figure" style="max-height:50vh" /></p><p>Passive Infrared Motion Detector</p></div></div><p>
 </p>
@@ -1067,8 +1067,8 @@ non-linear near zero (due to noise)
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org84f2088" data-background="./figures/raw/underexposure2.jpg">
-<h4 id="org84f2088">Underexposure Image Noise</h4>
+<section id="slide-org6a79f54" data-background="./figures/raw/underexposure2.jpg">
+<h4 id="org6a79f54">Underexposure Image Noise</h4>
 <ul>
 <li>Canon EOS 6D + EF35mm f/1.4L USM</li>
 <li>f/1.4 1/8s ISO 12800</li>
@@ -1077,8 +1077,8 @@ non-linear near zero (due to noise)
 </ul>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org714c877" data-background="./figures/raw/underexposure.jpg">
-<h4 id="org714c877">Underexposure Image Noise</h4>
+<section id="slide-org11190cb" data-background="./figures/raw/underexposure.jpg">
+<h4 id="org11190cb">Underexposure Image Noise</h4>
 <ul>
 <li>Canon EOS 6D + EF35mm f/1.4L USM</li>
 <li>f/1.4 1/8s ISO 12800</li>
@@ -1421,7 +1421,7 @@ TODO: CIE xy
 <div class="slide-footer"><br></div>
 </section>
 <section id="slide-orgbc5a52a">
-<h4 id="orgbc5a52a">UART</h4>
+<h3 id="orgbc5a52a">UART</h3>
 <ul>
 <li>Universal Asynchronous Receiver/Transmitter</li>
 <li>Hardware that translates between parallel and serial forms</li>
@@ -1450,16 +1450,47 @@ TODO: CIE xy
 TODO: time
 </p>
 
+<p>
+Asynchronous means that data is transferred without support from an external clock signal.
+</p>
+
+<p>
+The asynchronous serial protocol has a number of built-in rules - mechanisms that help ensure robust and error-free data transfers. These mechanisms, which we get for eschewing the external clock signal, are:
+</p>
+
+<p>
+Data bits,
+Synchronization bits,
+Parity bits,
+and Baud rate.
+</p>
+
+<p>
+Through the variety of these signaling mechanisms, you&rsquo;ll find that there&rsquo;s no one way to send data serially. The protocol is highly configurable. The critical part is making sure that both devices on a serial bus are configured to use the exact same protocols.
+</p>
+
+<p>
+The baud rate specifies how fast data is sent over a serial line. It&rsquo;s usually expressed in units of bits-per-second (bps). If you invert the baud rate, you can find out just how long it takes to transmit a single bit. This value determines how long the transmitter holds a serial line high/low or at what period the receiving device samples its line.
+</p>
+
+<p>
+Baud rates can be just about any value within reason. The only requirement is that both devices operate at the same rate. One of the more common baud rates, especially for simple stuff where speed isn&rsquo;t critical, is 9600 bps. Other &ldquo;standard&rdquo; baud are 1200, 2400, 4800, 19200, 38400, 57600, and 115200.
+</p>
+
+<p>
+The higher a baud rate goes, the faster data is sent/received, but there are limits to how fast data can be transferred. You usually won&rsquo;t see speeds exceeding 115200 - that&rsquo;s fast for most microcontrollers. Get too high, and you&rsquo;ll begin to see errors on the receiving end, as clocks and sampling periods just can&rsquo;t keep up.
+</p>
+
 <div class="slide-footer"><br></div>
 </section>
 <section id="slide-org0159641">
-<h4 id="org0159641">I2C</h4>
+<h3 id="org0159641">I2C</h3>
 <ul>
 <li>Feature 3 wire
 <ul>
-<li>GND</li>
 <li>SCL(clock)</li>
 <li>SDA(data)</li>
+<li>GND</li>
 
 </ul></li>
 <li>All slaves share the same bus wire</li>
@@ -1517,8 +1548,8 @@ TODO: time
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org702e685">
-<h4 id="org702e685">Master Write operation</h4>
+<section id="slide-orgfcbfcda">
+<h4 id="orgfcbfcda">Master Write operation</h4>
 <ol>
 <li>Master generate specific start signal to inform all devices</li>
 <li>Master put target device address to the I2C bus, ７-bit address + 1-bit read / <b>write</b> flag</li>
@@ -1533,8 +1564,8 @@ TODO: time
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org3f7b847">
-<h4 id="org3f7b847">Master Write operation</h4>
+<section id="slide-orgd98b2d7">
+<h4 id="orgd98b2d7">Master Write operation</h4>
 <p>
  </p><div class="imgcontainer"><div about="figures/raw/i2cwrite.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/i2cwrite.png" alt="Figure" style="max-height:50vh" /></p><p>Master Write</p></div></div><p>
 </p>
@@ -1542,8 +1573,8 @@ TODO: time
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgeff1f0f">
-<h4 id="orgeff1f0f">Master read operation</h4>
+<section id="slide-orgca13f8e">
+<h4 id="orgca13f8e">Master read operation</h4>
 <ol>
 <li>Master generate specific start signal to inform all devices</li>
 <li>Master put target device address to the I2C bus, ７-bit address + 1-bit <b>read</b> / write flag</li>
@@ -1557,8 +1588,8 @@ TODO: time
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgd7ab873">
-<h4 id="orgd7ab873">Master read operation</h4>
+<section id="slide-org1342c30">
+<h4 id="org1342c30">Master read operation</h4>
 <p>
  </p><div class="imgcontainer"><div about="figures/raw/i2cread.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/i2cread.png" alt="Figure" style="max-height:50vh" /></p><p>Master Read</p></div></div><p>
 </p>
@@ -1567,13 +1598,98 @@ TODO: time
 <div class="slide-footer"><br></div>
 </section>
 <section id="slide-orga5fed81">
-<h4 id="orga5fed81">SPI</h4>
+<h3 id="orga5fed81">SPI</h3>
+<div class="leftcol">
+<p>
+
+</p>
+
+<ul>
+<li>Feature 5+ wire
+<ul>
+<li>SCLK(clock)</li>
+<li>MOSI(Master out Slave in)</li>
+<li>MISO(Master in Slave out)</li>
+<li>SS(Slave Select)</li>
+<li>GND</li>
+
+</ul></li>
+<li>Typical Speed: 50 Mbps</li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/spisingle.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/spisingle.png" alt="SPI Single Master and Single Slave" style="max-height:50vh" /></p><p>SPI Single Master and Single Slave</p><p style="max-width:50vh">by <span property="cc:attributionName">Cburnett</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/e/ed/SPI_single_slave.svg">Wikipedia</a></p></div></div><p>
+</p>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org8782881">
+<h4 id="org8782881">Time Diagram</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/spitime.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/spitime.png" alt="SPI Bus Timing Diagram" style="max-height:70vh" /></p><p>SPI Bus Timing Diagram</p><p style="max-width:70vh">by <span property="cc:attributionName">Cburnett</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/6/6b/SPI_timing_diagram2.svg">Wikipedia</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb771818">
+<h4 id="orgb771818">Multiple Slaves</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/spimultislaves.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/spimultislaves.png" alt="SPI Single Master and Multiple Slaves" style="max-height:70vh" /></p><p>SPI Single Master and Multiple Slaves</p><p style="max-width:70vh">by <span property="cc:attributionName">Cburnett</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/f/fc/SPI_three_slaves.svg">Wikipedia</a></p></div></div><p>
+</p>
+
 
 <div class="slide-footer"><br></div>
 </section>
 <section id="slide-orgca19f93">
-<h4 id="orgca19f93">Comparison between UART/I2C/SPI</h4>
+<h3 id="orgca19f93">Comparison between UART/I2C/SPI</h3>
+<table>
 
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">UART</td>
+<td class="org-left">I2C</td>
+<td class="org-left">SPI</td>
+</tr>
+
+<tr>
+<td class="org-left">Single Slave</td>
+<td class="org-left">Multiple Slaves</td>
+<td class="org-left">Multiple Salves</td>
+</tr>
+
+<tr>
+<td class="org-left">Full Duplex</td>
+<td class="org-left">Half Duplex</td>
+<td class="org-left">Full Duplex</td>
+</tr>
+
+<tr>
+<td class="org-left">Tx, Rx</td>
+<td class="org-left">SDA, SCL</td>
+<td class="org-left">SCLK, MOSI, MISO, SS(mutilple)</td>
+</tr>
+
+<tr>
+<td class="org-left">Upto 115.2k</td>
+<td class="org-left">3.4 Mbsp</td>
+<td class="org-left">Typical 50 Mbps</td>
+</tr>
+</tbody>
+</table>
 
 <div class="slide-footer"><br></div>
 </section>
@@ -1583,7 +1699,7 @@ TODO: time
 <li>Parallel
 <ul>
 <li>Infiband</li>
-<li>Ethernet</li>
+<li>Etherne (10M/100M/1G/10G)</li>
 <li>Camera Interface</li>
 <li>USB 3.x</li>
 <li>&#x2026;</li>
