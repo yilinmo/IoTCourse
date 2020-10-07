@@ -150,7 +150,6 @@
   - electric dipoles at the molecular level 
   - high voltage poling to macroscopically align dipoles
   - “electrets” made by poling various waxy mixtures
-
     {{{revealimg("figures/piezo.meta","Piezoelectricity","50vh",nil,'none)}}}
 
 #+REVEAL: split
