@@ -1512,11 +1512,9 @@ MX based on blocking.
 *** Single Core
     :PROPERTIES:
     :CUSTOM_ID: pi-single-core
-    :reveal_extra_attr: data-audio-src="./audio/7-pi-spinning.ogg"
     :END:
     {{{revealimg("./figures/7-PI-spin-1.meta",nil,"60vh",nil,t)}}}
 
-    See [[#pi-spinlocks][previous slide]] or notes for explanations
     #+begin_notes
 Green thread T0 executes on the single CPU core where is enters a CS,
 holding a lock, until the red thread T1 with higher priority arrives.
