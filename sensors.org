@@ -558,9 +558,133 @@ TODO: CIE xy
 * Sensor to Endpoints Communication
   
 ** Serial Communication
-*** UART
-*** I2C
-*** SPI
+
+*** Motivation
+- Connect different systems together
+  - Two embedded systems
+  - A PC and an embedded system
+- Connect different chips together in the same embedded system
+  - MCU to peripheral (sensors/actuators)
+  - MCU to MCU
+- Without using a lot of I/O lines
+  - I/O lines require I/O pads which cost $$$ and size
+  - I/O lines require PCB area which costs $$$ and size
+- Often at relatively low data rates
+- But sometimes at higher data rates  
+
+*** Design Consideration
+
+- Number of wires required?
+- Asynchronous or synchronous?
+- How fast can it transfer data?
+- Can it support more than two endpoints?
+- Can it support more than one master (i.e. txn initiator)?
+
+** UART
+- Universal Asynchronous Receiver/Transmitter
+- Hardware that translates between parallel and serial forms
+- Commonly used in conjunction with communication standards such as EIA, RS-232, RS-422 or RS-485
+- The universal designation indicates that the data format and transmission speeds are configurable and that the actual electric signaling levels and methods (such as differential signaling etc.) typically are handled by a special driver circuit external to the UART.
+ 
+*** UART Protocol 
+- Each character is sent as 
+  - a logic low start bit
+  - a configurable number of data bits (usually 7 or 8, sometimes 5)
+  - an optional parity bit
+  - one or more logic high stop bits
+  - with a particular bit timing (“baud”)
+TODO: time
+
+Asynchronous means that data is transferred without support from an external clock signal.
+
+The asynchronous serial protocol has a number of built-in rules - mechanisms that help ensure robust and error-free data transfers. These mechanisms, which we get for eschewing the external clock signal, are:
+
+    Data bits,
+    Synchronization bits,
+    Parity bits,
+    and Baud rate.
+
+Through the variety of these signaling mechanisms, you'll find that there's no one way to send data serially. The protocol is highly configurable. The critical part is making sure that both devices on a serial bus are configured to use the exact same protocols.
+
+The baud rate specifies how fast data is sent over a serial line. It's usually expressed in units of bits-per-second (bps). If you invert the baud rate, you can find out just how long it takes to transmit a single bit. This value determines how long the transmitter holds a serial line high/low or at what period the receiving device samples its line.
+
+Baud rates can be just about any value within reason. The only requirement is that both devices operate at the same rate. One of the more common baud rates, especially for simple stuff where speed isn't critical, is 9600 bps. Other "standard" baud are 1200, 2400, 4800, 19200, 38400, 57600, and 115200.
+
+The higher a baud rate goes, the faster data is sent/received, but there are limits to how fast data can be transferred. You usually won't see speeds exceeding 115200 - that's fast for most microcontrollers. Get too high, and you'll begin to see errors on the receiving end, as clocks and sampling periods just can't keep up.
+
+** SPI
+   
+** I2C
+- Feature 3 wire
+  - GND 
+  - SCL(clock) 
+  - SDA(data) 
+- All slaves share the same bus wire 
+- Speed 
+  - Standard: 100 Kbps
+  - Fast-mode: 400 Kbps
+  - High-speed mode: 3.4 Mbsp
+
+*** Master/Slave
+
+#+BEGIN_leftcol
+- Master is the initiator of data Tx/Rx
+- Master drive the SCL
+- Slave passively receive command and execute command sent by master 
+#+END_leftcol
+#+BEGIN_rightcol
+  {{{revealimg("figures/i2c.meta","I2C Master and Multiple Slaves","50vh",nil,'none)}}}
+#+END_rightcol
+
+*** Example: APDS9960/Power over Ethernet HAT
+    
+#+BEGIN_leftcol
+  {{{revealimg("figures/apds9960.meta","APDS9960","50vh",nil,'none)}}}
+   
+#+BEGIN_SRC python :exports code
+class adafruit_apds9960.apds9960.APDS9960(i2c, *, interrupt_pin=None, address=57, integration_time=1, gain=1, rotation=0)
+#+END_SRC
+
+#+END_leftcol
+#+BEGIN_rightcol
+  {{{revealimg("figures/poe.meta","PoE HAT","50vh",nil,'none)}}}
+#+END_rightcol
+
+*** Master Write operation 
+1. Master generate specific start signal to inform all devices 
+2. Master put target device address to the I2C bus, ７-bit address + 1-bit read / *write* flag
+3. Target device (device with matched address) sends 1bit ACK
+4. Master see ACK on SDA, continue transmitting data on SDA Line 
+5. Master release SDA after transmitting each byte, waiting for ACK from the target device 
+6. Device sends ACK indicating that data received correctly 
+7. Master continue sending data until end of data 
+8. Master send specific data to inform end of transmission 
+
+*** Master Write operation 
+    
+  {{{revealimg("figures/i2cwrite.meta","Master Write","50vh",nil,'none)}}}
+
+*** Master read operation
+
+1. Master generate specific start signal to inform all devices
+2. Master put target device address to the I2C bus, ７-bit address + 1-bit *read* / write flag
+3. Master release SDA waiting for target device response. 
+4. Target device (device with matched address) sends ACK 
+5. Master receive data when target response. 
+6. Target send data via SDA, After sending each byte, slave release SDA, waiting for master response. 
+7. Master sends ACK or NAK to response to slave 
+
+*** Master read operation
+  {{{revealimg("figures/i2cread.meta","Master Read","50vh",nil,'none)}}}
+
+    
+** Comparison between UART/I2C/SPI
+      | UART                  | I2C            | SPI                            |
+      | Single Slave          | Multiple Slave | Multiple Salve                 |
+      | Full Duplex           | Half Duplex    | Full Duplex                    |
+      | Tx, Rx                | SDA, SCL       | SCLK, MOSI, MISO, SS(mutilple) |
+      | Baud rate upto 115.2k  | 3.4 Mbsp       |                                |
+
 ** Other Communication Method
    
 - Parallel
@@ -574,7 +698,7 @@ TODO: CIE xy
  
 * Advanced sensors 
   
-   
+  
 ** Time-of-flight imaging
   
 - Conventional imaging: Measure all photons together regardless of time of travel.
