@@ -448,6 +448,16 @@ converts electrons to voltage using per-pixel readout circuitry
 #+END_rightcol
 
 *** CCD vs CMOS
+
+
+   #+ATTR_HTML: :controls controls :width 1280 :height 720
+   #+BEGIN_video
+   #+HTML: <source src="./videos/ccd_vs_cmos.mp4" type="video/mp4">
+   Your browser does not support the video tag.
+   #+END_video
+ 
+
+*** CCD vs CMOS
 - Modern CMOS sensors have optical performance comparable to CCD sensors.
 - Most modern commercial and industrial cameras use CMOS sensors.
 
@@ -469,14 +479,14 @@ look-up table (LUT):
 - corrects defective pixels.
 
 ** Color Primer
-
-TODO: dress
    
+  {{{revealimg("figures/thedress.meta","Is the dress Black/Blue or While/Gold?","50vh",nil,'none)}}}
+  
 Color is complicated!
 
 *** Color is an artifact of human perception
   
-TODO: electromagnetic spectrum
+  {{{revealimg("figures/spectrum.meta",t,"50vh")}}}
 - “Color” is not an objective physical property of light (electromagnetic radiation).
 - Instead, light is characterized by its wavelength
 - What we call “color” is how we subjectively perceive a very small range of these wavelengths
@@ -484,7 +494,8 @@ TODO: electromagnetic spectrum
 *** Spectral Power Distribution
 - Most types of light “contain” more than one wavelengths.
 - We can describe light based on the distribution of power over different wavelengths.
-TODO: light source SPD
+  {{{revealimg("figures/spd.meta","Spectral Power Distribution of Multiple Light Sources","50vh",nil,'none)}}}
+
 *** Spectral Sensitivity Function (SSF)
 - Any light sensor (digital or not) has different sensitivity to different wavelengths.
 - This is described by the sensor’s spectral sensitivity function
@@ -500,21 +511,28 @@ TODO: light source SPD
 - "short": \(S = \int_\lambda \Phi(\lambda)S(\lambda)d\lambda\)
 - "medium": \(M = \int_\lambda \Phi(\lambda)M(\lambda)d\lambda\)
 - "long": \(L = \int_\lambda \Phi(\lambda)L(\lambda)d\lambda\)
-TODO: pic 
 
-*** Color filter arrays (CFA)
+*** Spectral Sensitivity Function of Human Eye
+    
+  {{{revealimg("figures/humanssf.meta",t,"50vh")}}}
+    
+
+*** Color Filter Arrays 
 - To measure color with a digital sensor, mimic cone cells of human vision system.
 - “Cones” correspond to pixels that are covered by different color filters, each with its own spectral sensitivity function
-TODO: pic
+
+  {{{revealimg("figures/bayer.meta",t,"50vh")}}}
+  
+*** Many different spectral sensitivity functions
+Each sensor has its more or less unique, and most of the time secret, SSF.
+- Makes it very difficult to correctly reproduce the color of sensor measurements.
+
+  {{{revealimg("figures/ssf.meta","Spectral Sensitivity Function of Different Camera Sensor","50vh",nil,'none)}}}
 
 *** Many different spectral sensitivity functions
-Each camera has its more or less unique, and most of the time secret, SSF.
-- Makes it very difficult to correctly reproduce the color of sensor measurements.
-- We will see more about this in the color lecture.
+  {{{revealimg("figures/cameracomparison.meta","Different Camera Sensor Produces Different Colors","50vh",nil,'none)}}}
 
-TODO: SSF comparison
-
-*** The retinal color space
+*** The Retinal Color Space
 
 #+BEGIN_SRC python :eval never-export :export none
   from colormath.color_objects import SepctralColor, XYZColor, RGBColor
@@ -530,18 +548,35 @@ TODO: SSF comparison
 
 #+END_SRC
 
-
+*** Chromaticity
+  {{{revealimg("figures/cie.meta",t,"50vh")}}}
+- Perspective projection of 3D retinal color space to two dimensions.
+- The edge corresponds to the color of monochromatic light.
+ 
 *** Metamers
+    
+#+BEGIN_leftcol
 - Distinct mixed beams can produce the same retinal color
 - These beams are called metamers
 - There is an infinity of metamers
-TODO: illuminant metamerism
+#+END_leftcol
+#+BEGIN_rightcol
+  {{{revealimg("figures/metamer.meta",t,"70vh")}}}
+#+END_rightcol
 
-*** Chromaticity
-TODO: CIE xy
+*** Color Gamuts
+  {{{revealimg("figures/colorgamut.meta",t,"50vh")}}}
+- Why would a color space not be able to reproduce all of the chromaticity space?
+- Many colors require negative weights to be reproduced, which are not realizable.
 
-*** Color gamuts
+*** Fun Fact: Impossible Colors
 
+   #+ATTR_HTML: :controls controls :width 1280 :height 720
+   #+BEGIN_video
+   #+HTML: <source src="./videos/impossiblecolors.mp4" type="video/mp4">
+   Your browser does not support the video tag.
+   #+END_video
+ 
 ** Depth Camera
 *** The camera as a coordinate transformation
 - A camera is a mapping from the 3D world to a 2D image
@@ -552,8 +587,6 @@ TODO: CIE xy
     
 *** Triangulation
     
-#+BEGIN_COMMENT
-
 * Sensor to Endpoints Communication
   
 ** Serial Communication
@@ -703,7 +736,7 @@ class adafruit_apds9960.apds9960.APDS9960(i2c, *, interrupt_pin=None, address=57
       | Single Slave | Multiple Slaves | Multiple Salves                |
       | Full Duplex  | Half Duplex     | Full Duplex                    |
       | Tx, Rx       | SDA, SCL        | SCLK, MOSI, MISO, SS(mutilple) |
-      | Upto 115.2k  | 3.4 Mbsp        | Typical 50 Mbps                |
+      | Up to 115.2k | 3.4 Mbsp        | ~ 50 Mbps               |
 
 ** Other Communication Method
    
@@ -719,19 +752,14 @@ class adafruit_apds9960.apds9960.APDS9960(i2c, *, interrupt_pin=None, address=57
 * Advanced sensors 
   
   
-** Time-of-flight imaging
-  
-- Conventional imaging: Measure all photons together regardless of time of travel.
-- Time-of-flight imaging: Measure photons separately based on time of travel.
-
-*** Time-of-flight imaging in nature
-    
 ** Ultrasonic
    
 ** Optical Microcavity
 
 * Energy management
 
+** Power Management 
+   
 *** Power Budget
 - Active sensor power
 - Frequency of data collection
@@ -742,8 +770,8 @@ class adafruit_apds9960.apds9960.APDS9960(i2c, *, interrupt_pin=None, address=57
 - Energy loss from leakage or power supply inefficiency
 - Power reserve for actuators and motors
  
-*** Example: TI SensorTag C2650
-For example, the TI SensorTag C2650 has the following power characteristics:
+*** Example: TI SensorTag CC2650
+For example, the TI SensorTag CC2650 has the following power characteristics:
 - Standby mode: 0.24 mA
 - Running with all sensors disabled: 0.33 mA
 - Sensors enabled
@@ -751,7 +779,8 @@ For example, the TI SensorTag C2650 has the following power characteristics:
   - Light sensor: 0.56 mA
   - Accelerometer and gyros: 4.68 mA
   - Barometric sensor: 0.5 mA
-- Bluetooth LE: 
+- Bluetooth LE
+*** Example: TI SensorTag CC2650
 | State                               | Time [µs] | Current [mA] | Time * Current |
 | Wake Up & Pre-processing            |   1283.89 |         3.10 |        3981.68 |
 | Preparation for Recieve             |    394.22 |         3.58 |        1409.55 |
@@ -763,19 +792,33 @@ For example, the TI SensorTag C2650 has the following power characteristics:
 | Total time * current [µs*mA]        |           |              |        11905.2 |
 | Average Current draw [µA]           |           |              |         3736.1 |
 
-
 The TI SensorTag uses a standard CR2032 coin cell battery rated at 240 mAh. Therefore, the maximum life is expected to be about 44 hours.
 
 *** power management practices
-Many power management practices are employed, such as
+Many power management practices can employed, such as
 - New material: clock gating components not being used in silicon
 - reducing the clock rates of processors or microcontrollers
 - adjusting the sensing frequency and broadcast frequency
 - back-off strategies to reduce communication strength
 - and various levels of sleep modes.
- These techniques are widely used in the computing business as a general practice.
  
 ** Energy harvest
+  
+*** Solar Harvesting 
+*** Piezo-Mechanical Harvesting
    
+*** RF Energy Harvesting 
+*** Thermal Harvesting
+    
 ** Energy storage
-#+END_COMMENT’
+
+*** Design Considerations
+- Volume allowance for a power subsystem. Will a battery even fit?
+- The battery energy capacity.
+- Accessibility. If the unit is embedded in concrete, limited forms of energy regeneration can be used, and the difficulty of replacing batteries can be costly.
+- Weight. Is the unit intended to fly as a drone, or float on water?
+- How often will the battery be recharged?
+- Is the renewable form of energy constantly available, or intermittent, as in solar?
+- The battery power characteristics. How the battery's energy will vary over time as it's discharged.
+- Is the sensor in a thermally constrained environment that can affect battery life and reliability?
+- Does the battery have a profile that guarantees minimum current availability?
