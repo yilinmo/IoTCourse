@@ -2,7 +2,7 @@
 
 #+TITLE: Endpoints of Intelligent Networked System
 #+AUTHOR: Mo, Yilin
-#+DATE: Sept 2020 
+#+DATE: Oct 2020 
 
 #+KEYWORDS: Endpoints, Sensors, Energy Management
 #+DESCRIPTION: endpoints for iot course
@@ -14,11 +14,15 @@
 - What is a transducer/sensor/actuator?
 - What is a passive/active sensor?
 - What types electrical phenomena can be leveraged for sensing purpose?
+- How to does camera work?
+- How to connect sensors to endpoints?
+- What are possible energy management options?
 ** Learning Objectives
-   
-   - Explain notion of transducer/sensors/actuator
-     - Explain self-generating/modulating sensors
-   - Explain the conversion of pressure/thermal energy/light into electrical phenomenon.
+- Explain notion of transducer/sensors/actuator
+  - Explain self-generating/modulating sensors
+- Explain the conversion of pressure/thermal energy/light into electrical phenomenon.
+- Explain the difference between UART, I2C and SPI.
+- Explain various energy management options.
 ** Table of Contents
    :PROPERTIES:
    :UNNUMBERED: notoc
@@ -449,22 +453,21 @@ converts electrons to voltage using per-pixel readout circuitry
 
 *** CCD vs CMOS
 
-
    #+ATTR_HTML: :controls controls :width 1280 :height 720
    #+BEGIN_video
    #+HTML: <source src="./videos/ccd_vs_cmos.mp4" type="video/mp4">
    Your browser does not support the video tag.
    #+END_video
- 
 
-*** CCD vs CMOS
+*** CMOS sensor (very) simplified layout
 - Modern CMOS sensors have optical performance comparable to CCD sensors.
 - Most modern commercial and industrial cameras use CMOS sensors.
 
-*** CMOS sensor (very) simplified layout
+  {{{revealimg("figures/cmos.meta",t,"50vh")}}}
     
 *** Analog front end
     
+  {{{revealimg("figures/analogfront.meta","Block Diagram of a Typical Imaging Application","20vh",nil,'none)}}}
 analog amplifier (gain):
 - gets voltage in range needed by A/D converter.
 - accommodates ISO settings.
@@ -579,14 +582,73 @@ Each sensor has its more or less unique, and most of the time secret, SSF.
  
 ** Depth Camera
 *** The camera as a coordinate transformation
-- A camera is a mapping from the 3D world to a 2D image
+- A camera is a perspective projection from the 3D world to a 2D image
+\[x = PX\]
+- \(x\): 2D image point
+- \(X\): 3D world point
+- \(P\): camera matrix
 
-*** Camera matrix
+  {{{revealimg("figures/cameramatrix.meta","Camera as a Projection","30vh",nil,'none)}}}
+*** Perspective Projection
 
-*** Ames Room 
+#+BEGIN_leftcol
+  {{{revealimg("figures/perspective1.meta","","50vh",nil,'none)}}}
+#+END_leftcol
+#+BEGIN_rightcol
+  {{{revealimg("figures/perspective2.meta","","50vh",nil,'none)}}}
+#+END_rightcol
+*** Perspective Projection(Ames Room)
     
-*** Triangulation
+  {{{revealimg("figures/perspective3.meta","Ames Room","60vh",nil,'none)}}}
+  
+*** Triangulation (No noise)
     
+  {{{revealimg("figures/triangulation.meta",t,"60vh")}}}
+  
+*** Triangulation 
+- In practice, the image points \(y_1\) and \(y_2\) cannot be perfectly measured, due to
+  - Geometric distortion
+  - Diffraction
+  - Quantization
+  - Localization error (feature extraction/matching)
+- The corresponding projection lines (blue) do not, in general, intersect in 3D space and may also not intersect with point \(x\).
+- Solution: "minimize" the error
+
+*** Triangulation 
+
+  {{{revealimg("figures/triangulation2.meta",t,"60vh")}}}
+  
+*** Feature Matching 
+
+#+BEGIN_leftcol
+  {{{revealimg("figures/twoview1.meta","","50vh",nil,'none)}}}
+#+END_leftcol
+#+BEGIN_rightcol
+  {{{revealimg("figures/twoview2.meta","","50vh",nil,'none)}}}
+#+END_rightcol
+
+*** Optical Time-of-Flight 3D camera    
+   
+  {{{revealimg("figures/tofcamera.meta",t,"30vh")}}}
+The distance can be computed as
+\[ d = \frac{1}{2} \frac{q_1}{q_1+q_2} ct \] 
+- \(c\) is the speed of light
+- \(t\) is the length of the pulse
+- \(q_1\) is the accumulated charge in the pixel when light is emitted 
+- and \(q_2\) is the accumulated charge when it is not.
+
+*** Applications
+#+BEGIN_leftcol
+  {{{revealimg("figures/kinect.meta",t,"60vh")}}}
+#+END_leftcol
+#+BEGIN_rightcol
+   #+ATTR_HTML: :controls controls :width 480 :height 270
+   #+BEGIN_video
+   #+HTML: <source src="./videos/lidar.webm" type="video/webm">
+   Your browser does not support the video tag.
+   #+END_video
+#+END_rightcol
+
 * Sensor to Endpoints Communication
   
 ** Serial Communication
@@ -604,45 +666,41 @@ Each sensor has its more or less unique, and most of the time secret, SSF.
 - Often at relatively low data rates
 - But sometimes at higher data rates  
 
+*** Serial vs Parallel
+    
+  {{{revealimg("figures/svsp.meta",t,"60vh")}}}
+
 *** Design Consideration
 
 - Number of wires required?
 - Asynchronous or synchronous?
 - How fast can it transfer data?
 - Can it support more than two endpoints?
-- Can it support more than one master (i.e. txn initiator)?
 
 ** UART
-- Universal Asynchronous Receiver/Transmitter
-- Hardware that translates between parallel and serial forms
+- Universal Asynchronous Receiver/Transmitter{{{reveallicense("./figures/uart.meta","40vh",nil,'none)}}}
+- The data format and transmission speeds are configurable
+- The actual electric signaling levels and methods (such as differential signaling etc.) typically are handled by a special driver circuit 
 - Commonly used in conjunction with communication standards such as EIA, RS-232, RS-422 or RS-485
-- The universal designation indicates that the data format and transmission speeds are configurable and that the actual electric signaling levels and methods (such as differential signaling etc.) typically are handled by a special driver circuit external to the UART.
  
 *** UART Protocol 
+    
+  {{{revealimg("figures/uartframe.meta",t,"30vh")}}}
 - Each character is sent as 
   - a logic low start bit
   - a configurable number of data bits (usually 7 or 8, sometimes 5)
   - an optional parity bit
   - one or more logic high stop bits
   - with a particular bit timing (“baud”)
-TODO: time
+  
+*** UART Protocol
 
-Asynchronous means that data is transferred without support from an external clock signal.
-
-The asynchronous serial protocol has a number of built-in rules - mechanisms that help ensure robust and error-free data transfers. These mechanisms, which we get for eschewing the external clock signal, are:
-
-    Data bits,
-    Synchronization bits,
-    Parity bits,
-    and Baud rate.
-
-Through the variety of these signaling mechanisms, you'll find that there's no one way to send data serially. The protocol is highly configurable. The critical part is making sure that both devices on a serial bus are configured to use the exact same protocols.
-
-The baud rate specifies how fast data is sent over a serial line. It's usually expressed in units of bits-per-second (bps). If you invert the baud rate, you can find out just how long it takes to transmit a single bit. This value determines how long the transmitter holds a serial line high/low or at what period the receiving device samples its line.
-
-Baud rates can be just about any value within reason. The only requirement is that both devices operate at the same rate. One of the more common baud rates, especially for simple stuff where speed isn't critical, is 9600 bps. Other "standard" baud are 1200, 2400, 4800, 19200, 38400, 57600, and 115200.
-
-The higher a baud rate goes, the faster data is sent/received, but there are limits to how fast data can be transferred. You usually won't see speeds exceeding 115200 - that's fast for most microcontrollers. Get too high, and you'll begin to see errors on the receiving end, as clocks and sampling periods just can't keep up.
+- Asynchronous means that data is transferred without support from an external clock signal.
+- The baud rate (in bit per second) specifies how fast data is sent over a serial line.
+- The inverse of baud rate equals to how long it takes to transmit a single bit.
+  - or at what period the receiving device should sample its line.
+- Both sending and receiving devices need to agree upon the same rate. 
+- Common baud rates is 9600 bps. Other "standard" baud are 1200, 2400, 4800, 19200, 38400, 57600, and 115200.
 
 ** I2C
 - Feature 3 wire
@@ -749,14 +807,7 @@ class adafruit_apds9960.apds9960.APDS9960(i2c, *, interrupt_pin=None, address=57
 - Wireless
   - Will be covered in the next lecture
  
-* Advanced sensors 
-  
-  
-** Ultrasonic
-   
-** Optical Microcavity
-
-* Energy management
+* Energy Sources and Power Management
 
 ** Power Management 
    
@@ -771,7 +822,29 @@ class adafruit_apds9960.apds9960.APDS9960(i2c, *, interrupt_pin=None, address=57
 - Power reserve for actuators and motors
  
 *** Example: TI SensorTag CC2650
-For example, the TI SensorTag CC2650 has the following power characteristics:
+
+#+BEGIN_leftcol
+    {{{revealimg("figures/cc2650.meta","Texas Instruments CC2650 SensorTag","60vh",nil,'none)}}}
+#+END_leftcol
+#+BEGIN_rightcol
+- Sensors
+  - Ambient light sensor 
+  - Infrared temperature sensor 
+  - Ambient temperature sensor 
+  - Accelerometer 
+  - Gyroscope 
+  - Magnetometer 
+  - Altimeter/Pressure sensor 
+  - Humidity sensor 
+  - MEMS microphone 
+  - Magnetic sensor 
+- Communications
+  - Bluetooth Low Energy 
+  - IEEE 802.15.4
+#+END_rightcol
+
+*** Example: TI SensorTag CC2650
+The TI SensorTag CC2650 has the following power characteristics:
 - Standby mode: 0.24 mA
 - Running with all sensors disabled: 0.33 mA
 - Sensors enabled
@@ -794,31 +867,163 @@ For example, the TI SensorTag CC2650 has the following power characteristics:
 
 The TI SensorTag uses a standard CR2032 coin cell battery rated at 240 mAh. Therefore, the maximum life is expected to be about 44 hours.
 
-*** power management practices
+*** Power Management Practices
 Many power management practices can employed, such as
 - New material: clock gating components not being used in silicon
 - reducing the clock rates of processors or microcontrollers
 - adjusting the sensing frequency and broadcast frequency
 - back-off strategies to reduce communication strength
-- and various levels of sleep modes.
+- and various levels of sleep modes
  
-** Energy harvest
-  
-*** Solar Harvesting 
-*** Piezo-Mechanical Harvesting
-   
-*** RF Energy Harvesting 
-*** Thermal Harvesting
-    
 ** Energy storage
 
+*** Ragone Plot
+    {{{revealimg("figures/ragone.meta","Ragone plot of various energy storage/propulsion devices","60vh",nil,'none)}}}
+   
+- Batteries like Li-ion have higher energy density 
+- Capacitors produce very high-power densities
+ 
+*** Batteries
+- Lithium-ion (Li-ion) battery is the standard form of power in mobile devices due to its energy density
+- Batteries develop memories with many charge-discharge cycles.
+  - For example, 30% capacity loss after 1,000 cycles
+  - Loss will increase in a high-temperature environment
+- Another factor in battery life is self-discharge.
+  - The rate of loss depends on chemistry and temperature.
+  - Typically, a Li-ion can last for 10 years (at ~2% loss per month)  
+
+*** Discharge Profile
+    {{{revealimg("figures/dischargeprofile.meta","Example of relative discharge rates for various batteries","60vh",nil,'none)}}}
+- Li-ion provides a nearly constant voltage over its life, but has a precipitous drop towards the end of its storage capacity
+- Difficult to predict the remaining power
+
 *** Design Considerations
-- Volume allowance for a power subsystem. Will a battery even fit?
 - The battery energy capacity.
-- Accessibility. If the unit is embedded in concrete, limited forms of energy regeneration can be used, and the difficulty of replacing batteries can be costly.
 - Weight. Is the unit intended to fly as a drone, or float on water?
-- How often will the battery be recharged?
-- Is the renewable form of energy constantly available, or intermittent, as in solar?
 - The battery power characteristics. How the battery's energy will vary over time as it's discharged.
 - Is the sensor in a thermally constrained environment that can affect battery life and reliability?
-- Does the battery have a profile that guarantees minimum current availability?
+- How often will the battery be recharged?
+- Is the renewable form of energy constantly available, or intermittent, as in solar?
+- Geometry/Accessibility/...
+
+*** Supercapacitors
+- Supercapacitors (or supercaps) store energy at significantly higher volumes than typical capacitors
+  - A typical capacitor: 0.01 Watt-hours/kg.
+  - A supercap: 1 to 10 Watt-hours/kg
+  - A battery: 200 Watt-hours/kg.
+- can charge to their full potential in seconds
+- cannot be overcharged
+  - Li-ion can be overcharged and can result in serious safety concerns
+- Easy to predict remaining power
+  - need DC-DC converter to keep the voltage constant
+- Cons:
+  - leakage current 
+  - the cost (need exotic material such as graphene)
+*** Comparison
+|                         | Li-ion Battery                 | Supercapacitor  |
+| Energy density          | 200 Wh/hg                      | 8-10Wh/kg       |
+| Charge-discharge cycles | 100-1,000 after capacity drops | Nearly infinity |
+| Charge-discharge time   | hours                          | seconds         |
+| Discharge profile | constant                       | linear decay    |
+| Form factor             | small                          | large           |
+| Cost($/kWh)             | Low(250-100)                   | High(10,000)   |
+Hybrid solution (Electrical vehicle): 
+- use supercap for regenerative braking and acceleration
+- use battery for cruising
+** Energy harvest
+   
+- Any system that represents a change in state can convert its form of energy into electrical energy.
+  - hot to cold
+  - radio signals
+  - light
+- Can be used as the sole form of energy, or to augment or extend the life of a battery
+- In general, have a *low energy potential* and *low conversion efficiency*
+- Systems must be efficient in capturing energy and storing power
+  - E.g., sensors embedded in a sidewalk (harvesting mechanical energy)
+  - Need to compensate the time period in which there is not enough foot traffic
+- There are situations where there is a large supply of untapped waste energy, e.g., in industrial settings
+
+*** Energy Harvesting Sweet Spots
+    {{{revealimg("figures/energyharvesting.meta","Typical Energy Consumption for Various Devices","60vh",nil,'none)}}}
+    
+*** Solar Harvesting 
+- Energy from natural (or artificial) light can be captured and used as an energy source.
+- Solar resources varies seasonally and geographically.
+- Solar PV are not 100% efficient.
+  - Efficiency lies between 15% to 20%  
+  - State of the art is 23%
+- A 25 square cm solar array could produce 300 mW at peak power
+- Also need to consider incidence of light.
+*** Solar Harvesting 
+    {{{revealimg("./figures/chinaghi.meta",t,"70vh")}}}
+
+*** Piezo-Mechanical Harvesting
+Three main ways to convert mechanical energy into electricity:   
+- Piezoelectric devices: they use piezoelectric materials that present the ability to generate charges when they are under stress/strain.
+- Electromagnetic devices: they are based on electromagnetic induction and ruled by Faraday’s law. An electromotive force is generated from a relative motion between a coil and a magnet.
+- Electrostatic devices: they use a variable capacitor structure to generate charges from a relative motion between two plates.
+
+   {{{revealgrid(2, "figures/mechharvest.grid", 20 , 2, 1, "\"ga1 ga2\" ")}}}
+
+*** Electrostatic Device: Charge-constrained cycle
+
+   {{{revealgrid(3, "figures/electrostatic.grid", 20 , 3, 1, "\"ga1 ga2 ga3\" ")}}}
+   
+\[E_q = \frac{1}{2} Q_{cst}^2 \left(\frac{1}{C_{min}} - \frac{1}{C_{max}}\right).\]
+
+*** RF Energy Harvesting 
+- Near-field application: RFID
+- Far-field applications, harvest energy from broadcast transmissions
+  - Broadcast transmissions are ubiquitous
+  - However, capturing energy from RF is difficult due to its low energy density
+  - Also need to design appropriate antenna to capture a frequency band   
+    
+*** Thermal Harvesting
+    
+- Thermal energy can be converted into an electric current for any device exhibiting heat flow 
+  - Thermoelectric: Direct conversion of thermal energy into electrical energy through the Seebeck effect.
+  - Thermionic: Also known as thermotunneling. Electrons are ejected from an electrode that is heated, and into an electrode that is cool.
+
+*** Thermoelectric Effect
+   
+    {{{revealimg("./figures/thermoelectric.meta",t,"50vh")}}}
+- A thermoelectric generator (TEG), could produce voltage simply based on the temperature difference of a human, and outside temperature
+- One substantial problem with TEG is the poor efficiency of the energy conversion (less than 10%)
+
+* Conclusion
+** Sensor
+   
+- Sensor: a transducer that converts a physical phenomenon into an electrical signal.
+- Action of environment on sensor changes an electrical parameter that we can measure
+    - resistance changes
+    - capacitance changes 
+    - inductance changes
+- Action of environment on a sensor causes it to generate an electrical signal directly
+    - voltage source 
+    - current or charge source
+
+** Image Sensing
+- Photoelectric effect: Interaction of light with matter frees electrons or promotes them from valence to conduction band.
+- Light is characterized by its wavelength
+- “color” is how we subjectively perceive a very small range of these wavelengths
+- A camera can also be seen a perspective projection from the 3D world to a 2D image
+- One could reconstruct the 3D object by triangulation from multiple cameras
+- Time-of-flight can also be leveraged to gain depth information
+** Serial Communication
+  
+
+      | UART         | I2C             | SPI                            |
+      | Single Slave | Multiple Slaves | Multiple Salves                |
+      | Full Duplex  | Half Duplex     | Full Duplex                    |
+      | Tx, Rx       | SDA, SCL        | SCLK, MOSI, MISO, SS(mutilple) |
+      | Up to 115.2k | 3.4 Mbsp        | ~ 50 Mbps                      |
+
+** Energy Management
+- Energy management is important for wireless endpoints
+- Energy storage: battery vs supercapacitor vs hybrid solution
+- Energy harvesting:
+  - Solar
+  - Mechanical
+  - Radio 
+  - Thermal
+- Power management: do *NOT* waste energy

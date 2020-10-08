@@ -1,0 +1,77 @@
+#+INCLUDE: "preamble.org"
+
+#+TITLE: Physical Layer 
+#+AUTHOR: Mo, Yilin
+#+DATE: Oct 2020 
+
+#+KEYWORDS: physical layer
+#+DESCRIPTION: physical layer for iot course
+
+* Overview
+
+** OSI Physical Layer
+- Concerned with the transmission of unstructured
+bit streams over the physical medium
+- Deals with accessing the physical medium
+  - Mechanical characteristics
+  - Electrical characteristics
+  - Functional characteristics
+  - Procedural characteristics
+
+* Modulation and Demodulation
+ 
+** Frequency Band
+  
+* AWGN Channels
+** Impairments
+- Free space loss
+- Noise
+- Atmospheric absorption
+- Fading
+  - Multi-path
+  - Small-scale fading
+
+** Free Space Loss
+   
+** Noise
+- Thermal Noise
+  - Noise seen in switching circuits due to electrons
+  - Function of temperature
+   \[N = kTB\]
+  - \(N\): Noise, \(k\): Boltzman constant, \(T\): Temperature, \(B\): Bandwidth
+- Inter-modulation noise
+  - Noise caused by signals at different frequencies on the same medium
+- Crosstalk
+  - coupling between signal paths
+- Impulse Noise
+  - Power spike (e.g. from thunder)
+
+** Fundamental Limit
+
+* Fading Channels and Diversity
+ 
+** Multi-path
+• Multi-path: obstacles reflect signals so that
+multiple copies with varying delays are received
+– Reflection - occurs when signal encounters a surface
+that is large relative to the wavelength of the signal
+– Diffraction - occurs at the edge of an impenetrable
+body that is large compared to wavelength of radio
+wave
+– Scattering – occurs when incoming signal hits an
+object whose size in the order of the wavelength of
+the signal or less
+*** Effects of Multi-path
+– Multiple copies of a signal may arrive at different
+phases
+• If phases add destructively, the signal level relative to noise
+declines, making signal detection more difficult
+– Inter-symbol interference (ISI)
+• One or more delayed copies of a pulse may arrive at the
+same time as the primary pulse for a subsequent bit
+
+ 
+** CDMA
+** OFDM
+ 
+* Physical Layer Protocol

@@ -9,5 +9,5 @@
   grid-template-rows: repeat(1, 1fr);
   grid-gap: 5px;
   align-items: center;
-  grid-template-areas: "ga1 ga2 ga3"; }
+  grid-template-areas: "ga1 ga2 ga3" ; }
 .grid-img img { }
