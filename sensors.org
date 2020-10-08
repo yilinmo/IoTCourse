@@ -1,5 +1,4 @@
 #+INCLUDE: "preamble.org"
-
 #+TITLE: Endpoints of Intelligent Networked System
 #+AUTHOR: Mo, Yilin
 #+DATE: Oct 2020 
@@ -217,7 +216,6 @@ Pros:
 Cons:
 - Low speed
 #+END_rightcol
-
 
 * Basic Sensors
 
@@ -466,20 +464,16 @@ converts electrons to voltage using per-pixel readout circuitry
   {{{revealimg("figures/cmos.meta",t,"50vh")}}}
     
 *** Analog front end
-    
-  {{{revealimg("figures/analogfront.meta","Block Diagram of a Typical Imaging Application","20vh",nil,'none)}}}
-analog amplifier (gain):
-- gets voltage in range needed by A/D converter.
-- accommodates ISO settings.
-- accounts for vignetting.
-
-analog-to-digital converter (ADC):
-- depending on sensor, output has 10-16 bits.
-- most often (?) 12 bits.
-
-look-up table (LUT):
-- corrects non-linearities in sensor’s response function (within proper exposure).
-- corrects defective pixels.
+- Analog amplifier (gain): {{{reveallicense("./figures/analogfront.meta","30vh",nil,'none)}}}
+  - gets voltage in range needed by A/D converter.
+  - accommodates ISO settings.
+  - accounts for vignetting.
+- Analog-to-digital converter (ADC):
+  - depending on sensor, output has 10-16 bits.
+  - most often (?) 12 bits.
+- Look-up table (LUT):
+  - corrects non-linearities in sensor’s response function (within proper exposure).
+  - corrects defective pixels.
 
 ** Color Primer
    
@@ -489,7 +483,7 @@ Color is complicated!
 
 *** Color is an artifact of human perception
   
-  {{{revealimg("figures/spectrum.meta",t,"50vh")}}}
+  {{{revealimg("figures/spectrum.meta",t,"40vh")}}}
 - “Color” is not an objective physical property of light (electromagnetic radiation).
 - Instead, light is characterized by its wavelength
 - What we call “color” is how we subjectively perceive a very small range of these wavelengths
@@ -517,7 +511,7 @@ Color is complicated!
 
 *** Spectral Sensitivity Function of Human Eye
     
-  {{{revealimg("figures/humanssf.meta",t,"50vh")}}}
+  {{{revealimg("figures/humanssf.meta",t,"60vh")}}}
     
 
 *** Color Filter Arrays 
@@ -533,24 +527,20 @@ Each sensor has its more or less unique, and most of the time secret, SSF.
   {{{revealimg("figures/ssf.meta","Spectral Sensitivity Function of Different Camera Sensor","50vh",nil,'none)}}}
 
 *** Many different spectral sensitivity functions
-  {{{revealimg("figures/cameracomparison.meta","Different Camera Sensor Produces Different Colors","50vh",nil,'none)}}}
+  {{{revealimg("figures/cameracomparison.meta","Different Camera Sensor Produces Different Colors","60vh",nil,'none)}}}
 
 *** The Retinal Color Space
 
-#+BEGIN_SRC python :eval never-export :export none
-  from colormath.color_objects import SepctralColor, XYZColor, RGBColor
-  from colormath.color_conversions import convert_color
-
-  colors=[]
-  for i in range(340, 840, 10):
-      s = 'tmp = SpectralColor(spec%dnm=1)' % i
-      exec(s)
-      colors.append(tmp)
-
-  for color in colors:
-
-#+END_SRC
-
+#+HTML: <style>
+#+HTML:   .p_iframe iframe {
+#+HTML:     width:90%;
+#+HTML:     height:576px;
+#+HTML: }
+#+HTML: </style>
+#+HTML: <div class="p_iframe">
+#+HTML: <iframe frameborder="0" seamless='seamless' scrolling=no src="color_lms.html"></iframe>
+#+HTML: </div>
+  
 *** Chromaticity
   {{{revealimg("figures/cie.meta",t,"50vh")}}}
 - Perspective projection of 3D retinal color space to two dimensions.
@@ -568,7 +558,7 @@ Each sensor has its more or less unique, and most of the time secret, SSF.
 #+END_rightcol
 
 *** Color Gamuts
-  {{{revealimg("figures/colorgamut.meta",t,"50vh")}}}
+  {{{revealimg("figures/colorgamut.meta",t,"45vh")}}}
 - Why would a color space not be able to reproduce all of the chromaticity space?
 - Many colors require negative weights to be reproduced, which are not realizable.
 
@@ -630,8 +620,7 @@ Each sensor has its more or less unique, and most of the time secret, SSF.
 *** Optical Time-of-Flight 3D camera    
    
   {{{revealimg("figures/tofcamera.meta",t,"30vh")}}}
-The distance can be computed as
-\[ d = \frac{1}{2} \frac{q_1}{q_1+q_2} ct \] 
+The distance can be computed as \( d = \frac{1}{2} \frac{q_1}{q_1+q_2} ct \) 
 - \(c\) is the speed of light
 - \(t\) is the length of the pulse
 - \(q_1\) is the accumulated charge in the pixel when light is emitted 
