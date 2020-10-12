@@ -20,3 +20,4 @@ fig = go.Figure(data = go.Scatter3d(
     )
 
 fig.write_html("color_lms.html")
+fig.show()
