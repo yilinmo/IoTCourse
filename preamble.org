@@ -13,11 +13,15 @@
 #+HTML_HEAD: <script src="./reveal.js/plugin/chart/Chart.min.js"></script>
 #+HTML_HEAD: <script src="./reveal.js/plugin/chart/plugin.js"></script>
 #+HTML_HEAD: <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
-#+OPTIONS: html5-fancy:t
+
+#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.1.min.js"></script>
+#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.1.min.js"></script>
+#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.1.min.js"></script>
 
 #+HTML_HEAD: <script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
 #+HTML_HEAD: <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
+#+OPTIONS: html5-fancy:t
 
 # Generate bibliography with LaTeX
 #+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
@@ -32,5 +36,3 @@
 
 #+REVEAL_EXTERNAL_PLUGINS: ((spotlight . "{src:'%splugin/spotlight/spotlight.js'}") (wordcloud . "{src: '%splugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } }"))
 #+REVEAL_INIT_SCRIPT: plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {84: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1
-
-
