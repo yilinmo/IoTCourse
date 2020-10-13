@@ -75,6 +75,29 @@
   - QAM (quadrature amplitude modulation): a finite number of at least two phases and at least two amplitudes are used.
 
 *** Rectangle Pulse and Sinc Function
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/test.js"
+  from bokeh.resources import CDN
+  from bokeh.plotting import figure
+  from bokeh.embed import autoload_static
+
+  plot = figure()
+  plot.circle([1,10], [3,4])
+  plot.height_policy = "fit"
+  plot.aspect_ratio = 16/9
+
+  js, tag = autoload_static(plot, CDN, filename)
+  f = open(filename, "w")
+  f.write(js)
+  f.close()
+
+  print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/test.js" id="df7eeb14-5a72-499d-bc43-64d1d6d6dd6c"></script>
+#+end_export
 
 *** Power Spectral Density
     
@@ -125,8 +148,9 @@
 
 *** Thermal Noise
 
+
 - White noise since it contains the same level of power at all frequencies
- \(N = ktB\)
+ \[N = ktB\]
 - \(k\) is the Boltzmann’s constant: \(1.381\times 10^{-21} W/(K\cdot Hz)\),
 - \(T\) is the absolute temperature in Kelvin, and
 - \(B\) is the bandwidth.
@@ -163,7 +187,6 @@
 *** Mobile Object
     
 *** Coherent Time
-
 
 
 * Diversity
