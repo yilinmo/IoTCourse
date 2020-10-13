@@ -75,32 +75,71 @@
   - QAM (quadrature amplitude modulation): a finite number of at least two phases and at least two amplitudes are used.
 
 *** Rectangle Pulse and Sinc Function
-#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/test.js"
-  from bokeh.resources import CDN
-  from bokeh.plotting import figure
-  from bokeh.embed import autoload_static
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/rect.js"
+from bokeh.resources import CDN
+from bokeh.plotting import figure
+from bokeh.embed import autoload_static
+from bokeh.layouts import gridplot
 
-  plot = figure()
-  plot.circle([1,10], [3,4])
-  plot.height_policy = "fit"
-  plot.aspect_ratio = 16/9
+from numpy import linspace, sinc
 
-  js, tag = autoload_static(plot, CDN, filename)
-  f = open(filename, "w")
-  f.write(js)
-  f.close()
+x = linspace(-5,5,200)
+y = [1 if z <= 0.5 and z >= -0.5 else 0 for z in x]
+p1 = figure(title = "Time Domain")
+p1.line(x,y)
 
-  print(tag)
+x = linspace(-20,20,400)  
+y = sinc(x)
+p2 = figure(title = "Frequence Domain")
+p2.line(x,y)
+
+p = gridplot([p1, p2], ncols = 2, plot_width = 600, plot_height = 600)
+
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
 #+END_SRC
 
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/test.js" id="df7eeb14-5a72-499d-bc43-64d1d6d6dd6c"></script>
+<script src="figures/rect.js" id="9dadc6da-6030-4495-8ea9-3458a993e342"></script>
 #+end_export
 
 *** Power Spectral Density
     
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/psd.js"
+from bokeh.resources import CDN
+from bokeh.plotting import figure
+from bokeh.embed import autoload_static
+from bokeh.layouts import gridplot
+
+from numpy import linspace, sinc
+
+x = linspace(-20,20,400)  
+y = sinc(x)
+p = figure(title = "Power Spectral Density")
+p.line(x,y**2)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/psd.js" id="df3dc688-6fc5-4810-8ee3-6f8b2bdf4bbf"></script>
+#+end_export
+
+   
 *** Fourier Transform (Revisit)
     
 \[F(\omega ) = \int_{-\infty}^\infty f(t) \exp(2\pi i  \omega t)dt.\]
@@ -109,10 +148,64 @@
 | Multiplication     | \( f(t)\times g(t)  \)        | \(F(\omega) * G(\omega)\)               |
 | Delay              | \(f(t-\tau)\)                 |  \(\exp(-2\pi i \tau \omega) F(\omega)\) |
 
+*** Fourier Transform
 
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/modulation.js"
+from bokeh.resources import CDN
+from bokeh.plotting import figure, show
+from bokeh.embed import autoload_static
+from bokeh.layouts import gridplot
+
+from numpy import linspace, sinc, cos, pi
+
+x = linspace(-2,2,5)
+y = [1 if z <= 0.5 and z >= -0.5 else 0 for z in x]
+p1 = figure(title = "Time Domain")
+p1.step(x, y, line_width=2, mode="center")
+
+x = linspace(-20,20,400)  
+y = sinc(x)
+p2 = figure(title = "Frequence Domain")
+p2.line(x, y, line_width=2)
+
+x = linspace(-2,2,200)
+y = cos(10*pi*x)
+p3 = figure(title = "Time Domain")
+p3.line(x,y, line_width=2)
+
+x = [-5,5]
+y = [.5, .5]
+p4 = figure(title = "Frequence Domain")
+p4.triangle(x, y, size=20)
+p4.segment(x0 = x, y0 = y, x1 = x, y1 = [0,0], line_width=2)
+
+x = linspace(-2,2,200)
+y = [cos(10*pi*z) if z <= 0.5 and z >= -0.5 else 0 for z in x]
+p5 = figure(title = "Time Domain")
+p5.line(x, y, line_width=2)
+
+x = linspace(-20,20,400)
+y = sinc(x-5) + sinc(x+5)
+p6 = figure(title = "Frequency Domain")
+p6.line(x, y/2, line_width=2)
+
+p = gridplot([p1, p3, p5, p2, p4, p6], ncols = 3, plot_width = 400, plot_height = 300)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/modulation.js" id="835a8023-02d2-4835-a104-f9f0115ecd25"></script>
+#+end_export
 
 ** Amplitude-Shift Keying
-   
 
 ** Frequency-Shift Keying
    
@@ -202,7 +295,7 @@
 ** Chirp Spread Spectrum 
    
 ** CDMA
-
+   
 * Physical Layer Protocol
 ** Bluetooth LE
    
