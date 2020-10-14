@@ -26,7 +26,7 @@ def step_func(x, x0, y0):
 #+END_SRC
 
 #+RESULTS:
-: # Out[2]:
+: # Out[1]:
 
 * Introduction
   
@@ -130,7 +130,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/rect.js" id="e312393f-8d3e-4ac0-b28b-9e8b6451c78c"></script>
+<script src="figures/rect.js" id="cf11430c-d27a-4ade-89e0-793926ad0e4b"></script>
 #+end_export
 
 *** Energy Spectrum of Rectangle Function
@@ -152,7 +152,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/psd.js" id="f35569d6-120b-4ea7-bd26-4831ca39f4ea"></script>
+<script src="figures/psd.js" id="d4485f35-7b00-40e1-9caa-baa9e9de33c6"></script>
 #+end_export
 
 - Most of the energy are located inside the passband of \(\pm 1Hz\).
@@ -222,7 +222,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/modulation.js" id="b8f3411d-a915-441e-b465-119b9c7587d2"></script>
+<script src="figures/modulation.js" id="54c057fa-fc48-4ab5-bd8d-10a3a846fda8"></script>
 #+end_export
 
 *** Demodulation
@@ -281,7 +281,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/demodulation.js" id="08522973-97f2-4eda-b7b3-526a729b6fd3"></script>
+<script src="figures/demodulation.js" id="3b631c8c-46cf-4e19-804f-995e5130cc2d"></script>
 #+end_export
 
 ** Amplitude-Shift Keying
@@ -316,7 +316,8 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/ask.js" id="306c4b75-4a4e-47ff-a39b-dce7bbe20c7c"></script>
+<script src="figures/ask.js" id="da356ad6-26c1-48f0-8728-642304f25b96"></script>
+BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
 #+end_export
 
 *** Amplitude-Shift Keying
@@ -351,9 +352,9 @@ print(tag)
 
 #+RESULTS:
 #+begin_export html
-BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
 
-<script src="figures/fsk.js" id="c1219734-9b1f-4a7d-8b79-d7e652847503"></script>
+<script src="figures/fsk.js" id="88b8654e-7e4e-46b9-a4a1-68fc6dd344be"></script>
+BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
 #+end_export
 
 *** Frequency-Shift Keying
@@ -396,9 +397,9 @@ print(tag)
 
 #+RESULTS:
 #+begin_export html
-BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
 
-<script src="figures/psk.js" id="79cc1902-2594-402d-9557-a46974210f48"></script>
+<script src="figures/psk.js" id="a87028c8-7659-4ebc-9ae9-14e0bbcfa96f"></script>
+BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
 #+end_export
  
 ** QAM
@@ -440,7 +441,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/constellation.js" id="aeedf5e8-5942-4eb0-87c9-c4d4f518cae1"></script>
+<script src="figures/constellation.js" id="f8b9e07a-9b6f-4540-aa3f-71f4fd4e6e73"></script>
 #+end_export
 
 *** Quadrature Amplitude Modulation (QAM)
@@ -479,7 +480,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/qam.js" id="3d55417f-39e1-4e69-aab1-bc6b633a7e19"></script>
+<script src="figures/qam.js" id="4510a8e9-34b4-4412-9bac-3aaed3661156"></script>
 #+end_export
 
 - For Wifi 6, up to 1024-QAM can be used depending on the channel quality
@@ -502,7 +503,7 @@ print(tag)
 *** Friis Transmission Equation
 
 - Friss Transmission Equation:
- \[\frac {P_{r}}{P_{t}}}=\left({\frac {A_{r}A_{t}}{d^{2}\lambda ^{2}}}\right)} {\displaystyle {\frac {P_{r}}{P_{t}}}=\left({\frac {A_{r}A_{t}}{d^{2}\lambda ^{2}}}\right).\]
+ \[\frac {P_{r}}{P_{t}}}=\left({\frac {A_{r}A_{t}}{d^{2}\lambda ^{2}}}\right).\]
 - where:
   - \(P_{t}\) is the power fed into the transmitting antenna input terminals;
   - \(P_{r}\) is the power available at receiving antenna output terminals;
@@ -527,7 +528,6 @@ print(tag)
 
 *** Thermal Noise
 
-
 - White noise since it contains the same level of power at all frequencies
  \[N = ktB\]
 - \(k\) is the Boltzmann’s constant: \(1.381\times 10^{-21} W/(K\cdot Hz)\),
@@ -535,53 +535,27 @@ print(tag)
 - \(B\) is the bandwidth.
 - At room temperature, \(T = 290K\), the thermal noise power spectral density
   \(kT =  –174 dBm/Hz\)
+- dBm is the ratio between the power and a reference of one milliwatt (mW), expressed in dB.
+  - 0dBm = 1mW, 10dBm = 10mW, 20dBm = 100mW
+- For 1MHz bandwidth, the power of the noise is
+\(-174 + 10 log 1M= -114dBm\) or \(4\times 10^{-15}W\).
 
 *** Thermal Noise
-    
 
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/thermalnoise.js"
 
-x = linspace(-2,2,5)
-y = [1 if z <= 0.5 and z >= -0.5 else 0 for z in x]
-p1 = figure(title = "Time Domain")
-p1.step(x, y, line_width=2, mode="center")
+from scipy import signal
+t = linspace(0,5,501)
+y = random.randn(len(t))
+p1 = figure(title = 'White Noise')
+p1.line(t,y)
 
-x = linspace(-8,8,400)  
-y = sinc(x)
-p2 = figure(title = "Frequence Domain")
-p2.line(x,y, line_width=2)
+f, Pxx_den = signal.welch(random.randn(100000), 1024, nperseg=1024)
+p2 = figure(title = 'Power Spectra Density')
+p2.line(f[1:-1],Pxx_den[1:-1])
+p2.y_range=Range1d(0, max(Pxx_den))
 
-p = gridplot([p1, p2], ncols = 2, plot_width = width//2, plot_height = height)
-js, tag = autoload_static(p, CDN, filename)
-f = open(filename, "w")
-f.write(js)
-f.close()
-
-print(tag)
-#+END_SRC
-
-*** Constellation Diagram with Noise
-    
-    {{{revealimg("./figures/16qam.meta",t,"60vh")}}}
- 
-** Shannon Channel Capacity Theorem
-
-*** Basic of Detection Theory
-- Assuming we are using BPSK:
-
-#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/binarydetection.js"
-
-x = [-1,1]
-y = [0,0]
-p = figure(title = "Detection of BPSK", plot_width = width//2, plot_height = height)
-p.circle(x, y, size=10)
-
-x = linspace(-3,3,101)
-y = exp(-x**2/2)/sqrt(2*pi)
-
-p.line(x-1, y, line_width=2)
-p.line(x+1, y, line_width=2)
-
+p = gridplot([p1, p2], ncols = 1, plot_width = width, plot_height = height//2)
 show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
@@ -594,11 +568,77 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/binarydetection.js" id="8fa43711-014c-469e-a4d7-383e3a3af29f"></script>
+<script src="figures/thermalnoise.js" id="6be8e08c-a9cd-4b71-be6f-9dd565fc7950"></script>
+#+end_export
+
+*** Constellation Diagram with Noise
+    
+#+BEGIN_leftcol
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/qam2.js"
+x = linspace(-3,3,4)
+y = linspace(-3,3,4)
+xx, yy = meshgrid(x, y)
+p = figure(title = "16-QAM",  plot_width = width//3, plot_height = width//3)
+p.circle(xx.flatten(), yy.flatten(), size = 20)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/qam2.js" id="15a910a6-2327-40f6-a149-02faa81499e9"></script>
+#+end_export
+
+#+END_leftcol
+
+#+BEGIN_rightcol
+    {{{revealimg("./figures/16qam.meta",t,"60vh")}}}
+#+END_rightcol
+ 
+** Shannon Channel Capacity Theorem
+
+*** Basic of Detection Theory
+- Assuming we are using BPSK:
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/binarydetection.js"
+
+x = [-1,1]
+y = [0,0]
+p = figure(title = "Detection of BPSK", plot_width = width, plot_height = height//2)
+p.circle(x, y, size=10)
+
+x = linspace(-3,3,121)
+y = exp(-x**2/2)/sqrt(2*pi)
+
+p.line(x-1, y, line_width=2)
+p.line(x+1, y, line_width=2)
+p.patch(x[-41:-1]-1, y[-41:-1], hatch_pattern="/")
+p.patch(x[0:41]+1, y[0:41], hatch_pattern="\\")
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/binarydetection.js" id="ae0a1212-086f-419d-94f9-945cb583732e"></script>
 #+end_export
 
 - The probability of error is
-\[P_e = Q\left(2\sqrt{SNR}\right)\]
+\[P_e = Q\left(2\sqrt{SNR}\right),\]
+- \(Q\) is the 
 
 
 * Multi-Path Problem 
