@@ -1,5 +1,6 @@
 RAWDIR  := ./figures/raw
 METADIR := ./figures
+PUBLICFIGDIR := ./public/figures
 
 PNGS    := $(wildcard $(RAWDIR)/*.png)
 PNGMETAS:= $(patsubst $(RAWDIR)/%.png,$(METADIR)/%.meta,$(PNGS))
@@ -18,12 +19,14 @@ TIKZSVGS  := $(patsubst %.tikz,%.svg,$(TIKZS))
 TIKZPNGS  := $(patsubst %.tikz,%.png,$(TIKZS))
 TIKZMETAS := $(patsubst $(TIKZDIR)/%.tikz,$(METADIR)/%.meta,$(TIKZS))
 
+JSIMGS    := $(wildcard $(METADIR)/*.js)
+JSPUBLISH := $(patsubst $(METADIR)/%.js,$(PUBLICFIGDIR)/%.js,$(JSIMGS))
 
 .PHONY: all clean pics
 
-all: pics
+all: pics 
 
-pics: $(PNGMETAS) $(GIFMETAS) $(JPGMETAS) $(TIKZMETAS) $(TIKZPNGS) $(TIKZSVGS)
+pics: $(PNGMETAS) $(GIFMETAS) $(JPGMETAS) $(TIKZMETAS) $(TIKZPNGS) $(TIKZSVGS) $(JSPUBLISH)
 
 %.tex: %.tikz
 	sed -e "s;%TIKZNAME%;$(basename $^);g" ./template.tex > $@
@@ -55,6 +58,9 @@ $(METADIR)/%.meta: | $(RAWDIR)/%.gif
 
 $(METADIR)/%.meta: | $(RAWDIR)/%.jpg
 	./gen_meta.sh $| > $@
+
+$(PUBLICFIGDIR)/%.js: | $(METADIR)/%.js
+	cp -alv $| $@
 
 clean:
 	rm $(PNGMETAS) $(GIFMETAS) $(JPGMETAS) $(TIKZTEXS) $(TIKZPDFS) $(TIKZSVGS) $(TIKZPNGS) $(TIKZMETAS) 

@@ -7,6 +7,27 @@
 #+KEYWORDS: physical layer
 #+DESCRIPTION: physical layer for iot course
 
+
+#+BEGIN_SRC ipython :session :exports none
+from bokeh.resources import CDN
+from bokeh.plotting import figure, show
+from bokeh.embed import autoload_static
+from bokeh.layouts import gridplot
+from bokeh.models import Range1d
+from numpy import *
+
+width = 1200
+height = 600
+
+
+def step_func(x, x0, y0):
+    index = argsort(abs(x - 0.5 - x0))[0]
+    return y0[index]
+#+END_SRC
+
+#+RESULTS:
+: # Out[2]:
+
 * Introduction
   
 ** Core Questions
@@ -69,33 +90,35 @@
 - Modulation is the process of varying one or more properties of a periodic waveform, called the *carrier signal*, with a *modulating signal* that typically contains information to be transmitted. 
 - In digital modulation, an *analog carrier signal* is modulated by a *discrete signal*.
 - The most fundamental digital modulation techniques are based on keying:
-  - ASK (amplitude-shift keying): a finite number of amplitudes are used.
-  - FSK (frequency-shift keying): a finite number of frequencies are used.
-  - PSK (phase-shift keying): a finite number of phases are used.
-  - QAM (quadrature amplitude modulation): a finite number of at least two phases and at least two amplitudes are used.
+  - ASK (amplitude-shift keying): *a finite number of amplitudes* are used.
+  - FSK (frequency-shift keying): *a finite number of frequencies* are used.
+  - PSK (phase-shift keying): *a finite number of phases* are used.
+  - QAM (quadrature amplitude modulation): *a finite number of at least two phases and at least two amplitudes* are used.
 
-*** Rectangle Pulse and Sinc Function
+*** Rectangle and Sinc Function
+
+- The simplest digital signal is a rectangle function:
+\[rect(x) = \begin{cases} 1 & x \in [-0.5,0.5]\\ 0 & otherwise \end{cases}.\]  
+- Fourier Transform:
+\[F(\omega ) = \int_{-\infty}^\infty f(t) \exp(2\pi i  \omega t)dt.\]
+- The FT of rectangle function is (normalized) sinc function
+\[sinc(\omega) = \frac{\sin(\pi*\omega)}{\pi*\omega}.\]
+
+*** Rectangle and Sinc Function
+
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/rect.js"
-from bokeh.resources import CDN
-from bokeh.plotting import figure
-from bokeh.embed import autoload_static
-from bokeh.layouts import gridplot
 
-from numpy import linspace, sinc
-
-x = linspace(-5,5,200)
+x = linspace(-2,2,5)
 y = [1 if z <= 0.5 and z >= -0.5 else 0 for z in x]
 p1 = figure(title = "Time Domain")
-p1.line(x,y)
+p1.step(x, y, line_width=2, mode="center")
 
-x = linspace(-20,20,400)  
+x = linspace(-8,8,400)  
 y = sinc(x)
 p2 = figure(title = "Frequence Domain")
-p2.line(x,y)
+p2.line(x,y, line_width=2)
 
-p = gridplot([p1, p2], ncols = 2, plot_width = 600, plot_height = 600)
-
-
+p = gridplot([p1, p2], ncols = 2, plot_width = width//2, plot_height = height)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -107,23 +130,16 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/rect.js" id="9dadc6da-6030-4495-8ea9-3458a993e342"></script>
+<script src="figures/rect.js" id="e312393f-8d3e-4ac0-b28b-9e8b6451c78c"></script>
 #+end_export
 
-*** Power Spectral Density
-    
+*** Energy Spectrum of Rectangle Function
+ 
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/psd.js"
-from bokeh.resources import CDN
-from bokeh.plotting import figure
-from bokeh.embed import autoload_static
-from bokeh.layouts import gridplot
-
-from numpy import linspace, sinc
-
-x = linspace(-20,20,400)  
+x = linspace(-5,5,400)  
 y = sinc(x)
-p = figure(title = "Power Spectral Density")
-p.line(x,y**2)
+p = figure(title = "Energy Spectrum", plot_width = width, plot_height = height )
+p.line(x, y**2, line_width=2)
 
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
@@ -136,27 +152,31 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/psd.js" id="df3dc688-6fc5-4810-8ee3-6f8b2bdf4bbf"></script>
+<script src="figures/psd.js" id="f35569d6-120b-4ea7-bd26-4831ca39f4ea"></script>
 #+end_export
 
+- Most of the energy are located inside the passband of \(\pm 1Hz\).
    
-*** Fourier Transform (Revisit)
+*** Properties of Fourier Transform
     
-\[F(\omega ) = \int_{-\infty}^\infty f(t) \exp(2\pi i  \omega t)dt.\]
 |                    | Time Domain                   | Frequency Domain                        |
 | Linear Combination | \(a\times f(t)+b\times g(t)\) | \(a\times F(\omega)+b\times G(\omega)\) |
 | Multiplication     | \( f(t)\times g(t)  \)        | \(F(\omega) * G(\omega)\)               |
 | Delay              | \(f(t-\tau)\)                 |  \(\exp(-2\pi i \tau \omega) F(\omega)\) |
 
-*** Fourier Transform
+*** Modulation
+
+- If we multiply the baseband signal (\(rect(t)\)) with a carrier signal (\(cos(2\pi f_0 t)\))
+
+\[S(t) = rect(t)\times \cos (2\pi f_0 t). \]
+- In frequency domain, the signal will be centered around the carrier frequency \(f_0\)
+- Most of the energy is allocated inside \(f_0\pm 1\).
+- If we reduce the symbol time from \(1s\) to \(\tau s\):
+  - The modulated signal will still be centered around \(f_0\)
+  - However, the zero crossing will happen at \(f_0 \pm 1/\tau\).
+*** Modulation
 
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/modulation.js"
-from bokeh.resources import CDN
-from bokeh.plotting import figure, show
-from bokeh.embed import autoload_static
-from bokeh.layouts import gridplot
-
-from numpy import linspace, sinc, cos, pi
 
 x = linspace(-2,2,5)
 y = [1 if z <= 0.5 and z >= -0.5 else 0 for z in x]
@@ -189,7 +209,7 @@ y = sinc(x-5) + sinc(x+5)
 p6 = figure(title = "Frequency Domain")
 p6.line(x, y/2, line_width=2)
 
-p = gridplot([p1, p3, p5, p2, p4, p6], ncols = 3, plot_width = 400, plot_height = 300)
+p = gridplot([p1, p3, p5, p2, p4, p6], ncols = 3, plot_width = width//3, plot_height = height//2)
 
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
@@ -202,33 +222,299 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/modulation.js" id="835a8023-02d2-4835-a104-f9f0115ecd25"></script>
+<script src="figures/modulation.js" id="b8f3411d-a915-441e-b465-119b9c7587d2"></script>
+#+end_export
+
+*** Demodulation
+- The baseband signal can be recovered as
+\begin{align*}
+S(t) \times \cos(2\pi f_0 t) &= rect(t) \times \cos^2(2\pi f_0 t)\\
+&= \frac{1}{2} rect(t) \times \left[1+\cos(4\pi f_0 t)\right] 
+\end{align*}
+- A low pass filter can be used in order to:
+  - Filter out the high frequency \(rect(t) \times \cos(4\pi f_0 t)\) component;
+  - And recover the baseband signal \(rect(t)\).
+
+*** Demodulation
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/demodulation.js"
+
+x = linspace(-2,2,5)
+y = [1 if z <= 0.5 and z >= -0.5 else 0 for z in x]
+p1 = figure(title = "Time Domain")
+p1.step(x, y, line_width=2, mode="center")
+
+x = linspace(-20,20,400)  
+y = sinc(x)
+p2 = figure(title = "Frequence Domain")
+p2.line(x, y, line_width=2)
+
+x = linspace(-2,2,200)
+y = [cos(10*pi*z) if z <= 0.5 and z >= -0.5 else 0 for z in x]
+p3 = figure(title = "Time Domain")
+p3.line(x, y, line_width=2)
+
+x = linspace(-20,20,400)
+y = sinc(x-5) + sinc(x+5)
+p4 = figure(title = "Frequency Domain")
+p4.line(x, y/2, line_width=2)
+
+x = linspace(-2,2,400)
+y = [cos(10*pi*z)**2 if z <= 0.5 and z >= -0.5 else 0 for z in x]
+p5 = figure(title = "Time Domain")
+p5.line(x, y, line_width=2)
+
+x = linspace(-20,20,400)
+y = sinc(x-10) + 2*sinc(x) +  sinc(x+10)
+p6 = figure(title = "Frequency Domain")
+p6.line(x, y/2, line_width=2)
+
+p = gridplot([p1, p3, p5, p2, p4, p6], ncols = 3, plot_width = width//3, plot_height = height//2)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/demodulation.js" id="08522973-97f2-4eda-b7b3-526a729b6fd3"></script>
 #+end_export
 
 ** Amplitude-Shift Keying
+   
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/ask.js"
+x0 = linspace(0, 12, 13)
+y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0,0]
+p1 = figure(title = "Baseband Signal")
+p1.step(x0, y0, line_width=2, mode="after")
+
+x = linspace(0, 12, 241)
+y = [step_func(p, x0, y0) * sin(2*pi*p) for p in x]
+p2 = figure(title = "On-off Keying")
+p2.line(x, y, line_width=2)
+
+x1 = linspace(0, 11, 12)
+y1 = [0,0,3,3,1,1,0,0,1,1,2,2]
+y = [(step_func(p, x1, y1)+1) * sin(2*pi*p) for p in x]
+p3 = figure(title = "4-ASK")
+p3.line(x, y, line_width=2)
+
+p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/ask.js" id="306c4b75-4a4e-47ff-a39b-dce7bbe20c7c"></script>
+#+end_export
+
+*** Amplitude-Shift Keying
+- We are allocated with a frequency band between 200-300kHz. If we use 4-ASK modulation scheme: 
+  - What is the carrier frequency?
+  - What is the symbol rate per second?
+  - What is the bit rate per second?
 
 ** Frequency-Shift Keying
    
 
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/fsk.js"
+x0 = linspace(0, 12, 13)
+y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0,0]
+p1 = figure(title = "Baseband Signal")
+p1.step(x0, y0, line_width=2, mode="after")
+
+x = linspace(0, 12, 241)
+y = [step_func(p, x0, y0) * sin(4*pi*p) + (1-step_func(p, x0, y0)) * sin(2*pi*p) for p in x]
+p2 = figure(title = "Frequency-Shift Keying")
+p2.line(x, y, line_width=2)
+
+p = gridplot([p1, p2], ncols = 1, plot_width = width, plot_height = height//2)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
+
+<script src="figures/fsk.js" id="c1219734-9b1f-4a7d-8b79-d7e652847503"></script>
+#+end_export
+
+*** Frequency-Shift Keying
+- In practice, we can smooth the digital signal 
+  - e.g., by Gaussian filter
+  - the frequency changes more smoothly rather than instantaneously
+  - to reduce sideband power
+- We are allocated with a frequency band between 200-300kHz. If we use FSK modulation scheme: 
+  - What are the sub-carrier frequencies?
+  - What is the bit rate per second?
+
 ** Phase-Shift Keying
    
-*** Constellation Graph
-    
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/psk.js"
+x0 = linspace(0, 12, 13)
+y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0,0]
+p1 = figure(title = "Baseband Signal")
+p1.step(x0, y0, line_width=2, mode="after")
+
+x = linspace(0, 12, 241)
+y = [(1-2*step_func(p, x0, y0)) * sin(2*pi*p) for p in x]
+p2 = figure(title = "Binary PSK")
+p2.line(x, y, line_width=2)
+
+x1 = linspace(0, 11, 12)
+y1 = [0,0,3,3,1,1,0,0,1,1,2,2]
+y = [sin(2*pi*p+pi/4 + pi/2*step_func(p,x1,y1)) for p in x]
+p3 = figure(title = "Quadrature-PSK")
+p3.line(x, y, line_width=2)
+
+p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
+
+<script src="figures/psk.js" id="79cc1902-2594-402d-9557-a46974210f48"></script>
+#+end_export
+ 
 ** QAM
  
+*** Constellation Diagram
+   
+- We could draw the amplitude and phase of the symbol on the complex plane:
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/constellation.js"
+x = [0,1]
+y = [0,0]
+rx = cos(linspace(0,2*pi,200))
+ry = sin(linspace(0,2*pi,200))
+p1 = figure(title = "OOK")
+p1.circle(x, y, size = 20)
+p1.line(rx, ry, line_dash = 'dotted')
+
+x = [1,-1]
+y = [0,0]
+p2 = figure(title = "BPSK")
+p2.circle(x, y, size = 20)
+p2.line(rx, ry, line_dash = 'dotted')
+
+x = cos(linspace(pi/4,pi/4*7,4))
+y = sin(linspace(pi/4,pi/4*7,4))
+p3 = figure(title = "QPSK")
+p3.circle(x, y, size = 20)
+p3.line(rx, ry, line_dash = 'dotted')
+
+p = gridplot([p1, p2, p3], ncols = 3, plot_width = width//3, plot_height = width//3)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/constellation.js" id="aeedf5e8-5942-4eb0-87c9-c4d4f518cae1"></script>
+#+end_export
+
+*** Quadrature Amplitude Modulation (QAM)
+- We could combine multiple amplitude and multiple phase together to form a constellation
+- The most common ones are 16, 64, 256 QAM
+  - each symbol carries 4, 6, 8 bits repsectively
+  
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/qam.js"
+x = linspace(-3,3,4)
+y = linspace(-3,3,4)
+xx, yy = meshgrid(x, y)
+p1 = figure(title = "16-QAM")
+p1.circle(xx.flatten(), yy.flatten(), size = 20)
+
+x = linspace(-5,5,6)
+y = linspace(-5,5,6)
+xx, yy = meshgrid(x, y)
+p2 = figure(title = "64-QAM")
+p2.circle(xx.flatten(), yy.flatten(), size = 10)
+
+x = linspace(-7,7,8)
+y = linspace(-7,7,8)
+xx, yy = meshgrid(x, y)
+p3 = figure(title = "256-QAM")
+p3.circle(xx.flatten(), yy.flatten(), size = 10)
+p = gridplot([p1, p2, p3], ncols = 3, plot_width = width//3, plot_height = width//3)
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/qam.js" id="3d55417f-39e1-4e69-aab1-bc6b633a7e19"></script>
+#+end_export
+
+- For Wifi 6, up to 1024-QAM can be used depending on the channel quality
+- Can we use "infinite"-QAM to transmit at "infinite" bit rate?
+
 * Free Space Propagation Model
   
 ** Free Space Loss
-  
-*** Impairments
+
+*** Channel Impairments
 - *Free space loss*
 - *Noise*
 - Fading 
   - Multi-path (Next Section)
 - Atmospheric absorption
 
+*** Free Space Transmission
+    {{{revealimg("./figures/freespace.meta",t,"60vh")}}}
+
 *** Friis Transmission Equation
- 
+
+- Friss Transmission Equation:
+ \[\frac {P_{r}}{P_{t}}}=\left({\frac {A_{r}A_{t}}{d^{2}\lambda ^{2}}}\right)} {\displaystyle {\frac {P_{r}}{P_{t}}}=\left({\frac {A_{r}A_{t}}{d^{2}\lambda ^{2}}}\right).\]
+- where:
+  - \(P_{t}\) is the power fed into the transmitting antenna input terminals;
+  - \(P_{r}\) is the power available at receiving antenna output terminals;
+  - \(A_{r}\) is the effective aperture of the receiving antenna;
+  - \(A_{t}\) is the effective aperture of the transmitting antenna;
+  - \(d\) is the distance between antennas;
+  - \(\lambda\) is the wavelength of the radio frequency;
+- To increase signal strength at the receiving end:
+  - Increase transmitting power; 
+  - Decrease carrier frequency, distance;
+  - Better antenna
+
 ** Noise
 - Thermal Noise(John-Nyquist Noise)
   - Noise seen in switching circuits due to electrons
@@ -250,7 +536,70 @@ print(tag)
 - At room temperature, \(T = 290K\), the thermal noise power spectral density
   \(kT =  –174 dBm/Hz\)
 
+*** Thermal Noise
+    
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/thermalnoise.js"
+
+x = linspace(-2,2,5)
+y = [1 if z <= 0.5 and z >= -0.5 else 0 for z in x]
+p1 = figure(title = "Time Domain")
+p1.step(x, y, line_width=2, mode="center")
+
+x = linspace(-8,8,400)  
+y = sinc(x)
+p2 = figure(title = "Frequence Domain")
+p2.line(x,y, line_width=2)
+
+p = gridplot([p1, p2], ncols = 2, plot_width = width//2, plot_height = height)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+*** Constellation Diagram with Noise
+    
+    {{{revealimg("./figures/16qam.meta",t,"60vh")}}}
+ 
 ** Shannon Channel Capacity Theorem
+
+*** Basic of Detection Theory
+- Assuming we are using BPSK:
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/binarydetection.js"
+
+x = [-1,1]
+y = [0,0]
+p = figure(title = "Detection of BPSK", plot_width = width//2, plot_height = height)
+p.circle(x, y, size=10)
+
+x = linspace(-3,3,101)
+y = exp(-x**2/2)/sqrt(2*pi)
+
+p.line(x-1, y, line_width=2)
+p.line(x+1, y, line_width=2)
+
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/binarydetection.js" id="8fa43711-014c-469e-a4d7-383e3a3af29f"></script>
+#+end_export
+
+- The probability of error is
+\[P_e = Q\left(2\sqrt{SNR}\right)\]
+
 
 * Multi-Path Problem 
  
