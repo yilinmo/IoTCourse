@@ -7,7 +7,6 @@
 #+KEYWORDS: physical layer
 #+DESCRIPTION: physical layer for iot course
 
-
 #+BEGIN_SRC ipython :session :exports none
 from bokeh.resources import CDN
 from bokeh.plotting import figure, show
@@ -15,6 +14,7 @@ from bokeh.embed import autoload_static
 from bokeh.layouts import gridplot
 from bokeh.models import Range1d
 from numpy import *
+from bokeh.palettes import Category10_10
 
 width = 1200
 height = 600
@@ -29,11 +29,27 @@ def step_func(x, x0, y0):
 : # Out[2]:
 
 * Introduction
-  
+
 ** Core Questions
-   TODO
+  
+- What purpose does the physical layer serve in OSI network model?
+- What is a frequency band for radio signal?
+  - How can we modulate a baseband signal to fit in the frequency band?
+- What is the fundamental limit for reliable data transmission?
+- How does multi-path deteriorate the communication channel?
+  - How to counter the multi-path effect using diversity?
+- What considerations do we have for choosing PHY protocols?   
+   
 ** Learning Objectives
-   TODO
+   
+- Definition of physical layer in the OSI network model
+- Frequency band of radio signal
+  - Digital modulation and demodulation  
+- The capacity of a AWGN channel
+- Coherence bandwidth and time due to multi-path
+- Time/Space/Frequency diversity
+- Various communication protocols and the comparison between them
+   
 ** Table of Contents
    :PROPERTIES:
    :UNNUMBERED: notoc
@@ -130,7 +146,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/rect.js" id="1a1d7507-3e64-49e9-9989-2e4668110aca"></script>
+<script src="figures/rect.js" id="64ccdbeb-6499-4cac-b85c-9bb4f24dd0cb"></script>
 #+end_export
 
 *** Energy Spectrum of Rectangle Function
@@ -152,7 +168,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/psd.js" id="63aed4d2-2b0d-4cdd-8679-c4bb6c7de00d"></script>
+<script src="figures/psd.js" id="64a91652-029f-4f4d-8e1a-66a66c172894"></script>
 #+end_export
 
 - Most of the energy are located inside the passband of \(\pm 1Hz\).
@@ -222,7 +238,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/modulation.js" id="2cb94c84-ea0b-41b7-9870-83c6af6b354d"></script>
+<script src="figures/modulation.js" id="1915e652-39ea-489a-8e91-560227055c12"></script>
 #+end_export
 
 *** Demodulation
@@ -281,7 +297,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/demodulation.js" id="71d69392-cdc6-4328-b4d7-cdc6355c6a4a"></script>
+<script src="figures/demodulation.js" id="b2d5c9c1-cca2-4837-828a-b7dfa9dc9be0"></script>
 #+end_export
 
 ** Amplitude-Shift Keying
@@ -316,7 +332,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/ask.js" id="bb7ed264-3fed-488b-aaee-624f0eb74df4"></script>
+<script src="figures/ask.js" id="57f36ac7-2619-49c4-86b3-5664001755d1"></script>
 #+end_export
 
 *** Amplitude-Shift Keying
@@ -351,7 +367,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fsk.js" id="1bee45de-470b-4e71-b15c-6b75e5b9aa9c"></script>
+<script src="figures/fsk.js" id="9183530f-b130-491e-b59b-5ab7c3275556"></script>
 #+end_export
 
 *** Frequency-Shift Keying
@@ -395,7 +411,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/psk.js" id="211b8c6a-1c8c-41a0-9983-a68072551ca0"></script>
+<script src="figures/psk.js" id="38f59171-08ea-4216-aff4-fadfde45d94d"></script>
 #+end_export
  
 ** QAM
@@ -437,7 +453,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/constellation.js" id="0fcb2294-4871-41c3-a803-c39785e6e25a"></script>
+<script src="figures/constellation.js" id="2835d487-001d-4fbd-82ff-f89ca064fd76"></script>
 #+end_export
 
 *** Quadrature Amplitude Modulation (QAM)
@@ -476,7 +492,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/qam.js" id="464b09ee-d8e5-42ef-809c-7e6cdedb5560"></script>
+<script src="figures/qam.js" id="cbc7e569-2482-4b38-9372-ef840a15eeb8"></script>
 #+end_export
 
 - For Wifi 6, up to 1024-QAM can be used depending on the channel quality
@@ -506,11 +522,15 @@ print(tag)
   - \(D_{r}, D_t\) are the antenna directivities (with respect to an isotropic radiator) of the transmitting and receiving antennas respectively;
   - \(d\) is the distance between antennas;
   - \(\lambda\) is the wavelength of the radio frequency;
+
+#+REVEAL: split
+- Friss Transmission Equation:
+ \[\frac {P_r}{P_t}=D_rD_t\left(\frac {\lambda}{4\pi d}\right)^2.\]
 - To increase signal strength at the receiving end:
   - Increase transmitting power; 
   - Decrease carrier frequency, distance;
   - Better antenna
-
+    
 ** Noise
 - Thermal Noise(John-Nyquist Noise)
   - Noise seen in switching circuits due to electrons
@@ -562,7 +582,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/thermalnoise.js" id="4f621304-5b63-4990-ae88-23419552a92e"></script>
+<script src="figures/thermalnoise.js" id="1adce4e0-31e9-412d-a453-98e15dd2c203"></script>
 #+end_export
 
 *** Constellation Diagram with Noise
@@ -587,7 +607,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/qam2.js" id="faac10d2-7be7-4980-9fde-1bbe228493a1"></script>
+<script src="figures/qam2.js" id="a1f298ff-27a7-4e56-8ecb-23d2a95fc3b5"></script>
 #+end_export
 
 #+END_leftcol
@@ -640,16 +660,15 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/binarydetection.js" id="b4b77841-9866-45ab-bec4-0c18439330b8"></script>
+<script src="figures/binarydetection.js" id="ca85152c-99bf-4f0b-9413-4502c0bba93e"></script>
 #+end_export
 
 *** Probability of Error
-- We need to estimate ("detect") the phase of \(x\)
-- A detector is essentially a mapping from \(y\) to \(\hat x\)
-- The probability of error for the detector is
+- We need to estimate ("detect") the phase of \(x\) 
+- The probability of error is
 \[P_e = P(\hat x \neq x).\]
 - Bayesian Detector:
-  - Calculate the condition probability
+  - Calculate the conditional probability
   \begin{align*}
   P(x = a|y)  &= \frac{P(x = a)P(y|x = a)}{P(y)},\\
   P(x =- a|y) &= \frac{P(x = -a)P(y|x =- a)}{P(y)}.
@@ -691,16 +710,18 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/binarydetection2.js" id="99f5b4f4-0867-4602-a571-3aaf2e7dcab3"></script>
+<script src="figures/binarydetection2.js" id="aeb02283-bfc9-4eb5-abb6-247f91de5956"></script>
 #+end_export
 
 - Assuming \(\pm a\) has equal probability, then the decision rule is 
 \[\hat x = \begin{cases} 0 & if\;y\geq 0\\ \pi& otherwise\end{cases}.\]
+
+#+REVEAL: split
 - The probability of error is given by
 \begin{align*}
 P_e &= \int_{a}^{\infty} \frac{1}{\sqrt{2 \pi N_0}}\exp\left(-x^2/2N_0\right) dx \\
-&= \int_{a/\{sqrt N_0}} \frac{1}{\sqrt{2\pi}} \exp\left(-x^2/2\right)dx\\
-&=Q(\sqrt{SNR})
+&= \int_{a/\sqrt {N_0}}^\infty\frac{1}{\sqrt{2\pi}} \exp\left(-x^2/2\right)dx\\
+&=Q(\sqrt{SNR}).
 \end{align*}
 
 *** Encoding/Decoding
@@ -761,7 +782,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/capacityvsbandwidth.js" id="96a1dd8a-38a0-44e4-826c-71a6f6470bb0"></script>
+<script src="figures/capacityvsbandwidth.js" id="33fe108e-f061-4641-b710-c2cff0a32435"></script>
 #+end_export
 
 #+END_rightcol
@@ -815,12 +836,12 @@ print(tag)
 \[\phi_1 =  \frac{2\pi}{c}rf.\]
 - The reflected signal has a phase delay of 
 \[\phi_2 =  \frac{2\pi}{c}(2d-r)f.\]
-- The phase difference of the two signal is
-  \[\Delta \phi = \frac{4 \pi}{c} (d-r)f.\]
   
 #+END_leftcol
 #+BEGIN_rightcol
-  {{{revealimg("./figures/multipath.meta","Reflecting Wall Example","20vh",nil,'none)}}}
+  {{{revealimg("./figures/multipath.meta","Reflecting Wall Example","40vh",nil,'none)}}}
+- The phase difference of the two signal is
+  \[\Delta \phi = \frac{4 \pi}{c} (d-r)f.\]
 #+END_rightcol
 
 ** Coherence Bandwidth
@@ -869,7 +890,7 @@ p3.line(linspace(1.2, 12, 217), y[0:217]/2, line_width=2)
 p4 = figure(title = "Combined Signal")
 p4.line(linspace(1, 12, 221), y[0:221]/2 + hstack((zeros(4),y[0:217]/2)), line_width=2)
 
-p = gridplot([ p2, p3, p4], ncols = 1, plot_width = width, plot_height = height//3)
+p = gridplot([ p3, p4], ncols = 1, plot_width = width, plot_height = height//3)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -881,7 +902,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fskwithisi.js" id="41a926c0-8936-41cd-a474-fd47c59e7112"></script>
+<script src="figures/fskwithisi.js" id="be337c6e-6ef9-41bc-a8ae-6fb167bbb78e"></script>
 #+end_export
 
 ** Coherence Time
@@ -923,7 +944,6 @@ p.x_range.range_padding = p.y_range.range_padding = 0
 p.image(image=[amp], x=0, y=1000, dw=30, dh=2, palette="Greys256", level="image")
 p.xaxis.axis_label = "Time(ms)"
 p.yaxis.axis_label = "Frequncy(MHz)"
-show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -935,7 +955,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fading.js" id="57a2641b-f1ec-4c4b-940f-6c65e3181463"></script>
+<script src="figures/fading.js" id="a37ee54a-92e2-4dbf-a970-aacdcd06b46c"></script>
 #+end_export
 
 #+END_rightcol
@@ -943,7 +963,6 @@ print(tag)
     {{{revealimg("./figures/realfading.meta",t,"60vh")}}}
 
 * Diversity
-  
 ** Time Diversity 
  
 #+BEGIN_leftcol
@@ -963,7 +982,7 @@ print(tag)
    
 - Multiple antenna can be used at the transmitting and receiving end
 - Instead of destructive fading, we can achieve constructive fading
-  {{{revealimg("./figures/spacediversity.meta","SIMO, MISO and MIMO","60vh",nil,'none)}}}
+  {{{revealimg("./figures/spacediversity.meta","SIMO\, MISO and MIMO","60vh",nil,'none)}}}
 
 ** Frequency Diversity   
   
@@ -988,7 +1007,6 @@ p2 = figure(title = "Downchirp")
 p2.line(x[::-1],y, line_width=2)
 
 p = gridplot([p1, p2], ncols = 2, plot_width = width//2, plot_height = height//2)
-show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -1000,7 +1018,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/chirp.js" id="13af9c16-449e-4f9a-92f1-1b5c9d8c1121"></script>
+<script src="figures/chirp.js" id="d5b7eae5-8c25-415d-95a9-8270a2fb7e3e"></script>
 #+end_export
 
 *** Direct Sequence Spread Spectrum
@@ -1011,6 +1029,7 @@ print(tag)
   - The processing gain is \(1228.8/9.6 = 128\)
   - 64 chips are used for 1 data bit
 
+*** Direct Sequence Spread Spectrum
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/dhss.js"
 x = linspace(0,32,33)
 y = array([1 if z <= 16 else 0 for z in x])
@@ -1026,7 +1045,6 @@ p3.step(x, encode, line_width=2, mode="before")
 
 p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
 
-show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -1038,7 +1056,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/dhss.js" id="1faba1d9-2856-4f1d-8d9c-c4d606896a66"></script>
+<script src="figures/dhss.js" id="7981e84f-bf2d-4e75-8815-b5b99baa9965"></script>
 #+end_export
 
 *** Direct Sequence Spread Spectrum 
@@ -1063,7 +1081,6 @@ p3.step(x[1:], decode, line_width=2, mode="before")
 p3.x_range=Range1d(0, 32)
 p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
 
-show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -1075,7 +1092,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/dhss2.js" id="d7bb1a45-f544-43d1-bd91-495cb0e429b9"></script>
+<script src="figures/dhss2.js" id="0876ce05-a29c-46dd-844e-eb363637b629"></script>
 #+end_export
 
 *** Frequency Hopping Spread Spectrum
@@ -1089,16 +1106,12 @@ for f in range(0,5):
     for t in range(1,10):
         p.rect(x=t,y=f,width=0.9,height=0.9, fill_color="#ffffff")
 
-p.rect(x=1,y=1,width=0.9,height=0.9, fill_color="#cab2d6")
-pref = 1
-for t in range(2,10):
+for t in range(1,10):
     f = random.randint(5)
     p.rect(x=t,y=f,width=0.9,height=0.9, fill_color="#cab2d6")
-    p.line(x=t,y=f,width=0.9,height=0.9, fill_color="#cab2d6")
-    pref = f
+
 p.xaxis.axis_label = "Time"
 p.yaxis.axis_label = "Frequency"
-show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -1110,7 +1123,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fhss.js" id="ba922392-aec5-449f-8afc-11e66ba50e25"></script>
+<script src="figures/fhss.js" id="0ae8eabf-3e79-4517-b45f-49121d4fab50"></script>
 #+end_export
    
 *** Orthogonal Frequency Division Multiplexing
@@ -1126,7 +1139,6 @@ p = figure(title = "Frequency Division", plot_width = width, plot_height=height/
 for i in range(1,10):
     p.patch(x+2*i, y, line_width=2)
 
-show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -1138,21 +1150,158 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fdma.js" id="43c4a651-92d8-4b3c-bb66-def05cd0f741"></script>
+<script src="figures/fdma.js" id="bd08ef7f-2af1-4651-a19e-d916308b8e00"></script>
 #+end_export
+
+*** Orthogonal Frequency Division Multiplexing
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/ofdm.js"
+x = linspace(-3, 7, 501)
+symbol = array([round(x)*2 -1 for x in random.rand(5)])
+p = figure(title = "Orthogonal Frequency Division Multiplexing", plot_width = width, plot_height=height)
+color = Category10_10.__iter__()
+for i in range(5):
+    p.line(x, symbol[i]*sinc(x-i), line_width=1, color = next(color))
+    
+from functools import reduce
+y = reduce(lambda x,y:x+y, map(lambda i: symbol[i]*sinc(x-i), range(5)))
+p.line(x, y, line_width=3, color = next(color))
+p.circle(range(5), symbol, size=10, fill_alpha=.5, color = next(color)) 
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/ofdm.js" id="8fc043ff-2f85-438d-97f0-57da35d415f9"></script>
+#+end_export
+
+*** Orthogonal Frequency Division Multiplexing
+    
+- \(sinc(x + k),\, k\in\mathbb Z\) are orthogonal to each other
+- For the OFDM scheme
+  - If the symbol rate is \(R\)
+  - Each sub-carrier signal only needs to be \(R\) apart
+  - More than twice spectra efficient
+  - Modulation/Demodulation can be done efficiently via Fast Fourier Transform
+- OFDM is originally proposed by Bell lab in 1966
+- Used in Wifi, 4G, 5G
 
 * Physical Layer Protocol
 ** Bluetooth LE
-   
-** IEEE 802.15.4
-   
-** IEEE 802.11
-
-** Cellular System
-   
-** LoRa
   
-* Conclusion
+- Bluetooth is a low-power wireless connectivity technology {{{reveallicense("./figures/bluetooth.meta","20vh")}}}
+  - cell phones sensors
+  - headsets
+  - keyboards/mouses
+  - video game systems
+- The name Bluetooth refers to King Harald Blatand in the region of what is now Norway and Sweden in around 958AD.
+  - He got this name due to his liking of blueberries and/or the eating of his frozen enemies.
+  - Bluetooth is derived from his name because King Blatand brought together warring tribes.
+- Bluetooth Low Energy is used extensively in IoT deployments 
+  - beacons
+  - wireless sensors
+  - asset tracking systems
+  - remote controls
+  - health monitors
+  - and alarm systems.
+- Throughout its history, Bluetooth and all the optional components have been under GPL license and are essentially open source.
+
+*** PHY of Bluetooth LE
+
+- Operates in the 2.400–2.4835 GHz ISM band (Same as Wifi and 802.15.4)
+- The ISM band is divided into forty 2-MHz channels.
+  - 37 of the channels are used to transmit date
+  - 3 channels are reserved for advertising
+  - frequency hopping is used to provide diversity
+- Within a channel, data is transmitted using Gaussian FSK modulation
+- The bit rate is 1 Mbit/s, and the maximum transmit power is 10 mW 
+  - Can be increased to 2Mbit/s and 100 mW in Bluetooth 5
+
+*** PHY of Bluetooth LE cite:Lea2018
+
+  {{{revealimg("./figures/ble.meta","Bluetooth Low Energy Channels","60vh",nil,'none)}}}
+
+*** Comparison between Bluetooth and Bluetooth LE
+| Technical specification           | Bluetooth            | Bluetooth Low Energy technology     |
+| Distance/range (theoretical max.) | 100 m                | <100 m                              |
+| Over the air data rate            | 1–3 Mbit/s           | 125k – 500k – 1M – 2 Mbit/s         |
+| Power consumption                 | 1 W as the reference | 0.01–0.50 W (depending on use case) |
+| Peak current consumption          | <30 mA               | <15 mA                              |
+
+** IEEE 802.15.4
+- The IEEE 802.15.4 is a standard wireless personal area network (PAN) defined by the IEEE 802.15 working group.
+  - Defines the physical and MAC layer
+  - basis of many other protocols: Thread, Zigbee, WirelessHART, and others.
+- The goal is to develop a low-cost WPAN with low power consumption.   
+- Operates in the ISM spectrum:
+  - 868 MHz, 915 MHz, and 2400 MHz.
+
+| Frequency range (MHz) | Channel numbers    | Modulation      | Data rate (Kbps) | Region                   |
+|                 868.3 | 1 channel: 0       | BPSK/O-QPSK/ASK | 20/ 100 /250     | Europe                   |
+|               902-928 | 10 channels: 1-10  | BPSK/O-QPSK/ASK | 40/250/250       | North America, Australia |
+|             2405-2480 | 16 channels: 11-26 | O-QPSK          | 250              | Worldwide                |
+
+
+*** PHY of IEEE 802.15.4 cite:Lea2018
+- Direct Sequence SS/Chirp SS/Ultra-wideband can be used for diversity
+- Typical range: 200 meters outdoors, 30m indoors
+- Typical transmission current: 15~30 mA, and reception current: 18~37mA
+
+  {{{revealimg("./figures/80215.meta","Bluetooth Low Energy Channels","60vh",nil,'none)}}}
+
+** IEEE 802.11 (WiFi)
+- First release in June 1997
+- The newest is Wifi 6
+  - Works in both 2.4Ghz and 5Ghz ISM band
+  - Support up to 1024 QAM
+  - Use OFDMA for spreading spectrum and multiple user access
+  - Use Multi-user MIMO
+*** Comparison between different generations of Wifi cite:Lea2018
+  {{{revealimg("./figures/wifi.meta","Various IEEE 802.11 standards and specification","60vh",nil,'none)}}}
+
+** Cellular Communication
+- The International Telecommunication Union (ITU) is a UN specialized agency 
+  - was founded in 1865
+  - took its present name in 1932
+  - before becoming a specialized agency in the UN.
+- the Radio communication Sector (ITU-R) defines the international standards and goals for various generations of cellular communication. 
+|                    | 2G         | 3G           | 4G                                   | 5G                                 |
+| First Availability | 1999       | 2002         | 2010                                 | 2020                               |
+| Bandwidth          | NA         | 2/0.384Mbps  | 1/0.1 Gbps                           | Min Down: 20 Gbps/ Min Up: 10 Gbps |
+| Features           | Voice, SMS | Audio, Video | Unified IP and seamless LAN/WAN/WLAN | IoT, ultra density, low latency    |
+
+** LoRa
+- LoRa is a physical layer for a *long-range* and *low-power* IoT protocol
+- Originally developed by Cycleo in France and then acquired by the Semtech Corporation in U.S.
+- ZTE and Alibaba are in the LoRa Alliance.
+- Uses the following ISM band:
+  - 915 MHz: In the USA
+  - 868 MHz: In Europe
+  - 433 MHz: In Asia.
+- Chirp Spread Spectrum (CSS) is the modulation technique used in LoRa.
+- Typical data rate is 0.3 - 5kbps
+- Typical range of communication is 2-3km in cities and 5-7km in rural area
+  - The world record is 702km!
+
+** Comparison
+- Good physical layer protocol for intelligent networked system:
+  - Long Range
+  - High Throughput
+  - Low Power
+  - Other metrics: low latency, mobility, cost, ...
+- NO communication scheme can achieve long range, high throughput and low power simultaneously.
+- Need to consider applications:
+  - Surveillance camera for smart city: 4G/5G
+  - Environmental monitoring: LoRa
+  - Smart Building: 
+    - WiFi for camera
+    - 802.15.4/Bluetooth LE for temperature sensor
 
 * Bibliography
   :PROPERTIES:
