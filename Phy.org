@@ -26,7 +26,7 @@ def step_func(x, x0, y0):
 #+END_SRC
 
 #+RESULTS:
-: # Out[1]:
+: # Out[2]:
 
 * Introduction
   
@@ -130,7 +130,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/rect.js" id="cf11430c-d27a-4ade-89e0-793926ad0e4b"></script>
+<script src="figures/rect.js" id="1a1d7507-3e64-49e9-9989-2e4668110aca"></script>
 #+end_export
 
 *** Energy Spectrum of Rectangle Function
@@ -152,7 +152,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/psd.js" id="d4485f35-7b00-40e1-9caa-baa9e9de33c6"></script>
+<script src="figures/psd.js" id="63aed4d2-2b0d-4cdd-8679-c4bb6c7de00d"></script>
 #+end_export
 
 - Most of the energy are located inside the passband of \(\pm 1Hz\).
@@ -222,7 +222,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/modulation.js" id="54c057fa-fc48-4ab5-bd8d-10a3a846fda8"></script>
+<script src="figures/modulation.js" id="2cb94c84-ea0b-41b7-9870-83c6af6b354d"></script>
 #+end_export
 
 *** Demodulation
@@ -281,14 +281,14 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/demodulation.js" id="3b631c8c-46cf-4e19-804f-995e5130cc2d"></script>
+<script src="figures/demodulation.js" id="71d69392-cdc6-4328-b4d7-cdc6355c6a4a"></script>
 #+end_export
 
 ** Amplitude-Shift Keying
    
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/ask.js"
 x0 = linspace(0, 12, 13)
-y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0,0]
+y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0]
 p1 = figure(title = "Baseband Signal")
 p1.step(x0, y0, line_width=2, mode="after")
 
@@ -316,8 +316,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/ask.js" id="da356ad6-26c1-48f0-8728-642304f25b96"></script>
-BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
+<script src="figures/ask.js" id="bb7ed264-3fed-488b-aaee-624f0eb74df4"></script>
 #+end_export
 
 *** Amplitude-Shift Keying
@@ -331,7 +330,7 @@ BokehUserWarning: ColumnDataSource's columns must be of the same length. Current
 
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/fsk.js"
 x0 = linspace(0, 12, 13)
-y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0,0]
+y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0]
 p1 = figure(title = "Baseband Signal")
 p1.step(x0, y0, line_width=2, mode="after")
 
@@ -341,7 +340,6 @@ p2 = figure(title = "Frequency-Shift Keying")
 p2.line(x, y, line_width=2)
 
 p = gridplot([p1, p2], ncols = 1, plot_width = width, plot_height = height//2)
-
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -353,8 +351,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fsk.js" id="88b8654e-7e4e-46b9-a4a1-68fc6dd344be"></script>
-BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
+<script src="figures/fsk.js" id="1bee45de-470b-4e71-b15c-6b75e5b9aa9c"></script>
 #+end_export
 
 *** Frequency-Shift Keying
@@ -370,7 +367,7 @@ BokehUserWarning: ColumnDataSource's columns must be of the same length. Current
    
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/psk.js"
 x0 = linspace(0, 12, 13)
-y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0,0]
+y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0]
 p1 = figure(title = "Baseband Signal")
 p1.step(x0, y0, line_width=2, mode="after")
 
@@ -398,8 +395,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/psk.js" id="a87028c8-7659-4ebc-9ae9-14e0bbcfa96f"></script>
-BokehUserWarning: ColumnDataSource's columns must be of the same length. Current lengths: ('x', 13), ('y', 14)
+<script src="figures/psk.js" id="211b8c6a-1c8c-41a0-9983-a68072551ca0"></script>
 #+end_export
  
 ** QAM
@@ -441,7 +437,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/constellation.js" id="f8b9e07a-9b6f-4540-aa3f-71f4fd4e6e73"></script>
+<script src="figures/constellation.js" id="0fcb2294-4871-41c3-a803-c39785e6e25a"></script>
 #+end_export
 
 *** Quadrature Amplitude Modulation (QAM)
@@ -480,7 +476,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/qam.js" id="4510a8e9-34b4-4412-9bac-3aaed3661156"></script>
+<script src="figures/qam.js" id="464b09ee-d8e5-42ef-809c-7e6cdedb5560"></script>
 #+end_export
 
 - For Wifi 6, up to 1024-QAM can be used depending on the channel quality
@@ -503,12 +499,11 @@ print(tag)
 *** Friis Transmission Equation
 
 - Friss Transmission Equation:
- \[\frac {P_{r}}{P_{t}}}=\left({\frac {A_{r}A_{t}}{d^{2}\lambda ^{2}}}\right).\]
+ \[\frac {P_r}{P_t}=D_rD_t\left(\frac {\lambda}{4\pi d}\right)^2.\]
 - where:
   - \(P_{t}\) is the power fed into the transmitting antenna input terminals;
   - \(P_{r}\) is the power available at receiving antenna output terminals;
-  - \(A_{r}\) is the effective aperture of the receiving antenna;
-  - \(A_{t}\) is the effective aperture of the transmitting antenna;
+  - \(D_{r}, D_t\) are the antenna directivities (with respect to an isotropic radiator) of the transmitting and receiving antennas respectively;
   - \(d\) is the distance between antennas;
   - \(\lambda\) is the wavelength of the radio frequency;
 - To increase signal strength at the receiving end:
@@ -556,7 +551,6 @@ p2.line(f[1:-1],Pxx_den[1:-1])
 p2.y_range=Range1d(0, max(Pxx_den))
 
 p = gridplot([p1, p2], ncols = 1, plot_width = width, plot_height = height//2)
-show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -568,7 +562,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/thermalnoise.js" id="6be8e08c-a9cd-4b71-be6f-9dd565fc7950"></script>
+<script src="figures/thermalnoise.js" id="4f621304-5b63-4990-ae88-23419552a92e"></script>
 #+end_export
 
 *** Constellation Diagram with Noise
@@ -593,7 +587,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/qam2.js" id="15a910a6-2327-40f6-a149-02faa81499e9"></script>
+<script src="figures/qam2.js" id="faac10d2-7be7-4980-9fde-1bbe228493a1"></script>
 #+end_export
 
 #+END_leftcol
@@ -602,26 +596,39 @@ print(tag)
     {{{revealimg("./figures/16qam.meta",t,"60vh")}}}
 #+END_rightcol
  
-** Shannon Channel Capacity Theorem
+** Channel Capacity
 
 *** Basic of Detection Theory
-- Assuming we are using BPSK:
+- Assuming we are using BPSK.
 
+- At the receiving end, we get the following signals:
+\[y = x + w =  \pm a + w,\]
+  - \(a^2\) can be viewed as the energy of the received signal
+  - \(w\sim \mathcal N(0,N_0)\) is a zero mean Gaussian noise, with average energy \(N_0\)
+  - The Signal to Noise Ratio (SNR) can be defined as \(SNR = a^2/N_0\).
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/binarydetection.js"
 
-x = [-1,1]
-y = [0,0]
+x = array([0, 0])
+y = array([0, 0.5])
 p = figure(title = "Detection of BPSK", plot_width = width, plot_height = height//2)
-p.circle(x, y, size=10)
+p.line(x+1, y, line_width = 2, line_dash = 'dotted')
+p.line(x-1, y, line_width = 2, line_dash = 'dotted')
 
 x = linspace(-3,3,121)
 y = exp(-x**2/2)/sqrt(2*pi)
 
 p.line(x-1, y, line_width=2)
 p.line(x+1, y, line_width=2)
-p.patch(x[-41:-1]-1, y[-41:-1], hatch_pattern="/")
-p.patch(x[0:41]+1, y[0:41], hatch_pattern="\\")
-show(p)
+xx = x[-41:-1]-1
+yy = y[-41:-1]
+xx = hstack((xx[0:1], xx))
+yy = hstack(([0], yy))
+#p.patch(xx, yy, hatch_pattern="/")
+xx = x[0:41]+1
+yy = y[0:41]
+xx = hstack((xx,xx[-1:]))
+yy = hstack((yy,[0]))
+#p.patch(xx,yy, hatch_pattern="\\")
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -633,13 +640,155 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/binarydetection.js" id="ae0a1212-086f-419d-94f9-945cb583732e"></script>
+<script src="figures/binarydetection.js" id="b4b77841-9866-45ab-bec4-0c18439330b8"></script>
 #+end_export
 
-- The probability of error is
-\[P_e = Q\left(2\sqrt{SNR}\right),\]
-- \(Q\) is the 
+*** Probability of Error
+- We need to estimate ("detect") the phase of \(x\)
+- A detector is essentially a mapping from \(y\) to \(\hat x\)
+- The probability of error for the detector is
+\[P_e = P(\hat x \neq x).\]
+- Bayesian Detector:
+  - Calculate the condition probability
+  \begin{align*}
+  P(x = a|y)  &= \frac{P(x = a)P(y|x = a)}{P(y)},\\
+  P(x =- a|y) &= \frac{P(x = -a)P(y|x =- a)}{P(y)}.
+  \end{align*}
+  - If \(P(x=a|y)\geq P(x=-a|y)\), then \(\hat x = 0\), otherwise \(\hat x = \pi\).
+  
+*** Probability of Error
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/binarydetection2.js"
 
+x = array([0, 0])
+y = array([0, 0.5])
+p = figure(title = "Detection of BPSK", plot_width = width, plot_height = height//2)
+#p.line(x+1, y, line_width = 2, line_dash = 'dotted')
+#p.line(x-1, y, line_width = 2, line_dash = 'dotted')
+
+x = linspace(-3,3,121)
+y = exp(-x**2/2)/sqrt(2*pi)
+
+p.line(x-1, y, line_width=2)
+p.line(x+1, y, line_width=2)
+xx = x[-41:-1]-1
+yy = y[-41:-1]
+xx = hstack((xx[0:1], xx))
+yy = hstack(([0], yy))
+p.patch(xx, yy, hatch_pattern="/")
+xx = x[0:41]+1
+yy = y[0:41]
+xx = hstack((xx,xx[-1:]))
+yy = hstack((yy,[0]))
+p.patch(xx,yy, hatch_pattern="\\")
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/binarydetection2.js" id="99f5b4f4-0867-4602-a571-3aaf2e7dcab3"></script>
+#+end_export
+
+- Assuming \(\pm a\) has equal probability, then the decision rule is 
+\[\hat x = \begin{cases} 0 & if\;y\geq 0\\ \pi& otherwise\end{cases}.\]
+- The probability of error is given by
+\begin{align*}
+P_e &= \int_{a}^{\infty} \frac{1}{\sqrt{2 \pi N_0}}\exp\left(-x^2/2N_0\right) dx \\
+&= \int_{a/\{sqrt N_0}} \frac{1}{\sqrt{2\pi}} \exp\left(-x^2/2\right)dx\\
+&=Q(\sqrt{SNR})
+\end{align*}
+
+*** Encoding/Decoding
+- To reduce bit error rate, one could
+  - increase the SNR.
+  - However, this is very expensive
+- More clever solution:
+  - We could transmit the same bit multiple times (repetition code)
+  - or better yet, use error correct code
+- Problem: If we use "higher" QAM (assuming the same average signal energy)
+  - we pack more symbols into the same area in the constellation diagram
+  - the symbols are more difficult to differentiate -> higher error rate per symbol
+  - However, we could use better encoder to reduce the bit error rate
+  - Can we achieve *infinite bit rate* (under some constraints on bit error rate)?
+
+*** Shannon-Hartley Theorem 
+
+\[C = B \times log_2( 1 + S/N ) = B \times log_2( 1 + SNR )\]
+
+- where:
+  - \(C\) the information rate of data that can be communicated at an arbitrarily low error rate;
+  - \(B\) is the bandwidth of the channel in hertz;
+  - \(S\) is the average received signal power over the bandwidth measured in watts; and
+  - \(N\) is the average power of the noise and interference over the bandwidth, measured in watts.
+- Fundamental limit: We *CANNOT* achieve a data rate higher than \(C\) *regardless of modulation/encoding* scheme.
+- Achievability: For any data rate lower than \(C\), there *exists* a modulation/encoding scheme to achieve it.
+  - Problem: the computational complexity is usually very high
+  - Polar code is the first capacity-achieving code with complexity of \(O(n\log n)\).
+
+*** Shannon-Hartley Theorem
+ 
+\[C = B \times log_2( 1 + S/N ) \]
+
+#+BEGIN_leftcol
+- What if we increase the bandwidth \(B\)?
+- The noise \(N = kTB = N_0B\) will also increase!
+- The maximum capacity is still bounded by \(\log_2(e) S/N_0 \approx 1.44 S/N_0\).
+ 
+#+END_leftcol
+#+BEGIN_rightcol
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/capacityvsbandwidth.js"
+
+x = linspace(0.1,20,101)
+y = [b*log2(1+1/b) for b in x]
+p = figure(title = "AWGN Channel Capacity for S/N0 = 1", plot_width = width//2, plot_height = height)
+p.line(x, y, line_width=2)
+p.xaxis.axis_label = "Bandwidth"
+p.yaxis.axis_label = "Channel Capacity"
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/capacityvsbandwidth.js" id="96a1dd8a-38a0-44e4-826c-71a6f6470bb0"></script>
+#+end_export
+
+#+END_rightcol
+
+*** Shannon-Hartley Theorem
+
+\[C = B \times log_2( 1 + SNR )\]
+- Even SNR is very bad, we can still have reliable communication:
+\[C = B \times log_2( 1 + SNR ) \approx \log_2(e) B \times SNR. \]
+- Example: GPS communication
+  - \(B\): 1 MHz bandwidth,
+  - \(SNR\): −30 dB, the signal is 1000 times smaller than noise!
+  - \(C \approx 1.44\times 10^6 \times 10^{-3} = 1440 bit/s\)
+- Navigation message of GPS is sent at 50 bit/s
+  - reliable communication can be established.
+
+*** Implications
+- Good physical layer protocol for intelligent networked system:
+  - Long Range
+  - High Throughput
+  - Low Power
+  - Other metrics: low latency, mobility, cost, ...
+- Shannon-Hartley Theorem & Friis transmission equation: NO communication scheme can achieve long range, high throughput and low power simultaneously.
+- Need to consider applications:
+  - Surveillance camera for smart city: long range, high throughput
+  - Environmental monitoring: long range, low power
+  - Smart Building: short range
 
 * Multi-Path Problem 
  
@@ -658,33 +807,340 @@ print(tag)
   - Diffraction - occurs at the edge of an impenetrable body that is large compared to wavelength of radio wave
   - Scattering – occurs when incoming signal hits an object whose size in the order of the wavelength of the signal or less
 
-*** Reflection/Diffraction/Scattering
+*** Reflecting Wall Example cite:Tse2005
+ 
+#+BEGIN_leftcol
+- Assuming a single frequency \(f\) sinusoidal signal is transmitted
+- The direct signal has a phase delay of 
+\[\phi_1 =  \frac{2\pi}{c}rf.\]
+- The reflected signal has a phase delay of 
+\[\phi_2 =  \frac{2\pi}{c}(2d-r)f.\]
+- The phase difference of the two signal is
+  \[\Delta \phi = \frac{4 \pi}{c} (d-r)f.\]
+  
+#+END_leftcol
+#+BEGIN_rightcol
+  {{{revealimg("./figures/multipath.meta","Reflecting Wall Example","20vh",nil,'none)}}}
+#+END_rightcol
 
-*** Reflecting Wall Example
+** Coherence Bandwidth
 
-*** Coherent Bandwidth
+- The difference between the max and min delay is called delay spread. In our case,
+  \[T_d = \frac{2(d-r)}{c}.\]
+- If the frequency changes by \(1/2T_d\), then the phase difference changes by \(\pi\).
+- \(W_c = 1/2T_d\) is called coherence bandwidth.
+- For cellular communication, the path length difference is usually less than 300m
+- The delay spread is \(300m/c = 1\mu s\)
+- The coherence bandwidth is \( (2 \mu s)^{-1} = 500 KHz\).
+*** Flat v.s. Frequency Selective Fading
+- *Flat fading*: \(W_c\) is much larger than the bandwidth of the signal. 
+  - All frequency components of the signal will experience the same magnitude of fading.
+  - Narrowband signal: GSM use 200kHz sub-channel
+- *Frequency-selective fading*: \(W_c\) is smaller than the bandwidth of the signal.
+  - Different frequency components of the signal experience different fading.
+  - Countermeasures: equalization, ...
+  - Wideband signal: cdmaOne uses 1.25Mhz
+*** Flat v.s. Frequency Selective Fading cite:Tse2005
+
+  {{{revealimg("./figures/freqfading.meta","Impulse Response of a Fading Channel","60vh",nil,'none)}}}
 
 *** Intersymbol Interference
-    
-*** Mobile Object
-    
-*** Coherent Time
 
+- Delay causes copies of the signal arriving at the receiver at different times
+- Part or all of a given symbol will be spread into the subsequent symbols
+  - Interfering with the correct detection of those symbols
+- To avoid ISI, symbol duration needs to be much larger than delay spread
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/fskwithisi.js"
+x0 = linspace(0, 12, 13)
+y0 = [0,0,1,1,0,1,0,0,0,1,1,0,0]
+p1 = figure(title = "Baseband Signal")
+p1.step(x0, y0, line_width=2, mode="after")
+
+x = linspace(0, 12, 241)
+y = [step_func(p, x0, y0) * sin(4*pi*p) + (1-step_func(p, x0, y0)) * sin(2*pi*p) for p in x]
+y = array(y)
+p2 = figure(title = "Frequency-Shift Keying")
+p2.line(x, y, line_width=2)
+
+p3 = figure(title = "Delayed Signal")
+p3.line(linspace(1, 12, 221), y[0:221]/2, line_width=2, line_dash = 'dashed')
+p3.line(linspace(1.2, 12, 217), y[0:217]/2, line_width=2)
+
+p4 = figure(title = "Combined Signal")
+p4.line(linspace(1, 12, 221), y[0:221]/2 + hstack((zeros(4),y[0:217]/2)), line_width=2)
+
+p = gridplot([ p2, p3, p4], ncols = 1, plot_width = width, plot_height = height//3)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/fskwithisi.js" id="41a926c0-8936-41cd-a474-fd47c59e7112"></script>
+#+end_export
+
+** Coherence Time
+
++ Recall that phase difference of the two signal is
+  \[\Delta \phi = \frac{4 \pi}{c} (d-r)f.\]
++ If the frequency is fixed, then the phase changes \(\pi\) if the receiver moves
+\[\Delta r = c/4f.\]
+  - For a carrier frequency of 1GHz, \(\Delta r \approx 7.5 cm\).
++ Consider we are on a vehicle at speed \(60km/h \approx 16.7m/s\)
+  - It takes 4.5ms for \(\Delta \phi\) to change \(\pi\)
+  - This time is called coherence time 
+*** Fading 
+    
+#+BEGIN_leftcol
+- If we assume:
+  - the initial path length difference \(2(d-r_0) = 300m\);
+  - the base frequency \(f_0 = 1GHz\);
+  - moving speed of 10m/s.
+
+#+END_leftcol
+
+#+BEGIN_rightcol
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/fading.js"
+f0 = 1e9
+f = linspace(0, 2e6, 50 ) + f0
+d0 = 300
+v = 10
+t = linspace(0, 10e-2, 150)
+d = d0 + 2*v*t 
+c = 3e8 
+dd, ff = meshgrid(d, f)
+amp = 1 + cos(ff*dd*2*pi/c)
+
+p = figure(tooltips=[("t", "$x"), ("f", "$y"), ("value", "@image")])
+p.x_range.range_padding = p.y_range.range_padding = 0
+
+p.image(image=[amp], x=0, y=1000, dw=30, dh=2, palette="Greys256", level="image")
+p.xaxis.axis_label = "Time(ms)"
+p.yaxis.axis_label = "Frequncy(MHz)"
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/fading.js" id="57a2641b-f1ec-4c4b-940f-6c65e3181463"></script>
+#+end_export
+
+#+END_rightcol
+*** Real World Fading 
+    {{{revealimg("./figures/realfading.meta",t,"60vh")}}}
 
 * Diversity
   
 ** Time Diversity 
+ 
+#+BEGIN_leftcol
+- Wireless communication is usually an underspread channel
+  - Delay spread (\(\mu s\)) is much smaller than coherence time (ms)
+  - A narrowband signal (flat-fading) can transmit 100's symbols during a coherent time window 
+- To ensure that the coded symbols are transmitted through independent or nearly independent fading gains, we can interleave the code.
+- Drawbacks: may results in large latency
+- GSM use TDMA for voice communication
+#+END_leftcol
+#+BEGIN_rightcol
+
+  {{{revealimg("./figures/timediversity.meta","Time Diversity","60vh",nil,'none)}}}
+#+END_rightcol
+
+** Space Diversity: MIMO
    
+- Multiple antenna can be used at the transmitting and receiving end
+- Instead of destructive fading, we can achieve constructive fading
+  {{{revealimg("./figures/spacediversity.meta","SIMO, MISO and MIMO","60vh",nil,'none)}}}
+
 ** Frequency Diversity   
+  
+*** Spread Spectrum
+- Spread-spectrum: a signal with a particular bandwidth is deliberately spread in the frequency domain, resulting in a signal with a wider bandwidth. 
+- Benefits
+  - Frequency diversity: not all frequencies are in deep fade
+  - Used for hiding and encrypting signals 
+
+*** Chirp Spread Spectrum 
+- A chirp is a sinusoidal signal of frequency increase or decrease over time
+- Idea for low energy communication protocols
+  - e.g. LoRa
+ 
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/chirp.js"
+
+x = linspace(0,1,500)
+y = sin(50*pi*x**2)
+p1 = figure(title = "Upchirp")
+p1.line(x,y, line_width=2)
+p2 = figure(title = "Downchirp")
+p2.line(x[::-1],y, line_width=2)
+
+p = gridplot([p1, p2], ncols = 2, plot_width = width//2, plot_height = height//2)
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/chirp.js" id="13af9c16-449e-4f9a-92f1-1b5c9d8c1121"></script>
+#+end_export
+
+*** Direct Sequence Spread Spectrum
+- Information is encoded and modulated by a pseudonoise (PN) sequence
+- The data rate \(R\) is much smaller than the transmission bandwidth \(W\) Hz
+  - e.g., cdmaOne use a bandwidth of 1.2288 MHz 
+  - and a typical data rate (voice) is 9.6 kbits/s
+  - The processing gain is \(1228.8/9.6 = 128\)
+  - 64 chips are used for 1 data bit
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/dhss.js"
+x = linspace(0,32,33)
+y = array([1 if z <= 16 else 0 for z in x])
+p1 = figure(title = "Baseband Signal")
+p1.step(x, y, line_width=2, mode="before")
+pn = array([round(p) for p in random.rand(16)])
+pn = hstack((pn,pn,pn[:1]))
+p2 = figure(title = "PN Sequence")
+p2.step(x, pn, line_width=2, mode="before")
+encode = 0.5 + 2*(y-0.5)*(pn-0.5)
+p3 = figure(title = "Transmitted Signal")
+p3.step(x, encode, line_width=2, mode="before")
+
+p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
+
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/dhss.js" id="1faba1d9-2856-4f1d-8d9c-c4d606896a66"></script>
+#+end_export
+
+*** Direct Sequence Spread Spectrum 
+- How to combat Intersymbol interference:
+  - The shifted PN sequence is "orthogonal" to the original sequence
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/dhss2.js"
+
+p1 = figure(title = "PN Sequence")
+p1.step(x, pn, line_width=2, mode="before")
+
+p1.x_range=Range1d(0, 32)
+p2 = figure(title = "Delayed Signal")
+p2.step(x[1:], encode[:-1], line_width=2, mode="before")
+
+p2.x_range=Range1d(0, 32)
+
+decode = 0.5 + 2*(pn[1:]-0.5)*(encode[:-1]-0.5)
+p3 = figure(title = "Decoded Signal")
+p3.step(x[1:], decode, line_width=2, mode="before")
+
+p3.x_range=Range1d(0, 32)
+p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
+
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/dhss2.js" id="d7bb1a45-f544-43d1-bd91-495cb0e429b9"></script>
+#+end_export
+
+*** Frequency Hopping Spread Spectrum
+- Frequency-hopping spread spectrum is a method of transmitting radio signals by *rapidly changing the carrier frequency* among many distinct frequencies occupying a large spectral band
+  - e.g. Bluetooth LE uses 37 channels, each occupy 2MHz
+  - Channels are switched at a rate of 1600 hops/s (\(625\mu s\)).
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/fhss.js"
+p = figure(title="Frequency Hopping Spread Spectrum", plot_width = width, plot_height = height//2)
+
+for f in range(0,5):
+    for t in range(1,10):
+        p.rect(x=t,y=f,width=0.9,height=0.9, fill_color="#ffffff")
+
+p.rect(x=1,y=1,width=0.9,height=0.9, fill_color="#cab2d6")
+pref = 1
+for t in range(2,10):
+    f = random.randint(5)
+    p.rect(x=t,y=f,width=0.9,height=0.9, fill_color="#cab2d6")
+    p.line(x=t,y=f,width=0.9,height=0.9, fill_color="#cab2d6")
+    pref = f
+p.xaxis.axis_label = "Time"
+p.yaxis.axis_label = "Frequency"
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/fhss.js" id="ba922392-aec5-449f-8afc-11e66ba50e25"></script>
+#+end_export
    
-** Frequency Hopping Spread Spectrum
-   
-** OFDM
-   
-** Chirp Spread Spectrum 
-   
-** CDMA
-   
+*** Orthogonal Frequency Division Multiplexing
+- Consider the Bluetooth LE example
+  - Assuming a symbol rate of \(R\)
+  - The corresponding \(sinc\) function will occupy \(2R\) bandwidth
+  - Hence, \(2R + guard\;band\leq 2MHz\)
+- Is it really necessary?   
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/fdma.js"
+x = linspace(-0.7,0.7,51)
+y = sinc(x/0.7)
+p = figure(title = "Frequency Division", plot_width = width, plot_height=height//2)
+for i in range(1,10):
+    p.patch(x+2*i, y, line_width=2)
+
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/fdma.js" id="43c4a651-92d8-4b3c-bb66-def05cd0f741"></script>
+#+end_export
+
 * Physical Layer Protocol
 ** Bluetooth LE
    
@@ -697,3 +1153,15 @@ print(tag)
 ** LoRa
   
 * Conclusion
+
+* Bibliography
+  :PROPERTIES:
+  :CUSTOM_ID: bibliography
+  :END:
+
+  printbibliography:references.bib
+
+  # Local Variables:
+  # indent-tabs-mode: nil
+  # org-src-preserve-indentation: t
+  # End:
