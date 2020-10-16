@@ -26,7 +26,7 @@ def step_func(x, x0, y0):
 #+END_SRC
 
 #+RESULTS:
-: # Out[2]:
+: # Out[1]:
 
 * Introduction
 
@@ -146,7 +146,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/rect.js" id="64ccdbeb-6499-4cac-b85c-9bb4f24dd0cb"></script>
+<script src="figures/rect.js" id="a997696d-0ad0-4a34-9e26-1480eecbb1d3"></script>
 #+end_export
 
 *** Energy Spectrum of Rectangle Function
@@ -376,7 +376,7 @@ print(tag)
   - the frequency changes more smoothly rather than instantaneously
   - to reduce sideband power
 - We are allocated with a frequency band between 200-300kHz. If we use FSK modulation scheme: 
-  - What are the sub-carrier frequencies?
+  - What are the sub-carrier frequencies if we assume that we use two frequencies that are 10Mhz apart?
   - What is the bit rate per second?
 
 ** Phase-Shift Keying
