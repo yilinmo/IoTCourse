@@ -1187,7 +1187,7 @@ print(tag)
 - For the OFDM scheme
   - If the symbol rate is \(R\)
   - Each sub-carrier signal only needs to be \(R\) apart
-  - More than twice spectra efficient
+  - More than twice spectral efficient
   - Modulation/Demodulation can be done efficiently via Fast Fourier Transform
 - OFDM is originally proposed by Bell lab in 1966
 - Used in Wifi, 4G, 5G
@@ -1273,7 +1273,7 @@ print(tag)
 - the Radio communication Sector (ITU-R) defines the international standards and goals for various generations of cellular communication. 
 |                    | 2G         | 3G           | 4G                                   | 5G                                 |
 | First Availability | 1999       | 2002         | 2010                                 | 2020                               |
-| Bandwidth          | NA         | 2/0.384Mbps  | 1/0.1 Gbps                           | Min Down: 20 Gbps/ Min Up: 10 Gbps |
+| Bandwidth          | NA         | Stationary: 2Mbps Mobile 384Kbps | Stationary:1 Gbps, Mobile 100Mbps    | Min Down: 20 Gbps/ Min Up: 10 Gbps |
 | Features           | Voice, SMS | Audio, Video | Unified IP and seamless LAN/WAN/WLAN | IoT, ultra density, low latency    |
 
 ** LoRa
@@ -1286,6 +1286,8 @@ print(tag)
   - 433 MHz: In Asia.
 - Chirp Spread Spectrum (CSS) is the modulation technique used in LoRa.
 - Typical data rate is 0.3 - 5kbps
+- Each LoRa packet contains 51-222 Bytes of Data
+- Typical Energy for one message is < 1 \(\muAh\)
 - Typical range of communication is 2-3km in cities and 5-7km in rural area
   - The world record is 702km!
 

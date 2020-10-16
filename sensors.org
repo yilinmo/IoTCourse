@@ -896,7 +896,7 @@ Many power management practices can employed, such as
 - Geometry/Accessibility/...
 
 *** Supercapacitors
-- Supercapacitors (or supercaps) store energy at significantly higher volumes than typical capacitors
+- Supercapacitors (or supercaps) store energy at significantly higher volumes than typical capacitors {{{reveallicense("./figures/ultracapacitorbus.meta","20vh",nil,'none)}}}
   - A typical capacitor: 0.01 Watt-hours/kg.
   - A supercap: 1 to 10 Watt-hours/kg
   - A battery: 200 Watt-hours/kg.
@@ -908,6 +908,8 @@ Many power management practices can employed, such as
 - Cons:
   - leakage current 
   - the cost (need exotic material such as graphene)
+
+    
 *** Comparison
 |                         | Li-ion Battery                 | Supercapacitor  |
 | Energy density          | 200 Wh/hg                      | 8-10Wh/kg       |

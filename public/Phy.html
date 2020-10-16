@@ -25,6 +25,9 @@
 <script src="./reveal.js/plugin/chart/Chart.min.js"></script>
 <script src="./reveal.js/plugin/chart/plugin.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.1.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.1.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.1.min.js"></script>
 <script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
@@ -58,22 +61,89 @@
 </section>
 
 <section>
+<section id="slide-org137443a">
+<h2 id="org137443a">Introduction</h2>
+<div class="outline-text-2" id="text-org137443a">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org37cb424">
+<h3 id="org37cb424">Core Questions</h3>
+<ul>
+<li>What purpose does the physical layer serve in OSI network model?</li>
+<li>What is a frequency band for radio signal?
+<ul>
+<li>How can we modulate a baseband signal to fit in the frequency band?</li>
+
+</ul></li>
+<li>What is the fundamental limit for reliable data transmission?</li>
+<li>How does multi-path deteriorate the communication channel?
+<ul>
+<li>How to counter the multi-path effect using diversity?</li>
+
+</ul></li>
+<li>What considerations do we have for choosing PHY protocols?</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf260f46">
+<h3 id="orgf260f46">Learning Objectives</h3>
+<ul>
+<li>Definition of physical layer in the OSI network model</li>
+<li>Frequency band of radio signal
+<ul>
+<li>Digital modulation and demodulation</li>
+
+</ul></li>
+<li>The capacity of a AWGN channel</li>
+<li>Coherence bandwidth and time due to multi-path</li>
+<li>Time/Space/Frequency diversity</li>
+<li>Various communication protocols and the comparison between them</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf79f85d">
+<h3 id="orgf79f85d">Table of Contents</h3>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#slide-org137443a">Introduction</a></li>
+<li><a href="#slide-org423c06f">Overview</a></li>
+<li><a href="#slide-org9240e73">Digital Modulation and Demodulation</a></li>
+<li><a href="#slide-org0531567">Free Space Propagation Model</a></li>
+<li><a href="#slide-orgb223cdb">Multi-Path Problem</a></li>
+<li><a href="#slide-org10113ac">Diversity</a></li>
+<li><a href="#slide-org1e225fe">Physical Layer Protocol</a></li>
+<li><a href="#slide-bibliography">Bibliography</a></li>
+</ul>
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
 <section id="slide-org423c06f">
 <h2 id="org423c06f">Overview</h2>
 <div class="outline-text-2" id="text-org423c06f">
 </div>
 <div class="slide-footer"><br></div>
 </section>
+<section id="slide-org900b9fe">
+<h3 id="org900b9fe">OSI 7-Layer Network Model</h3>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/osimodel.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/osimodel.png" alt="OSI Network Model" style="max-height:60vh" /></p><p>OSI Network Model</p><p style="max-width:60vh">by <span property="cc:attributionName">Offnfopt</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/8/8d/OSI_Model_v1.svg">Wikipedia</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
 <section id="slide-org61bd2a1">
 <h3 id="org61bd2a1">OSI Physical Layer</h3>
 <ul>
-<li>Concerned with the transmission of unstructured</li>
-
-</ul>
-<p>
-bit streams over the physical medium
-</p>
-<ul>
+<li>The physical layer defines the means of transmitting raw bits over a physical data link connecting network nodes.</li>
 <li>Deals with accessing the physical medium
 <ul>
 <li>Mechanical characteristics</li>
@@ -87,37 +157,132 @@ bit streams over the physical medium
 
 <div class="slide-footer"><br></div>
 </section>
-</section>
-<section>
-<section id="slide-orgaac8ada">
-<h2 id="orgaac8ada">Modulation and Demodulation</h2>
-<div class="outline-text-2" id="text-orgaac8ada">
-</div>
+<section id="slide-org778baa3">
+<h3 id="org778baa3">Wireless PHY protocols</h3>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/wirelesscommunication.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/wirelesscommunication.png" alt="Figure" style="max-height:60vh" /></p><p>Various wireless communication protocols and categories designed for different ranges, data rates, and use cases</p></div></div><p>
+</p>
+
+
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orga240d90">
-<h3 id="orga240d90">Frequency Band</h3>
+<section id="slide-org581d9ae">
+<h3 id="org581d9ae">Electromagnetic Spectrum</h3>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/emspectrum.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/emspectrum.png" alt="Electromagnetic Spectrum" style="max-height:60vh" /></p><p>Electromagnetic Spectrum</p><p style="max-width:60vh">by <span property="cc:attributionName">Penubag</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/2/25/Electromagnetic-Spectrum.svg">Wikipedia</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org9104041">
+<h3 id="org9104041">Radio Frequency (RF) Signal</h3>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/ituradioband.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/ituradioband.png" alt="Frequencies and wavelengths of upper ITU radio bands with related common names" style="max-height:60vh" /></p><p>Frequencies and wavelengths of upper ITU radio bands with related common names</p><p style="max-width:60vh">by <span property="cc:attributionName">Hedles</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC BY-SA 4.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/8/88/Higher_frequency_ITU_radio_bands.png">Wikipedia</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc308332">
+<h3 id="orgc308332">RF Band Allocation</h3>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/usfreqallocation.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/usfreqallocation.jpg" alt="United States radio spectrum frequency allocations chart as of January 2016" style="max-height:60vh" /></p><p>United States radio spectrum frequency allocations chart as of January 2016</p><p style="max-width:60vh">by <span property="cc:attributionName"> United States Department of Commerce</span> under <a rel="license" href="https://commons.wikimedia.org/wiki/Public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/c/c7/United_States_Frequency_Allocations_Chart_2016_-_The_Radio_Spectrum.pdf">Wikipedia</a></p></div></div><p>
+</p>
+<ul>
+<li>Frequency band is a very <b>rare</b> &amp; <b>important</b> resource!</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org4d1eaef">
+<h3 id="org4d1eaef">ISM Band</h3>
+<ul>
+<li>Radio spectrum reserved internationally for industrial, scientific and medical (ISM) purposes 
+<ul>
+<li>e.g., microwave ovens</li>
+
+</ul></li>
+<li>Fastest-growing use for low power wireless communications systems
+<ul>
+<li>e.g., WiFi, Bluetooth, Zigbee, LoRa</li>
+
+</ul></li>
+<li>Communications equipment must tolerate interference generated by ISM applications</li>
+
+</ul>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Frequency Range</td>
+<td class="org-left">Center Frequency</td>
+<td class="org-left">Bandwidth</td>
+<td class="org-left">Availability</td>
+</tr>
+
+<tr>
+<td class="org-left">433.05~434.79 MHz</td>
+<td class="org-left">433.92 MHz</td>
+<td class="org-left">1.74 MHz</td>
+<td class="org-left">Region 1</td>
+</tr>
+
+<tr>
+<td class="org-left">902~928 MHz</td>
+<td class="org-left">915 MHz</td>
+<td class="org-left">26 MHz</td>
+<td class="org-left">Region 2</td>
+</tr>
+
+<tr>
+<td class="org-left">2.4~2.5 GHz</td>
+<td class="org-left">2.45 GHz</td>
+<td class="org-left">100 MHz</td>
+<td class="org-left">Worldwide</td>
+</tr>
+
+<tr>
+<td class="org-left">5.725~5.875 GHz</td>
+<td class="org-left">5.8 GHz</td>
+<td class="org-left">150 MHz</td>
+<td class="org-left">Worldwide</td>
+</tr>
+</tbody>
+</table>
 
 <div class="slide-footer"><br></div>
 </section>
 </section>
 <section>
-<section id="slide-org8e9d3e9">
-<h2 id="org8e9d3e9">AWGN Channels</h2>
-<div class="outline-text-2" id="text-org8e9d3e9">
+<section id="slide-org9240e73">
+<h2 id="org9240e73">Digital Modulation and Demodulation</h2>
+<div class="outline-text-2" id="text-org9240e73">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org399a1f9">
-<h3 id="org399a1f9">Impairments</h3>
+<section id="slide-org0e0ed45">
+<h3 id="org0e0ed45">Modulation Overview</h3>
 <ul>
-<li>Free space loss</li>
-<li>Noise</li>
-<li>Atmospheric absorption</li>
-<li>Fading
+<li>Modulation is the process of varying one or more properties of a periodic waveform, called the <b>carrier signal</b>, with a <b>modulating signal</b> that typically contains information to be transmitted.</li>
+<li>In digital modulation, an <b>analog carrier signal</b> is modulated by a <b>discrete signal</b>.</li>
+<li>The most fundamental digital modulation techniques are based on keying:
 <ul>
-<li>Multi-path</li>
-<li>Small-scale fading</li>
+<li>ASK (amplitude-shift keying): <b>a finite number of amplitudes</b> are used.</li>
+<li>FSK (frequency-shift keying): <b>a finite number of frequencies</b> are used.</li>
+<li>PSK (phase-shift keying): <b>a finite number of phases</b> are used.</li>
+<li>QAM (quadrature amplitude modulation): <b>a finite number of at least two phases and at least two amplitudes</b> are used.</li>
 
 </ul></li>
 
@@ -125,20 +290,331 @@ bit streams over the physical medium
 
 <div class="slide-footer"><br></div>
 </section>
+<section id="slide-org45c0fb8">
+<h4 id="org45c0fb8">Rectangle and Sinc Function</h4>
+<ul>
+<li>The simplest digital signal is a rectangle function:</li>
+
+</ul>
+<p>
+\[rect(x) = \begin{cases} 1 & x \in [-0.5,0.5]\\ 0 & otherwise \end{cases}.\]  
+</p>
+<ul>
+<li>Fourier Transform:</li>
+
+</ul>
+<p>
+\[F(\omega ) = \int_{-\infty}^\infty f(t) \exp(2\pi i  \omega t)dt.\]
+</p>
+<ul>
+<li>The FT of rectangle function is (normalized) sinc function</li>
+
+</ul>
+<p>
+\[sinc(\omega) = \frac{\sin(\pi*\omega)}{\pi*\omega}.\]
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgea3ef3b">
+<h4 id="orgea3ef3b">Rectangle and Sinc Function</h4>
+
+<script src="figures/rect.js" id="64ccdbeb-6499-4cac-b85c-9bb4f24dd0cb"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org68cd079">
+<h4 id="org68cd079">Energy Spectrum of Rectangle Function</h4>
+
+<script src="figures/psd.js" id="64a91652-029f-4f4d-8e1a-66a66c172894"></script>
+
+<ul>
+<li>Most of the energy are located inside the passband of \(\pm 1Hz\).</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb89d7b6">
+<h4 id="orgb89d7b6">Properties of Fourier Transform</h4>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Time Domain</td>
+<td class="org-left">Frequency Domain</td>
+</tr>
+
+<tr>
+<td class="org-left">Linear Combination</td>
+<td class="org-left">\(a\times f(t)+b\times g(t)\)</td>
+<td class="org-left">\(a\times F(\omega)+b\times G(\omega)\)</td>
+</tr>
+
+<tr>
+<td class="org-left">Multiplication</td>
+<td class="org-left">\( f(t)\times g(t)  \)</td>
+<td class="org-left">\(F(\omega) * G(\omega)\)</td>
+</tr>
+
+<tr>
+<td class="org-left">Delay</td>
+<td class="org-left">\(f(t-\tau)\)</td>
+<td class="org-left">\(\exp(-2\pi i \tau \omega) F(\omega)\)</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgcc36d48">
+<h4 id="orgcc36d48">Modulation</h4>
+<ul>
+<li>If we multiply the baseband signal (\(rect(t)\)) with a carrier signal (\(cos(2\pi f_0 t)\))</li>
+
+</ul>
+
+<p>
+\[S(t) = rect(t)\times \cos (2\pi f_0 t). \]
+</p>
+<ul>
+<li>In frequency domain, the signal will be centered around the carrier frequency \(f_0\)</li>
+<li>Most of the energy is allocated inside \(f_0\pm 1\).</li>
+<li>If we reduce the symbol time from \(1s\) to \(\tau s\):
+<ul>
+<li>The modulated signal will still be centered around \(f_0\)</li>
+<li>However, the zero crossing will happen at \(f_0 \pm 1/\tau\).</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc086eaf">
+<h4 id="orgc086eaf">Modulation</h4>
+
+<script src="figures/modulation.js" id="1915e652-39ea-489a-8e91-560227055c12"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orge55b944">
+<h4 id="orge55b944">Demodulation</h4>
+<ul>
+<li>The baseband signal can be recovered as</li>
+
+</ul>
+<div>
+\begin{align*}
+S(t) \times \cos(2\pi f_0 t) &= rect(t) \times \cos^2(2\pi f_0 t)\\
+&= \frac{1}{2} rect(t) \times \left[1+\cos(4\pi f_0 t)\right] 
+\end{align*}
+
+</div>
+<ul>
+<li>A low pass filter can be used in order to:
+<ul>
+<li>Filter out the high frequency \(rect(t) \times \cos(4\pi f_0 t)\) component;</li>
+<li>And recover the baseband signal \(rect(t)\).</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd1d54da">
+<h4 id="orgd1d54da">Demodulation</h4>
+
+<script src="figures/demodulation.js" id="b2d5c9c1-cca2-4837-828a-b7dfa9dc9be0"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgaf01ab2">
+<h3 id="orgaf01ab2">Amplitude-Shift Keying</h3>
+
+<script src="figures/ask.js" id="57f36ac7-2619-49c4-86b3-5664001755d1"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga04f1b5">
+<h4 id="orga04f1b5">Amplitude-Shift Keying</h4>
+<ul>
+<li>We are allocated with a frequency band between 200-300kHz. If we use 4-ASK modulation scheme: 
+<ul>
+<li>What is the carrier frequency?</li>
+<li>What is the symbol rate per second?</li>
+<li>What is the bit rate per second?</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org715f3ac">
+<h3 id="org715f3ac">Frequency-Shift Keying</h3>
+
+<script src="figures/fsk.js" id="9183530f-b130-491e-b59b-5ab7c3275556"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb9ca645">
+<h4 id="orgb9ca645">Frequency-Shift Keying</h4>
+<ul>
+<li>In practice, we can smooth the digital signal 
+<ul>
+<li>e.g., by Gaussian filter</li>
+<li>the frequency changes more smoothly rather than instantaneously</li>
+<li>to reduce sideband power</li>
+
+</ul></li>
+<li>We are allocated with a frequency band between 200-300kHz. If we use FSK modulation scheme: 
+<ul>
+<li>What are the sub-carrier frequencies?</li>
+<li>What is the bit rate per second?</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org46b5c00">
+<h3 id="org46b5c00">Phase-Shift Keying</h3>
+
+<script src="figures/psk.js" id="38f59171-08ea-4216-aff4-fadfde45d94d"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf25bdbe">
+<h3 id="orgf25bdbe">QAM</h3>
+<div class="outline-text-3" id="text-orgf25bdbe">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org07c6b78">
+<h4 id="org07c6b78">Constellation Diagram</h4>
+<ul>
+<li>We could draw the amplitude and phase of the symbol on the complex plane:</li>
+
+</ul>
+
+<script src="figures/constellation.js" id="2835d487-001d-4fbd-82ff-f89ca064fd76"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2753424">
+<h4 id="org2753424">Quadrature Amplitude Modulation (QAM)</h4>
+<ul>
+<li>We could combine multiple amplitude and multiple phase together to form a constellation</li>
+<li>The most common ones are 16, 64, 256 QAM
+<ul>
+<li>each symbol carries 4, 6, 8 bits repsectively</li>
+
+</ul></li>
+
+</ul>
+
+
+<script src="figures/qam.js" id="cbc7e569-2482-4b38-9372-ef840a15eeb8"></script>
+
+<ul>
+<li>For Wifi 6, up to 1024-QAM can be used depending on the channel quality</li>
+<li>Can we use &ldquo;infinite&rdquo;-QAM to transmit at &ldquo;infinite&rdquo; bit rate?</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org0531567">
+<h2 id="org0531567">Free Space Propagation Model</h2>
+<div class="outline-text-2" id="text-org0531567">
+</div>
+<div class="slide-footer"><br></div>
+</section>
 <section id="slide-orge9efdd0">
 <h3 id="orge9efdd0">Free Space Loss</h3>
+<div class="outline-text-3" id="text-orge9efdd0">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org591500e">
+<h4 id="org591500e">Channel Impairments</h4>
+<ul>
+<li><b>Free space loss</b></li>
+<li><b>Noise</b></li>
+<li>Fading 
+<ul>
+<li>Multi-path (Next Section)</li>
+
+</ul></li>
+<li>Atmospheric absorption</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf78d7be">
+<h4 id="orgf78d7be">Free Space Transmission</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/freespace.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/freespace.png" alt="Free Space Transmission" style="max-height:60vh" /></p><p>Free Space Transmission</p><p style="max-width:60vh">by <span property="cc:attributionName">John S. Huggins</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/5/5e/Friis_Free-Space_Radio_Circuit.png">Wikipedia</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org72c7c48">
+<h4 id="org72c7c48">Friis Transmission Equation</h4>
+<ul>
+<li>Friss Transmission Equation:
+\[\frac {P_r}{P_t}=D_rD_t\left(\frac {\lambda}{4\pi d}\right)^2.\]</li>
+<li>where:
+<ul>
+<li>\(P_{t}\) is the power fed into the transmitting antenna input terminals;</li>
+<li>\(P_{r}\) is the power available at receiving antenna output terminals;</li>
+<li>\(D_{r}, D_t\) are the antenna directivities (with respect to an isotropic radiator) of the transmitting and receiving antennas respectively;</li>
+<li>\(d\) is the distance between antennas;</li>
+<li>\(\lambda\) is the wavelength of the radio frequency;</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section>
+<ul>
+<li>Friss Transmission Equation:
+\[\frac {P_r}{P_t}=D_rD_t\left(\frac {\lambda}{4\pi d}\right)^2.\]</li>
+<li>To increase signal strength at the receiving end:
+<ul>
+<li>Increase transmitting power;</li>
+<li>Decrease carrier frequency, distance;</li>
+<li>Better antenna</li>
+
+</ul></li>
+
+</ul>
 
 <div class="slide-footer"><br></div>
 </section>
 <section id="slide-org1df95da">
 <h3 id="org1df95da">Noise</h3>
 <ul>
-<li>Thermal Noise
+<li>Thermal Noise(John-Nyquist Noise)
 <ul>
 <li>Noise seen in switching circuits due to electrons</li>
-<li>Function of temperature
-\[N = kTB\]</li>
-<li>\(N\): Noise, \(k\): Boltzman constant, \(T\): Temperature, \(B\): Bandwidth</li>
 
 </ul></li>
 <li>Inter-modulation noise
@@ -161,56 +637,673 @@ bit streams over the physical medium
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb15e76e">
-<h3 id="orgb15e76e">Fundamental Limit</h3>
+<section id="slide-org9d12cb4">
+<h4 id="org9d12cb4">Thermal Noise</h4>
+<ul>
+<li>White noise since it contains the same level of power at all frequencies
+\[N = ktB\]</li>
+<li>\(k\) is the Boltzmann’s constant: \(1.381\times 10^{-21} W/(K\cdot Hz)\),</li>
+<li>\(T\) is the absolute temperature in Kelvin, and</li>
+<li>\(B\) is the bandwidth.</li>
+<li>At room temperature, \(T = 290K\), the thermal noise power spectral density
+\(kT =  –174 dBm/Hz\)</li>
+<li>dBm is the ratio between the power and a reference of one milliwatt (mW), expressed in dB.
+<ul>
+<li>0dBm = 1mW, 10dBm = 10mW, 20dBm = 100mW</li>
+
+</ul></li>
+<li>For 1MHz bandwidth, the power of the noise is</li>
+
+</ul>
+<p>
+\(-174 + 10 log 1M= -114dBm\) or \(4\times 10^{-15}W\).
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0691299">
+<h4 id="org0691299">Thermal Noise</h4>
+
+<script src="figures/thermalnoise.js" id="1adce4e0-31e9-412d-a453-98e15dd2c203"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb047cae">
+<h4 id="orgb047cae">Constellation Diagram with Noise</h4>
+<div class="leftcol">
+<p>
+
+</p>
+
+
+<script src="figures/qam2.js" id="a1f298ff-27a7-4e56-8ecb-23d2a95fc3b5"></script>
+
+</div>
+
+<div class="rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/16qam.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/16qam.png" alt="16 QAM of LTE connection measured in laboratory" style="max-height:60vh" /></p><p>16 QAM of LTE connection measured in laboratory</p><p style="max-width:60vh">by <span property="cc:attributionName">Dipl-Ingo</span> under <a rel="license" href="https://en.wikipedia.org/wiki/Public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/d/de/FDD_16-QAM.png">Wikipedia</a></p></div></div><p>
+</p>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org67dfa2b">
+<h3 id="org67dfa2b">Channel Capacity</h3>
+<div class="outline-text-3" id="text-org67dfa2b">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org736708e">
+<h4 id="org736708e">Basic of Detection Theory</h4>
+<ul>
+<li>Assuming we are using BPSK.</li>
+
+<li>At the receiving end, we get the following signals:</li>
+
+</ul>
+<p>
+\[y = x + w =  \pm a + w,\]
+</p>
+<ul>
+<li>\(a^2\) can be viewed as the energy of the received signal</li>
+<li>\(w\sim \mathcal N(0,N_0)\) is a zero mean Gaussian noise, with average energy \(N_0\)</li>
+<li>The Signal to Noise Ratio (SNR) can be defined as \(SNR = a^2/N_0\).</li>
+
+</ul>
+
+<script src="figures/binarydetection.js" id="ca85152c-99bf-4f0b-9413-4502c0bba93e"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0e78b3f">
+<h4 id="org0e78b3f">Probability of Error</h4>
+<ul>
+<li>We need to estimate (&ldquo;detect&rdquo;) the phase of \(x\)</li>
+<li>The probability of error is</li>
+
+</ul>
+<p>
+\[P_e = P(\hat x \neq x).\]
+</p>
+<ul>
+<li><p>
+Bayesian Detector:
+</p>
+<ul>
+<li>Calculate the conditional probability</li>
+
+</ul>
+<div>
+\begin{align*}
+P(x = a|y)  &= \frac{P(x = a)P(y|x = a)}{P(y)},\\
+P(x =- a|y) &= \frac{P(x = -a)P(y|x =- a)}{P(y)}.
+\end{align*}
+
+</div>
+<ul>
+<li>If \(P(x=a|y)\geq P(x=-a|y)\), then \(\hat x = 0\), otherwise \(\hat x = \pi\).</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd76298a">
+<h4 id="orgd76298a">Probability of Error</h4>
+
+<script src="figures/binarydetection2.js" id="aeb02283-bfc9-4eb5-abb6-247f91de5956"></script>
+
+<ul>
+<li>Assuming \(\pm a\) has equal probability, then the decision rule is</li>
+
+</ul>
+<p>
+\[\hat x = \begin{cases} 0 & if\;y\geq 0\\ \pi& otherwise\end{cases}.\]
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section>
+<ul>
+<li>The probability of error is given by</li>
+
+</ul>
+<div>
+\begin{align*}
+P_e &= \int_{a}^{\infty} \frac{1}{\sqrt{2 \pi N_0}}\exp\left(-x^2/2N_0\right) dx \\
+&= \int_{a/\sqrt {N_0}}^\infty\frac{1}{\sqrt{2\pi}} \exp\left(-x^2/2\right)dx\\
+&=Q(\sqrt{SNR}).
+\end{align*}
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org846e04b">
+<h4 id="org846e04b">Encoding/Decoding</h4>
+<ul>
+<li>To reduce bit error rate, one could
+<ul>
+<li>increase the SNR.</li>
+<li>However, this is very expensive</li>
+
+</ul></li>
+<li>More clever solution:
+<ul>
+<li>We could transmit the same bit multiple times (repetition code)</li>
+<li>or better yet, use error correct code</li>
+
+</ul></li>
+<li>Problem: If we use &ldquo;higher&rdquo; QAM (assuming the same average signal energy)
+<ul>
+<li>we pack more symbols into the same area in the constellation diagram</li>
+<li>the symbols are more difficult to differentiate -&gt; higher error rate per symbol</li>
+<li>However, we could use better encoder to reduce the bit error rate</li>
+<li>Can we achieve <b>infinite bit rate</b> (under some constraints on bit error rate)?</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org76c6655">
+<h4 id="org76c6655">Shannon-Hartley Theorem</h4>
+<p>
+\[C = B \times log_2( 1 + S/N ) = B \times log_2( 1 + SNR )\]
+</p>
+
+<ul>
+<li>where:
+<ul>
+<li>\(C\) the information rate of data that can be communicated at an arbitrarily low error rate;</li>
+<li>\(B\) is the bandwidth of the channel in hertz;</li>
+<li>\(S\) is the average received signal power over the bandwidth measured in watts; and</li>
+<li>\(N\) is the average power of the noise and interference over the bandwidth, measured in watts.</li>
+
+</ul></li>
+<li>Fundamental limit: We <b>CANNOT</b> achieve a data rate higher than \(C\) <b>regardless of modulation/encoding</b> scheme.</li>
+<li>Achievability: For any data rate lower than \(C\), there <b>exists</b> a modulation/encoding scheme to achieve it.
+<ul>
+<li>Problem: the computational complexity is usually very high</li>
+<li>Polar code is the first capacity-achieving code with complexity of \(O(n\log n)\).</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf640103">
+<h4 id="orgf640103">Shannon-Hartley Theorem</h4>
+<p>
+\[C = B \times log_2( 1 + S/N ) \]
+</p>
+
+<div class="leftcol">
+<ul>
+<li>What if we increase the bandwidth \(B\)?</li>
+<li>The noise \(N = kTB = N_0B\) will also increase!</li>
+<li>The maximum capacity is still bounded by \(\log_2(e) S/N_0 \approx 1.44 S/N_0\).</li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+
+</p>
+
+
+<script src="figures/capacityvsbandwidth.js" id="33fe108e-f061-4641-b710-c2cff0a32435"></script>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org64a7a26">
+<h4 id="org64a7a26">Shannon-Hartley Theorem</h4>
+<p>
+\[C = B \times log_2( 1 + SNR )\]
+</p>
+<ul>
+<li>Even SNR is very bad, we can still have reliable communication:</li>
+
+</ul>
+<p>
+\[C = B \times log_2( 1 + SNR ) \approx \log_2(e) B \times SNR. \]
+</p>
+<ul>
+<li>Example: GPS communication
+<ul>
+<li>\(B\): 1 MHz bandwidth,</li>
+<li>\(SNR\): −30 dB, the signal is 1000 times smaller than noise!</li>
+<li>\(C \approx 1.44\times 10^6 \times 10^{-3} = 1440 bit/s\)</li>
+
+</ul></li>
+<li>Navigation message of GPS is sent at 50 bit/s
+<ul>
+<li>reliable communication can be established.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org3c75093">
+<h4 id="org3c75093">Implications</h4>
+<ul>
+<li>Good physical layer protocol for intelligent networked system:
+<ul>
+<li>Long Range</li>
+<li>High Throughput</li>
+<li>Low Power</li>
+<li>Other metrics: low latency, mobility, cost, &#x2026;</li>
+
+</ul></li>
+<li>Shannon-Hartley Theorem &amp; Friis transmission equation: NO communication scheme can achieve long range, high throughput and low power simultaneously.</li>
+<li>Need to consider applications:
+<ul>
+<li>Surveillance camera for smart city: long range, high throughput</li>
+<li>Environmental monitoring: long range, low power</li>
+<li>Smart Building: short range</li>
+
+</ul></li>
+
+</ul>
 
 <div class="slide-footer"><br></div>
 </section>
 </section>
 <section>
-<section id="slide-org6bf7f46">
-<h2 id="org6bf7f46">Fading Channels and Diversity</h2>
-<div class="outline-text-2" id="text-org6bf7f46">
+<section id="slide-orgb223cdb">
+<h2 id="orgb223cdb">Multi-Path Problem</h2>
+<div class="outline-text-2" id="text-orgb223cdb">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orge526c02">
-<h3 id="orge526c02">Multi-path</h3>
-<p>
-• Multi-path: obstacles reflect signals so that
-multiple copies with varying delays are received
-– Reflection - occurs when signal encounters a surface
-that is large relative to the wavelength of the signal
-– Diffraction - occurs at the edge of an impenetrable
-body that is large compared to wavelength of radio
-wave
-– Scattering – occurs when incoming signal hits an
-object whose size in the order of the wavelength of
-the signal or less
-</p>
+<section id="slide-orgbc0b7ab">
+<h3 id="orgbc0b7ab">Multi-path</h3>
+<div class="outline-text-3" id="text-orgbc0b7ab">
+</div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7955c27">
-<h4 id="org7955c27">Effects of Multi-path</h4>
+<section id="slide-orgf8bb636">
+<h4 id="orgf8bb636">Impairments</h4>
+<ul>
+<li>Free space loss</li>
+<li>Noise</li>
+<li>Fading 
+<ul>
+<li><b>Multi-path</b></li>
+
+</ul></li>
+<li>Atmospheric absorption</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga81973f">
+<h4 id="orga81973f">Multi-path</h4>
+<ul>
+<li>Multi-path: obstacles reflect signals so that multiple copies with varying delays are received
+<ul>
+<li>Reflection - occurs when signal encounters a surface that is large relative to the wavelength of the signal</li>
+<li>Diffraction - occurs at the edge of an impenetrable body that is large compared to wavelength of radio wave</li>
+<li>Scattering – occurs when incoming signal hits an object whose size in the order of the wavelength of the signal or less</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgfe12a2f">
+<h4 id="orgfe12a2f">Reflecting Wall Example <a class="org-ref-reference" href="#slide-bibliography">[Tse2005]</a></h4>
+<div class="leftcol">
+<ul>
+<li>Assuming a single frequency \(f\) sinusoidal signal is transmitted</li>
+<li>The direct signal has a phase delay of</li>
+
+</ul>
 <p>
-– Multiple copies of a signal may arrive at different
-phases
-• If phases add destructively, the signal level relative to noise
-declines, making signal detection more difficult
-– Inter-symbol interference (ISI)
-• One or more delayed copies of a pulse may arrive at the
-same time as the primary pulse for a subsequent bit
+\[\phi_1 =  \frac{2\pi}{c}rf.\]
+</p>
+<ul>
+<li>The reflected signal has a phase delay of</li>
+
+</ul>
+<p>
+\[\phi_2 =  \frac{2\pi}{c}(2d-r)f.\]
+</p>
+
+</div>
+<div class="rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/multipath.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/multipath.png" alt="Figure" style="max-height:40vh" /></p><p>Reflecting Wall Example</p></div></div><p>
+</p>
+<ul>
+<li>The phase difference of the two signal is
+\[\Delta \phi = \frac{4 \pi}{c} (d-r)f.\]</li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5892735">
+<h3 id="org5892735">Coherence Bandwidth</h3>
+<ul>
+<li>The difference between the max and min delay is called delay spread. In our case,
+\[T_d = \frac{2(d-r)}{c}.\]</li>
+<li>If the frequency changes by \(1/2T_d\), then the phase difference changes by \(\pi\).</li>
+<li>\(W_c = 1/2T_d\) is called coherence bandwidth.</li>
+<li>For cellular communication, the path length difference is usually less than 300m</li>
+<li>The delay spread is \(300m/c = 1\mu s\)</li>
+<li>The coherence bandwidth is \( (2 \mu s)^{-1} = 500 KHz\).</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7150c87">
+<h4 id="org7150c87">Flat v.s. Frequency Selective Fading</h4>
+<ul>
+<li><b>Flat fading</b>: \(W_c\) is much larger than the bandwidth of the signal. 
+<ul>
+<li>All frequency components of the signal will experience the same magnitude of fading.</li>
+<li>Narrowband signal: GSM use 200kHz sub-channel</li>
+
+</ul></li>
+<li><b>Frequency-selective fading</b>: \(W_c\) is smaller than the bandwidth of the signal.
+<ul>
+<li>Different frequency components of the signal experience different fading.</li>
+<li>Countermeasures: equalization, &#x2026;</li>
+<li>Wideband signal: cdmaOne uses 1.25Mhz</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd8ddaf9">
+<h4 id="orgd8ddaf9">Flat v.s. Frequency Selective Fading <a class="org-ref-reference" href="#slide-bibliography">[Tse2005]</a></h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/freqfading.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/freqfading.png" alt="Figure" style="max-height:60vh" /></p><p>Impulse Response of a Fading Channel</p></div></div><p>
 </p>
 
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org0da8b9a">
-<h3 id="org0da8b9a">CDMA</h3>
+<section id="slide-org7640f8c">
+<h4 id="org7640f8c">Intersymbol Interference</h4>
+<ul>
+<li>Delay causes copies of the signal arriving at the receiver at different times</li>
+<li>Part or all of a given symbol will be spread into the subsequent symbols
+<ul>
+<li>Interfering with the correct detection of those symbols</li>
+
+</ul></li>
+<li>To avoid ISI, symbol duration needs to be much larger than delay spread</li>
+
+</ul>
+
+<script src="figures/fskwithisi.js" id="be337c6e-6ef9-41bc-a8ae-6fb167bbb78e"></script>
+
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org9a7ba0a">
-<h3 id="org9a7ba0a">OFDM</h3>
+<section id="slide-org849dc55">
+<h3 id="org849dc55">Coherence Time</h3>
+<ul>
+<li>Recall that phase difference of the two signal is
+\[\Delta \phi = \frac{4 \pi}{c} (d-r)f.\]</li>
+<li>If the frequency is fixed, then the phase changes \(\pi\) if the receiver moves</li>
+
+</ul>
+<p>
+\[\Delta r = c/4f.\]
+</p>
+<ul>
+<li>For a carrier frequency of 1GHz, \(\Delta r \approx 7.5 cm\).</li>
+
+</ul>
+<ul>
+<li>Consider we are on a vehicle at speed \(60km/h \approx 16.7m/s\)
+<ul>
+<li>It takes 4.5ms for \(\Delta \phi\) to change \(\pi\)</li>
+<li>This time is called coherence time</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgca92e86">
+<h4 id="orgca92e86">Fading</h4>
+<div class="leftcol">
+<ul>
+<li>If we assume:
+<ul>
+<li>the initial path length difference \(2(d-r_0) = 300m\);</li>
+<li>the base frequency \(f_0 = 1GHz\);</li>
+<li>moving speed of 10m/s.</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+
+<div class="rightcol">
+<p>
+
+</p>
+
+
+<script src="figures/fading.js" id="a37ee54a-92e2-4dbf-a970-aacdcd06b46c"></script>
+
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7a2bf82">
+<h4 id="org7a2bf82">Real World Fading</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/realfading.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/realfading.jpg" alt=" An unidentified radio signal at 6.600 MHz with strong propagation noise" style="max-height:60vh" /></p><p>An unidentified radio signal at 6.600 MHz with strong propagation noise</p><p style="max-width:60vh">by <span property="cc:attributionName">Mysid</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/f/fe/Radio_propagation_noise.jpg">Wikipedia</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org10113ac">
+<h2 id="org10113ac">Diversity</h2>
+<div class="outline-text-2" id="text-org10113ac">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc89664e">
+<h3 id="orgc89664e">Time Diversity</h3>
+<div class="leftcol">
+<ul>
+<li>Wireless communication is usually an underspread channel
+<ul>
+<li>Delay spread (\(\mu s\)) is much smaller than coherence time (ms)</li>
+<li>A narrowband signal (flat-fading) can transmit 100&rsquo;s symbols during a coherent time window</li>
+
+</ul></li>
+<li>To ensure that the coded symbols are transmitted through independent or nearly independent fading gains, we can interleave the code.</li>
+<li>Drawbacks: may results in large latency</li>
+<li>GSM use TDMA for voice communication</li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+
+</p>
+
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/timediversity.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/timediversity.png" alt="Figure" style="max-height:60vh" /></p><p>Time Diversity</p></div></div><p>
+</p>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2075dd8">
+<h3 id="org2075dd8">Space Diversity: MIMO</h3>
+<ul>
+<li>Multiple antenna can be used at the transmitting and receiving end</li>
+<li>Instead of destructive fading, we can achieve constructive fading
+ </p><div class="imgcontainer"><div about="figures/raw/spacediversity.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/spacediversity.png" alt="Figure" style="max-height:60vh" /></p><p>SIMO, MISO and MIMO</p></div></div><p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org358f310">
+<h3 id="org358f310">Frequency Diversity</h3>
+<div class="outline-text-3" id="text-org358f310">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd1ae6f6">
+<h4 id="orgd1ae6f6">Spread Spectrum</h4>
+<ul>
+<li>Spread-spectrum: a signal with a particular bandwidth is deliberately spread in the frequency domain, resulting in a signal with a wider bandwidth.</li>
+<li>Benefits
+<ul>
+<li>Frequency diversity: not all frequencies are in deep fade</li>
+<li>Used for hiding and encrypting signals</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2145b93">
+<h4 id="org2145b93">Chirp Spread Spectrum</h4>
+<ul>
+<li>A chirp is a sinusoidal signal of frequency increase or decrease over time</li>
+<li>Idea for low energy communication protocols
+<ul>
+<li>e.g. LoRa</li>
+
+</ul></li>
+
+</ul>
+
+
+<script src="figures/chirp.js" id="d5b7eae5-8c25-415d-95a9-8270a2fb7e3e"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2d73b29">
+<h4 id="org2d73b29">Direct Sequence Spread Spectrum</h4>
+<ul>
+<li>Information is encoded and modulated by a pseudonoise (PN) sequence</li>
+<li>The data rate \(R\) is much smaller than the transmission bandwidth \(W\) Hz
+<ul>
+<li>e.g., cdmaOne use a bandwidth of 1.2288 MHz</li>
+<li>and a typical data rate (voice) is 9.6 kbits/s</li>
+<li>The processing gain is \(1228.8/9.6 = 128\)</li>
+<li>64 chips are used for 1 data bit</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orge785cd4">
+<h4 id="orge785cd4">Direct Sequence Spread Spectrum</h4>
+
+<script src="figures/dhss.js" id="7981e84f-bf2d-4e75-8815-b5b99baa9965"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga6df9da">
+<h4 id="orga6df9da">Direct Sequence Spread Spectrum</h4>
+<ul>
+<li>How to combat Intersymbol interference:
+<ul>
+<li>The shifted PN sequence is &ldquo;orthogonal&rdquo; to the original sequence</li>
+
+</ul></li>
+
+</ul>
+
+
+<script src="figures/dhss2.js" id="0876ce05-a29c-46dd-844e-eb363637b629"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2282c82">
+<h4 id="org2282c82">Frequency Hopping Spread Spectrum</h4>
+<ul>
+<li>Frequency-hopping spread spectrum is a method of transmitting radio signals by <b>rapidly changing the carrier frequency</b> among many distinct frequencies occupying a large spectral band
+<ul>
+<li>e.g. Bluetooth LE uses 37 channels, each occupy 2MHz</li>
+<li>Channels are switched at a rate of 1600 hops/s (\(625\mu s\)).</li>
+
+</ul></li>
+
+</ul>
+
+<script src="figures/fhss.js" id="0ae8eabf-3e79-4517-b45f-49121d4fab50"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgec4d1b2">
+<h4 id="orgec4d1b2">Orthogonal Frequency Division Multiplexing</h4>
+<ul>
+<li>Consider the Bluetooth LE example
+<ul>
+<li>Assuming a symbol rate of \(R\)</li>
+<li>The corresponding \(sinc\) function will occupy \(2R\) bandwidth</li>
+<li>Hence, \(2R + guard\;band\leq 2MHz\)</li>
+
+</ul></li>
+<li>Is it really necessary?</li>
+
+</ul>
+
+<script src="figures/fdma.js" id="bd08ef7f-2af1-4651-a19e-d916308b8e00"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgdc1deeb">
+<h4 id="orgdc1deeb">Orthogonal Frequency Division Multiplexing</h4>
+
+<script src="figures/ofdm.js" id="8fc043ff-2f85-438d-97f0-57da35d415f9"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org103ae02">
+<h4 id="org103ae02">Orthogonal Frequency Division Multiplexing</h4>
+<ul>
+<li>\(sinc(x + k),\, k\in\mathbb Z\) are orthogonal to each other</li>
+<li>For the OFDM scheme
+<ul>
+<li>If the symbol rate is \(R\)</li>
+<li>Each sub-carrier signal only needs to be \(R\) apart</li>
+<li>More than twice spectral efficient</li>
+<li>Modulation/Demodulation can be done efficiently via Fast Fourier Transform</li>
+
+</ul></li>
+<li>OFDM is originally proposed by Bell lab in 1966</li>
+<li>Used in Wifi, 4G, 5G</li>
+
+</ul>
 
 <div class="slide-footer"><br></div>
 </section>
@@ -218,6 +1311,363 @@ same time as the primary pulse for a subsequent bit
 <section>
 <section id="slide-org1e225fe">
 <h2 id="org1e225fe">Physical Layer Protocol</h2>
+<div class="outline-text-2" id="text-org1e225fe">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0a85316">
+<h3 id="org0a85316">Bluetooth LE</h3>
+<ul>
+<li><p>
+Bluetooth is a low-power wireless connectivity technology  </p><div about="figures/raw/bluetooth.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/bluetooth.png" alt="Bluetooth Logo" style="max-height:20vh" /></p><p></p><p style="max-width:20vh">&ldquo;<span property="dcterms:title">Bluetooth Logo</span>&rdquo; by <span property="cc:attributionName">Skarr21</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/2/2c/Bluetooth_FM_Color.png">Wikipedia</a></p></div><p>
+</p>
+<ul>
+<li>cell phones sensors</li>
+<li>headsets</li>
+<li>keyboards/mouses</li>
+<li>video game systems</li>
+
+</ul></li>
+<li>The name Bluetooth refers to King Harald Blatand in the region of what is now Norway and Sweden in around 958AD.
+<ul>
+<li>He got this name due to his liking of blueberries and/or the eating of his frozen enemies.</li>
+<li>Bluetooth is derived from his name because King Blatand brought together warring tribes.</li>
+
+</ul></li>
+<li>Bluetooth Low Energy is used extensively in IoT deployments 
+<ul>
+<li>beacons</li>
+<li>wireless sensors</li>
+<li>asset tracking systems</li>
+<li>remote controls</li>
+<li>health monitors</li>
+<li>and alarm systems.</li>
+
+</ul></li>
+<li>Throughout its history, Bluetooth and all the optional components have been under GPL license and are essentially open source.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orge0c79fa">
+<h4 id="orge0c79fa">PHY of Bluetooth LE</h4>
+<ul>
+<li>Operates in the 2.400–2.4835 GHz ISM band (Same as Wifi and 802.15.4)</li>
+<li>The ISM band is divided into forty 2-MHz channels.
+<ul>
+<li>37 of the channels are used to transmit date</li>
+<li>3 channels are reserved for advertising</li>
+<li>frequency hopping is used to provide diversity</li>
+
+</ul></li>
+<li>Within a channel, data is transmitted using Gaussian FSK modulation</li>
+<li>The bit rate is 1 Mbit/s, and the maximum transmit power is 10 mW 
+<ul>
+<li>Can be increased to 2Mbit/s and 100 mW in Bluetooth 5</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org190f39f">
+<h4 id="org190f39f">PHY of Bluetooth LE <a class="org-ref-reference" href="#slide-bibliography">[Lea2018]</a></h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/ble.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/ble.png" alt="Figure" style="max-height:60vh" /></p><p>Bluetooth Low Energy Channels</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org02134b1">
+<h4 id="org02134b1">Comparison between Bluetooth and Bluetooth LE</h4>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Technical specification</td>
+<td class="org-left">Bluetooth</td>
+<td class="org-left">Bluetooth Low Energy technology</td>
+</tr>
+
+<tr>
+<td class="org-left">Distance/range (theoretical max.)</td>
+<td class="org-left">100 m</td>
+<td class="org-left">&lt;100 m</td>
+</tr>
+
+<tr>
+<td class="org-left">Over the air data rate</td>
+<td class="org-left">1–3 Mbit/s</td>
+<td class="org-left">125k – 500k – 1M – 2 Mbit/s</td>
+</tr>
+
+<tr>
+<td class="org-left">Power consumption</td>
+<td class="org-left">1 W as the reference</td>
+<td class="org-left">0.01–0.50 W (depending on use case)</td>
+</tr>
+
+<tr>
+<td class="org-left">Peak current consumption</td>
+<td class="org-left">&lt;30 mA</td>
+<td class="org-left">&lt;15 mA</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2f00326">
+<h3 id="org2f00326">IEEE 802.15.4</h3>
+<ul>
+<li>The IEEE 802.15.4 is a standard wireless personal area network (PAN) defined by the IEEE 802.15 working group.
+<ul>
+<li>Defines the physical and MAC layer</li>
+<li>basis of many other protocols: Thread, Zigbee, WirelessHART, and others.</li>
+
+</ul></li>
+<li>The goal is to develop a low-cost WPAN with low power consumption.</li>
+<li>Operates in the ISM spectrum:
+<ul>
+<li>868 MHz, 915 MHz, and 2400 MHz.</li>
+
+</ul></li>
+
+</ul>
+
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">Frequency range (MHz)</td>
+<td class="org-left">Channel numbers</td>
+<td class="org-left">Modulation</td>
+<td class="org-left">Data rate (Kbps)</td>
+<td class="org-left">Region</td>
+</tr>
+
+<tr>
+<td class="org-right">868.3</td>
+<td class="org-left">1 channel: 0</td>
+<td class="org-left">BPSK/O-QPSK/ASK</td>
+<td class="org-left">20/ 100 /250</td>
+<td class="org-left">Europe</td>
+</tr>
+
+<tr>
+<td class="org-right">902-928</td>
+<td class="org-left">10 channels: 1-10</td>
+<td class="org-left">BPSK/O-QPSK/ASK</td>
+<td class="org-left">40/250/250</td>
+<td class="org-left">North America, Australia</td>
+</tr>
+
+<tr>
+<td class="org-right">2405-2480</td>
+<td class="org-left">16 channels: 11-26</td>
+<td class="org-left">O-QPSK</td>
+<td class="org-left">250</td>
+<td class="org-left">Worldwide</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org406e24b">
+<h4 id="org406e24b">PHY of IEEE 802.15.4 <a class="org-ref-reference" href="#slide-bibliography">[Lea2018]</a></h4>
+<ul>
+<li>Direct Sequence SS/Chirp SS/Ultra-wideband can be used for diversity</li>
+<li>Typical range: 200 meters outdoors, 30m indoors</li>
+<li><p>
+Typical transmission current: 15~30 mA, and reception current: 18~37mA
+</p>
+
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/80215.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/80215.png" alt="Figure" style="max-height:60vh" /></p><p>Bluetooth Low Energy Channels</p></div></div><p>
+</p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc8145de">
+<h3 id="orgc8145de">IEEE 802.11 (WiFi)</h3>
+<ul>
+<li>First release in June 1997</li>
+<li>The newest is Wifi 6
+<ul>
+<li>Works in both 2.4Ghz and 5Ghz ISM band</li>
+<li>Support up to 1024 QAM</li>
+<li>Use OFDMA for spreading spectrum and multiple user access</li>
+<li>Use Multi-user MIMO</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1861158">
+<h4 id="org1861158">Comparison between different generations of Wifi <a class="org-ref-reference" href="#slide-bibliography">[Lea2018]</a></h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/wifi.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/wifi.png" alt="Figure" style="max-height:60vh" /></p><p>Various IEEE 802.11 standards and specification</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org4b6d176">
+<h3 id="org4b6d176">Cellular Communication</h3>
+<ul>
+<li>The International Telecommunication Union (ITU) is a UN specialized agency 
+<ul>
+<li>was founded in 1865</li>
+<li>took its present name in 1932</li>
+<li>before becoming a specialized agency in the UN.</li>
+
+</ul></li>
+<li>the Radio communication Sector (ITU-R) defines the international standards and goals for various generations of cellular communication.</li>
+
+</ul>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">2G</td>
+<td class="org-left">3G</td>
+<td class="org-left">4G</td>
+<td class="org-left">5G</td>
+</tr>
+
+<tr>
+<td class="org-left">First Availability</td>
+<td class="org-left">1999</td>
+<td class="org-left">2002</td>
+<td class="org-left">2010</td>
+<td class="org-left">2020</td>
+</tr>
+
+<tr>
+<td class="org-left">Bandwidth</td>
+<td class="org-left">NA</td>
+<td class="org-left">Stationary: 2Mbps Mobile 384Kbps</td>
+<td class="org-left">Stationary:1 Gbps, Mobile 100Mbps</td>
+<td class="org-left">Min Down: 20 Gbps/ Min Up: 10 Gbps</td>
+</tr>
+
+<tr>
+<td class="org-left">Features</td>
+<td class="org-left">Voice, SMS</td>
+<td class="org-left">Audio, Video</td>
+<td class="org-left">Unified IP and seamless LAN/WAN/WLAN</td>
+<td class="org-left">IoT, ultra density, low latency</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgda0efa9">
+<h3 id="orgda0efa9">LoRa</h3>
+<ul>
+<li>LoRa is a physical layer for a <b>long-range</b> and <b>low-power</b> IoT protocol</li>
+<li>Originally developed by Cycleo in France and then acquired by the Semtech Corporation in U.S.</li>
+<li>ZTE and Alibaba are in the LoRa Alliance.</li>
+<li>Uses the following ISM band:
+<ul>
+<li>915 MHz: In the USA</li>
+<li>868 MHz: In Europe</li>
+<li>433 MHz: In Asia.</li>
+
+</ul></li>
+<li>Chirp Spread Spectrum (CSS) is the modulation technique used in LoRa.</li>
+<li>Typical data rate is 0.3 - 5kbps</li>
+<li>Each LoRa packet contains 51-222 Bytes of Data</li>
+<li>Typical Energy for one message is &lt; 1 \(\muAh\)</li>
+<li>Typical range of communication is 2-3km in cities and 5-7km in rural area
+<ul>
+<li>The world record is 702km!</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org9d70d75">
+<h3 id="org9d70d75">Comparison</h3>
+<ul>
+<li>Good physical layer protocol for intelligent networked system:
+<ul>
+<li>Long Range</li>
+<li>High Throughput</li>
+<li>Low Power</li>
+<li>Other metrics: low latency, mobility, cost, &#x2026;</li>
+
+</ul></li>
+<li>NO communication scheme can achieve long range, high throughput and low power simultaneously.</li>
+<li>Need to consider applications:
+<ul>
+<li>Surveillance camera for smart city: 4G/5G</li>
+<li>Environmental monitoring: LoRa</li>
+<li>Smart Building: 
+<ul>
+<li>WiFi for camera</li>
+<li>802.15.4/Bluetooth LE for temperature sensor</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-bibliography">
+<h2 id="bibliography">Bibliography</h2>
+<ul class='org-ref-bib'><li><a id="Lea2018">[Lea2018]</a> <a name="Lea2018"></a>Parry Lea, Internet of Things for Architects, Packt Publishing, 2018. <a href=""></a></li>
+<li><a id="Tse2005">[Tse2005]</a> <a name="Tse2005"></a>Tse & Viswanath, Fundamentals of Wireless Communication, Cambridge University Press, 2005. <a href=""></a></li>
+</ul>
 <div class="slide-footer"><br></div>
 </section>
 </section>
