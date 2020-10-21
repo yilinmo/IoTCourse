@@ -30,10 +30,25 @@ def step_func(x, x0, y0):
 * Introduction
 
 ** Core Questions
+
+- What purpose does the data link layer serve in OSI network model?
+- How does collision occur in wireless communication?
+  - What are hidden and exposed terminal problem?
+- What are the major categories for medium access control protocols? 
+- How to save energy in the MAC protocol?
+ 
    
 ** Learning Objectives
-   
-todo 
+- Definition of the data link layer in the OSI network model
+  - Medium Access Control
+  - Logical Link Control
+- Characteristics of collision problem in wireless communication
+  - Hidden terminal problem
+  - Exposed terminal problem
+- MAC layer protocols
+  - Deterministic access
+  - Ordered access
+  - Random access
 
 ** Table of Contents
    :PROPERTIES:
@@ -47,47 +62,47 @@ todo
 
     {{{revealimg("./figures/osimodel.meta",t,"60vh")}}}
 
-*** MAC Layer
+*** Data-Link Layer
 - Physical Layer: handles transmission of raw bits
 - What is not taken care of...
-    – Handling collision
-    – Error checking
-    – Framing
+  - Handling collision
+  - Multiplexing
+  - Error checking
+  - Framing
 
 *** Data-Link Layer
 
-- Medium Access Control (MAC)
 - Logical Link Control (LLC)
-    – IEEE 802.2 standard
-    – recognizing where frames begin and end in the bit- stream
-    – multiplexing protocols transmitted over the MAC layer
-    – optionally providing flow control, and detection and retransmission of dropped packets
+  - IEEE 802.2 standard
+  - recognizing where frames begin and end in the bit-stream
+  - (de)multiplexing different protocols to be transmitted over the MAC layer
+  - optionally providing flow control, and detection and retransmission of dropped frames
+    - Usually provided by transport layer protocols (TCP) in an end-to-end fashion
+- Medium/Media Access Control (MAC)
 
 *** What is MAC?
 
 - Defines how a node obtains a channel when it needs to
-    – Must avoid interference at the traffic control level
-    – Determines who gets to send packets at any given time
+    – Determines who gets to send data at any given time
+    – Avoid Collision
 
 *** Design Considerations
 
 - What kind of a resource do we have?
+  - Frequency: bandwidth
+  - Time: Latency
+  - Energy
 - How much does a node need?
     – How often?
-    – How regular?
-- How often will the node initiate a request?
-- How much traffic can the resource afford?
-- What kind of a “guarantee” should be provided?
-- How fair should allocation be?
-- Do we need control or “let things happen as they may”?
-- Power saving issues?
-- Complexity?
-
+    – How regular? Is the communication bursty or not?
+- What kind of a "guarantee" should be provided?
+- Do we need central control or "let things happen as they may"?
+- Complexity/Fairness/...
 
 ** The Collision Problem in Wireless Communications
 
 - Two nodes send to the same node at the same time
-- Interference of data \(\to\) packet loss
+- Interference of data: data loss
 
 
 *** Ethernet vs. Wireless
@@ -102,56 +117,55 @@ todo
     – Cannot send and receive at the same time
         - (assuming a single frequency)
 
-*** Collision Problem (Wireless Version)
-
-- Collision cannot be sensed when transmitting: large collision penalty
-- Energy concern for wireless devices that operate using battery
-- Hidden Terminal problem
-- Exposed Terminal problem
-
 *** The "Hidden Terminal" Problem
+- Station C is sending data to station B. 
+- Station A wants to do the same and listens for other frames being sent. 
+- Since A is *out of the range* of station C, it does *NOT* notice its frames and thinks the media is free. 
+- A and C transmit simultaneously to B, and B loses *both* frames.
 
-- A hidden terminal T is in the range to interfere with H’s receiver R, but is out of range to sense the transmitter H.
-
-todo
-
-They can transmit simultaneously to R, and R loses *both* packets.
+    {{{revealimg("./figures/hiddennode.meta",t,"40vh")}}}
 
 *** The "Exposed Terminal" Problem
 
-- An exposed terminal is in the range to sense a transmitter but out of range to interfere with the transmitter
+- The two transmitters (S1, S2) in the middle are in range of each other. 
+- The two receivers (R1, R2) are out of range of each other
+- If a transmission between S1 and R1 is taking place:
+  - However, S2 can "hear" S1’s transmission
+  - S2 concludes that it will interfere with  S1
+  - So S2 chooses *NOT* to transmit
+- However R1 cannot hear S2 and R2 cannot hear S1.
 
-todo 
-
-However, E can "hear" T’s transmission and decide not to transmit.
+  {{{revealimg("./figures/exposednode.meta",t,"40vh")}}}
 
 *** Wasted Energy in Communication
 
 - Collisions
-    – Packets become corrupted
-    – Expend more energy for re-transmission
+  - Packets become corrupted
+  - Expend more energy for re-transmission
 - Overhearing
-    – Receiving a packet intended for another node
-    – Expend energy receiving a packet that is useless
-
-*** Wasted Energy in Communication
-
+  - Receiving a packet intended for another node
+  - Expend energy receiving a packet that is useless
 - Control Packet Overhead
-    – Large overhead translates into sending larger packets or more packets, and therefore more energy expended
+  - Large overhead translates into sending larger packets or more packets, and therefore more energy expended
 - Idle Listening
-    – Waiting to receive a packet
-    – Receiver expends energy and receives no data
-    – #1 source of wasted energy
+  - Waiting to receive a packet
+  - Receiver expends energy and receives no data
+  - #1 source of wasted energy
+
+*** Collision Problem (Wireless Version)
+
+- Collision cannot be sensed when transmitting
+- Hidden Terminal problem
+- Exposed Terminal problem
+- Energy concern 
 
 ** Types of MAC
 
 - Ordered Access
 - Deterministic Access
+  - Some of the protocols are in the physical layer
 - Random Access
-- Combinations
-
-todo
-
+- Hybrid
 
 * Ordered Access
 
@@ -159,85 +173,85 @@ todo
 
 - Not random
 - Not controlled by a central control point that allocates channels
-- Token passing
-    – Token Bus (IEEE 802.4)
-    – Token Ring (IEEE 802.5)
+- Token Ring 
+  - Introduced by IBM in 1984
+  - Standardized in 1989 as IEEE 802.5
+  - Was successful in corporate environments 
+  - Taken over by Ethernet (Random Access)
 
 *** Token Passing
 
-- Only the system which has some “token” can communicate
+- Only the system which has some "token" can communicate {{{reveallicense("./figures/ibmmau.meta","20vh")}}}
 - Token is passed to the next candidate in a sequential manner
+  {{{revealimg("./figures/tokenring.meta",t,"50vh")}}}
+
 
 *** Problems with Ordered Access
 
 - How about in a wireless network?
-    – Nodes might leave?
-    – Break the Order
-    – Take away the token
+  - Nodes might leave?
+  - Break the Order
+  - Take away the token
 
 * Deterministic Access
-
 ** Deterministic Access
 - Controlled by a central control point that allocates channels
-    – Time Division Multiple Access (TDMA)
-    – Frequency Division Multiple Access (FDMA)
-    – Space Division Multiple Access (SDMA)
-    – Code Division Multiple Access (CDMA)
+  - Time Division Multiple Access (TDMA)
+  - Frequency Division Multiple Access (FDMA)
+  - Space Division Multiple Access (SDMA)
+  - Code Division Multiple Access (CDMA)
 - Requires access points for coordination
-
 
 ** Frequency Division & Time Division 
 
 - Frequency Division Duplexing (FDD)
-    – Two distinct frequencies at the same time for the two directions
-    – Frequency separation must be coordinated to allow cheap RF technology
-    – Coordination with out-of-band users between the two bands
-    – Geared towards providing individual frequencies for each user
-
-    ![FDD]()
-
+  - Two distinct frequencies at the same time for the two directions
+  - Capacity is determined by frequency band allocation, making it difficult to make a dynamic change.
 - Time Division Duplexing (TDD)
-    – Two distinct sets of time slots on the same frequency for the two directions
-    – Time latency because only quasi-duplex
-    – No need for RF duplexer
-
-    ![TDD]()
+  - Two distinct sets of time slots on the same frequency for the two directions
+  - Cheaper since without the need of a diplexer to isolate transmission and receptions.
+  - Possible to change the uplink and downlink capacity ratio dynamically according to the needs.
+  - Time latency because only half-duplex
+  - Guard period is necessary
+- Both are used in 4G (not compatible)
+  - China Unicom, Telecom: FDD
+  - China Mobile: TDD -> FDD
 
 *** Time Division Multiple Access (TDMA)
 
-- Multiple users share frequency band via cyclically repeating “time slots”
-    – “channel”==particular time slot re-occurring every frame of N slots
-    – Transmission for any user is non-continuous: buffer-and-burst digital data & modulation needed, lower battery consumption
-    – Adaptive equalization is usually needed due to high symbol rate
-    – Larger overhead: synchronization bits for each data burst, guard bits for variations in propagation delay and delay spread
-    – Usually combined with either TDD or FDD for duplexing
-        - TDMA/TDD: half the slots in a frame used for uplink, half downlink
-        - TDMA/FDD: identical frames, with skew (why), on two frequencies
-
-![TDMA]()
+- Multiple users share the same frequency band via cyclically repeating "time slots"
+  - particular time slot re-occurring every frame of N slots
+  - Transmission for any user is non-continuous: buffer-and-burst digital data & modulation needed, lower battery consumption
+  - Larger overhead: synchronization bits for each data burst, guard bits for variations in propagation delay and delay spread
 
 *** Frequency Division Multiple Access (FDMA)
 
-- Assign different frequency bands to individual users or circuits
-    – Frequency band (“channel”) assigned on demand to users who request service
-    – No sharing of the frequency bands: idle if not used
-    – Usually available spectrum divided into number of “narrowband” channels
-        - Symbol time >> average delay spread, little or no equalization required
-    – Continuous transmission implies no framing or synchronization bits needed
-    – Tight RF filtering to minimize adjacent band interference
-    – Costly band-pass filters at base-station to eliminate spurious radiation
-    – Usually combined with FDD for duplexing
+- Assign different frequency bands to individual users
+  - Available spectrum is divided into a number of “narrowband” channels
+  - Frequency band assigned to users who request service
 
-![FDMA]()
+*** LTE Resource Block
+  {{{revealimg("./figures/lteresourceblock.meta","LTE Resource Block","40vh",nil,'none)}}}
+
+*** LTE Resource Block
+- Each LTE frame is 20MHz and 10ms
+- A resource block of 180kHz and 0.5ms can be allocated to each user
+- Each resource block is further divided into \(12\times 15Khz \) subcarriers
+- 7 OFDM symbols can be transmitted in 1 slot (\(0.5 ms \times 15kHz\))
+- 1 resource block contains 84 OFDM symbols
 
 ** Code Division Multiple Access (CDMA)
 
 - Exploits mathematical properties of orthogonality
-
-![CDMA]()
+todo
 
 ** Space Division Multiple Access (SDMA)
-
+- Traditional mobile network has no information on the position of the mobile units 
+  - Hence, the signal is transmitted in all directions 
+  - Likewise, in reception, the antenna receives signals coming from all directions 
+    - including interference signals.
+- For SDMA, the antenna, both in transmission and reception, is adapted to each user to obtain highest gain in the direction of that user.
+  - This is often done using phased array techniques.
 * Contention-Based
 
 ** Random Access
@@ -253,23 +267,23 @@ todo
 - A node can transmit as soon as it has a packet to send
 - Each node acts independently
 - Interference occurs when two or more nodes transmit concurrently
-- Simple but not quite efficient (18% max throughput)
+- Simple but not quite efficient 
 
-![ALOHA]()
+*** ALOHA
 
 ** Carrier Sense Multiple Access (CSMA)
 
 - Verifies the absence of other traffic before transmitting
 - If a carrier is sensed, the node waits for the transmission in progress to finish before initiating its own transmission.
-- If two nodes try to send a frame at nearly the same time, neither detects a carrier so both begin transmitting.
-
-- *Does not work in Wireless: hidden node problem*
+- However, if two nodes try to send a frame at nearly the same time, neither detects a carrier so both begin transmitting.
 
 ** Carrier Sense Multiple Access w/ Collision Detection (CSMA/CD)
 
 - Sending nodes are able to detect when a collision occurs and stop transmitting immediately, backing off for a random amount of time before trying again
+- Used in Ethernet
 - Does not work in Wireless
-    - cannot send and receive at the same time
+  - hidden node problem
+  - cannot send and receive at the same time
 
 ** Carrier Sense Multiple Access w/ Collision Avoidance (CSMA/CA)
 
@@ -278,43 +292,55 @@ todo
 - If the channel is sensed “idle”, then the station is permitted to transmit
 - If the channel is sensed as "busy" the station has to delay its transmission, avoiding collision
 - This virtual carrier sensing is done by a four-way handshake
-    – See next slide
 
-*** Four-Way Handshake (1 of 3)
+*** CSMA/CA
 
-- RTS (Ready to Send)
-- CTS (Clear to Send)
-- Data
-- ACK (Acknowledge)
+todo
 
-![Four-Way Handshake]()
-
-*** Four-Way Handshake (2 of 3)
+*** Hidden Terminal Problem
 
 - Partially solves the hidden node problem
 - T will get to know about the activity of H from CTS packet of R
+- RTS packet is small (low cost of collision)
 
-![Four-Way Handshake]()
 
-*** Four-Way Handshake (3 of 3)
+** Design Considerations
 
-- Partially solves the exposed node problem
-- If E receives only RTS of T but not CTS of R, it means that E cannot interfere with R when sending to A
+*** Random Access
+- Carrier sense or not?
+  - What is the probability of "hearing someone is talking"?
+- Slotted or Unslotted?
+- Cost of collision v.s. cost of overhead?
 
-![Four-Way Handshake]()
+*** Deterministic v.s. Random
 
-*** Random Backoff
+#+BEGIN_leftcol
+- Deterministic Access
+  - High throughput when traffic is heavy
+  - Small delay variance
+  - Relatively larger overhead of processing
+#+END_leftcol
+#+BEGIN_rightcol
+- Random Access
+  - Small overhead of processing
+  - Too many collisions when traffic is heavy: throughput decreases with load
+  - May subject to large delays
+#+END_rightcol
 
-- Use random backoff timer to avoid collisions
-- Minimize average number of 2nd collisions
+*** Deterministic v.s. Random
 
-![Random Backoff]()
 
-* MAC Layer Protocols
-** 4G/5G (FDMA)
-** WiFi (CSMA/CA)
-** IEEE 802.15.4 (Hybrid)
-** Lora (ALOHA)
+*** MAC Layer for Various Wireless Protocols
+    
+| 4G LTE        | TDMA and FDMA          |
+| IEEE 802.11   | CSMA/CA                |
+| Bluetooth     | CSMA/CA or TDMA + FHSS |
+| IEEE 802.15.4 | CSMA/CA and TDMA       |
+| LoRa          | Unslotted ALOHA        |
+
+* Hybrid Solution: IEEE 802.15.4
+
+
    
 * Bibliography
   :PROPERTIES:
