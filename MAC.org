@@ -83,8 +83,8 @@ def step_func(x, x0, y0):
 *** What is MAC?
 
 - Defines how a node obtains a channel when it needs to
-    – Determines who gets to send data at any given time
-    – Avoid Collision
+  - Determines who gets to send data at any given time
+  - Avoid Collision
 
 *** Design Considerations
 
@@ -93,8 +93,8 @@ def step_func(x, x0, y0):
   - Time: Latency
   - Energy
 - How much does a node need?
-    – How often?
-    – How regular? Is the communication bursty or not?
+  - How often?
+  - How regular? Is the communication bursty or not?
 - What kind of a "guarantee" should be provided?
 - Do we need central control or "let things happen as they may"?
 - Complexity/Fairness/...
@@ -108,14 +108,14 @@ def step_func(x, x0, y0):
 *** Ethernet vs. Wireless
 
 - Ethernet
-    – Medium is clear
-        - if you sense no carrier, there is no one sending data on the wire
-    – Node can send and receive at the same time
+  - Medium is clear
+    - if you sense no carrier, there is no one sending data on the wire
+  - Node can send and receive at the same time
 - Wireless LAN
-    – Medium is not clear
-        - possible that some node is sending data but is out of your range
-    – Cannot send and receive at the same time
-        - (assuming a single frequency)
+  - Medium is not clear
+      - possible that some node is sending data but is out of your range
+  - Cannot send and receive at the same time
+      - (assuming a single frequency)
 
 *** The "Hidden Terminal" Problem
 - Station C is sending data to station B. 
@@ -230,8 +230,8 @@ def step_func(x, x0, y0):
   - Available spectrum is divided into a number of “narrowband” channels
   - Frequency band assigned to users who request service
 
-*** LTE Resource Block
-  {{{revealimg("./figures/lteresourceblock.meta","LTE Resource Block","40vh",nil,'none)}}}
+*** LTE Resource Block cite:Lea2018
+  {{{revealimg("./figures/lteresouceblock.meta","LTE Resource Block","40vh",nil,'none)}}}
 
 *** LTE Resource Block
 - Each LTE frame is 20MHz and 10ms
@@ -257,10 +257,10 @@ todo
 ** Random Access
 
 - Randomly access media, usually detect collision *after* it happens
-    – ALOHA
-    – Carrier Sense Multiple Access (CSMA)
-    – Carrier Sense Multiple Access w/ Collision Detection (CSMA/CD)
-    – Carrier Sense Multiple Access w/ Collision Avoidance (CSMA/CA)
+  - ALOHA
+  - Carrier Sense Multiple Access (CSMA)
+  - Carrier Sense Multiple Access w/ Collision Detection (CSMA/CD)
+  - Carrier Sense Multiple Access w/ Collision Avoidance (CSMA/CA)
 
 ** ALOHA 
 

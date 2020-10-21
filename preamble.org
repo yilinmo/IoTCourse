@@ -14,9 +14,9 @@
 #+HTML_HEAD: <script src="./reveal.js/plugin/chart/plugin.js"></script>
 #+HTML_HEAD: <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
 
-#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.1.min.js"></script>
-#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.1.min.js"></script>
-#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.1.min.js"></script>
+#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.2.min.js"></script>
+#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.2.min.js"></script>
+#+HTML_HEAD: <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.2.min.js"></script>
 
 #+HTML_HEAD: <script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
 #+HTML_HEAD: <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

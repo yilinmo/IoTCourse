@@ -965,18 +965,60 @@ print(tag)
 * Diversity
 ** Time Diversity 
  
-#+BEGIN_leftcol
 - Wireless communication is usually an underspread channel
   - Delay spread (\(\mu s\)) is much smaller than coherence time (ms)
-  - A narrowband signal (flat-fading) can transmit 100's symbols during a coherent time window 
+  - A narrowband signal (flat-fading) can transmit hundreds of symbols during a coherent time window 
 - To ensure that the coded symbols are transmitted through independent or nearly independent fading gains, we can interleave the code.
 - Drawbacks: may results in large latency
 - GSM use TDMA for voice communication
-#+END_leftcol
-#+BEGIN_rightcol
 
-  {{{revealimg("./figures/timediversity.meta","Time Diversity","60vh",nil,'none)}}}
-#+END_rightcol
+*** Time Diversity 
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/timediversity.js"
+
+x = linspace(0,16,5)
+y = array([3, 2, .1, 1, 1])
+p1 = figure()
+p1.step(x, y, line_width=2, mode="after")
+p1.yaxis.axis_label = "Gain"
+
+p2 = figure()
+p2.axis.visible = False
+p2.xgrid.visible = False
+p2.ygrid.visible = False
+color = Category10_10.__iter__()
+c = next(color)
+for i in range(0,4):
+    c = next(color)
+    for j in range(0,4):
+        center = 4*i + j + 0.5
+        p2.rect(x = center ,y= 0.5,width=1,height=1, fill_color=c)
+
+p3 = figure()
+p3.axis.visible = False
+p3.xgrid.visible = False
+p3.ygrid.visible = False
+p3.xaxis.axis_label = "Time"
+color = Category10_10.__iter__()
+c = next(color)
+for i in range(0,4):
+    c = next(color)
+    for j in range(0,4):
+        center = 4*j + i + 0.5
+        p3.rect(x = center ,y= 0.5,width=1,height=1, fill_color=c)
+
+p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+<script src="figures/timediversity.js" id="65798b42-a9cf-4f29-9b81-f2439d9b48f2"></script>
+#+end_export
 
 ** Space Diversity: MIMO
    
@@ -1275,6 +1317,21 @@ print(tag)
 | First Availability | 1999       | 2002         | 2010                                 | 2020                               |
 | Bandwidth          | NA         | Stationary: 2Mbps Mobile 384Kbps | Stationary:1 Gbps, Mobile 100Mbps    | Min Down: 20 Gbps/ Min Up: 10 Gbps |
 | Features           | Voice, SMS | Audio, Video | Unified IP and seamless LAN/WAN/WLAN | IoT, ultra density, low latency    |
+
+*** 5G
+
+1. Enhanced Mobile Broadband (eMBB):
+   - 1 to 10 GBps connections to UEs/endpoints in the field (not theoretical)
+   - 100% coverage across the globe (or perception of)
+   - 10 to 100x the number of connected devices over 4G-LTE
+   - Connectivity at a speed of 500 km/h
+2. Ultra-Reliable and Low-Latency Communications (URLLC):
+   - Sub < 1 ms end-to-end round-trip latency
+   - 99.999% availability (or perception of)
+3. Massive Machine Type Communications (mMTC):
+   - 1000x bandwidth per unit area; this implies roughly 1 million nodes in 1 km 2
+   - Up to a 10 year battery life on endpoint IoT nodes
+   - 90% reduction in network energy usage
 
 ** LoRa
 - LoRa is a physical layer for a *long-range* and *low-power* IoT protocol
