@@ -12,7 +12,7 @@ from bokeh.resources import CDN
 from bokeh.plotting import figure, show
 from bokeh.embed import autoload_static
 from bokeh.layouts import gridplot
-from bokeh.models import Range1d
+from bokeh.models import Range1d, Label
 from numpy import *
 from bokeh.palettes import Category10_10
 
@@ -26,7 +26,7 @@ def step_func(x, x0, y0):
 #+END_SRC
 
 #+RESULTS:
-: # Out[1]:
+: # Out[2]:
 * Introduction
 
 ** Core Questions
@@ -132,7 +132,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/collision.js" id="da5a8f38-9f96-4dbd-b1ea-b6e756f21fcf"></script>
+<script src="figures/collision.js" id="fab7a758-e774-46ff-b235-7fbbed0be040"></script>
 #+end_export
 
 *** Ethernet vs. Wireless
@@ -247,18 +247,13 @@ print(tag)
   - China Unicom, Telecom: FDD
   - China Mobile: TDD -> FDD
 
-*** Time Division Multiple Access (TDMA)
+*** Time & Frequency Division Multiple Access (TDMA & FDMA)
 
-- Multiple users share the same frequency band via cyclically repeating "time slots"
-  - particular time slot re-occurring every frame of N slots
+- TDMA: Multiple users share the same frequency band via repeating "time slots"
   - Transmission for any user is non-continuous: buffer-and-burst digital data & modulation needed, lower battery consumption
   - Larger overhead: synchronization bits for each data burst, guard bits for variations in propagation delay and delay spread
-
-*** Frequency Division Multiple Access (FDMA)
-
-- Assign different frequency bands to individual users
+- FDMA: Assign different frequency bands to individual users
   - Available spectrum is divided into a number of “narrowband” channels
-  - Frequency band assigned to users who request service
 
 *** LTE Resource Block cite:Lea2018
   {{{revealimg("./figures/lteresouceblock.meta","LTE Resource Block","40vh",nil,'none)}}}
@@ -268,15 +263,17 @@ print(tag)
 - A resource block of 180kHz and 0.5ms can be allocated to each user.
 - \( (20-2)/0.18 \times 10/0.5 = 2000 \) resource blocks in 1 frame.
 - Each resource block is further divided into \(12\times 15Khz \) subcarriers.
-- 7 OFDM symbols can be transmitted by 1 subcarrier in one block (\(0.5 ms \times 15kHz\))
+- 7 symbols can be transmitted by 1 subcarrier (\(0.5 ms \times 15kHz\))
 - 1 resource block can transmit 84 OFDM symbols
 - \(84\times 2000 = 168k\) OFDM symbols can be transmitted in 1 frame 
 - The symbol rate is 16.8M/s
-- Assuming 16-QAM, the raw bit rate is \(16.8\times \log_216 = 67.2Mbps\).
+- Assuming 64-QAM, the raw bit rate is \(16.8\times \log_264 = 100.8Mbps\).
+- With \(2\times 2\) MIMO, the throughput can be further increased to 201.6Mbps.
 ** Code Division Multiple Access (CDMA)
 - Exploits mathematical properties of orthogonality
-
-
+- The code from different users are orthogonal to each other
+  - or "statistically" orthogonal if PN sequence is used
+- To decode the signal, one need to compute the inner product of the received signal with the corresponding PN sequence.
 
 ** Space Division Multiple Access (SDMA)
 - Traditional mobile network has no information on the position of the mobile units 
@@ -296,6 +293,14 @@ print(tag)
   - Carrier Sense Multiple Access w/ Collision Avoidance (CSMA/CA)
 
 ** ALOHA 
+- ALOHAnet was a pioneering computer networking system developed at the University of Hawaii.
+  - Became operational in June, 1971, 
+  - the first public demonstration of a wireless packet data network.
+- ALOHA originally stood for Additive Links On-line Hawaii Area.
+- The ALOHAnet employed
+  - a new medium access control: ALOHA protocol
+  - and UHF: 300Mhz - 3GHz
+- ARPANET: each node could only talk directly to a node at the other end of a wire or satellite circuit
 
 *** Slotted ALOHA
 - Time is divided into "slots" of one frame duration
@@ -307,6 +312,41 @@ print(tag)
   - Collided frames are re-transmitted after a random delay
 - Simple and has low latency under low traffic
 - But not efficient under high traffic
+
+*** Slotted ALOHA
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/alohatimeslot.js"
+p = figure(title="Slotted ALOHA", plot_width = width, plot_height = height)
+
+x = [0, 1, 3, 4, 5, 7, 8, 9 ]
+for i in range(len(x)):
+    p.rect(x[i]+0.5, random.randint(5)+1 ,width=0.9,height=0.5, fill_color="#ffffff")
+x = [2, 6 ]
+for i in range(len(x)):
+    y = random.randint(5)
+    p.rect(x[i]+0.5, y + 1 ,width=0.9,height=0.5, fill_color="#888888")
+    y += random.randint(4) + 1
+    y %= 5
+    p.rect(x[i]+0.5, y+1 ,width=0.9,height=0.5, fill_color="#888888")
+    
+p.xaxis.axis_label = "Time"
+p.ygrid.visible = False
+p.yaxis.ticker = [1,2,3,4,5]
+p.xaxis.ticker = [1,2,3,4,5,6,7,8,9,10]
+p.yaxis.major_label_overrides = {1: 'Node 1', 2: 'Node 2', 3:'Node 3', 4: 'Node 4', 5: 'Node 5'}
+
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/alohatimeslot.js" id="e7c3d856-8d97-48f1-b417-48be8645a812"></script>
+#+end_export
 
 *** Throughput of Slotted ALOHA 
 - Assuming that the packet transmission attempts in a time slot follows a Poission distribution of rate \(\lambda\)
@@ -340,7 +380,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/slottedaloha.js" id="6b026910-c822-48b8-b5e0-7d92ec6e1e9c"></script>
+<script src="figures/slottedaloha.js" id="17b62b03-0d50-4e63-900b-c619680c1597"></script>
 #+end_export
 
 *** Pure ALOHA
@@ -381,7 +421,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/unslottedaloha.js" id="ff3de5a3-2d11-4608-9b71-3f7caa281933"></script>
+<script src="figures/unslottedaloha.js" id="dd1e9106-9d36-41b9-b377-20403122d7dc"></script>
 #+end_export
 
 ** Carrier Sense Multiple Access (CSMA)
@@ -406,6 +446,7 @@ print(tag)
 - If the channel is sensed as "busy" the station has to delay its next carrier sense for a *random* amount of time
   - Ethernet will continuously listen to the channel and transmit *immediately* after the channel is clear for 96bit time
 - Additional RTS/CTS mechanism can also be used 
+  - RTS/CTS are smaller comparing to data packet (low cost of collision)
 
 *** CSMA/CA
 
@@ -413,13 +454,87 @@ print(tag)
 *** Hidden Terminal Problem
 
 - Partially solves the hidden node problem
-- T will get to know about the activity of H from CTS packet of R
-- RTS packet is small (low cost of collision)
+  - A sends RTS to B, and B sends CTS back
+  - C, although *CANNOT* hear RTS from A, can hear CTS from B
+  - C knows that there is a hidden terminal (B) and back-off for a random amount of time
+    
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/rtscts.js"
+p = figure(title="Hidden Terminal", plot_width = width, plot_height = height//2)
 
-todo
+p.rect(0.5, 3 ,width=0.9,height=0.5, fill_color="#ff8888")
+p.add_layout(Label(x=0.5,y=3,text='RTS',text_font_size='25px',text_align='center', y_offset=-15))
+p.rect(1.5, 2 ,width=0.9,height=0.5, fill_color="#88ff88")
+p.add_layout(Label(x=1.5,y=2,text='CTS',text_font_size='25px',text_align='center', y_offset=-15))
+p.rect(4.5, 3 ,width=4.9,height=0.5, fill_color="#ff8888")
+p.add_layout(Label(x=4.5,y=3,text='Data Frame',text_font_size='25px',text_align='center', y_offset=-15))
+p.rect(7.5, 2 ,width=0.9,height=0.5, fill_color="#88ff88")
+p.add_layout(Label(x=7.5,y=2,text='ACK',text_font_size='25px',text_align='center', y_offset=-15))
+    
+p.y_range=Range1d(0.5,3.5)
+p.xaxis.axis_label = "Time"
+p.xgrid.visible = False
+p.yaxis.ticker = [1,2,3]
+p.yaxis.major_label_overrides = {1: 'C', 2: 'B', 3:'A'}
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/rtscts.js" id="d9126410-077d-4ab0-8046-0b11c5d0e6c8"></script>
+#+end_export
 
 *** Exposed Terminal Problem
+- Partially solves the exposed terminal problem
+- If C receives the RTS from B but not the CTS from A
+  - C knows that it can transmit to D and A *CANNOT* hear it
+- However, CTS from A maybe lost due to other reasons
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/rtscts2.js"
+p = figure(title="Exposed Terminal", plot_width = width, plot_height = height//2)
+
+p.rect(0.5, 2 ,width=0.9,height=0.5, fill_color="#ff8888")
+p.add_layout(Label(x=0.5,y=2,text='RTS',text_font_size='25px',text_align='center', y_offset=-15))
+p.rect(1.5, 3 ,width=0.9,height=0.5, fill_color="#88ff88")
+p.add_layout(Label(x=1.5,y=3,text='CTS',text_font_size='25px',text_align='center', y_offset=-15))
+p.rect(4.5, 2 ,width=4.9,height=0.5, fill_color="#ff8888")
+p.add_layout(Label(x=4.5,y=2,text='Data Frame',text_font_size='25px',text_align='center', y_offset=-15))
+p.rect(7.5, 3 ,width=0.9,height=0.5, fill_color="#88ff88")
+p.add_layout(Label(x=7.5,y=3,text='ACK',text_font_size='25px',text_align='center', y_offset=-15))
+
+p.rect(2.5, 1 ,width=0.9,height=0.5, fill_color="#ff8888")
+p.add_layout(Label(x=2.5,y=1,text='RTS',text_font_size='25px',text_align='center', y_offset=-15))
+p.rect(3.5, 0 ,width=0.9,height=0.5, fill_color="#88ff88")
+p.add_layout(Label(x=3.5,y=0,text='CTS',text_font_size='25px',text_align='center', y_offset=-15))
+p.rect(6.5, 1 ,width=4.9,height=0.5, fill_color="#ff8888")
+p.add_layout(Label(x=6.5,y=1,text='Data Frame',text_font_size='25px',text_align='center', y_offset=-15))
+
     
+p.y_range=Range1d(-0.5,3.5)
+p.xaxis.axis_label = "Time"
+p.xgrid.visible = False
+p.yaxis.ticker = [0, 1,2,3]
+p.yaxis.major_label_overrides = {0:'D', 1: 'C', 2: 'B', 3:'A'}
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/rtscts2.js" id="74901ef8-fef2-42a9-94ee-bd3b3680a621"></script>
+#+end_export
+
 ** Design Considerations
 
 *** Random Access
@@ -454,7 +569,7 @@ todo
 | Deterministic   | FDMA/TDMA/CDMA                        |
 
 *** MAC Layer for Various Wireless Protocols
-    
+| Protocol      | MAC                         |
 | 4G LTE        | TDMA and FDMA               |
 | IEEE 802.11   | CSMA/CA                     |
 | Bluetooth     | FHSS + (CSMA/CA or TDMA)    |
@@ -487,9 +602,10 @@ todo
   - the PAN coordinator is constantly receiving transmissions and is usually on a dedicated power line
   - also serves as the gateway to LAN/WAN
 
-*** IEEE 802.15.4 Topology
+*** IEEE 802.15.4 Topology for Star and P2P Network
 
-todo
+    {{{revealimg("./figures/802154topology.meta",t,"50vh")}}}
+- Routing protocols can be added to create a mesh network
 
 ** Medium Access Control for IEEE 802.15.4
 
@@ -506,9 +622,40 @@ todo
 - Data transfer without guaranteed time-slot
   - Slotted CSMA-CA
 
-*** Beacon mode
     
-todo
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/802154beacon.js"
+p = figure(title="IEEE 802.15.4 Super-frame", plot_width = width, plot_height = height//3)
+
+p.rect(0.5,0.5,width=1,height=1, fill_color="#8888ff")
+for x in range(1,9):
+    p.rect(x+0.5,0.5,width=1,height=1, fill_color="#ff8888")
+for x in range(9,16):
+    p.rect(x+0.5,0.5,width=1,height=1, fill_color="#88ff88")
+
+p.add_layout(Label(x=0.5,y=1,text='Beacon',text_font_size='25px',text_align='center' ))
+p.add_layout(Label(x=4.5,y=1,text='Contention Access',text_font_size='25px',text_align='center' ))
+p.add_layout(Label(x=12.5,y=1,text='Guaranteed Access',text_font_size='25px',text_align='center' ))
+
+p.xaxis.axis_label = "Time"
+p.xgrid.visible = False
+p.ygrid.visible = False
+p.yaxis.visible = False
+p.y_range=Range1d(0, 1.5)
+p.xaxis.ticker = [1, 9, 16]
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/802154beacon.js" id="65d254ae-3f92-41b2-bb9e-8671bee5bc20"></script>
+#+end_export
 
 *** Beaconless mode
 

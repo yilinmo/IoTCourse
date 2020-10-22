@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Medium Access Control</title>
+<meta name="author" content="Mo, Yilin"/>
+<meta name="description" content="MAC layer for iot course"/>
+<meta name="keywords" content="Medium Access Control"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/oer-reveal.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/accessibility/helper.css"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/toc-progress/toc-progress.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/toc-style.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/fonts/source-sans-pro/source-sans-pro.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<style type="text/css"> div.flushright{text-align:right;} </style>
+<script src="./reveal.js/plugin/chart/Chart.min.js"></script>
+<script src="./reveal.js/plugin/chart/plugin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.2.min.js"></script>
+<script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body prefix="dc: http://purl.org/dc/elements/1.1/ dcterms: http://purl.org/dc/terms/ dcmitype: http://purl.org/dc/dcmitype/ cc: http://creativecommons.org/ns#" typeof="dcmitype:InteractiveResource">
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-state="no-toc-progress">
+<!-- The following copyright information only applies to the title slide. -->
+<!-- SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger -->
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+<!-- This is an HTML template for the title slide. -->
+<!-- Embed logos as necessary. -->
+<!-- <a class="nooutlink" href="url"><img class="state-background your-logo-class" src="whatever.png" alt="Whatever" /></a> -->
+
+<div class="talk-title">
+    <h1 class="no-toc-progress">Medium Access Control</h1>
+</div>
+<div class="talk-subtitle">
+    <p></p>
+</div>
+<div class="keyboard-usage">
+    <p>(Press <code>?</code> for help, <code>n</code> and <code>p</code> for next and previous slide; <a href="https://oer.gitlab.io/hints.html">usage hints</a>)</p>
+</div>
+<div class="talk-author">
+  <p>Mo, Yilin <br />
+  Oct 2020</p>
+</div>
+
+    <a class="nooutlink" href="http://www.au.tsinghua.edu.cn/"><img class="da-logo" src="./figures/raw/logo.png" alt="Logo of Dept. Automation" /></a>
+
+</section>
+
+<section>
+<section id="slide-orgb02673c">
+<h2 id="orgb02673c">Introduction</h2>
+<div class="outline-text-2" id="text-orgb02673c">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgac61c7b">
+<h3 id="orgac61c7b">Core Questions</h3>
+<ul>
+<li>What purpose does the data link layer serve in OSI network model?</li>
+<li>How does collision occur in wireless communication?
+<ul>
+<li>What are hidden and exposed terminal problem?</li>
+
+</ul></li>
+<li>What are the major categories for medium access control protocols?</li>
+<li>How to save energy in the MAC protocol?</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb0c742f">
+<h3 id="orgb0c742f">Learning Objectives</h3>
+<ul>
+<li>Definition of the data link layer in the OSI network model
+<ul>
+<li>Medium Access Control</li>
+<li>Logical Link Control</li>
+
+</ul></li>
+<li>Characteristics of collision problem in wireless communication
+<ul>
+<li>Hidden terminal problem</li>
+<li>Exposed terminal problem</li>
+
+</ul></li>
+<li>MAC layer protocols
+<ul>
+<li>Deterministic access</li>
+<li>Ordered access</li>
+<li>Random access</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org21c3911">
+<h3 id="org21c3911">Table of Contents</h3>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#slide-orgb02673c">Introduction</a></li>
+<li><a href="#slide-org6bdb5a0">Overview</a></li>
+<li><a href="#slide-org055cc69">Ordered Access</a></li>
+<li><a href="#slide-orgc0db644">Deterministic Access</a></li>
+<li><a href="#slide-org214c1ba">Contention-Based</a></li>
+<li><a href="#slide-org3dd6a44">Hybrid MAC: IEEE 802.15.4</a></li>
+<li><a href="#slide-bibliography">Bibliography</a></li>
+</ul>
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org6bdb5a0">
+<h2 id="org6bdb5a0">Overview</h2>
+<div class="outline-text-2" id="text-org6bdb5a0">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgde9ded5">
+<h3 id="orgde9ded5">OSI 7-Layer Network Model</h3>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/osimodel.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/osimodel.png" alt="OSI Network Model" style="max-height:60vh" /></p><p>OSI Network Model</p><p style="max-width:60vh">by <span property="cc:attributionName">Offnfopt</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/8/8d/OSI_Model_v1.svg">Wikipedia</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orge8e9c28">
+<h4 id="orge8e9c28">Data-Link Layer</h4>
+<ul>
+<li>Physical Layer: handles transmission of raw bits</li>
+<li>What is not taken care of&#x2026;
+<ul>
+<li>Handling collision</li>
+<li>Multiplexing</li>
+<li>Error checking</li>
+<li>Framing</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6ced594">
+<h4 id="org6ced594">Data-Link Layer</h4>
+<ul>
+<li>Logical Link Control (LLC)
+<ul>
+<li>IEEE 802.2 standard</li>
+<li>recognizing where frames begin and end in the bit-stream</li>
+<li>(de)multiplexing different protocols to be transmitted over the MAC layer</li>
+<li>optionally providing flow control, and detection and retransmission of dropped frames
+<ul>
+<li>Usually provided by transport layer protocols (TCP) in an end-to-end fashion</li>
+
+</ul></li>
+
+</ul></li>
+<li>Medium/Media Access Control (MAC)</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc476a62">
+<h4 id="orgc476a62">What is MAC?</h4>
+<ul>
+<li>Defines how a node obtains a channel when it needs to
+<ul>
+<li>Determines who gets to send data at any given time</li>
+<li>Avoid Collision</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org76b3c17">
+<h4 id="org76b3c17">Design Considerations</h4>
+<ul>
+<li>What kind of a resource do we have?
+<ul>
+<li>Frequency: bandwidth</li>
+<li>Time: Latency</li>
+<li>Energy</li>
+
+</ul></li>
+<li>How much does a node need?
+<ul>
+<li>How often?</li>
+<li>How regular? Is the communication bursty or not?</li>
+
+</ul></li>
+<li>What kind of a &ldquo;guarantee&rdquo; should be provided?</li>
+<li>Do we need central control or &ldquo;let things happen as they may&rdquo;?</li>
+<li>Complexity/Fairness/&#x2026;</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org878ded6">
+<h3 id="org878ded6">The Collision Problem in Wireless Communications</h3>
+<ul>
+<li>Two nodes send to the same node at the same time</li>
+<li>Interference of data: data loss</li>
+
+</ul>
+
+
+<script src="figures/collision.js" id="fab7a758-e774-46ff-b235-7fbbed0be040"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org486de39">
+<h4 id="org486de39">Ethernet vs. Wireless</h4>
+<ul>
+<li>Ethernet
+<ul>
+<li>Medium is clear
+<ul>
+<li>if you sense no carrier, there is no one sending data on the wire</li>
+
+</ul></li>
+<li>Node can send and receive at the same time</li>
+
+</ul></li>
+<li>Wireless LAN
+<ul>
+<li>Medium is not clear
+<ul>
+<li>possible that some node is sending data but is out of your range</li>
+
+</ul></li>
+<li>Cannot send and receive at the same time
+<ul>
+<li>(assuming a single frequency)</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf93fec4">
+<h4 id="orgf93fec4">The &ldquo;Hidden Terminal&rdquo; Problem</h4>
+<ul>
+<li>Station C is sending data to station B.</li>
+<li>Station A wants to do the same and listens for other frames being sent.</li>
+<li>Since A is <b>out of the range</b> of station C, it does <b>NOT</b> notice its frames and thinks the media is free.</li>
+<li><p>
+A and C transmit simultaneously to B, and B loses <b>both</b> frames.
+</p>
+
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/hiddennode.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hiddennode.png" alt="Hidden Terminal Problem" style="max-height:40vh" /></p><p>Hidden Terminal Problem</p><p style="max-width:40vh">by <span property="cc:attributionName">Andrei Stroe</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:GNU_Free_Documentation_License">GNU Free Document License</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/2/2b/Wifi_hidden_station_problem.svg">Wikipedia</a></p></div></div><p>
+</p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga2e53b6">
+<h4 id="orga2e53b6">The &ldquo;Exposed Terminal&rdquo; Problem</h4>
+<ul>
+<li>The two transmitters (S1, S2) in the middle are in range of each other.</li>
+<li>The two receivers (R1, R2) are out of range of each other</li>
+<li>If a transmission between S1 and R1 is taking place:
+<ul>
+<li>However, S2 can &ldquo;hear&rdquo; S1’s transmission</li>
+<li>S2 concludes that it will interfere with  S1</li>
+<li>So S2 chooses <b>NOT</b> to transmit</li>
+
+</ul></li>
+<li><p>
+However R1 cannot hear S2 and R2 cannot hear S1.
+</p>
+
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/exposednode.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/exposednode.png" alt="Exposed Terminal Problem" style="max-height:40vh" /></p><p>Exposed Terminal Problem</p><p style="max-width:40vh">by <span property="cc:attributionName">Fibonacci</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/9/97/Exposed_terminal_problem.svg">Wikipedia</a></p></div></div><p>
+</p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1671669">
+<h4 id="org1671669">Wasted Energy in Communication</h4>
+<ul>
+<li>Collisions
+<ul>
+<li>Data become corrupted</li>
+<li>Expend more energy for re-transmission</li>
+
+</ul></li>
+<li>Overhearing
+<ul>
+<li>Receiving a frame intended for another node</li>
+<li>Expend energy receiving a frame that is useless</li>
+
+</ul></li>
+<li>Control Packet Overhead
+<ul>
+<li>Large overhead translates into sending larger packets or more packets, and therefore more energy expended</li>
+
+</ul></li>
+<li>Idle Listening
+<ul>
+<li>Waiting to receive a frame</li>
+<li>Receiver expends energy and receives no data</li>
+<li>#1 source of wasted energy</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgcf285d3">
+<h4 id="orgcf285d3">Collision Problem (Wireless Version)</h4>
+<ul>
+<li>Collision cannot be sensed when transmitting</li>
+<li>Hidden Terminal problem</li>
+<li>Exposed Terminal problem</li>
+<li>Energy concern</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgbec51d4">
+<h3 id="orgbec51d4">Types of MAC</h3>
+<ul>
+<li>Ordered Access</li>
+<li>Deterministic Access
+<ul>
+<li>Some of the protocols are in the physical layer</li>
+
+</ul></li>
+<li>Random Access</li>
+<li>Hybrid</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org055cc69">
+<h2 id="org055cc69">Ordered Access</h2>
+<div class="outline-text-2" id="text-org055cc69">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgbaadb58">
+<h3 id="orgbaadb58">Ordered Access</h3>
+<ul>
+<li>Not random</li>
+<li>Not controlled by a central control point that allocates channels</li>
+<li>Token Ring 
+<ul>
+<li>Introduced by IBM in 1984</li>
+<li>Standardized in 1989 as IEEE 802.5</li>
+<li>Was successful in corporate environments</li>
+<li>Taken over by Ethernet (Random Access)</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5d83c77">
+<h4 id="org5d83c77">Token Passing</h4>
+<ul>
+<li><p>
+Only the system which has some &ldquo;token&rdquo; can communicate  </p><div about="figures/raw/ibmmau.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/ibmmau.jpg" alt="IBM Multistation Access Unit" style="max-height:20vh" /></p><p></p><p style="max-width:20vh">&ldquo;<span property="dcterms:title">IBM Multistation Access Unit</span>&rdquo; by <span property="cc:attributionName">Raymangold22</span> under <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0 1.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/3/31/IBM_8228_Multistation_Access_Unit.JPG">Wikipedia</a></p></div><p>
+</p></li>
+
+<li><p>
+Token is passed to the next candidate in a sequential manner
+ </p><div class="imgcontainer"><div about="figures/raw/tokenring.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/tokenring.png" alt="Example of a Token Ring Network" style="max-height:50vh" /></p><p>Example of a Token Ring Network</p><p style="max-width:50vh">by <span property="cc:attributionName">Andrew28913</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/c/cb/Token_ring.svg">Wikipedia</a></p></div></div><p>
+</p></li>
+
+</ul>
+
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc7086af">
+<h4 id="orgc7086af">Problems with Ordered Access</h4>
+<ul>
+<li>How about in a wireless network?
+<ul>
+<li>Nodes might leave?</li>
+<li>Break the Order</li>
+<li>Take away the token</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orgc0db644">
+<h2 id="orgc0db644">Deterministic Access</h2>
+<div class="outline-text-2" id="text-orgc0db644">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7ba6199">
+<h3 id="org7ba6199">Deterministic Access</h3>
+<ul>
+<li>Controlled by a central control point that allocates channels
+<ul>
+<li>Time Division Multiple Access (TDMA)</li>
+<li>Frequency Division Multiple Access (FDMA)</li>
+<li>Space Division Multiple Access (SDMA)</li>
+<li>Code Division Multiple Access (CDMA)</li>
+
+</ul></li>
+<li>Requires access points for coordination</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgbe01749">
+<h3 id="orgbe01749">Frequency Division &amp; Time Division</h3>
+<ul>
+<li>Frequency Division Duplexing (FDD)
+<ul>
+<li>Two distinct frequencies at the same time for the two directions</li>
+<li>Capacity is determined by frequency band allocation, making it difficult to make a dynamic change.</li>
+
+</ul></li>
+<li>Time Division Duplexing (TDD)
+<ul>
+<li>Two distinct sets of time slots on the same frequency for the two directions</li>
+<li>Cheaper since without the need of a diplexer to isolate transmission and receptions.</li>
+<li>Possible to change the uplink and downlink capacity ratio dynamically according to the needs.</li>
+<li>Time latency because only half-duplex</li>
+<li>Guard period is necessary</li>
+
+</ul></li>
+<li>Both are used in 4G (not compatible)
+<ul>
+<li>China Unicom, Telecom: FDD</li>
+<li>China Mobile: TDD -&gt; FDD</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf456e35">
+<h4 id="orgf456e35">Time &amp; Frequency Division Multiple Access (TDMA &amp; FDMA)</h4>
+<ul>
+<li>TDMA: Multiple users share the same frequency band via repeating &ldquo;time slots&rdquo;
+<ul>
+<li>Transmission for any user is non-continuous: buffer-and-burst digital data &amp; modulation needed, lower battery consumption</li>
+<li>Larger overhead: synchronization bits for each data burst, guard bits for variations in propagation delay and delay spread</li>
+
+</ul></li>
+<li>FDMA: Assign different frequency bands to individual users
+<ul>
+<li>Available spectrum is divided into a number of “narrowband” channels</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org168f8ca">
+<h4 id="org168f8ca">LTE Resource Block <a class="org-ref-reference" href="#slide-bibliography">[Lea2018]</a></h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/lteresouceblock.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/lteresouceblock.png" alt="Figure" style="max-height:40vh" /></p><p>LTE Resource Block</p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org8571384">
+<h4 id="org8571384">LTE Resource Block</h4>
+<ul>
+<li>Each LTE frame is 10ms and 20MHz, 2MHz of which are used as guard band.</li>
+<li>A resource block of 180kHz and 0.5ms can be allocated to each user.</li>
+<li>\( (20-2)/0.18 \times 10/0.5 = 2000 \) resource blocks in 1 frame.</li>
+<li>Each resource block is further divided into \(12\times 15Khz \) subcarriers.</li>
+<li>7 symbols can be transmitted by 1 subcarrier (\(0.5 ms \times 15kHz\))</li>
+<li>1 resource block can transmit 84 OFDM symbols</li>
+<li>\(84\times 2000 = 168k\) OFDM symbols can be transmitted in 1 frame</li>
+<li>The symbol rate is 16.8M/s</li>
+<li>Assuming 64-QAM, the raw bit rate is \(16.8\times \log_264 = 100.8Mbps\).</li>
+<li>With \(2\times 2\) MIMO, the throughput can be further increased to 201.6Mbps.</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5b2d412">
+<h3 id="org5b2d412">Code Division Multiple Access (CDMA)</h3>
+<ul>
+<li>Exploits mathematical properties of orthogonality</li>
+<li>The code from different users are orthogonal to each other
+<ul>
+<li>or &ldquo;statistically&rdquo; orthogonal if PN sequence is used</li>
+
+</ul></li>
+<li>To decode the signal, one need to compute the inner product of the received signal with the corresponding PN sequence.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org92c2d55">
+<h3 id="org92c2d55">Space Division Multiple Access (SDMA)</h3>
+<ul>
+<li>Traditional mobile network has no information on the position of the mobile units 
+<ul>
+<li>Hence, the signal is transmitted in all directions</li>
+<li>Likewise, in reception, the antenna receives signals coming from all directions 
+<ul>
+<li>including interference signals.</li>
+
+</ul></li>
+
+</ul></li>
+<li>For SDMA, the antenna, both in transmission and reception, is adapted to each user to obtain highest gain in the direction of that user.
+<ul>
+<li>This is often done using phased array techniques.</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org214c1ba">
+<h2 id="org214c1ba">Contention-Based</h2>
+<div class="outline-text-2" id="text-org214c1ba">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org81151ef">
+<h3 id="org81151ef">Random Access</h3>
+<ul>
+<li>Randomly access media, usually detect collision <b>after</b> it happens
+<ul>
+<li>ALOHA</li>
+<li>Carrier Sense Multiple Access (CSMA)</li>
+<li>Carrier Sense Multiple Access w/ Collision Detection (CSMA/CD)</li>
+<li>Carrier Sense Multiple Access w/ Collision Avoidance (CSMA/CA)</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org8cb161c">
+<h3 id="org8cb161c">ALOHA</h3>
+<ul>
+<li>ALOHAnet was a pioneering computer networking system developed at the University of Hawaii.
+<ul>
+<li>Became operational in June, 1971,</li>
+<li>the first public demonstration of a wireless packet data network.</li>
+
+</ul></li>
+<li>ALOHA originally stood for Additive Links On-line Hawaii Area.</li>
+<li>The ALOHAnet employed
+<ul>
+<li>a new medium access control: ALOHA protocol</li>
+<li>and UHF: 300Mhz - 3GHz</li>
+
+</ul></li>
+<li>ARPANET: each node could only talk directly to a node at the other end of a wire or satellite circuit</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org65ba7e3">
+<h4 id="org65ba7e3">Slotted ALOHA</h4>
+<ul>
+<li>Time is divided into &ldquo;slots&rdquo; of one frame duration
+<ul>
+<li>E.g., fixed size frames</li>
+
+</ul></li>
+<li>When a node has a frame to send, it waits until the start of the next slot to send it 
+<ul>
+<li><b>Requires synchronization</b></li>
+
+</ul></li>
+<li>If no other nodes attempt transmission during that slot, the transmission is successful
+<ul>
+<li>Otherwise &ldquo;collision&rdquo;</li>
+<li>Collided frames are re-transmitted after a random delay</li>
+
+</ul></li>
+<li>Simple and has low latency under low traffic</li>
+<li>But not efficient under high traffic</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org08440af">
+<h4 id="org08440af">Slotted ALOHA</h4>
+
+<script src="figures/alohatimeslot.js" id="e7c3d856-8d97-48f1-b417-48be8645a812"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6d15895">
+<h4 id="org6d15895">Throughput of Slotted ALOHA</h4>
+<ul>
+<li>Assuming that the packet transmission attempts in a time slot follows a Poission distribution of rate \(\lambda\)
+<ul>
+<li>Valid when there are many nodes, each transmit independently with a small probability</li>
+
+</ul></li>
+
+</ul>
+<p>
+\(P(\#attempts) = \frac{\lambda^k}{k^!}\exp(-\lambda).\)
+</p>
+<ul>
+<li>The probability of idle: \(\exp(-\lambda)\).</li>
+<li>The probability of successful transmission: \(\lambda\exp(-\lambda)\).</li>
+<li>The probability of collision: \(1-\exp(\lambda)-\lambda\exp(-\lambda)\).</li>
+<li>Maximum throughput is \(1/e\approx 0.368\), when \(\lambda = 1\).</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org36bbadc">
+<h4 id="org36bbadc">Throughput of Slotted ALOHA</h4>
+
+<script src="figures/slottedaloha.js" id="17b62b03-0d50-4e63-900b-c619680c1597"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7faf0ad">
+<h4 id="org7faf0ad">Pure ALOHA</h4>
+<ul>
+<li>A node can transmit as soon as it has a frame to send</li>
+<li>Each node acts independently</li>
+<li>No need for synchronization</li>
+<li>Smaller delay than slotted version when traffic is low</li>
+<li>More chance for interference</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org19c3925">
+<h4 id="org19c3925">Pure v.s. Slotted ALOHA</h4>
+<ul>
+<li>Slotted: Collision can only occur if someone else transmitted at time \(k\)</li>
+<li>Pure: Collision can occur if someone else transmitted between time \(k-1,k+1\)
+<ul>
+<li>The probability of a successful transmission is \(\lambda \exp(-2\lambda)\)</li>
+<li>Maximum throughput is \(1/2e\approx 0.184\), when \(\lambda = 0.5\).</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgfd4fe71">
+<h4 id="orgfd4fe71">Throughput of Pure v.s. Slotted ALOHA</h4>
+
+<script src="figures/unslottedaloha.js" id="dd1e9106-9d36-41b9-b377-20403122d7dc"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgabeb65d">
+<h3 id="orgabeb65d">Carrier Sense Multiple Access (CSMA)</h3>
+<ul>
+<li>Verifies the absence of other traffic before transmitting</li>
+<li>If a carrier is sensed, the node waits for the transmission in progress to finish before initiating its own transmission.</li>
+<li>However, if two nodes try to send a frame at nearly the same time, neither detects a carrier so both begin transmitting.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgaa3c636">
+<h3 id="orgaa3c636">Carrier Sense Multiple Access w/ Collision Detection (CSMA/CD)</h3>
+<ul>
+<li>Sending nodes are able to detect when a collision occurs and stop transmitting immediately, backing off for a random amount of time before trying again</li>
+<li>Used in Ethernet</li>
+<li>Does not work in Wireless
+<ul>
+<li>hidden node problem</li>
+<li>cannot send and receive at the same time</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgccdf279">
+<h3 id="orgccdf279">Carrier Sense Multiple Access w/ Collision Avoidance (CSMA/CA)</h3>
+<ul>
+<li>IEEE 802.11 Standard</li>
+<li>First, listen to the channel for a pre-determined amount of time so as to check for any activity on the channel</li>
+<li>If the channel is sensed “idle”, then the station is permitted to transmit</li>
+<li>If the channel is sensed as &ldquo;busy&rdquo; the station has to delay its next carrier sense for a <b>random</b> amount of time
+<ul>
+<li>Ethernet will continuously listen to the channel and transmit <b>immediately</b> after the channel is clear for 96bit time</li>
+
+</ul></li>
+<li>Additional RTS/CTS mechanism can also be used 
+<ul>
+<li>RTS/CTS are smaller comparing to data packet (low cost of collision)</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc3dc303">
+<h4 id="orgc3dc303">CSMA/CA</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/csmaca.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/csmaca.png" alt="IEEE 802.11 CSMA/CA diagram with RTS/CTS" style="max-height:60vh" /></p><p>IEEE 802.11 CSMA/CA diagram with RTS/CTS</p><p style="max-width:60vh">by <span property="cc:attributionName">jjgarcia.tsc</span> under <a rel="license" href="https://en.wikipedia.org/wiki/Public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/1/1d/Csma_ca.svg">Wikipedia</a></p></div></div><p>
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1439ffc">
+<h4 id="org1439ffc">Hidden Terminal Problem</h4>
+<ul>
+<li>Partially solves the hidden node problem
+<ul>
+<li>A sends RTS to B, and B sends CTS back</li>
+<li>C, although <b>CANNOT</b> hear RTS from A, can hear CTS from B</li>
+<li>C knows that there is a hidden terminal (B) and back-off for a random amount of time</li>
+
+</ul></li>
+
+</ul>
+
+
+<script src="figures/rtscts.js" id="d9126410-077d-4ab0-8046-0b11c5d0e6c8"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org9eeb4a3">
+<h4 id="org9eeb4a3">Exposed Terminal Problem</h4>
+<ul>
+<li>Partially solves the exposed terminal problem</li>
+<li>If C receives the RTS from B but not the CTS from A
+<ul>
+<li>C knows that it can transmit to D and A <b>CANNOT</b> hear it</li>
+
+</ul></li>
+<li>However, CTS from A maybe lost due to other reasons</li>
+
+</ul>
+
+<script src="figures/rtscts2.js" id="74901ef8-fef2-42a9-94ee-bd3b3680a621"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgce0a738">
+<h3 id="orgce0a738">Design Considerations</h3>
+<div class="outline-text-3" id="text-orgce0a738">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org917d3ca">
+<h4 id="org917d3ca">Random Access</h4>
+<ul>
+<li>Carrier sense or not?
+<ul>
+<li>What is the probability of &ldquo;hearing someone is talking&rdquo;?</li>
+
+</ul></li>
+<li>Slotted or Unslotted?</li>
+<li>Cost of collision v.s. cost of overhead?</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6ea3bdd">
+<h4 id="org6ea3bdd">Deterministic v.s. Random</h4>
+<div class="leftcol">
+<ul>
+<li>Deterministic Access
+<ul>
+<li>High throughput when traffic is heavy</li>
+<li>Small delay variance</li>
+<li>Large delay when traffic is low</li>
+<li>Relatively larger overhead of processing</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<ul>
+<li>Random Access
+<ul>
+<li>Small overhead of processing</li>
+<li>Small delay when the traffic is low</li>
+<li>Too many collisions when traffic is heavy
+<ul>
+<li>Throughput decreases with load</li>
+
+</ul></li>
+<li>May subject to large delays</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6777337">
+<h4 id="org6777337">How to Choose?</h4>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Type of Traffic</td>
+<td class="org-left">Multiple Access Techniques</td>
+</tr>
+
+<tr>
+<td class="org-left">short, bursty</td>
+<td class="org-left">Pure ALOHA, Slotted ALOHA, CSMA/CA</td>
+</tr>
+
+<tr>
+<td class="org-left">long, bursty</td>
+<td class="org-left">Deterministic Access with Reservation</td>
+</tr>
+
+<tr>
+<td class="org-left">Deterministic</td>
+<td class="org-left">FDMA/TDMA/CDMA</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb5a3ac8">
+<h4 id="orgb5a3ac8">MAC Layer for Various Wireless Protocols</h4>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Protocol</td>
+<td class="org-left">MAC</td>
+</tr>
+
+<tr>
+<td class="org-left">4G LTE</td>
+<td class="org-left">TDMA and FDMA</td>
+</tr>
+
+<tr>
+<td class="org-left">IEEE 802.11</td>
+<td class="org-left">CSMA/CA</td>
+</tr>
+
+<tr>
+<td class="org-left">Bluetooth</td>
+<td class="org-left">FHSS + (CSMA/CA or TDMA)</td>
+</tr>
+
+<tr>
+<td class="org-left">IEEE 802.15.4</td>
+<td class="org-left">(CSMA/CA + TDMA) or CSMA/CA</td>
+</tr>
+
+<tr>
+<td class="org-left">LoRa</td>
+<td class="org-left">Unslotted ALOHA</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org3dd6a44">
+<h2 id="org3dd6a44">Hybrid MAC: IEEE 802.15.4</h2>
+<div class="outline-text-2" id="text-org3dd6a44">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgaf80167">
+<h3 id="orgaf80167">IEEE 802.15.4 Protocol Revisit</h3>
+<ul>
+<li>Low-rate Wireless Personal Area Network (WPAN)</li>
+<li>For wireless sensor networks, home automation, home networking, connecting devices to a PC, home security, etc.</li>
+<li>Combines schedule-based and contention-based schemes</li>
+<li>Different roles as different types of nodes</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd2b5a0f">
+<h4 id="orgd2b5a0f">Node Type and Topology</h4>
+<ul>
+<li>There are two types of nodes in 802.15.4:</li>
+
+</ul>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Roles</td>
+</tr>
+
+<tr>
+<td class="org-left">Full Function Device (FFD)</td>
+<td class="org-left">PAN Coordinator, Coordinator,Device</td>
+</tr>
+
+<tr>
+<td class="org-left">Reduced Function Device(RFD)</td>
+<td class="org-left">Device</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Device must be connected to a coordinator/PAN coordinator and form a star topology</li>
+<li>Coordinator:
+<ul>
+<li>can communicate with the devices connected to it</li>
+<li>or other coordinators (in a peer-to-peer) fashion</li>
+<li>It can also relay messages from/to its devices</li>
+
+</ul></li>
+<li>In addition, one of the coordinators is designated as a PAN coordinator: 
+<ul>
+<li>has the duty of transmitting network beacons and storing node information</li>
+<li>the PAN coordinator is constantly receiving transmissions and is usually on a dedicated power line</li>
+<li>also serves as the gateway to LAN/WAN</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org505b746">
+<h4 id="org505b746">IEEE 802.15.4 Topology for Star and P2P Network</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/802154topology.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/802154topology.png" alt="IEEE 802.15.4 Star and Peer-to-Peer Topology" style="max-height:50vh" /></p><p>IEEE 802.15.4 Star and Peer-to-Peer Topology</p><p style="max-width:50vh">by <span property="cc:attributionName">Backsideficker</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/1/13/IEEE_802.15.4_Star_P2P.svg">Wikipedia</a></p></div></div><p>
+</p>
+<ul>
+<li>Routing protocols can be added to create a mesh network</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgedb340e">
+<h3 id="orgedb340e">Medium Access Control for IEEE 802.15.4</h3>
+<div class="outline-text-3" id="text-orgedb340e">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org592039a">
+<h4 id="org592039a">Beacon Mode</h4>
+<ul>
+<li>PAN coordinator communication
+<ul>
+<li>Super-frame structure
+<ul>
+<li>16 time slots</li>
+<li>up to 7 time slots in the end of the super-frame can be guaranteed time slots</li>
+
+</ul></li>
+<li>Inactive nodes including coordinator switch off their transceivers</li>
+
+</ul></li>
+<li>Data transfer with guaranteed time-slot
+<ul>
+<li>Device gets guaranteed time slots only if it sends request frames during contention access period</li>
+<li>Device transmits immediately in time slot without carrier sense or collision avoiding</li>
+
+</ul></li>
+<li>Data transfer without guaranteed time-slot
+<ul>
+<li>Slotted CSMA-CA</li>
+
+</ul></li>
+
+</ul>
+
+
+
+<script src="figures/802154beacon.js" id="65d254ae-3f92-41b2-bb9e-8671bee5bc20"></script>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org81acc1a">
+<h4 id="org81acc1a">Beaconless mode</h4>
+<ul>
+<li>PAN coordinator does not send beacon frames</li>
+<li>No guaranteed time-slot</li>
+<li>Un-slotted (not time-synchronized) CSMA-CA</li>
+<li>PAN coordinator must be &ldquo;on&rdquo; constantly, although devices can follow their own sleep schedule</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-bibliography">
+<h2 id="bibliography">Bibliography</h2>
+<ul class='org-ref-bib'><li><a id="Lea2018">[Lea2018]</a> <a name="Lea2018"></a>Parry Lea, Internet of Things for Architects, Packt Publishing, 2018. <a href=""></a></li>
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/dist/reveal.js"></script>
+<script src="./reveal.js/plugin/notes/notes.js"></script>
+<script src="./reveal.js/plugin/search/search.js"></script>
+<script src="./reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: true,
+fragmentInURL: true,
+hashOneBasedIndex: false,
+pdfSeparateFragments: false,
+
+overview: true,
+
+transition: 'fade',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealNotes, RevealSearch, RevealZoom ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+{src:'./reveal.js/plugin/spotlight/spotlight.js'},
+{src: './reveal.js/plugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } },
+{ src: './reveal.js/plugin/audio-slideshow/audio-slideshow.js', condition: function( ) { return !!document.body.classList && !Reveal.isSpeakerNotes(); } },
+{ src: './reveal.js/plugin/anything/anything.js' },
+{ src: './reveal.js/plugin/toc-progress/toc-progress.js', async: true, callback: function() { toc_progress.initialize('reduce', 'rgba(120,138,130,0.2)', 'body'); toc_progress.create(); } },
+{ src: './reveal.js/plugin/jump/jump.js', async: true },
+{ src: './reveal.js/plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({preventUnanswered: true, skipStartButton: true}); } },
+{ src: './reveal.js/plugin/coursemod/coursemod.js', async: true },
+{ src: './reveal.js/plugin/accessibility/helper.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+,plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {84: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1,
+audioStartAtFragment: true,
+  audio: {
+    advance: -1, autoplay: false, defaultDuration: 0, defaultAudios: false, playerOpacity: 0.8, playerStyle: 'position: fixed; bottom: 9.5vh; left: 0%; width: 30%; height:30px; z-index: 33;' },
+anything: [
+        // Following initialization code for class animate from anything-demo.html.
+        // Copyright (c) 2016 Asvin Goel, under The MIT License (MIT).
+	{className: "animate",  initialize: (function(container, options){
+		Reveal.addEventListener( 'fragmentshown', function( event ) {
+			if (typeof event.fragment.beginElement === "function" ) {
+				event.fragment.beginElement();
+			}
+		});
+		Reveal.addEventListener( 'fragmenthidden', function( event ) {
+			if (event.fragment.hasAttribute('data-reverse') ) {
+				var reverse = event.fragment.parentElement.querySelector('[id=\"' + event.fragment.getAttribute('data-reverse') + '\"]');
+				if ( reverse && typeof reverse.beginElement === "function" ) {
+					reverse.beginElement();
+				}
+			}
+		});
+		if ( container.getAttribute("data-svg-src") ) {
+			var xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+				if (xhr.readyState === 4) {
+					var svg = container.querySelector('svg');
+					container.removeChild( svg );
+					container.innerHTML = xhr.responseText + container.innerHTML;
+					if ( svg ) {
+						container.querySelector('svg').innerHTML = container.querySelector('svg').innerHTML + svg.innerHTML;
+					}
+				}
+				else {
+					console.warn( "Failed to get file. ReadyState: " + xhr.readyState + ", Status: " + xhr.status);
+				}
+			};
+			xhr.open( 'GET', container.getAttribute("data-svg-src"), true );
+			xhr.send();
+		}
+	}) },
+	{className: "randomPic",
+	 defaults: {imgalt: "Dummy alt text",
+		    imgcaption: "Image by {name}",
+		    choices: [ {name: "dummyname", path: "dummypath"} ]},
+	 initialize: (function(container, options){
+	     var choice = Math.trunc( Math.random()*(options.choices.length) );
+	     var img = "<img src='" + options.choices[choice].path + "' alt='" + options.choices[choice].imgalt + "' />";
+	     var caption = options.imgcaption.replace(new RegExp('\{name\}', 'gm'), options.choices[choice].name);
+	     container.innerHTML = img + caption;
+	 }) },
+	{className: "notes",
+	 initialize: (function(container, options){
+	     container.addEventListener('click', function(e) { Reveal.getPlugins().notes.open(); });
+	 }) }
+],
+coursemod: { enabled: true, shown: false },
+});
+</script>
+</body>
+</html>

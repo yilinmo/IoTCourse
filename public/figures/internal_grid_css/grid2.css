@@ -2,7 +2,7 @@
 .grid2-img2 { grid-area: ga2; }
 .grid2 {
   display: grid;
-  height: 20vh;
+  height: 40vh;
   max-width: 90%;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(1, 1fr);

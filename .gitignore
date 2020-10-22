@@ -18,3 +18,5 @@ howto.html*
 figures/tikz/*png
 figures/tikz/*svg
 !public/reveal.js/*
+/public/figures/tikz/*.png
+/public/figures/*.grid

@@ -146,7 +146,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/rect.js" id="a997696d-0ad0-4a34-9e26-1480eecbb1d3"></script>
+<script src="figures/rect.js" id="adf3b7cf-b02b-4482-b454-c2df6c135cc1"></script>
 #+end_export
 
 *** Energy Spectrum of Rectangle Function
@@ -168,7 +168,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/psd.js" id="64a91652-029f-4f4d-8e1a-66a66c172894"></script>
+<script src="figures/psd.js" id="da486d8f-8105-42e2-90b7-9aa8acad9347"></script>
 #+end_export
 
 - Most of the energy are located inside the passband of \(\pm 1Hz\).
@@ -238,7 +238,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/modulation.js" id="1915e652-39ea-489a-8e91-560227055c12"></script>
+<script src="figures/modulation.js" id="0e5ec336-0db7-407f-86c0-9df1e6a3d180"></script>
 #+end_export
 
 *** Demodulation
@@ -297,7 +297,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/demodulation.js" id="b2d5c9c1-cca2-4837-828a-b7dfa9dc9be0"></script>
+<script src="figures/demodulation.js" id="b8088de3-1718-46e0-b179-9b6321af3fe4"></script>
 #+end_export
 
 ** Amplitude-Shift Keying
@@ -332,7 +332,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/ask.js" id="57f36ac7-2619-49c4-86b3-5664001755d1"></script>
+<script src="figures/ask.js" id="1de5b360-abf7-4369-9f9b-18c1f6b7fbdb"></script>
 #+end_export
 
 *** Amplitude-Shift Keying
@@ -367,7 +367,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fsk.js" id="9183530f-b130-491e-b59b-5ab7c3275556"></script>
+<script src="figures/fsk.js" id="0b788e02-774e-4cb0-8974-23902b98743a"></script>
 #+end_export
 
 *** Frequency-Shift Keying
@@ -411,7 +411,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/psk.js" id="38f59171-08ea-4216-aff4-fadfde45d94d"></script>
+<script src="figures/psk.js" id="f6de5c15-2541-46d3-bad8-319ad1097618"></script>
 #+end_export
  
 ** QAM
@@ -453,7 +453,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/constellation.js" id="2835d487-001d-4fbd-82ff-f89ca064fd76"></script>
+<script src="figures/constellation.js" id="6800f62e-ed38-420c-8172-640d60dbe119"></script>
 #+end_export
 
 *** Quadrature Amplitude Modulation (QAM)
@@ -492,10 +492,10 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/qam.js" id="cbc7e569-2482-4b38-9372-ef840a15eeb8"></script>
+<script src="figures/qam.js" id="8459d200-1554-4549-8b6c-39a4d60aee94"></script>
 #+end_export
 
-- For Wifi 6, up to 1024-QAM can be used depending on the channel quality
+- For WiFi 6, up to 1024-QAM can be used depending on the channel quality
 - Can we use "infinite"-QAM to transmit at "infinite" bit rate?
 
 * Free Space Propagation Model
@@ -582,7 +582,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/thermalnoise.js" id="1adce4e0-31e9-412d-a453-98e15dd2c203"></script>
+<script src="figures/thermalnoise.js" id="badf17aa-84c0-47b0-bcae-04c36b1f98b7"></script>
 #+end_export
 
 *** Constellation Diagram with Noise
@@ -607,7 +607,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/qam2.js" id="a1f298ff-27a7-4e56-8ecb-23d2a95fc3b5"></script>
+<script src="figures/qam2.js" id="4c7d4f04-dec8-49c9-82d1-b960533edcbb"></script>
 #+end_export
 
 #+END_leftcol
@@ -660,7 +660,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/binarydetection.js" id="ca85152c-99bf-4f0b-9413-4502c0bba93e"></script>
+<script src="figures/binarydetection.js" id="94f41f35-f44f-4c01-bcc8-b09271a280ef"></script>
 #+end_export
 
 *** Probability of Error
@@ -710,7 +710,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/binarydetection2.js" id="aeb02283-bfc9-4eb5-abb6-247f91de5956"></script>
+<script src="figures/binarydetection2.js" id="e9b08b6d-e437-4a8c-9b9b-6fa1f0466d94"></script>
 #+end_export
 
 - Assuming \(\pm a\) has equal probability, then the decision rule is 
@@ -782,7 +782,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/capacityvsbandwidth.js" id="33fe108e-f061-4641-b710-c2cff0a32435"></script>
+<script src="figures/capacityvsbandwidth.js" id="dcdf285b-afb0-4384-9bd4-760f1c8e493f"></script>
 #+end_export
 
 #+END_rightcol
@@ -902,7 +902,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fskwithisi.js" id="be337c6e-6ef9-41bc-a8ae-6fb167bbb78e"></script>
+<script src="figures/fskwithisi.js" id="0b9e5912-c1c0-4536-b02b-2f6108c3d060"></script>
 #+end_export
 
 ** Coherence Time
@@ -955,7 +955,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fading.js" id="a37ee54a-92e2-4dbf-a970-aacdcd06b46c"></script>
+<script src="figures/fading.js" id="a12af83b-2444-47da-9505-a5200598fc07"></script>
 #+end_export
 
 #+END_rightcol
@@ -1018,7 +1018,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/timediversity.js" id="e69ef1f1-edaa-4903-a350-115157c6587d"></script>
+<script src="figures/timediversity.js" id="cad2a2ff-dd81-45fc-9a26-f75e9a2e91c7"></script>
 #+end_export
 
 ** Space Diversity: MIMO
@@ -1061,7 +1061,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/chirp.js" id="d5b7eae5-8c25-415d-95a9-8270a2fb7e3e"></script>
+<script src="figures/chirp.js" id="fc7debd7-c666-49e2-a589-10d7f91f4727"></script>
 #+end_export
 
 *** Direct Sequence Spread Spectrum
@@ -1078,7 +1078,7 @@ print(tag)
 x = linspace(0,32,33)
 y = array([1 if z <= 16 else 0 for z in x])
 p1 = figure(title = "Baseband Signal")
-p1.step(x, y, line_width=2, mode="before")
+p1.step(x, y*2-1, line_width=2, mode="before")
 pn = array([round(p) for p in random.rand(16)])
 pn = hstack((pn,pn,pn[:1]))
 p2 = figure(title = "PN Sequence")
@@ -1101,7 +1101,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/dhss.js" id="94cb0f73-9460-4678-877b-82aff85c9464"></script>
+<script src="figures/dhss.js" id="1035365d-96c5-447a-bf6a-f417e6d295ac"></script>
 #+end_export
 
 *** Direct Sequence Spread Spectrum: Decoding 
@@ -1135,7 +1135,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/dhssdecoding.js" id="cd66bf0d-aa1f-472a-bca3-34f9c7192eba"></script>
+<script src="figures/dhssdecoding.js" id="2ba6a10a-116e-4e33-bfc1-29f18498835c"></script>
 #+end_export
 
 *** Direct Sequence Spread Spectrum 
@@ -1160,7 +1160,6 @@ p3.step(x[1:], decode*2-1, line_width=2, mode="before")
 
 p3.x_range=Range1d(0, 32)
 p = gridplot([p2, p1, p3], ncols = 1, plot_width = width, plot_height = height//3)
-show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -1172,7 +1171,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/dhss2.js" id="2c12226d-8ffc-4517-a028-f510ba8b24fa"></script>
+<script src="figures/dhss2.js" id="059b783f-e261-4629-94c3-b98f34bfd7ff"></script>
 #+end_export
 
 *** Frequency Hopping Spread Spectrum
@@ -1203,7 +1202,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fhss.js" id="0ae8eabf-3e79-4517-b45f-49121d4fab50"></script>
+<script src="figures/fhss.js" id="026fad79-7295-4109-a9d2-9d282325772d"></script>
 #+end_export
    
 *** Orthogonal Frequency Division Multiplexing
@@ -1230,7 +1229,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/fdma.js" id="bd08ef7f-2af1-4651-a19e-d916308b8e00"></script>
+<script src="figures/fdma.js" id="2b962e40-4ff2-4e46-96bf-37347ce870c9"></script>
 #+end_export
 
 *** Orthogonal Frequency Division Multiplexing
@@ -1258,7 +1257,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/ofdm.js" id="8fc043ff-2f85-438d-97f0-57da35d415f9"></script>
+<script src="figures/ofdm.js" id="eac154f3-89af-495b-a191-ad06d8a67eb2"></script>
 #+end_export
 
 *** Orthogonal Frequency Division Multiplexing
@@ -1270,7 +1269,7 @@ print(tag)
   - More than twice spectral efficient
   - Modulation/Demodulation can be done efficiently via Fast Fourier Transform
 - OFDM is originally proposed by Bell lab in 1966
-- Used in Wifi, 4G, 5G
+- Used in WiFi, 4G, 5G
 
 * Physical Layer Protocol
 ** Bluetooth LE
@@ -1283,6 +1282,8 @@ print(tag)
 - The name Bluetooth refers to King Harald Blatand in the region of what is now Norway and Sweden in around 958AD.
   - He got this name due to his liking of blueberries and/or the eating of his frozen enemies.
   - Bluetooth is derived from his name because King Blatand brought together warring tribes.
+   
+*** Bluetooth LE
 - Bluetooth Low Energy is used extensively in IoT deployments 
   - beacons
   - wireless sensors
@@ -1294,7 +1295,7 @@ print(tag)
 
 *** PHY of Bluetooth LE
 
-- Operates in the 2.400–2.4835 GHz ISM band (Same as Wifi and 802.15.4)
+- Operates in the 2.400–2.4835 GHz ISM band (Same as WiFi and 802.15.4)
 - The ISM band is divided into forty 2-MHz channels.
   - 37 of the channels are used to transmit date
   - 3 channels are reserved for advertising
@@ -1337,7 +1338,7 @@ print(tag)
 
 ** IEEE 802.11 (WiFi)
 - First release in June 1997
-- The newest is Wifi 6
+- The newest is WiFi 6
   - Works in both 2.4Ghz and 5Ghz ISM band
   - Support up to 1024-QAM
   - Use OFDMA for spreading spectrum and multiple user access
@@ -1407,7 +1408,7 @@ print(tag)
 - Chirp Spread Spectrum (CSS) is the modulation technique used in LoRa.
 - Typical data rate is 0.3 - 5kbps
 - Each LoRa packet contains 51-222 Bytes of Data
-- Typical Energy for one message is < 1 \(\muAh\)
+- Typical Energy for one message is < 1 \(\mu Ah\)
 - Typical range of communication is 2-3km in cities and 5-7km in rural area
   - The world record is 702km!
 

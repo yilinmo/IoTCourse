@@ -25,6 +25,9 @@
 <script src="./reveal.js/plugin/chart/Chart.min.js"></script>
 <script src="./reveal.js/plugin/chart/plugin.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.2.min.js"></script>
 <script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
@@ -58,14 +61,14 @@
 </section>
 
 <section>
-<section id="slide-org27f9acf">
-<h2 id="org27f9acf">Introduction</h2>
-<div class="outline-text-2" id="text-org27f9acf">
+<section id="slide-orgb4cf228">
+<h2 id="orgb4cf228">Introduction</h2>
+<div class="outline-text-2" id="text-orgb4cf228">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb1cd9a9">
-<h3 id="orgb1cd9a9">Core Questions</h3>
+<section id="slide-orga9c716b">
+<h3 id="orga9c716b">Core Questions</h3>
 <ul>
 <li>What is OS and Kernel?</li>
 <li>What is virtual memory?
@@ -110,17 +113,17 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgda7237e">
-<h3 id="orgda7237e">Table of Contents</h3>
+<section id="slide-org915275d">
+<h3 id="org915275d">Table of Contents</h3>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#slide-org27f9acf">Introduction</a></li>
-<li><a href="#slide-orga42a09a">What is an OS?</a></li>
+<li><a href="#slide-orgb4cf228">Introduction</a></li>
+<li><a href="#slide-org28c082e">What is an OS?</a></li>
 <li><a href="#slide-main-concepts">Memory Management</a></li>
-<li><a href="#slide-org31a14e8">Multitasking</a></li>
-<li><a href="#slide-org7053ab4">Synchronizations</a></li>
-<li><a href="#slide-org68c8893">Embedded OS</a></li>
-<li><a href="#slide-orgb8855f7">Conclusions</a></li>
+<li><a href="#slide-org1b5922a">Multitasking</a></li>
+<li><a href="#slide-org6fa38c5">Synchronizations</a></li>
+<li><a href="#slide-org355a70b">Embedded OS</a></li>
+<li><a href="#slide-org1a16c27">Conclusions</a></li>
 <li><a href="#slide-bibliography">Bibliography</a></li>
 </ul>
 </div>
@@ -130,14 +133,14 @@
 </section>
 </section>
 <section>
-<section id="slide-orga42a09a">
-<h2 id="orga42a09a">What is an OS?</h2>
-<div class="outline-text-2" id="text-orga42a09a">
+<section id="slide-org28c082e">
+<h2 id="org28c082e">What is an OS?</h2>
+<div class="outline-text-2" id="text-org28c082e">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb53fc2d">
-<h3 id="orgb53fc2d">&ldquo;Hello World!&rdquo; on Bare Metal</h3>
+<section id="slide-org2ae4ba5">
+<h3 id="org2ae4ba5">&ldquo;Hello World!&rdquo; on Bare Metal</h3>
 <div class="org-src-container">
 
 <pre  class="src src-C" id="helloworld"><span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">main</span>()
@@ -162,8 +165,8 @@ Source code from <a href="https://github.com/bztsrc/raspi3-tutorial">Github</a>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgd19d2c4">
-<h4 id="orgd19d2c4">UART Initialization</h4>
+<section id="slide-orgb53c4b0">
+<h4 id="orgb53c4b0">UART Initialization</h4>
 <div class="org-src-container">
 
 <pre  class="src src-C" id="uart_init"><span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">uart_init</span>()
@@ -195,8 +198,8 @@ Source code from <a href="https://github.com/bztsrc/raspi3-tutorial">Github</a>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org2b828c7">
-<h4 id="org2b828c7">UART Send Char and String</h4>
+<section id="slide-orgf038842">
+<h4 id="orgf038842">UART Send Char and String</h4>
 <div class="org-src-container">
 
 <pre  class="src src-C" id="uart_send"><span style="color: #204a87;">void</span> <span style="color: #a40000; font-weight: bold;">uart_send</span>(<span style="color: #204a87;">unsigned</span> <span style="color: #204a87;">int</span> <span style="color: #b35000;">c</span>) {
@@ -223,8 +226,8 @@ Source code from <a href="https://github.com/bztsrc/raspi3-tutorial">Github</a>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgc398f80">
-<h4 id="orgc398f80">UART Get Char</h4>
+<section id="slide-org2531123">
+<h4 id="org2531123">UART Get Char</h4>
 <div class="org-src-container">
 
 <pre  class="src src-C" id="uart_getc"><span style="color: #204a87;">char</span> <span style="color: #a40000; font-weight: bold;">uart_getc</span>() {
@@ -241,8 +244,8 @@ Source code from <a href="https://github.com/bztsrc/raspi3-tutorial">Github</a>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb398c1f">
-<h4 id="orgb398c1f">Problem for Bare Metal Approach</h4>
+<section id="slide-org9dcc500">
+<h4 id="org9dcc500">Problem for Bare Metal Approach</h4>
 <ul>
 <li>What if we also need to read a sensor and send its measurement out?
 <ul>
@@ -284,8 +287,8 @@ Percentage, 71.8,  22.9,  20.4,  19.9,  10.5,  8.8,  7.2,  6.1,  5.2,  3.6,  3.0
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orga127fe3">
-<h4 id="orga127fe3">Popular operating System for Endpoints</h4>
+<section id="slide-orgfff363e">
+<h4 id="orgfff363e">Popular operating System for Endpoints</h4>
 <canvas data-chart="bar" class="stretch">
 OS, Linux, No OS / Bare metal, FreeRTOS, Windows, Other, Mbed OS, Contiki, TinyOS, RIOT OS, QNX, Vxworks, Zephyr, Huawei LiteOS, Micrium OS, KEIL RTXS
 Percentage, 38.7,  19.6,  19.3,  14.1,  8.0,  7.7,  6.1,  5.5,  4.7,  3.0,  2.2,  1.4,  1.1,  1.1,  0.8
@@ -304,8 +307,8 @@ Percentage, 38.7,  19.6,  19.3,  14.1,  8.0,  7.7,  6.1,  5.5,  4.7,  3.0,  2.2,
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org8d65a19">
-<h4 id="org8d65a19">Popular operating System for Gateways/Edge</h4>
+<section id="slide-orgfc00248">
+<h4 id="orgfc00248">Popular operating System for Gateways/Edge</h4>
 <canvas data-chart="bar" class="stretch">
 OS, Linux, Windows, Other, FreeRTOS, TinyOS, Mbed OS, Contiki, QNX, Zephyr, RIOT OS, Vxworks, Micrium OS, No OS / Bare metal, KEIL RTXS, Huawei LiteOS
 Percentage, 64.1,  14.9,  6.1,  5.0,  2.2,  2.2,  2.2,  1.9,  1.7,  1.7,  1.4,  1.1,  0.8,  0.8
@@ -482,8 +485,8 @@ called system calls.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgaadc5aa">
-<h4 id="orgaadc5aa">OS Services</h4>
+<section id="slide-org438fc5f">
+<h4 id="org438fc5f">OS Services</h4>
 <ul>
 <li>A full-fledged OS services/features/functionality includes
 <ul>
@@ -684,8 +687,8 @@ Code of threads just uses virtual addresses within machine instructions, and it 
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org5961c8a">
-<h4 id="org5961c8a">Physical vs virtual addresses</h4>
+<section id="slide-org57aeec9">
+<h4 id="org57aeec9">Physical vs virtual addresses</h4>
 <ul>
 <li>Physical: Addresses used on memory bus
 <ul>
@@ -766,8 +769,8 @@ Web browser may open multiple processes
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgac336a9">
-<h4 id="orgac336a9">Memory Layout for a C program</h4>
+<section id="slide-orge404dbc">
+<h4 id="orge404dbc">Memory Layout for a C program</h4>
 <div class="leftcol">
 <p>
  </p><div class="imgcontainer"><div about="figures/raw/stack.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/stack.png" alt="Figure" style="max-height:70vh" /></p><p>Memory Layout for a C program</p></div></div><p>
@@ -806,8 +809,8 @@ Web browser may open multiple processes
 <h3 id="vm-uses">Uses for Virtual Memory</h3>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgdbf2923">
-<h4 id="orgdbf2923">Private Storage</h4>
+<section id="slide-org9b4a9c1">
+<h4 id="org9b4a9c1">Private Storage</h4>
 <ul>
 <li>Each process has its own address space, <b>isolated</b> from others
 <ul>
@@ -909,8 +912,8 @@ added to its PSS</li>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7918e91">
-<h4 id="org7918e91">Flexible Memory Allocation</h4>
+<section id="slide-org3562357">
+<h4 id="org3562357">Flexible Memory Allocation</h4>
 <ul>
 <li>Allocation of RAM does not need to be contiguous
 <ul>
@@ -927,8 +930,8 @@ added to its PSS</li>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orga71acea">
-<h4 id="orga71acea">Non-Contiguous Allocation</h4>
+<section id="slide-org727c107">
+<h4 id="org727c107">Non-Contiguous Allocation</h4>
 <p>
  </p><div about="figures/raw/hail_f0609.pdf.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hail_f0609.pdf.png" alt="Figure 6.9 of cite:Hai17" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">Figure 6.9 of <a class="org-ref-reference" href="#slide-bibliography">[Hai17]</a></span>&rdquo; by <span property="cc:attributionName">Max Hailperin</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; converted from <a rel="dcterms:source" href="https://github.com/Max-Hailperin/Operating-Systems-and-Middleware--Supporting-Controlled-Interaction/blob/master/hail_f0609.pdf">GitHub</a></p></div><p>
 </p>
@@ -1173,8 +1176,8 @@ Page table for that situation (Fig. 6.11)
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org0ce0bb9">
-<h3 id="org0ce0bb9">Is complex memory management scheme necessary?</h3>
+<section id="slide-orge877cfa">
+<h3 id="orge877cfa">Is complex memory management scheme necessary?</h3>
 <ul>
 <li class="fragment appear">It depends!</li>
 <li class="fragment appear"><p class="forwardlink">
@@ -1191,9 +1194,9 @@ TinyOS (<a class="org-ref-reference" href="#slide-bibliography">[TinyOS]</a>)
 </section>
 </section>
 <section>
-<section id="slide-org31a14e8">
-<h2 id="org31a14e8">Multitasking</h2>
-<div class="outline-text-2" id="text-org31a14e8">
+<section id="slide-org1b5922a">
+<h2 id="org1b5922a">Multitasking</h2>
+<div class="outline-text-2" id="text-org1b5922a">
 </div>
 <div class="slide-footer"><br></div>
 </section>
@@ -1230,9 +1233,9 @@ TinyOS (<a class="org-ref-reference" href="#slide-bibliography">[TinyOS]</a>)
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgfe4cf41">
-<h3 id="orgfe4cf41">Thread</h3>
-<div class="outline-text-3" id="text-orgfe4cf41">
+<section id="slide-org001483f">
+<h3 id="org001483f">Thread</h3>
+<div class="outline-text-3" id="text-org001483f">
 </div>
 <div class="slide-footer"><br></div>
 </section>
@@ -1840,8 +1843,8 @@ their relative urgency or importance.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org5f76e99">
-<h4 id="org5f76e99">Throughput</h4>
+<section id="slide-org287cdf1">
+<h4 id="org287cdf1">Throughput</h4>
 <ul>
 <li>To increase throughput, avoid idle times of CPU
 <ul>
@@ -1859,8 +1862,8 @@ their relative urgency or importance.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7f78196">
-<h4 id="org7f78196">Response Time</h4>
+<section id="slide-org747cf38">
+<h4 id="org747cf38">Response Time</h4>
 <ul>
 <li>Frequent context switches may help for small response time
 <ul>
@@ -1877,14 +1880,14 @@ their relative urgency or importance.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7b0bb10">
-<h3 id="org7b0bb10">Scheduling Mechanisms</h3>
-<div class="outline-text-3" id="text-org7b0bb10">
+<section id="slide-org0d1e3a5">
+<h3 id="org0d1e3a5">Scheduling Mechanisms</h3>
+<div class="outline-text-3" id="text-org0d1e3a5">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org70ab95e">
-<h4 id="org70ab95e">Three Families of Schedulers</h4>
+<section id="slide-org4e98f31">
+<h4 id="org4e98f31">Three Families of Schedulers</h4>
 <div class="leftcol">
 <ul>
 <li>Fixed thread priorities</li>
@@ -2086,8 +2089,8 @@ time slice)</li>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org1892d3e">
-<h4 id="org1892d3e">WRR vs WFQ with sample Gantt Charts</h4>
+<section id="slide-org12c48d8">
+<h4 id="org12c48d8">WRR vs WFQ with sample Gantt Charts</h4>
 <ul>
 <li>Threads T1, T2, T3 with weights 3, 2, 1; q = 10ms
 <ul>
@@ -2151,20 +2154,20 @@ time slice)</li>
 </section>
 </section>
 <section>
-<section id="slide-org7053ab4">
-<h2 id="org7053ab4">Synchronizations</h2>
-<div class="outline-text-2" id="text-org7053ab4">
+<section id="slide-org6fa38c5">
+<h2 id="org6fa38c5">Synchronizations</h2>
+<div class="outline-text-2" id="text-org6fa38c5">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7deef41">
-<h3 id="org7deef41">Race Conditions</h3>
-<div class="outline-text-3" id="text-org7deef41">
+<section id="slide-org50c8981">
+<h3 id="org50c8981">Race Conditions</h3>
+<div class="outline-text-3" id="text-org50c8981">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb31290d" data-state="no-toc-progress">
-<h4 id="orgb31290d">Central Challenge for Concurrency: Races</h4>
+<section id="slide-org8903b79" data-state="no-toc-progress">
+<h4 id="org8903b79">Central Challenge for Concurrency: Races</h4>
 <p>
  </p><div about="figures/raw/race-crash-cc-by-2.0.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/race-crash-cc-by-2.0.jpg" alt="Ferrari Kiss" /></p><p></p><p>&ldquo;<span property="dcterms:title">Ferrari Kiss</span>&rdquo; by <a rel="cc:attributionURL dcterms:creator" href="https://www.flickr.com/photos/antoinevalentini/" property="cc:attributionName">Antoine Valentini</a> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>; from <a rel="dcterms:source" href="https://www.flickr.com/photos/antoinevalentini/9129393830/">flickr</a></p></div><p>
 </p>
@@ -2204,8 +2207,8 @@ time slice)</li>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgede32e7">
-<h4 id="orgede32e7">Races (2/2)</h4>
+<section id="slide-org26ae9df">
+<h4 id="org26ae9df">Races (2/2)</h4>
 <ul>
 <li>OS
 <ul>
@@ -2220,8 +2223,8 @@ in database systems</li>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgbb6bbbe">
-<h4 id="orgbb6bbbe">What happened in our Python program?</h4>
+<section id="slide-org8341edb">
+<h4 id="org8341edb">What happened in our Python program?</h4>
 <table>
 
 
@@ -2299,8 +2302,8 @@ What if we use the following <code>increment_global</code> function:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgd95dc26">
-<h3 id="orgd95dc26">Atomicity</h3>
+<section id="slide-org82db8c9">
+<h3 id="org82db8c9">Atomicity</h3>
 <p>
 An <b>atomic action</b> is one that appears to take place as a single indivisible operation:
 </p>
@@ -2398,9 +2401,9 @@ that it does not get interrupted, when it doesn’t want to.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org18c725b">
-<h3 id="org18c725b">Locking</h3>
-<div class="outline-text-3" id="text-org18c725b">
+<section id="slide-org29d5598">
+<h3 id="org29d5598">Locking</h3>
+<div class="outline-text-3" id="text-org29d5598">
 </div>
 <div class="slide-footer"><br></div>
 </section>
@@ -2744,14 +2747,14 @@ forever.
 </section>
 </section>
 <section>
-<section id="slide-org68c8893">
-<h2 id="org68c8893">Embedded OS</h2>
-<div class="outline-text-2" id="text-org68c8893">
+<section id="slide-org355a70b">
+<h2 id="org355a70b">Embedded OS</h2>
+<div class="outline-text-2" id="text-org355a70b">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org718f854">
-<h3 id="org718f854">TinyOS</h3>
+<section id="slide-orgd86b0a6">
+<h3 id="orgd86b0a6">TinyOS</h3>
 <ul>
 <li>System configuration consists of 
 <ul>
@@ -2768,8 +2771,8 @@ forever.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org884e9e0">
-<h4 id="org884e9e0">TinyOS: Application</h4>
+<section id="slide-orgba27733">
+<h4 id="orgba27733">TinyOS: Application</h4>
 <ul>
 <li>Application SurgeC:
 <ul>
@@ -2784,8 +2787,8 @@ forever.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgc7264cd">
-<h4 id="orgc7264cd">TinyOS: Component</h4>
+<section id="slide-orgc462856">
+<h4 id="orgc462856">TinyOS: Component</h4>
 <ul>
 <li>A Component has:
 <ul>
@@ -2808,8 +2811,8 @@ forever.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org293547d">
-<h4 id="org293547d">TinyOS: Command</h4>
+<section id="slide-org6a50bc9">
+<h4 id="org6a50bc9">TinyOS: Command</h4>
 <ul>
 <li>Commands:
 <ul>
@@ -2825,8 +2828,8 @@ forever.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgbed007e">
-<h4 id="orgbed007e">TinyOS: Event</h4>
+<section id="slide-org5ec0500">
+<h4 id="org5ec0500">TinyOS: Event</h4>
 <ul>
 <li>Events:
 <ul>
@@ -2842,8 +2845,8 @@ forever.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org077c96d">
-<h4 id="org077c96d">TinyOS: Tasks</h4>
+<section id="slide-org8514ee7">
+<h4 id="org8514ee7">TinyOS: Tasks</h4>
 <ul>
 <li>Tasks:
 <ul>
@@ -2859,8 +2862,8 @@ forever.
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgb2322d4">
-<h4 id="orgb2322d4">TinyOS: Example</h4>
+<section id="slide-org9051423">
+<h4 id="org9051423">TinyOS: Example</h4>
 <div class="org-src-container">
 
 <pre  class="src src-C" id="nesc"><span style="color: #204a87;">module</span> <span style="color: #b35000;">BlinkTaskC</span>
@@ -2888,8 +2891,8 @@ implementation
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgdbe71c4">
-<h4 id="orgdbe71c4">TinyOS: Reactive Concurrency</h4>
+<section id="slide-orgd1a38d9">
+<h4 id="orgd1a38d9">TinyOS: Reactive Concurrency</h4>
 <ul>
 <li>Two-level scheduling: events and tasks</li>
 <li>Scheduler is simple FIFO
@@ -2907,8 +2910,8 @@ implementation
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgc2bb13d">
-<h4 id="orgc2bb13d">TinyOS: Synchronization</h4>
+<section id="slide-org0e62212">
+<h4 id="org0e62212">TinyOS: Synchronization</h4>
 <ul>
 <li><b>Race-Free Invariant</b>: Any update to shared state is 
 <ul>
@@ -2922,8 +2925,8 @@ implementation
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org4ffa639">
-<h4 id="org4ffa639">Advantages of TinyOS</h4>
+<section id="slide-orgb4011d8">
+<h4 id="orgb4011d8">Advantages of TinyOS</h4>
 <ul>
 <li>Small Overhead: E.g., 15kB for SurgeC</li>
 <li>Low Power Consumption</li>
@@ -2940,8 +2943,8 @@ implementation
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org51b015a">
-<h3 id="org51b015a">FreeRTOS</h3>
+<section id="slide-org1840775">
+<h3 id="org1840775">FreeRTOS</h3>
 <div class="leftcol">
 <ul>
 <li>Small and Portable
@@ -2970,8 +2973,8 @@ implementation
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgd5ee233">
-<h4 id="orgd5ee233">FreeRTOS: Memory Management</h4>
+<section id="slide-org64364c9">
+<h4 id="org64364c9">FreeRTOS: Memory Management</h4>
 <p>
 Support:
 </p>
@@ -2991,8 +2994,8 @@ Support:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7e768be">
-<h4 id="org7e768be">FreeRTOS: Multitasking</h4>
+<section id="slide-org2b10a85">
+<h4 id="org2b10a85">FreeRTOS: Multitasking</h4>
 <ul>
 <li>Round-robin scheduling with priority 
 <ul>
@@ -3008,8 +3011,8 @@ Support:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org0f03af0">
-<h3 id="org0f03af0">Comparison</h3>
+<section id="slide-org5f0b5c0">
+<h3 id="org5f0b5c0">Comparison</h3>
 <table>
 
 
@@ -3071,14 +3074,14 @@ Support:
 </section>
 </section>
 <section>
-<section id="slide-orgb8855f7">
-<h2 id="orgb8855f7">Conclusions</h2>
-<div class="outline-text-2" id="text-orgb8855f7">
+<section id="slide-org1a16c27">
+<h2 id="org1a16c27">Conclusions</h2>
+<div class="outline-text-2" id="text-org1a16c27">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7e15a71">
-<h3 id="org7e15a71">Summary: OS</h3>
+<section id="slide-org3f21cab">
+<h3 id="org3f21cab">Summary: OS</h3>
 <ul>
 <li>OS is Software
 <ul>
@@ -3097,8 +3100,8 @@ Support:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org923be85">
-<h3 id="org923be85">Summary: Memory Management</h3>
+<section id="slide-org9b058d9">
+<h3 id="org9b058d9">Summary: Memory Management</h3>
 <ul>
 <li>Virtual memory provides abstraction over RAM and secondary storage
 <ul>
@@ -3117,8 +3120,8 @@ Support:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org0c2f7a6">
-<h3 id="org0c2f7a6">Summary: Multitasking</h3>
+<section id="slide-org2de1746">
+<h3 id="org2de1746">Summary: Multitasking</h3>
 <ul>
 <li>Threads represent individual instruction execution sequences</li>
 <li>Multithreading improves
@@ -3144,8 +3147,8 @@ Support:
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgc30c597">
-<h3 id="orgc30c597">Summary: Synchronization</h3>
+<section id="slide-org4e94544">
+<h3 id="org4e94544">Summary: Synchronization</h3>
 <ul>
 <li>Parallelism is a fact of life
 <ul>
