@@ -26,7 +26,7 @@ def step_func(x, x0, y0):
 #+END_SRC
 
 #+RESULTS:
-: # Out[1]:
+: # Out[2]:
 
 * Introduction
 
@@ -1017,7 +1017,8 @@ print(tag)
 
 #+RESULTS:
 #+begin_export html
-<script src="figures/timediversity.js" id="65798b42-a9cf-4f29-9b81-f2439d9b48f2"></script>
+
+<script src="figures/timediversity.js" id="e69ef1f1-edaa-4903-a350-115157c6587d"></script>
 #+end_export
 
 ** Space Diversity: MIMO
@@ -1072,6 +1073,7 @@ print(tag)
   - 64 chips are used for 1 data bit
 
 *** Direct Sequence Spread Spectrum
+- Assuming BPSK: 1 is coded as +1, and 0 is coded as -1
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/dhss.js"
 x = linspace(0,32,33)
 y = array([1 if z <= 16 else 0 for z in x])
@@ -1080,13 +1082,14 @@ p1.step(x, y, line_width=2, mode="before")
 pn = array([round(p) for p in random.rand(16)])
 pn = hstack((pn,pn,pn[:1]))
 p2 = figure(title = "PN Sequence")
-p2.step(x, pn, line_width=2, mode="before")
+p2.step(x[:17], pn[:17]*2-1, line_width=2, mode="before")
+p2.step(x[16:], pn[16:]*2-1, line_width=2, mode="before", color = "#ff0000")
 encode = 0.5 + 2*(y-0.5)*(pn-0.5)
 p3 = figure(title = "Transmitted Signal")
-p3.step(x, encode, line_width=2, mode="before")
+p3.step(x[:17], encode[:17]*2-1, line_width=2, mode="before")
+p3.step(x[16:], encode[16:]*2-1, line_width=2, mode="before", color="#ff0000")
 
 p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
-
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -1098,7 +1101,41 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/dhss.js" id="7981e84f-bf2d-4e75-8815-b5b99baa9965"></script>
+<script src="figures/dhss.js" id="94cb0f73-9460-4678-877b-82aff85c9464"></script>
+#+end_export
+
+*** Direct Sequence Spread Spectrum: Decoding 
+- The original symbol can be recovered by performing an inner product with the *same* PN sequence
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/dhssdecoding.js"
+
+p1 = figure(title = "PN Sequence")
+p1.step(x[:17], pn[:17]*2-1, line_width=2, mode="before")
+p1.step(x[16:], pn[16:]*2-1, line_width=2, mode="before", color = "#ff0000")
+p1.x_range=Range1d(0, 32)
+
+p2 = figure(title = "Signal")
+p2.step(x, encode*2-1, line_width=2, mode="before")
+
+p2.x_range=Range1d(0, 32)
+
+decode = (pn*2-1)*(encode*2-1)
+p3 = figure(title = "Decoded Signal")
+p3.step(x, decode, line_width=2, mode="before")
+
+p3.x_range=Range1d(0, 32)
+p = gridplot([p2, p1, p3], ncols = 1, plot_width = width, plot_height = height//3)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/dhssdecoding.js" id="cd66bf0d-aa1f-472a-bca3-34f9c7192eba"></script>
 #+end_export
 
 *** Direct Sequence Spread Spectrum 
@@ -1108,21 +1145,22 @@ print(tag)
 #+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/dhss2.js"
 
 p1 = figure(title = "PN Sequence")
-p1.step(x, pn, line_width=2, mode="before")
-
+p1.step(x[:17], pn[:17]*2-1, line_width=2, mode="before")
+p1.step(x[16:], pn[16:]*2-1, line_width=2, mode="before", color = "#ff0000")
 p1.x_range=Range1d(0, 32)
+
 p2 = figure(title = "Delayed Signal")
-p2.step(x[1:], encode[:-1], line_width=2, mode="before")
+p2.step(x[1:], encode[:-1]*2-1, line_width=2, mode="before")
 
 p2.x_range=Range1d(0, 32)
 
 decode = 0.5 + 2*(pn[1:]-0.5)*(encode[:-1]-0.5)
 p3 = figure(title = "Decoded Signal")
-p3.step(x[1:], decode, line_width=2, mode="before")
+p3.step(x[1:], decode*2-1, line_width=2, mode="before")
 
 p3.x_range=Range1d(0, 32)
-p = gridplot([p1, p2, p3], ncols = 1, plot_width = width, plot_height = height//3)
-
+p = gridplot([p2, p1, p3], ncols = 1, plot_width = width, plot_height = height//3)
+show(p)
 js, tag = autoload_static(p, CDN, filename)
 f = open(filename, "w")
 f.write(js)
@@ -1134,7 +1172,7 @@ print(tag)
 #+RESULTS:
 #+begin_export html
 
-<script src="figures/dhss2.js" id="0876ce05-a29c-46dd-844e-eb363637b629"></script>
+<script src="figures/dhss2.js" id="2c12226d-8ffc-4517-a028-f510ba8b24fa"></script>
 #+end_export
 
 *** Frequency Hopping Spread Spectrum
@@ -1301,11 +1339,23 @@ print(tag)
 - First release in June 1997
 - The newest is Wifi 6
   - Works in both 2.4Ghz and 5Ghz ISM band
-  - Support up to 1024 QAM
+  - Support up to 1024-QAM
   - Use OFDMA for spreading spectrum and multiple user access
   - Use Multi-user MIMO
-*** Comparison between different generations of Wifi cite:Lea2018
-  {{{revealimg("./figures/wifi.meta","Various IEEE 802.11 standards and specification","60vh",nil,'none)}}}
+*** WiFi Channels
+
+    {{{revealimg("./figures/wifichannel.meta",t,"60vh")}}}
+*** WiFi MIMO cite:Lea2018
+    {{{revealimg("./figures/wifimimo1.meta","Single User MIMO for 802.11n","30vh",nil,'none)}}}
+    {{{revealimg("./figures/wifimimo2.meta","Beamforming for 802.11n","30vh",nil,'none)}}}
+*** Comparison between different generations of WiFi
+| Generation | Release | Frequency(GHz) | BW(MHz) | Modulation | Diversity | MIMO  | Max Mbps |
+| b          |    1999 | 2.4            | 22      | QPSK       | DSSS      | 1     |       11 |
+| a          |    1999 | 3.7/5          | 20      | 64-QAM     | OFDM      | 1     |       54 |
+| g          |    2003 | 2.4            | 20      | 64-QAM     | OFDM/DSSS | 1     |       54 |
+| n          |    2009 | 2.4/5          | 20~40   | 64-QAM     | OFDM      | SU: 4 |      150 |
+| ac         |    2013 | 5              | 20~160  | 256-QAM    | OFDM      | MU: 8 |      867 |
+| ax         |    2019 | 2.4/5          | 20~160  | 1024-QAM   | OFDMA     | MU: 8 |     1000 |
 
 ** Cellular Communication
 - The International Telecommunication Union (ITU) is a UN specialized agency 
@@ -1318,7 +1368,7 @@ print(tag)
 | Bandwidth          | NA         | Stationary: 2Mbps Mobile 384Kbps | Stationary:1 Gbps, Mobile 100Mbps    | Min Down: 20 Gbps/ Min Up: 10 Gbps |
 | Features           | Voice, SMS | Audio, Video | Unified IP and seamless LAN/WAN/WLAN | IoT, ultra density, low latency    |
 
-*** 5G
+*** 5G Scenarios
 
 1. Enhanced Mobile Broadband (eMBB):
    - 1 to 10 GBps connections to UEs/endpoints in the field (not theoretical)
@@ -1332,6 +1382,19 @@ print(tag)
    - 1000x bandwidth per unit area; this implies roughly 1 million nodes in 1 km 2
    - Up to a 10 year battery life on endpoint IoT nodes
    - 90% reduction in network energy usage
+
+*** Sub-6 and mmWave 
+- 4G-LTE systems mainly use frequencies *<3 GHz* range. 
+- 5G may use a multitude of frequencies:
+  - Sub 6 GHz: More ready for immediate use
+    - China Telecom: 3.4-3.5MHz
+    - China Unicom: 3.5-3.6MHz
+    - China Mobile: 4.8-4.9MHz
+  - mmWave (30-60 GHz): High bandwidth available, Gbps throughput
+    - Higher free space loss
+    - Absorbed by the atmosphere, vegetation, human body
+    - Difficult to penetrate walls
+    - Solution: Massive MIMO
 
 ** LoRa
 - LoRa is a physical layer for a *long-range* and *low-power* IoT protocol
@@ -1348,6 +1411,11 @@ print(tag)
 - Typical range of communication is 2-3km in cities and 5-7km in rural area
   - The world record is 702km!
 
+*** The Things Network
+    
+- 15669 gateways in 150 countries as of Oct, 2020
+
+  {{{revealimg("./figures/thethingsnetwork.meta","LoRa Gateways","60vh",nil,'none)}}}
 ** Comparison
 - Good physical layer protocol for intelligent networked system:
   - Long Range

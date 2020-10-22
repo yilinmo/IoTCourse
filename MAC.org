@@ -26,7 +26,7 @@ def step_func(x, x0, y0):
 #+END_SRC
 
 #+RESULTS:
-: # Out[2]:
+: # Out[1]:
 * Introduction
 
 ** Core Questions
@@ -36,7 +36,6 @@ def step_func(x, x0, y0):
   - What are hidden and exposed terminal problem?
 - What are the major categories for medium access control protocols? 
 - How to save energy in the MAC protocol?
- 
    
 ** Learning Objectives
 - Definition of the data link layer in the OSI network model
@@ -103,7 +102,6 @@ def step_func(x, x0, y0):
 
 - Two nodes send to the same node at the same time
 - Interference of data: data loss
-
 
 *** Ethernet vs. Wireless
 
@@ -234,16 +232,19 @@ def step_func(x, x0, y0):
   {{{revealimg("./figures/lteresouceblock.meta","LTE Resource Block","40vh",nil,'none)}}}
 
 *** LTE Resource Block
-- Each LTE frame is 20MHz and 10ms
-- A resource block of 180kHz and 0.5ms can be allocated to each user
-- Each resource block is further divided into \(12\times 15Khz \) subcarriers
-- 7 OFDM symbols can be transmitted in 1 slot (\(0.5 ms \times 15kHz\))
-- 1 resource block contains 84 OFDM symbols
-
+- Each LTE frame is 10ms and 20MHz, 2MHz of which are used as guard band.
+- A resource block of 180kHz and 0.5ms can be allocated to each user.
+- \( (20-2)/0.18 \times 10/0.5 = 2000 \) resource blocks in 1 frame.
+- Each resource block is further divided into \(12\times 15Khz \) subcarriers.
+- 7 OFDM symbols can be transmitted by 1 subcarrier in one block (\(0.5 ms \times 15kHz\))
+- 1 resource block can transmit 84 OFDM symbols
+- \(84\times 2000 = 168k\) OFDM symbols can be transmitted in 1 frame 
+- The symbol rate is 16.8M/s
+- Assuming 16-QAM, the raw bit rate is \(16.8\times \log_216 = 67.2Mbps\).
 ** Code Division Multiple Access (CDMA)
-
 - Exploits mathematical properties of orthogonality
-todo
+
+
 
 ** Space Division Multiple Access (SDMA)
 - Traditional mobile network has no information on the position of the mobile units 
@@ -328,15 +329,15 @@ todo
 #+END_rightcol
 
 *** Deterministic v.s. Random
-
+todo
 
 *** MAC Layer for Various Wireless Protocols
     
-| 4G LTE        | TDMA and FDMA          |
-| IEEE 802.11   | CSMA/CA                |
-| Bluetooth     | CSMA/CA or TDMA + FHSS |
-| IEEE 802.15.4 | CSMA/CA and TDMA       |
-| LoRa          | Unslotted ALOHA        |
+| 4G LTE        | TDMA and FDMA               |
+| IEEE 802.11   | CSMA/CA                     |
+| Bluetooth     | FHSS + (CSMA/CA or TDMA)    |
+| IEEE 802.15.4 | (CSMA/CA + TDMA) or CSMA/CA |
+| LoRa          | Unslotted ALOHA             |
 
 * Hybrid Solution: IEEE 802.15.4
 
