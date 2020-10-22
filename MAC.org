@@ -103,6 +103,38 @@ def step_func(x, x0, y0):
 - Two nodes send to the same node at the same time
 - Interference of data: data loss
 
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/collision.js"
+p = figure(title="Collision", plot_width = width, plot_height = height//2)
+
+x = [1, 2, 3, 6]
+y = [1, 2, 1,  1]
+for i in range(len(x)):
+    p.rect(x[i],y[i],width=0.9,height=0.5, fill_color="#ffffff")
+x =  [4.5, 5]
+y =  [2, 1]
+
+for i in range(len(x)):
+    p.rect(x[i],y[i],width=0.9,height=0.5, fill_color="#ff0000")
+p.xaxis.axis_label = "Time"
+p.xgrid.visible = False
+p.ygrid.visible = False
+p.yaxis.ticker = [1, 2]
+p.yaxis.major_label_overrides = {1: 'Node 1', 2: 'Node 2'}
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/collision.js" id="da5a8f38-9f96-4dbd-b1ea-b6e756f21fcf"></script>
+#+end_export
+
 *** Ethernet vs. Wireless
 
 - Ethernet
@@ -138,15 +170,15 @@ def step_func(x, x0, y0):
 *** Wasted Energy in Communication
 
 - Collisions
-  - Packets become corrupted
+  - Data become corrupted
   - Expend more energy for re-transmission
 - Overhearing
-  - Receiving a packet intended for another node
-  - Expend energy receiving a packet that is useless
+  - Receiving a frame intended for another node
+  - Expend energy receiving a frame that is useless
 - Control Packet Overhead
   - Large overhead translates into sending larger packets or more packets, and therefore more energy expended
 - Idle Listening
-  - Waiting to receive a packet
+  - Waiting to receive a frame
   - Receiver expends energy and receives no data
   - #1 source of wasted energy
 
@@ -265,12 +297,92 @@ def step_func(x, x0, y0):
 
 ** ALOHA 
 
-- A node can transmit as soon as it has a packet to send
-- Each node acts independently
-- Interference occurs when two or more nodes transmit concurrently
-- Simple but not quite efficient 
+*** Slotted ALOHA
+- Time is divided into "slots" of one frame duration
+  - E.g., fixed size frames
+- When a node has a frame to send, it waits until the start of the next slot to send it 
+  - *Requires synchronization*
+- If no other nodes attempt transmission during that slot, the transmission is successful
+  - Otherwise "collision" 
+  - Collided frames are re-transmitted after a random delay
+- Simple and has low latency under low traffic
+- But not efficient under high traffic
 
-*** ALOHA
+*** Throughput of Slotted ALOHA 
+- Assuming that the packet transmission attempts in a time slot follows a Poission distribution of rate \(\lambda\)
+ - Valid when there are many nodes, each transmit independently with a small probability
+\(P(\#attempts) = \frac{\lambda^k}{k^!}\exp(-\lambda).\)
+- The probability of idle: \(\exp(-\lambda)\).
+- The probability of successful transmission: \(\lambda\exp(-\lambda)\).
+- The probability of collision: \(1-\exp(\lambda)-\lambda\exp(-\lambda)\).
+- Maximum throughput is \(1/e\approx 0.368\), when \(\lambda = 1\).
+
+*** Throughput of Slotted ALOHA 
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/slottedaloha.js"
+
+x = linspace(0,5,100)
+y = x*exp(-x)
+p = figure(title = "Throughput of Slotted ALOHA", plot_width = width, plot_height = height )
+p.line(x, y, line_width=2)
+p.x_range=Range1d(0, 5.2)
+p.xaxis.axis_label = "Rate of Transmission"
+p.yaxis.axis_label = "Throughput"
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/slottedaloha.js" id="6b026910-c822-48b8-b5e0-7d92ec6e1e9c"></script>
+#+end_export
+
+*** Pure ALOHA
+- A node can transmit as soon as it has a frame to send
+- Each node acts independently
+- No need for synchronization
+- Smaller delay than slotted version when traffic is low
+- More chance for interference
+
+*** Pure v.s. Slotted ALOHA
+- Slotted: Collision can only occur if someone else transmitted at time \(k\)
+- Pure: Collision can occur if someone else transmitted between time \(k-1,k+1\)
+  - The probability of a successful transmission is \(\lambda \exp(-2\lambda)\)
+  - Maximum throughput is \(1/2e\approx 0.184\), when \(\lambda = 0.5\).
+
+*** Throughput of Pure v.s. Slotted ALOHA 
+
+#+BEGIN_SRC ipython :session :exports results :results output html :var filename="figures/unslottedaloha.js"
+
+x = linspace(0,5,100)
+y = x*exp(-2*x)
+p = figure(title = "Throughput of Pure v.s. Slotted ALOHA", plot_width = width, plot_height = height )
+p.line(x, y, line_width=2)
+y = x*exp(-x)
+p.line(x, y, line_width=2, color="#ff0000")
+p.x_range=Range1d(0, 5.2)
+p.xaxis.axis_label = "Rate of Transmission"
+p.yaxis.axis_label = "Throughput"
+show(p)
+js, tag = autoload_static(p, CDN, filename)
+f = open(filename, "w")
+f.write(js)
+f.close()
+
+print(tag)
+#+END_SRC
+
+#+RESULTS:
+#+begin_export html
+
+<script src="figures/unslottedaloha.js" id="ff3de5a3-2d11-4608-9b71-3f7caa281933"></script>
+#+end_export
 
 ** Carrier Sense Multiple Access (CSMA)
 
@@ -291,20 +403,23 @@ def step_func(x, x0, y0):
 - IEEE 802.11 Standard
 - First, listen to the channel for a pre-determined amount of time so as to check for any activity on the channel
 - If the channel is sensed “idle”, then the station is permitted to transmit
-- If the channel is sensed as "busy" the station has to delay its transmission, avoiding collision
-- This virtual carrier sensing is done by a four-way handshake
+- If the channel is sensed as "busy" the station has to delay its next carrier sense for a *random* amount of time
+  - Ethernet will continuously listen to the channel and transmit *immediately* after the channel is clear for 96bit time
+- Additional RTS/CTS mechanism can also be used 
 
 *** CSMA/CA
 
-todo
-
+    {{{revealimg("./figures/csmaca.meta",t,"60vh")}}}
 *** Hidden Terminal Problem
 
 - Partially solves the hidden node problem
 - T will get to know about the activity of H from CTS packet of R
 - RTS packet is small (low cost of collision)
 
+todo
 
+*** Exposed Terminal Problem
+    
 ** Design Considerations
 
 *** Random Access
@@ -319,17 +434,24 @@ todo
 - Deterministic Access
   - High throughput when traffic is heavy
   - Small delay variance
+  - Large delay when traffic is low
   - Relatively larger overhead of processing
 #+END_leftcol
 #+BEGIN_rightcol
 - Random Access
   - Small overhead of processing
-  - Too many collisions when traffic is heavy: throughput decreases with load
+  - Small delay when the traffic is low
+  - Too many collisions when traffic is heavy
+    - Throughput decreases with load
   - May subject to large delays
 #+END_rightcol
 
-*** Deterministic v.s. Random
-todo
+
+*** How to Choose?
+| Type of Traffic | Multiple Access Techniques            |
+| short, bursty   | Pure ALOHA, Slotted ALOHA, CSMA/CA    |
+| long, bursty    | Deterministic Access with Reservation |
+| Deterministic   | FDMA/TDMA/CDMA                        |
 
 *** MAC Layer for Various Wireless Protocols
     
@@ -339,10 +461,62 @@ todo
 | IEEE 802.15.4 | (CSMA/CA + TDMA) or CSMA/CA |
 | LoRa          | Unslotted ALOHA             |
 
-* Hybrid Solution: IEEE 802.15.4
+* Hybrid MAC: IEEE 802.15.4
 
 
-   
+** IEEE 802.15.4 Protocol Revisit
+
+- Low-rate Wireless Personal Area Network (WPAN)
+- For wireless sensor networks, home automation, home networking, connecting devices to a PC, home security, etc.
+- Combines schedule-based and contention-based schemes
+- Different roles as different types of nodes
+
+*** Node Type and Topology
+
+- There are two types of nodes in 802.15.4:
+|                              | Roles                               |
+| Full Function Device (FFD)   | PAN Coordinator, Coordinator,Device |
+| Reduced Function Device(RFD) | Device                              |
+- Device must be connected to a coordinator/PAN coordinator and form a star topology
+- Coordinator:
+  - can communicate with the devices connected to it
+  - or other coordinators (in a peer-to-peer) fashion
+  - It can also relay messages from/to its devices
+- In addition, one of the coordinators is designated as a PAN coordinator: 
+  - has the duty of transmitting network beacons and storing node information
+  - the PAN coordinator is constantly receiving transmissions and is usually on a dedicated power line
+  - also serves as the gateway to LAN/WAN
+
+*** IEEE 802.15.4 Topology
+
+todo
+
+** Medium Access Control for IEEE 802.15.4
+
+*** Beacon Mode 
+
+- PAN coordinator communication
+  - Super-frame structure
+    - 16 time slots
+    - up to 7 time slots in the end of the super-frame can be guaranteed time slots
+  - Inactive nodes including coordinator switch off their transceivers
+- Data transfer with guaranteed time-slot
+  - Device gets guaranteed time slots only if it sends request frames during contention access period
+  - Device transmits immediately in time slot without carrier sense or collision avoiding
+- Data transfer without guaranteed time-slot
+  - Slotted CSMA-CA
+
+*** Beacon mode
+    
+todo
+
+*** Beaconless mode
+
+- PAN coordinator does not send beacon frames
+- No guaranteed time-slot
+- Un-slotted (not time-synchronized) CSMA-CA
+- PAN coordinator must be "on" constantly, although devices can follow their own sleep schedule  
+
 * Bibliography
   :PROPERTIES:
   :CUSTOM_ID: bibliography
