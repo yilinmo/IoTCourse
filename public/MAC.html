@@ -116,9 +116,9 @@
 <ul>
 <li><a href="#slide-orgb02673c">Introduction</a></li>
 <li><a href="#slide-org6bdb5a0">Overview</a></li>
-<li><a href="#slide-org055cc69">Ordered Access</a></li>
-<li><a href="#slide-orgc0db644">Deterministic Access</a></li>
-<li><a href="#slide-org214c1ba">Contention-Based</a></li>
+<li><a href="#slide-org210b64c">Ordered Access</a></li>
+<li><a href="#slide-org9d2a778">Deterministic Access</a></li>
+<li><a href="#slide-org198f4aa">Random Access</a></li>
 <li><a href="#slide-org3dd6a44">Hybrid MAC: IEEE 802.15.4</a></li>
 <li><a href="#slide-bibliography">Bibliography</a></li>
 </ul>
@@ -143,8 +143,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orge8e9c28">
-<h4 id="orge8e9c28">Data-Link Layer</h4>
+<section id="slide-orgded93d7">
+<h4 id="orgded93d7">Data-Link Layer</h4>
 <ul>
 <li>Physical Layer: handles transmission of raw bits</li>
 <li>What is not taken care of&#x2026;
@@ -160,8 +160,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org6ced594">
-<h4 id="org6ced594">Data-Link Layer</h4>
+<section id="slide-orga7aaf85">
+<h4 id="orga7aaf85">Data-Link Layer</h4>
 <ul>
 <li>Logical Link Control (LLC)
 <ul>
@@ -195,8 +195,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org76b3c17">
-<h4 id="org76b3c17">Design Considerations</h4>
+<section id="slide-org1f78c81">
+<h4 id="org1f78c81">Design Considerations</h4>
 <ul>
 <li>What kind of a resource do we have?
 <ul>
@@ -361,7 +361,7 @@ However R1 cannot hear S2 and R2 cannot hear S1.
 <li>Some of the protocols are in the physical layer</li>
 
 </ul></li>
-<li>Random Access</li>
+<li>Random Access/Contention-Based Access</li>
 <li>Hybrid</li>
 
 </ul>
@@ -370,14 +370,14 @@ However R1 cannot hear S2 and R2 cannot hear S1.
 </section>
 </section>
 <section>
-<section id="slide-org055cc69">
-<h2 id="org055cc69">Ordered Access</h2>
-<div class="outline-text-2" id="text-org055cc69">
+<section id="slide-org210b64c">
+<h2 id="org210b64c">Ordered Access</h2>
+<div class="outline-text-2" id="text-org210b64c">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgbaadb58">
-<h3 id="orgbaadb58">Ordered Access</h3>
+<section id="slide-orge696e50">
+<h3 id="orge696e50">Ordered Access</h3>
 <ul>
 <li>Not random</li>
 <li>Not controlled by a central control point that allocates channels</li>
@@ -429,14 +429,14 @@ Token is passed to the next candidate in a sequential manner
 </section>
 </section>
 <section>
-<section id="slide-orgc0db644">
-<h2 id="orgc0db644">Deterministic Access</h2>
-<div class="outline-text-2" id="text-orgc0db644">
+<section id="slide-org9d2a778">
+<h2 id="org9d2a778">Deterministic Access</h2>
+<div class="outline-text-2" id="text-org9d2a778">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org7ba6199">
-<h3 id="org7ba6199">Deterministic Access</h3>
+<section id="slide-org518a12c">
+<h3 id="org518a12c">Deterministic Access</h3>
 <ul>
 <li>Controlled by a central control point that allocates channels
 <ul>
@@ -565,14 +565,14 @@ Token is passed to the next candidate in a sequential manner
 </section>
 </section>
 <section>
-<section id="slide-org214c1ba">
-<h2 id="org214c1ba">Contention-Based</h2>
-<div class="outline-text-2" id="text-org214c1ba">
+<section id="slide-org198f4aa">
+<h2 id="org198f4aa">Random Access</h2>
+<div class="outline-text-2" id="text-org198f4aa">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org81151ef">
-<h3 id="org81151ef">Random Access</h3>
+<section id="slide-orgc509f4e">
+<h3 id="orgc509f4e">Random Access</h3>
 <ul>
 <li>Randomly access media, usually detect collision <b>after</b> it happens
 <ul>
@@ -609,8 +609,8 @@ Token is passed to the next candidate in a sequential manner
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org65ba7e3">
-<h4 id="org65ba7e3">Slotted ALOHA</h4>
+<section id="slide-orgc57976a">
+<h4 id="orgc57976a">Slotted ALOHA</h4>
 <ul>
 <li>Time is divided into &ldquo;slots&rdquo; of one frame duration
 <ul>
@@ -635,15 +635,15 @@ Token is passed to the next candidate in a sequential manner
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org08440af">
-<h4 id="org08440af">Slotted ALOHA</h4>
+<section id="slide-org8ff15eb">
+<h4 id="org8ff15eb">Slotted ALOHA</h4>
 
 <script src="figures/alohatimeslot.js" id="e7c3d856-8d97-48f1-b417-48be8645a812"></script>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org6d15895">
-<h4 id="org6d15895">Throughput of Slotted ALOHA</h4>
+<section id="slide-orgbeb7b62">
+<h4 id="orgbeb7b62">Throughput of Slotted ALOHA</h4>
 <ul>
 <li>Assuming that the packet transmission attempts in a time slot follows a Poission distribution of rate \(\lambda\)
 <ul>
@@ -653,7 +653,7 @@ Token is passed to the next candidate in a sequential manner
 
 </ul>
 <p>
-\(P(\#attempts) = \frac{\lambda^k}{k^!}\exp(-\lambda).\)
+\(P(\#attempts) = \frac{\lambda^k}{k!}\exp(-\lambda).\)
 </p>
 <ul>
 <li>The probability of idle: \(\exp(-\lambda)\).</li>
@@ -665,8 +665,8 @@ Token is passed to the next candidate in a sequential manner
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org36bbadc">
-<h4 id="org36bbadc">Throughput of Slotted ALOHA</h4>
+<section id="slide-org5c20ddd">
+<h4 id="org5c20ddd">Throughput of Slotted ALOHA</h4>
 
 <script src="figures/slottedaloha.js" id="17b62b03-0d50-4e63-900b-c619680c1597"></script>
 
@@ -691,7 +691,7 @@ Token is passed to the next candidate in a sequential manner
 <li>Slotted: Collision can only occur if someone else transmitted at time \(k\)</li>
 <li>Pure: Collision can occur if someone else transmitted between time \(k-1,k+1\)
 <ul>
-<li>The probability of a successful transmission is \(\lambda \exp(-2\lambda)\)</li>
+<li>The expected throughput is \(\lambda \exp(-2\lambda)\)</li>
 <li>Maximum throughput is \(1/2e\approx 0.184\), when \(\lambda = 0.5\).</li>
 
 </ul></li>
@@ -727,6 +727,7 @@ Token is passed to the next candidate in a sequential manner
 <ul>
 <li>hidden node problem</li>
 <li>cannot send and receive at the same time</li>
+<li>continuous carrier sensing is energy inefficient</li>
 
 </ul></li>
 
@@ -745,7 +746,7 @@ Token is passed to the next candidate in a sequential manner
 <li>Ethernet will continuously listen to the channel and transmit <b>immediately</b> after the channel is clear for 96bit time</li>
 
 </ul></li>
-<li>Additional RTS/CTS mechanism can also be used 
+<li>Additional RTS(Request To Send) / CTS(Clear To Send) mechanism can also be used 
 <ul>
 <li>RTS/CTS are smaller comparing to data packet (low cost of collision)</li>
 
@@ -798,14 +799,14 @@ Token is passed to the next candidate in a sequential manner
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgce0a738">
-<h3 id="orgce0a738">Design Considerations</h3>
-<div class="outline-text-3" id="text-orgce0a738">
+<section id="slide-orgf2930c5">
+<h3 id="orgf2930c5">Design Considerations</h3>
+<div class="outline-text-3" id="text-orgf2930c5">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org917d3ca">
-<h4 id="org917d3ca">Random Access</h4>
+<section id="slide-org5660563">
+<h4 id="org5660563">Random Access</h4>
 <ul>
 <li>Carrier sense or not?
 <ul>
@@ -825,10 +826,10 @@ Token is passed to the next candidate in a sequential manner
 <ul>
 <li>Deterministic Access
 <ul>
+<li>Relatively larger overhead of processing</li>
 <li>High throughput when traffic is heavy</li>
 <li>Small delay variance</li>
 <li>Large delay when traffic is low</li>
-<li>Relatively larger overhead of processing</li>
 
 </ul></li>
 
@@ -844,16 +845,15 @@ Token is passed to the next candidate in a sequential manner
 <li>Too many collisions when traffic is heavy
 <ul>
 <li>Throughput decreases with load</li>
+<li>May subject to large random delays</li>
 
 </ul></li>
-<li>May subject to large delays</li>
 
 </ul></li>
 
 </ul>
 
 </div>
-
 
 <div class="slide-footer"><br></div>
 </section>
@@ -874,17 +874,22 @@ Token is passed to the next candidate in a sequential manner
 </tr>
 
 <tr>
-<td class="org-left">short, bursty</td>
-<td class="org-left">Pure ALOHA, Slotted ALOHA, CSMA/CA</td>
+<td class="org-left">short, bursty, low traffic</td>
+<td class="org-left">Pure ALOHA, Slotted ALOHA</td>
+</tr>
+
+<tr>
+<td class="org-left">short, bursty, medium traffic</td>
+<td class="org-left">CSMA/CA</td>
 </tr>
 
 <tr>
 <td class="org-left">long, bursty</td>
-<td class="org-left">Deterministic Access with Reservation</td>
+<td class="org-left">CSMA/CA with RTS/CTS</td>
 </tr>
 
 <tr>
-<td class="org-left">Deterministic</td>
+<td class="org-left">deterministic</td>
 <td class="org-left">FDMA/TDMA/CDMA</td>
 </tr>
 </tbody>
@@ -915,7 +920,7 @@ Token is passed to the next candidate in a sequential manner
 
 <tr>
 <td class="org-left">IEEE 802.11</td>
-<td class="org-left">CSMA/CA</td>
+<td class="org-left">CSMA/CA w/wo RTS/CTS</td>
 </tr>
 
 <tr>
@@ -930,7 +935,7 @@ Token is passed to the next candidate in a sequential manner
 
 <tr>
 <td class="org-left">LoRa</td>
-<td class="org-left">Unslotted ALOHA</td>
+<td class="org-left">Pure ALOHA</td>
 </tr>
 </tbody>
 </table>

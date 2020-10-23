@@ -20,3 +20,6 @@ figures/tikz/*svg
 !public/reveal.js/*
 /public/figures/tikz/*.png
 /public/figures/*.grid
+/figures/*.js
+/public/figures/tikz/*.svg
+/public/figures/tikz/*.tikz

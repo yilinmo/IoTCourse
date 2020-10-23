@@ -194,7 +194,7 @@ print(tag)
 - Ordered Access
 - Deterministic Access
   - Some of the protocols are in the physical layer
-- Random Access
+- Random Access/Contention-Based Access
 - Hybrid
 
 * Ordered Access
@@ -282,7 +282,7 @@ print(tag)
     - including interference signals.
 - For SDMA, the antenna, both in transmission and reception, is adapted to each user to obtain highest gain in the direction of that user.
   - This is often done using phased array techniques.
-* Contention-Based
+* Random Access
 
 ** Random Access
 
@@ -351,7 +351,7 @@ print(tag)
 *** Throughput of Slotted ALOHA 
 - Assuming that the packet transmission attempts in a time slot follows a Poission distribution of rate \(\lambda\)
  - Valid when there are many nodes, each transmit independently with a small probability
-\(P(\#attempts) = \frac{\lambda^k}{k^!}\exp(-\lambda).\)
+\(P(\#attempts) = \frac{\lambda^k}{k!}\exp(-\lambda).\)
 - The probability of idle: \(\exp(-\lambda)\).
 - The probability of successful transmission: \(\lambda\exp(-\lambda)\).
 - The probability of collision: \(1-\exp(\lambda)-\lambda\exp(-\lambda)\).
@@ -393,7 +393,7 @@ print(tag)
 *** Pure v.s. Slotted ALOHA
 - Slotted: Collision can only occur if someone else transmitted at time \(k\)
 - Pure: Collision can occur if someone else transmitted between time \(k-1,k+1\)
-  - The probability of a successful transmission is \(\lambda \exp(-2\lambda)\)
+  - The expected throughput is \(\lambda \exp(-2\lambda)\)
   - Maximum throughput is \(1/2e\approx 0.184\), when \(\lambda = 0.5\).
 
 *** Throughput of Pure v.s. Slotted ALOHA 
@@ -437,6 +437,7 @@ print(tag)
 - Does not work in Wireless
   - hidden node problem
   - cannot send and receive at the same time
+  - continuous carrier sensing is energy inefficient
 
 ** Carrier Sense Multiple Access w/ Collision Avoidance (CSMA/CA)
 
@@ -445,7 +446,7 @@ print(tag)
 - If the channel is sensed “idle”, then the station is permitted to transmit
 - If the channel is sensed as "busy" the station has to delay its next carrier sense for a *random* amount of time
   - Ethernet will continuously listen to the channel and transmit *immediately* after the channel is clear for 96bit time
-- Additional RTS/CTS mechanism can also be used 
+- Additional RTS(Request To Send) / CTS(Clear To Send) mechanism can also be used 
   - RTS/CTS are smaller comparing to data packet (low cost of collision)
 
 *** CSMA/CA
@@ -547,10 +548,10 @@ print(tag)
 
 #+BEGIN_leftcol
 - Deterministic Access
+  - Relatively larger overhead of processing
   - High throughput when traffic is heavy
   - Small delay variance
   - Large delay when traffic is low
-  - Relatively larger overhead of processing
 #+END_leftcol
 #+BEGIN_rightcol
 - Random Access
@@ -558,26 +559,25 @@ print(tag)
   - Small delay when the traffic is low
   - Too many collisions when traffic is heavy
     - Throughput decreases with load
-  - May subject to large delays
+    - May subject to large random delays
 #+END_rightcol
 
-
 *** How to Choose?
-| Type of Traffic | Multiple Access Techniques            |
-| short, bursty   | Pure ALOHA, Slotted ALOHA, CSMA/CA    |
-| long, bursty    | Deterministic Access with Reservation |
-| Deterministic   | FDMA/TDMA/CDMA                        |
+| Type of Traffic               | Multiple Access Techniques |
+| short, bursty, low traffic    | Pure ALOHA, Slotted ALOHA  |
+| short, bursty, medium traffic | CSMA/CA                    |
+| long, bursty                  | CSMA/CA with RTS/CTS       |
+| deterministic                 | FDMA/TDMA/CDMA             |
 
 *** MAC Layer for Various Wireless Protocols
 | Protocol      | MAC                         |
 | 4G LTE        | TDMA and FDMA               |
-| IEEE 802.11   | CSMA/CA                     |
+| IEEE 802.11   | CSMA/CA w/wo RTS/CTS        |
 | Bluetooth     | FHSS + (CSMA/CA or TDMA)    |
 | IEEE 802.15.4 | (CSMA/CA + TDMA) or CSMA/CA |
-| LoRa          | Unslotted ALOHA             |
+| LoRa          | Pure ALOHA                  |
 
 * Hybrid MAC: IEEE 802.15.4
-
 
 ** IEEE 802.15.4 Protocol Revisit
 
