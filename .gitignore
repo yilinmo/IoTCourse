@@ -23,3 +23,4 @@ figures/tikz/*svg
 /figures/*.js
 /public/figures/tikz/*.svg
 /public/figures/tikz/*.tikz
+public/preamble.html
