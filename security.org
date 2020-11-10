@@ -27,7 +27,6 @@ def step_func(x, x0, y0):
 * Introduction
 
 ** Core Questions
-
    
 ** Learning Objectives
 
@@ -38,21 +37,56 @@ def step_func(x, x0, y0):
 #+REVEAL_TOC: headlines 1
 
 * Information Security 
-  
-* Symmetric Encryption
+- Confidentiality
 
+In information security, confidentiality "is the property, that information is not made available or disclosed to unauthorized individuals, entities, or processes."[36] While similar to "privacy," the two words aren't interchangeable. Rather, confidentiality is a component of privacy that implements to protect our data from unauthorized viewers. Examples of confidentiality of electronic data being compromised include laptop theft, password theft, or sensitive emails being sent to the incorrect individuals.[37]
+Integrity
+- Integrity
+In information security, data integrity means maintaining and assuring the accuracy and completeness of data over its entire lifecycle.[38] This means that data cannot be modified in an unauthorized or undetected manner. This is not the same thing as referential integrity in databases, although it can be viewed as a special case of consistency as understood in the classic ACID model of transaction processing. Information security systems typically provide message integrity alongside confidentiality.
+Availability
+
+- Availability
+For any information system to serve its purpose, the information must be available when it is needed. This means the computing systems used to store and process the information, the security controls used to protect it, and the communication channels used to access it must be functioning correctly. High availability systems aim to remain available at all times, preventing service disruptions due to power outages, hardware failures, and system upgrades. Ensuring availability also involves preventing denial-of-service attacks, such as a flood of incoming messages to the target system, essentially forcing it to shut down.[39]
+
+In the realm of information security, availability can often be viewed as one of the most important parts of a successful information security program. Ultimately end-users need to be able to perform job functions; by ensuring availability an organization is able to perform to the standards that an organization's stakeholders expect. This can involve topics such as proxy configurations, outside web access, the ability to access shared drives and the ability to send emails. Executives oftentimes do not understand the technical side of information security and look at availability as an easy fix, but this often requires collaboration from many different organizational teams, such as network operations, development operations, incident response and policy/change management. A successful information security team involves many different key roles to mesh and align for the CIA triad to be provided effectively.
+Non-repudiation
+
+- Non-Repudiation
+In law, non-repudiation implies one's intention to fulfill their obligations to a contract. It also implies that one party of a transaction cannot deny having received a transaction, nor can the other party deny having sent a transaction.[40]
+
+It is important to note that while technology such as cryptographic systems can assist in non-repudiation efforts, the concept is at its core a legal concept transcending the realm of technology. It is not, for instance, sufficient to show that the message matches a digital signature signed with the sender's private key, and thus only the sender could have sent the message, and nobody else could have altered it in transit (data integrity). The alleged sender could in return demonstrate that the digital signature algorithm is vulnerable or flawed, or allege or prove that his signing key has been compromised. The fault for these violations may or may not lie with the sender, and such assertions may or may not relieve the sender of liability, but the assertion would invalidate the claim that the signature necessarily proves authenticity and integrity. As such, the sender may repudiate the message (because authenticity and integrity are pre-requisites for non-repudiation).  
+
+** Security Risks for Endpoints
+* Symmetric Encryption
+** Caesar Code
+** Frequency Analysis
+** Block Cipher
+** Enigma machine
+** DES
+** AES
+** Other Symmetric Scheme
+** One time pad
 * Diffie-Hellman Key Exchange
-  
-* Asymmetric Encryption
-  
+** Basics of Modulo n Arithmetics 
+** DH Key Exchange  
+** Man-in-the-Middle Attack
 * Message Authentication Code
 
 ** Hash Function
    
 *** Birthday paradox
-* TLS Overview
+** Asymmetric Encryption
+** Digital Signature
+* Transport Layer Security
 
+TLS and SSL do not fit neatly into any single layer of the OSI model or the TCP/IP model.[8][9] TLS runs "on top of some reliable transport protocol (e.g., TCP),"[10] which would imply that it is above the transport layer. It serves encryption to higher layers, which is normally the function of the presentation layer. However, applications generally use TLS as if it were a transport layer,[8][9] even though applications using TLS must actively control initiating TLS handshakes and handling of exchanged authentication certificates.[10]
+
+** Cipher Suit
+** Key Exchange
+** Hash Function
+** Protocol
 * Key Distribution 
+ 
 * Bibliography
   :PROPERTIES:
   :CUSTOM_ID: bibliography
