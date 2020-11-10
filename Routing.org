@@ -1,0 +1,78 @@
+#+INCLUDE: "preamble.org"
+
+#+TITLE: Routing 
+#+AUTHOR: Mo, Yilin
+#+DATE: Nov 2020 
+
+#+KEYWORDS: Routing
+#+DESCRIPTION: Routing for Mesh Networks
+
+#+BEGIN_SRC ipython :session :exports none
+from bokeh.resources import CDN
+from bokeh.plotting import figure, show
+from bokeh.embed import autoload_static
+from bokeh.layouts import gridplot
+from bokeh.models import Range1d, Label
+from numpy import *
+from bokeh.palettes import Category10_10
+
+width = 1200
+height = 600
+
+def step_func(x, x0, y0):
+    index = argsort(abs(x - 0.5 - x0))[0]
+    return y0[index]
+#+END_SRC
+
+* Introduction
+
+** Core Questions
+
+- What purpose does the network layer serve in OSI network model?
+   
+** Learning Objectives
+- Definition of the network layer in the OSI network model
+
+** Table of Contents
+   :PROPERTIES:
+   :UNNUMBERED: notoc
+   :END:
+#+REVEAL_TOC: headlines 1
+
+* Overview
+
+** OSI 7-Layer Network Model
+
+    {{{revealimg("./figures/osimodel.meta",t,"60vh")}}}
+- The network layer is responsible for packet forwarding 
+  - routing the packets through intermediate routers
+
+** Types of Routing Protocols
+
+
+* Flooding and Gossiping
+** Flooding
+- Incoming packet is sent through *every* outgoing link except the one it arrived on. 
+- How to deal graph containing cycles?
+  - TTL (time to live)
+  - Only forward packets that are not seen before
+    - need a buffer
+** Gossiping
+- Incoming packet is sent to *random* outgoing link with certain probability
+- The system behaves as a Markov Chain
+
+** Controlled Flooding
+- Combining gossiping and flooding
+* Active Routing
+* Passive Routing
+* Bibliography
+  :PROPERTIES:
+  :CUSTOM_ID: bibliography
+  :END:
+
+  printbibliography:references.bib
+
+  # Local Variables:
+  # indent-tabs-mode: nil
+  # org-src-preserve-indentation: t
+  # End:
