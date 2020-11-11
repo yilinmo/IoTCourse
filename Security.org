@@ -164,8 +164,7 @@ def step_func(x, x0, y0):
 ** AES
 ** Other Symmetric Scheme
 ** One-time-pad
-* Diffie-Hellman Key Exchange
-** Modular Arithmetic 
+* Modular Arithmetic 
 *** Congruence
 - Given an integer \(n > 1\), called a modulus, two integers are said to be *congruent* modulo \(n\), if there is an integer \(k\) such that 
 \[a − b = kn.\] 
@@ -215,11 +214,18 @@ def step_func(x, x0, y0):
 *** Euler's Theorem
 - Euler's Theorem: If \(a\) and \(n\) are coprime, then
 \[a^{\phi(n)}\equiv 1; (mod\;n).\]
-- If \(ed \equiv 1; (mod\;\phi(n))\), and \(a\) is coprime to \(n\) then
-\[a^{ed} \equiv a; (mod\;n).\]
- - The \(e\)th-root of \(a\) is \(a^d\), or vice versa.
- 
-** DH Key Exchange
+- If \(ed \equiv 1; (mod\;\phi(n))\), and \(a\) is coprime to \(n\) then \[a^{ed} \equiv a^{k\phi(n)}\times a\equiv a; (mod\;n).\]
+  - The \(e\)th-root of \(a\) is \(a^d\), or vice versa.
+- If we know \(p,q\), then we can easily generate compute \(d\)
+- However, computing \(d\) without knowing \(\phi(n)\) is considered to be difficult
+* Diffie-Hellman Key Exchange
+  
+** Diffie-Hellman Key Exchange
+- Named after Whitfield Diffie and Martin Hellman.
+- First published in 1976
+- The first public key exchange algorithm
+- Both received Turing Award in 2015
+** DH Protocol
 | Alice                     | Public Information                 | Bob                      |
 | \(p, g , a\)              |                                    |                          |
 |                           | \(p, g , g^a(mod\;p)\)             |                          |
@@ -229,25 +235,93 @@ def step_func(x, x0, y0):
 
 - The secret is generated as
 \[s \equiv g^{ab} \equiv (g^a)^b \equiv (g^b)^a \;(mod\;p).\]
-- However, the ones observing the public channel only have \(g^a(mod\;p),\,g^b(mod\;p)\) 
+- However, the ones passively observing the public channel only have \(g^a(mod\;p),\,g^b(mod\;p)\) 
   - \(a,b\) cannot be deduced since discrete logarithm is hard
   - No fast algorithm known to compute the secret
 
-*** Man-in-the-Middle Attack
-| Alice                     | Eve                                | Bob                      |
-| \(p, g , a\)              |                                    |                          |
-|                           | \(p, g , g^a(mod\;p)\)             |                          |
-|                           |                                    | \(p, g , g^a(mod\;p),b\) |
-|                           | \(p, g , g^a(mod\;p),g^b(mod\;p)\) |                          |
-| \(p, g , a, g^b(mod\;p)\) |                                    |                          |
-
-
+** Man-in-the-Middle Attack
+| Alice                         | Eve                                             | Bob                           |
+| \(p, g , a\)                  |                                                 |                               |
+|                               | \(p, g , g^a(mod\;p), \alpha, \beta\)           |                               |
+|                               |                                                 | \(p, g , g^\alpha(mod\;p),b\) |
+|                               | \(p, g , g^a(mod\;p),g^b(mod\;p),\alpha,\beta\) |                               |
+| \(p, g , a, g^\beta(mod\;p)\) |                                                 |                               |
+- Eve replace \(g^a(mod\;p)\) from Alice by \(g^\alpha(mod\;p)\);
+- and replace \(g^b(mod\;p)\) from Bob by \(g^\beta(mod\;p)\)
+- Alice will compute the secret as
+\[s_a \equiv g^{a\beta}\;(mod\;p).\]
+- Bob will compute the secret as
+\[s_b \equiv g^{\alpha b}\;(mod\;p).\]
+- Both can be computed by Eve
+- To avoid man in the middle attack, Alice and Bob need to verify that \(g^a(mod\;p)\) and \(g^b(mod\;p)\) come from the *correct* user.
 * Digital Signature and Message Authentication Code
-** Hash Function
-   
+
+** Cryptographic Hash Functions
+- A function H that takes an arbitrary size input \(m\)
+- and produces a *fixed* length output H(m). 
+  - The output length is typically 128–1024 bits.
+- A Hash be viewed as the finger print of the original message
+  - Hard to find 2 people with same fingerprint
+  - Given a person, it's easy to get his/her fingerprint
+  - However given a fingerprint, it's hard to find the person it came from 
+- Similarly
+  - Hard to find two message with the same hash (collision resistance)
+  - one-way
+
+*** Strong and Weak Collision Resistance
+- The once popular MD5 hash has a digest size of 128 bits.
+- We want to find an input corresponding to a *specific hash* by brute force
+  - We need to do \(2^128\) search on average
+- However, how much search we need to do if we want to find 2 inputs sharing the *same hash* by brute force?
+  - Surprisingly, only \(2^64\) search is needed due to birthday paradox!
+
 *** Birthday paradox
-** Digital Signature
-** Asymmetric Encryption
+- How likely this class of 30 students to contain two people with the same birthday?
+- The answer is roughly 71%!
+- The probability of *NOT* having two person with the same birthday (assuming no leap year) is
+\[P=\left(1-\frac{0}{365}\right) \left(1-\frac{1}{365}\right)\dots\left(1-\frac{n-1}{365}\right)\]
+- Notice that \(1-x \approx \exp(-x)\)
+\[P\approx\exp\left(-frac{\sum_{i=0}^{n-1}i}{365}\right)=\exp\left(-frac{n(n-1)}{730}\right).\]
+
+*** MD5 and SHA-1 
+- MD5 was invented in 1991
+  - Digest size is 128 bits
+- The strong collision resistance of MD5 was broken by Wang Xiaoyun in 2004. 
+- Now possible to find collisions in mere seconds. 
+- SHA-1 was released by the NSA in 1995
+  - Digest size is 160 bits
+- Best attack, also from Prof. Wang, on SHA-1 requires \(2^{63}\) search.
+
+** RSA 
+
+- Named after Ron Rivest, Adi Shamir, and Leonard Adleman
+- First published in 1977 
+- The first public key algorithm
+- All received Turing Award in 2002
+
+*** RSA
+- If Alice know two large prime \(p\) and \(q\), then
+  - she can compute \(\phi(pq) = pq-p-q+1\)
+  - and generate \(e\) and \(d\), such that \(ed\equiv 1 \;(mod\;\phi(pq))\)
+- \(pq, e\) is the public key
+- \(d\) is the private key for Alice
+- By Euler's theorem, given \(a^e\;(mod\;pq)\), Alice can find \(a\) by \[a \equiv (a^e)^d \;(mod\;pq).\]
+- However, this is very difficult for others who do not know \(d\)
+
+*** Digital Signature
+
+- By Euler's theorem, given \(a^d\;(mod\;pq)\), any one can compute \(a\) by \[a \equiv (a^d)^e \;(mod\;pq).\]
+  - \(e\) is publicly known
+- Now Alice can send the message \((a, a^d\;(mod\;pq))\)
+  - It proves that the sender knows \(d\);
+  - without the sender actually revealing \(d\)!
+  - hence the sender is Alice;
+  - and \(a\) is sent by her.
+- Digital signature also provide non-repudiation
+- Usually combined with hash function
+*** Public Key Infrastructure
+
+
 * Transport Layer Security 
 
 TLS and SSL do not fit neatly into any single layer of the OSI model or the TCP/IP model.[8][9] TLS runs "on top of some reliable transport protocol (e.g., TCP),"[10] which would imply that it is above the transport layer. It serves encryption to higher layers, which is normally the function of the presentation layer. However, applications generally use TLS as if it were a transport layer,[8][9] even though applications using TLS must actively control initiating TLS handshakes and handling of exchanged authentication certificates.[10]
@@ -265,6 +339,31 @@ TLS and SSL do not fit neatly into any single layer of the OSI model or the TCP/
 - Bootstrapping off of Trusted Base-station
 - Random Key Pre-distribution
 - Multi-path Key Reinforcement
+
+** Asymmetric Keys
+- Prior to deployment, master public/private key-pair generated.  
+- For every Node A, a public/private key-pair is generated and stored along with master key’s signature on \(K_A\).
+- Nodes perform key exchange. Once public key is verified, a symmetric link key is generated to be used as session key
+  - e.g., using Diffie-Hellman
+
+*** Pros and Cons
+Properties
+• Resilient against node capture
+– Nodes have no knowledge of other secret link keys
+• Revocation possible
+– Broadcast of revoked key-pair signed by master will result in revocation
+• Scalable
+– Scheme retains effectiveness regardless of number of nodes
+
+Drawbacks
+• Dependence on asymmetric key cryptographic hardware or software
+– Computationally intensive
+– Nodes may lack integer multiplication unit
+• Vulnerability to DoS
+– Digital signature verification is resource-consuming
+– Floods of illegal signatures can drain batteries
+• No resistance to node replication
+– By capturing one node, links can be set up with all other nodes, creating “omnipresence”
 
 ** Single Network-wide Key
 Using a Single Network-wide Key
@@ -322,31 +421,6 @@ Drawbacks
 – All key establishment goes through base-station, which in large networks may be many hops away
 • Base station becomes target for compromise
 – Single point of failure
-
-** Asymmetric Keys
-- Prior to deployment, master public/private key-pair generated.  
-- For every Node A, a public/private key-pair is generated and stored along with master key’s signature on \(K_A\).
-- Nodes perform key exchange. Once public key is verified, a symmetric link key is generated to be used as session key
-  - e.g., using Diffie-Hellman
-
-*** Pros and Cons
-Properties
-• Resilient against node capture
-– Nodes have no knowledge of other secret link keys
-• Revocation possible
-– Broadcast of revoked key-pair signed by master will result in revocation
-• Scalable
-– Scheme retains effectiveness regardless of number of nodes
-
-Drawbacks
-• Dependence on asymmetric key cryptographic hardware or software
-– Computationally intensive
-– Nodes may lack integer multiplication unit
-• Vulnerability to DoS
-– Digital signature verification is resource-consuming
-– Floods of illegal signatures can drain batteries
-• No resistance to node replication
-– By capturing one node, links can be set up with all other nodes, creating “omnipresence”
 
 * Bibliography
   :PROPERTIES:
