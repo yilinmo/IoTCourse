@@ -1,11 +1,11 @@
 #+INCLUDE: "preamble.org"
 
-#+TITLE: Routing 
+#+TITLE: Information Security 
 #+AUTHOR: Mo, Yilin
 #+DATE: Nov 2020 
 
-#+KEYWORDS: Routing
-#+DESCRIPTION: Routing for Mesh Networks
+#+KEYWORDS: Security
+#+DESCRIPTION: security for internet of things
 
 #+BEGIN_SRC ipython :session :exports none
 from bokeh.resources import CDN
@@ -37,27 +37,125 @@ def step_func(x, x0, y0):
 #+REVEAL_TOC: headlines 1
 
 * Information Security 
+  
+** Why *Security*?
+   
+** Security Risks 
+   - The next generation of systems: *Smart Grids*, *Smart Buildings*, *Internet of Things*, will make extensive use of widespread sensing and networking.
+   - As the systems become "/smarter/", they are also more vulnerable to malicious attacks.
+   {{{revealgrid(1, "./smartcps.grid", 20, 3, 1, "\"ga1 ga2 ga3\"")}}}
+   
+*** The First Cyber-physical system Malware: Stuxnet
+
+    - Stuxnet is the first discovered malware that spies on and subverts industrial control systems. It was discovered in June 2010.
+      {{{revealimg("./stuxnet.meta","Stuxnet Incident","auto",nil,'none)}}}
+
+*** Threats to Industrial Control Systems
+   
+    - In FY 2016, ICS-CERT received *290* incidents. The scope of incidents includes: {{{reveallicense("./cert.meta","auto",nil,'none)}}}
+      * Unauthorized access, 
+      * Exploitation of zero-day vulnerabilities,  
+      * Malware infections within air-gapped control system networks.
+
+*** Attacks on Critical Infrastructure
+
+- A Successful attack on *critical infrastructure* can be devastating.
+      {{{revealgrid(2, "./powergridattack.grid", 50, 2, 1, "\"ga1 ga2 \"")}}}
+- Vitek Boden
+  - Arrested in Queensland, Australia on April 23, 2000
+  - Found guilty of computer hacking
+  - Took control of municipal water system
+  - Dumped ~1 million liters of raw sewage into local
+  - waterways and parks
+
+*** Attack Through Supply Chain
+
+    - 70% of the components for Boeing 787 are manufactured by other suppliers cite:Tang2009
+      {{{revealimg("./boeing.meta","Supply Chain for Boeing 787","auto",nil,'none)}}}
+
+** Key Information Security Concepts
+
+*** The CIA triad
 - Confidentiality
-
-In information security, confidentiality "is the property, that information is not made available or disclosed to unauthorized individuals, entities, or processes."[36] While similar to "privacy," the two words aren't interchangeable. Rather, confidentiality is a component of privacy that implements to protect our data from unauthorized viewers. Examples of confidentiality of electronic data being compromised include laptop theft, password theft, or sensitive emails being sent to the incorrect individuals.[37]
-Integrity
+  - Information is not made available or disclosed to unauthorized individuals, entities, or processes.
 - Integrity
-In information security, data integrity means maintaining and assuring the accuracy and completeness of data over its entire lifecycle.[38] This means that data cannot be modified in an unauthorized or undetected manner. This is not the same thing as referential integrity in databases, although it can be viewed as a special case of consistency as understood in the classic ACID model of transaction processing. Information security systems typically provide message integrity alongside confidentiality.
-Availability
-
+  - Data cannot be modified in an unauthorized or undetected manner.
 - Availability
-For any information system to serve its purpose, the information must be available when it is needed. This means the computing systems used to store and process the information, the security controls used to protect it, and the communication channels used to access it must be functioning correctly. High availability systems aim to remain available at all times, preventing service disruptions due to power outages, hardware failures, and system upgrades. Ensuring availability also involves preventing denial-of-service attacks, such as a flood of incoming messages to the target system, essentially forcing it to shut down.[39]
+  - Information must be available when it is needed.
+  - Information need to be *stored, processed, and communicated* in a timely manner.
+*** Case Study of Smart Grid
+   
+   - A case study for smart grid cite:Mo2011
+   |                 | Control Signal                | Measurements                   | Software           |
+   | Confidentiality | Exposure of System Structure  | Unauthorized Access            | Piracy             |
+   | Integrity       | *Changes of Control Command*  | *Incorrect Data*              | *Malicious Software* |
+   | Availability    | *Inability to Control the Grid* | *Unavailability of Measurements* | N/A                |
+ 
 
-In the realm of information security, availability can often be viewed as one of the most important parts of a successful information security program. Ultimately end-users need to be able to perform job functions; by ensuring availability an organization is able to perform to the standards that an organization's stakeholders expect. This can involve topics such as proxy configurations, outside web access, the ability to access shared drives and the ability to send emails. Executives oftentimes do not understand the technical side of information security and look at availability as an easy fix, but this often requires collaboration from many different organizational teams, such as network operations, development operations, incident response and policy/change management. A successful information security team involves many different key roles to mesh and align for the CIA triad to be provided effectively.
-Non-repudiation
-
+*** Other Considerations
 - Non-Repudiation
-In law, non-repudiation implies one's intention to fulfill their obligations to a contract. It also implies that one party of a transaction cannot deny having received a transaction, nor can the other party deny having sent a transaction.[40]
-
-It is important to note that while technology such as cryptographic systems can assist in non-repudiation efforts, the concept is at its core a legal concept transcending the realm of technology. It is not, for instance, sufficient to show that the message matches a digital signature signed with the sender's private key, and thus only the sender could have sent the message, and nobody else could have altered it in transit (data integrity). The alleged sender could in return demonstrate that the digital signature algorithm is vulnerable or flawed, or allege or prove that his signing key has been compromised. The fault for these violations may or may not lie with the sender, and such assertions may or may not relieve the sender of liability, but the assertion would invalidate the claim that the signature necessarily proves authenticity and integrity. As such, the sender may repudiate the message (because authenticity and integrity are pre-requisites for non-repudiation).  
+  - One party of a transaction cannot deny having received a transaction;
+  - Nor can the other party deny having sent a transaction
+  - Legal implications
+  - Digital Signature can be used to enforce non-repudiation
+- Privacy
+  - /Wikipedia/: Privacy is the ability of an individual or group to seclude themselves or information about themselves, and thereby express themselves *selectively*.
+  - Not to be confused with confidentiality
+  - Confidentiality: information is not disclosed to *unauthorized users*
+  - Privacy: *authorized users* CANNOT infer private information from available data
+    - Utility v.s. Privacy
 
 ** Security Risks for Endpoints
-* Symmetric Encryption
+*** Passive Information Gathering
+- Someone pulls up with a receiver and sniffs the packets being sent on the network
+  - Same method used to sniff unencrypted WiFi traffic
+  - When sending un-important information, not a large threat
+
+*** Traffic Analysis: Side-Information
+- Examine cause and effect of encrypted packet
+  - E.g. Each time an xyz packet is sent, that valve opens
+  - We do not need to know what xyz is, only what it does
+  - Semantic security
+
+*** Subversion of a Node
+- Someone “captures” and “interrogates” the node to determine cryptographic information
+- Sensor functionality may be compromised by attacker
+ 
+*** Fake Node
+- WSNs are self-arranging / self-configuring
+- Intruder adds a node to the system
+- Node may block passage of real data or transmit false data
+- “Sybil” Attack
+  - A single node presents multiple ID’s to other nodes
+  - Affects geographic routing, distributed storage, multi-path routing, topology maintenance
+- How do we tell if a node is “real?”
+
+*** Message Corruption
+- Attacks integrity of message
+- Intruder inserts itself between source and destination to modify contents of the message
+- Use fake/false node?
+
+*** Node Malfunction and Outage
+- Node may malfunction and generate inaccurate data
+- Node may forward packets incorrectly
+- How to detect and remove these nodes?
+- Node outage: node just stops working altogether
+  - alternative route
+  - observability/controllability of the system?
+  - how much redundancy is needed where?
+
+*** Denial of Service ("DOS" attack)
+- Jamming the radio link
+- Exhaust resources
+- Re-route data
+- Various kinds:
+  - Black Hole
+    - Node refuses to forward any packets it receives
+  - Sink-holes
+  - Induced Routing Loops
+  - HELLO Flooding
+
+* Symmetric Encryption 
 ** Caesar Code
 ** Frequency Analysis
 ** Block Cipher
@@ -65,19 +163,92 @@ It is important to note that while technology such as cryptographic systems can 
 ** DES
 ** AES
 ** Other Symmetric Scheme
-** One time pad
+** One-time-pad
 * Diffie-Hellman Key Exchange
-** Basics of Modulo n Arithmetics 
-** DH Key Exchange  
-** Man-in-the-Middle Attack
-* Message Authentication Code
+** Modular Arithmetic 
+*** Congruence
+- Given an integer \(n > 1\), called a modulus, two integers are said to be *congruent* modulo \(n\), if there is an integer \(k\) such that 
+\[a − b = kn.\] 
+- We write \(a \equiv b (mod\;n)\).
+- One can verify that congruence is an equivalent relationship.
+  - Symmetric
+  - Reflexive
+  - Transitive
+*** Modular Arithmetic: Addition and Multiplication
+- Addition and multiplication have the same properties as addition and multiplications on real numbers:
+  - Associative
+  - Commutative
+  - Distributive
+- Subtraction is trivial:
+  - \(a + b \equiv c\; (mod\;n)\Rightarrow b\equiv c+(n-a)\;(mod\;n).\)
+*** Modular Arithmetic: Inverse and Division
+- If \(a\) and \(n\) are coprime, then \(gcd(a,n)=1\).
+- Notice that the gcd can be computed via Euclidean Division.
+- There exists integer \(x,\,y\) such that
+\[xa+yn=1.\]
+- or \(xa  \equiv 1\; (mod\;n)\).
+- \(a b \equiv c\; (mod\;n)\Rightarrow b\equiv cx\;(mod\;n).\)
+*** Modular Arithmetic: Power and Logarithm 
+- How to compute \(c \equiv a^b\; (mod\;n)\)?
+- Can be done in roughly \(O(\log(b))) multiplications.
+- On the other hand, there is no known fast algorithm to solve the discrete logarithm problem.
+  - Finding \(b = \log_a c\) is hard!
+  - However, efficient algorithms for quantum computer exists
 
+*** Euler's Theorem
+- Consider the set of numbers that are
+  - less than n;
+  - and coprime to n.
+- Important observation:
+  - If \(a\) and \(b\) are coprime to \(n\), then \(ab\) is coprime to \(n\).
+  - If \(a\) is coprime to \(n\), then we can find \(a^{-1}\) coprime to \(n\).
+  - In other words, such set is an Abelian group under modulo multiplication.
+- Euler's Totient Function \(\phi(n)\): size of such set
+- For example: \(\phi(6) = |\{1,5\}| = 2.\)
+- If \(p\) and \(q\) are prime, then
+  - \(\phi(p) = p-1.\) (Fermat's Little Theorem)
+  - \(\phi(pq) = pq - p - q +1.\)
+  - Computing \(\phi(pq)\) is the same as factorizing \(pq\).
+  - No know fast factorization algorithm exists 
+  - However, efficient quantum algorithm exists
+
+*** Euler's Theorem
+- Euler's Theorem: If \(a\) and \(n\) are coprime, then
+\[a^{\phi(n)}\equiv 1; (mod\;n).\]
+- If \(ed \equiv 1; (mod\;\phi(n))\), and \(a\) is coprime to \(n\) then
+\[a^{ed} \equiv a; (mod\;n).\]
+ - The \(e\)th-root of \(a\) is \(a^d\), or vice versa.
+ 
+** DH Key Exchange
+| Alice                     | Public Information                 | Bob                      |
+| \(p, g , a\)              |                                    |                          |
+|                           | \(p, g , g^a(mod\;p)\)             |                          |
+|                           |                                    | \(p, g , g^a(mod\;p),b\) |
+|                           | \(p, g , g^a(mod\;p),g^b(mod\;p)\) |                          |
+| \(p, g , a, g^b(mod\;p)\) |                                    |                          |
+
+- The secret is generated as
+\[s \equiv g^{ab} \equiv (g^a)^b \equiv (g^b)^a \;(mod\;p).\]
+- However, the ones observing the public channel only have \(g^a(mod\;p),\,g^b(mod\;p)\) 
+  - \(a,b\) cannot be deduced since discrete logarithm is hard
+  - No fast algorithm known to compute the secret
+
+*** Man-in-the-Middle Attack
+| Alice                     | Eve                                | Bob                      |
+| \(p, g , a\)              |                                    |                          |
+|                           | \(p, g , g^a(mod\;p)\)             |                          |
+|                           |                                    | \(p, g , g^a(mod\;p),b\) |
+|                           | \(p, g , g^a(mod\;p),g^b(mod\;p)\) |                          |
+| \(p, g , a, g^b(mod\;p)\) |                                    |                          |
+
+
+* Digital Signature and Message Authentication Code
 ** Hash Function
    
 *** Birthday paradox
-** Asymmetric Encryption
 ** Digital Signature
-* Transport Layer Security
+** Asymmetric Encryption
+* Transport Layer Security 
 
 TLS and SSL do not fit neatly into any single layer of the OSI model or the TCP/IP model.[8][9] TLS runs "on top of some reliable transport protocol (e.g., TCP),"[10] which would imply that it is above the transport layer. It serves encryption to higher layers, which is normally the function of the presentation layer. However, applications generally use TLS as if it were a transport layer,[8][9] even though applications using TLS must actively control initiating TLS handshakes and handling of exchanged authentication certificates.[10]
 
@@ -85,8 +256,98 @@ TLS and SSL do not fit neatly into any single layer of the OSI model or the TCP/
 ** Key Exchange
 ** Hash Function
 ** Protocol
-* Key Distribution 
- 
+* Key Establishment and Management for Wireless Mesh Networks
+
+** Overview
+- Single Network-wide key
+- Asymmetric Cryptography
+- Pair-wise Keys
+- Bootstrapping off of Trusted Base-station
+- Random Key Pre-distribution
+- Multi-path Key Reinforcement
+
+** Single Network-wide Key
+Using a Single Network-wide Key
+Simple technique
+1. Pre-load onto all nodes prior to deployment
+2. After deployment, establish communication with neighbors with shared key
+3. Encrypt all communication in shared key and append MAC (message authentication code) for integrity
+
+*** Pros and Cons
+
+Pros:
+• Minimal storage required
+• No additional steps in scheme
+• Resistant against DoS and packet injection
+– Provided adversary doesn’t know the key with communication
+– Replay can be avoided by sending source, destination, and timestamp
+Drawbacks
+• If single node is compromised, security is lost
+• Impractical unless:
+– Nodes are tamper-resistant
+– No new nodes are ever added after deployment
+
+** Using Pair-wise Keys
+• Every node shares a unique symmetric key with every other node on the network
+• After deployment, nodes must perform key discovery to verify the identification of neighbors
+
+*** Pros and Cons
+Properties
+• Perfect resilience against node capture
+• Revocation of compromised keys
+• Uses only symmetric cryptography
+– Allows for cheaper nodes
+– Less susceptible to DoS
+Drawbacks
+• Poor scalability
+– With an 80-bit key, a 100- node network requires 1KB storage on each node
+– Memory limitations make large networks infeasible
+
+** Bootstrapping Security from Trusted Base Station
+1. Prior to deployment, symmetric key generated for each node and stored
+   - in order to communicate with the base station 
+2. Nodes authenticate to base station using secret master key
+3. Base station generates link key for two nodes to communicate
+
+*** Pros and Cons
+Properties
+• Small memory requirement
+• Perfect resilience to node capture
+• Revocation of nodes is simple
+• Node replication is easily controlled
+– All key establishment goes through base station. If the number of links of any node is too high, station can refuse to generate new link keys for the node
+Drawbacks
+• Not scalable
+– High communication overhead
+– All key establishment goes through base-station, which in large networks may be many hops away
+• Base station becomes target for compromise
+– Single point of failure
+
+** Asymmetric Keys
+- Prior to deployment, master public/private key-pair generated.  
+- For every Node A, a public/private key-pair is generated and stored along with master key’s signature on \(K_A\).
+- Nodes perform key exchange. Once public key is verified, a symmetric link key is generated to be used as session key
+  - e.g., using Diffie-Hellman
+
+*** Pros and Cons
+Properties
+• Resilient against node capture
+– Nodes have no knowledge of other secret link keys
+• Revocation possible
+– Broadcast of revoked key-pair signed by master will result in revocation
+• Scalable
+– Scheme retains effectiveness regardless of number of nodes
+
+Drawbacks
+• Dependence on asymmetric key cryptographic hardware or software
+– Computationally intensive
+– Nodes may lack integer multiplication unit
+• Vulnerability to DoS
+– Digital signature verification is resource-consuming
+– Floods of illegal signatures can drain batteries
+• No resistance to node replication
+– By capturing one node, links can be set up with all other nodes, creating “omnipresence”
+
 * Bibliography
   :PROPERTIES:
   :CUSTOM_ID: bibliography
