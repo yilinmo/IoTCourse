@@ -156,107 +156,76 @@ def step_func(x, x0, y0):
   - HELLO Flooding
 
 * Symmetric Encryption 
-** Caesar Code
-** Frequency Analysis
-** Block Cipher
-** Enigma machine
-** DES
-** AES
-** Other Symmetric Scheme
-** One-time-pad
-* Modular Arithmetic 
-*** Congruence
-- Given an integer \(n > 1\), called a modulus, two integers are said to be *congruent* modulo \(n\), if there is an integer \(k\) such that 
-\[a − b = kn.\] 
-- We write \(a \equiv b (mod\;n)\).
-- One can verify that congruence is an equivalent relationship.
-  - Symmetric
-  - Reflexive
-  - Transitive
-*** Modular Arithmetic: Addition and Multiplication
-- Addition and multiplication have the same properties as addition and multiplications on real numbers:
-  - Associative
-  - Commutative
-  - Distributive
-- Subtraction is trivial:
-  - \(a + b \equiv c\; (mod\;n)\Rightarrow b\equiv c+(n-a)\;(mod\;n).\)
-*** Modular Arithmetic: Inverse and Division
-- If \(a\) and \(n\) are coprime, then \(gcd(a,n)=1\).
-- Notice that the gcd can be computed via Euclidean Division.
-- There exists integer \(x,\,y\) such that
-\[xa+yn=1.\]
-- or \(xa  \equiv 1\; (mod\;n)\).
-- \(a b \equiv c\; (mod\;n)\Rightarrow b\equiv cx\;(mod\;n).\)
-*** Modular Arithmetic: Power and Logarithm 
-- How to compute \(c \equiv a^b\; (mod\;n)\)?
-- Can be done in roughly \(O(\log(b))) multiplications.
-- On the other hand, there is no known fast algorithm to solve the discrete logarithm problem.
-  - Finding \(b = \log_a c\) is hard!
-  - However, efficient algorithms for quantum computer exists
 
-*** Euler's Theorem
-- Consider the set of numbers that are
-  - less than n;
-  - and coprime to n.
-- Important observation:
-  - If \(a\) and \(b\) are coprime to \(n\), then \(ab\) is coprime to \(n\).
-  - If \(a\) is coprime to \(n\), then we can find \(a^{-1}\) coprime to \(n\).
-  - In other words, such set is an Abelian group under modulo multiplication.
-- Euler's Totient Function \(\phi(n)\): size of such set
-- For example: \(\phi(6) = |\{1,5\}| = 2.\)
-- If \(p\) and \(q\) are prime, then
-  - \(\phi(p) = p-1.\) (Fermat's Little Theorem)
-  - \(\phi(pq) = pq - p - q +1.\)
-  - Computing \(\phi(pq)\) is the same as factorizing \(pq\).
-  - No know fast factorization algorithm exists 
-  - However, efficient quantum algorithm exists
+** Cryptography Basics
 
-*** Euler's Theorem
-- Euler's Theorem: If \(a\) and \(n\) are coprime, then
-\[a^{\phi(n)}\equiv 1; (mod\;n).\]
-- If \(ed \equiv 1; (mod\;\phi(n))\), and \(a\) is coprime to \(n\) then \[a^{ed} \equiv a^{k\phi(n)}\times a\equiv a; (mod\;n).\]
-  - The \(e\)th-root of \(a\) is \(a^d\), or vice versa.
-- If we know \(p,q\), then we can easily generate compute \(d\)
-- However, computing \(d\) without knowing \(\phi(n)\) is considered to be difficult
-* Diffie-Hellman Key Exchange
-  
-** Diffie-Hellman Key Exchange
-- Named after Whitfield Diffie and Martin Hellman.
-- First published in 1976
-- The first public key exchange algorithm
-- Both received Turing Award in 2015
-** DH Protocol
-| Alice                     | Public Information                 | Bob                      |
-| \(p, g , a\)              |                                    |                          |
-|                           | \(p, g , g^a(mod\;p)\)             |                          |
-|                           |                                    | \(p, g , g^a(mod\;p),b\) |
-|                           | \(p, g , g^a(mod\;p),g^b(mod\;p)\) |                          |
-| \(p, g , a, g^b(mod\;p)\) |                                    |                          |
+*** Basic Elements
+- Plaintext: original message with no transformation
+- Ciphertext: plaintext message after modification to obscure it from normal usage and readability
+  - encryption converts plaintext into ciphertext
+  - decryption converts ciphertext into plaintext
+- Cryptographic algorithm: mathematical operation used to convert plain text into ciphertext
+- Key:
+    - secret key used to encrypt or decrypt the message
 
-- The secret is generated as
-\[s \equiv g^{ab} \equiv (g^a)^b \equiv (g^b)^a \;(mod\;p).\]
-- However, the ones passively observing the public channel only have \(g^a(mod\;p),\,g^b(mod\;p)\) 
-  - \(a,b\) cannot be deduced since discrete logarithm is hard
-  - No fast algorithm known to compute the secret
+*** Breaking a Cryptographic Algorithm
+- Crypto-analysis:
+  - Identify patterns based on plaintext to re-generate key
+  - Good algorithms generate noisy ciphertext with no discernible patterns
+- Brute-force guessing:
+  - Keys longer than 128-bits (\(10^38\) possibilities) are generally considered to be acceptable
+  - Higher the key width, safer is the encryption
 
-** Man-in-the-Middle Attack
-| Alice                         | Eve                                             | Bob                           |
-| \(p, g , a\)                  |                                                 |                               |
-|                               | \(p, g , g^a(mod\;p), \alpha, \beta\)           |                               |
-|                               |                                                 | \(p, g , g^\alpha(mod\;p),b\) |
-|                               | \(p, g , g^a(mod\;p),g^b(mod\;p),\alpha,\beta\) |                               |
-| \(p, g , a, g^\beta(mod\;p)\) |                                                 |                               |
-- Eve replace \(g^a(mod\;p)\) from Alice by \(g^\alpha(mod\;p)\);
-- and replace \(g^b(mod\;p)\) from Bob by \(g^\beta(mod\;p)\)
-- Alice will compute the secret as
-\[s_a \equiv g^{a\beta}\;(mod\;p).\]
-- Bob will compute the secret as
-\[s_b \equiv g^{\alpha b}\;(mod\;p).\]
-- Both can be computed by Eve
-- To avoid man in the middle attack, Alice and Bob need to verify that \(g^a(mod\;p)\) and \(g^b(mod\;p)\) come from the *correct* user.
-* Digital Signature and Message Authentication Code
 
-** Cryptographic Hash Functions
+** Brief History of Cryptography
+*** Antiquity
+- 1500 BC: clay tablets from Mesopotamia
+ {{{reveallicense("./figures/skytale.meta","40vh")}}}
+  - encrypt a craftsman's recipe for pottery glaze 
+- 600~500 BC: Hebrew uses Atbash ciphers
+  - Bible:  "The king of Sheshach shall drink after them" – Sheshach meaning Babylon
+| Plain  | A | B | C |
+| Cipher | Z | Y | X |
+- 400 BC~200 AD: "Mlecchita vikalpa" was documented in the Kama Sutra for the purpose of communication between lovers.
+- Scytale transposition cipher was used by the Spartan military
+- Caesar cipher and its variations used by Julius Caesar:
+  - Left shift by 3
+  - His nephew, Augustus, uses a similar system of right shift by 1
+*** Frequency Analysis
+- For a simple substitute cipher, there are \(26!\approx 4\times 10^26\) possible keys 
+ {{{reveallicense("./figures/alkindi.meta","40vh")}}}
+- Roughly equivalent to 88 bit keys
+- In comparison, the DES algorithm proposed in 1975 only has 56-bit key.
+- However, substitute cipher are vulnerable to Frequency Analysis
+  - First proposed by 9th century by Al-Kindi, an Arab polymath
+- Possible solutions:
+  - map most common letters to multiple letters
+  - map a pair of letters or triplet of letters 
+  - change the substitution rules 
+*** Frequency of English Letters
+
+
+*** Kerckhoffs' Principle
+/A cryptosystem should be secure even if *everything* about the system, except the *key*, is public knowledge. /
+- First formulated in 1883 by Auguste Kerckhoffs, in a journal article on /La Cryptographie Militaire/
+- Shannon's Maxim: "the enemy knows the system".
+- The "wrong" approach to security is called "security by obscurity":
+  - Used by CSS encryption on DVD
+  - compromised in 3 years
+
+*** Zimmermann Telegram
+*** Enigma Machine
+
+** Symmetric Encryption
+
+*** Data Encryption Standard
+
+
+*** Advanced Encryption Standard
+*** One-time-pad
+** Authenticated Encryption
+
+*** Cryptographic Hash Functions
 - A function H that takes an arbitrary size input \(m\)
 - and produces a *fixed* length output H(m). 
   - The output length is typically 128–1024 bits.
@@ -292,78 +261,17 @@ def step_func(x, x0, y0):
   - Digest size is 160 bits
 - Best attack, also from Prof. Wang, on SHA-1 requires \(2^{63}\) search.
 
-** RSA 
 
-- Named after Ron Rivest, Adi Shamir, and Leonard Adleman
-- First published in 1977 
-- The first public key algorithm
-- All received Turing Award in 2002
-
-*** RSA
-- If Alice know two large prime \(p\) and \(q\), then
-  - she can compute \(\phi(pq) = pq-p-q+1\)
-  - and generate \(e\) and \(d\), such that \(ed\equiv 1 \;(mod\;\phi(pq))\)
-- \(pq, e\) is the public key
-- \(d\) is the private key for Alice
-- By Euler's theorem, given \(a^e\;(mod\;pq)\), Alice can find \(a\) by \[a \equiv (a^e)^d \;(mod\;pq).\]
-- However, this is very difficult for others who do not know \(d\)
-
-*** Digital Signature
-
-- By Euler's theorem, given \(a^d\;(mod\;pq)\), any one can compute \(a\) by \[a \equiv (a^d)^e \;(mod\;pq).\]
-  - \(e\) is publicly known
-- Now Alice can send the message \((a, a^d\;(mod\;pq))\)
-  - It proves that the sender knows \(d\);
-  - without the sender actually revealing \(d\)!
-  - hence the sender is Alice;
-  - and \(a\) is sent by her.
-- Digital signature also provide non-repudiation
-- Usually combined with hash function
-*** Public Key Infrastructure
-
-
-* Transport Layer Security 
-
-TLS and SSL do not fit neatly into any single layer of the OSI model or the TCP/IP model.[8][9] TLS runs "on top of some reliable transport protocol (e.g., TCP),"[10] which would imply that it is above the transport layer. It serves encryption to higher layers, which is normally the function of the presentation layer. However, applications generally use TLS as if it were a transport layer,[8][9] even though applications using TLS must actively control initiating TLS handshakes and handling of exchanged authentication certificates.[10]
-
-** Cipher Suit
-** Key Exchange
-** Hash Function
-** Protocol
-* Key Establishment and Management for Wireless Mesh Networks
+* Key Management for Wireless Networks
 
 ** Overview
-- Single Network-wide key
-- Asymmetric Cryptography
-- Pair-wise Keys
-- Bootstrapping off of Trusted Base-station
-- Random Key Pre-distribution
-- Multi-path Key Reinforcement
-
-** Asymmetric Keys
-- Prior to deployment, master public/private key-pair generated.  
-- For every Node A, a public/private key-pair is generated and stored along with master key’s signature on \(K_A\).
-- Nodes perform key exchange. Once public key is verified, a symmetric link key is generated to be used as session key
-  - e.g., using Diffie-Hellman
-
-*** Pros and Cons
-Properties
-• Resilient against node capture
-– Nodes have no knowledge of other secret link keys
-• Revocation possible
-– Broadcast of revoked key-pair signed by master will result in revocation
-• Scalable
-– Scheme retains effectiveness regardless of number of nodes
-
-Drawbacks
-• Dependence on asymmetric key cryptographic hardware or software
-– Computationally intensive
-– Nodes may lack integer multiplication unit
-• Vulnerability to DoS
-– Digital signature verification is resource-consuming
-– Floods of illegal signatures can drain batteries
-• No resistance to node replication
-– By capturing one node, links can be set up with all other nodes, creating “omnipresence”
+- The goal is to establish *secure* communication between endpoints in a wireless network.
+- Possible schemes using symmetric keys:
+  - Single Network-wide key
+  - Pair-wise Keys
+  - Bootstrapping off of Trusted Base-station
+  - Random Key Pre-distribution
+- Alternatively, one could use asymmetric cryptography, which will be discussed later
 
 ** Single Network-wide Key
 Using a Single Network-wide Key
@@ -421,7 +329,303 @@ Drawbacks
 – All key establishment goes through base-station, which in large networks may be many hops away
 • Base station becomes target for compromise
 – Single point of failure
+** Random Key Pre-distribution
+– Random set of keys, S, chosen. For each node, m keys are selected and stored in memory (key ring)
+– Size of S, |S|, chosen such that any two random subsets of size m will share at least one key with a probability of p Key Setup
+– Nodes perform key discovery to determine neighbors with shared key
+Forms connected graph of secure links
+– Nodes can set up path keys with neighboring nodes that lack a shared key
+- Erdos–Renyi graph: Consider a graph with \(n\) vertices and each pair of vertices is connected independently with probability \(p\), then
+  - If \(p < (1- \epsilon)\log n/n\), then the graph contains isolated vertices a.s. 
+  - If \(p > (1+ \epsilon)\log n/n\), then the graph is connected a.s. 
+** Asymmetric Keys
+- Prior to deployment, master public/private key-pair generated.  
+- For every Node A, a public/private key-pair is generated and stored along with master key’s signature on \(K_A\).
+- Nodes perform key exchange. Once public key is verified, a symmetric link key is generated to be used as session key
+  - e.g., using Diffie-Hellman
 
+*** Pros and Cons
+Properties
+• Resilient against node capture
+– Nodes have no knowledge of other secret link keys
+• Revocation possible
+– Broadcast of revoked key-pair signed by master will result in revocation
+• Scalable
+– Scheme retains effectiveness regardless of number of nodes
+
+Drawbacks
+• Dependence on asymmetric key cryptographic hardware or software
+– Computationally intensive
+– Nodes may lack integer multiplication unit
+• Vulnerability to DoS
+– Digital signature verification is resource-consuming
+– Floods of illegal signatures can drain batteries
+• No resistance to node replication
+– By capturing one node, links can be set up with all other nodes, creating “omnipresence”
+
+* Modular Arithmetic 
+*** Congruence
+- Given an integer \(n > 1\), called a modulus, two integers are said to be *congruent* modulo \(n\), if there is an integer \(k\) such that 
+\[a − b = kn.\] 
+- We write \(a \equiv b (mod\;n)\).
+- One can verify that congruence is an equivalent relationship.
+  - Symmetric
+  - Reflexive
+  - Transitive
+*** Modular Arithmetic: Addition and Multiplication
+- Addition and multiplication have the same properties as addition and multiplications on real numbers:
+  - Associative
+  - Commutative
+  - Distributive
+- Subtraction is trivial:
+  - \(a + b \equiv c\; (mod\;n)\Rightarrow b\equiv c+(n-a)\;(mod\;n).\)
+*** Modular Arithmetic: Inverse and Division
+- If \(a\) and \(n\) are coprime, then \(gcd(a,n)=1\).
+- Notice that the gcd can be computed via Euclidean Division.
+- There exists integer \(x,\,y\) such that
+\[xa+yn=1.\]
+- or \(xa  \equiv 1\; (mod\;n)\).
+- \(a b \equiv c\; (mod\;n)\Rightarrow b\equiv cx\;(mod\;n).\)
+*** Modular Arithmetic: Power and Logarithm 
+- How to compute \(c \equiv a^b\; (mod\;n)\)?
+- Can be done in roughly \(O(\log(b))) multiplications.
+- On the other hand, there is no known fast algorithm to solve the discrete logarithm problem.
+  - Finding \(b = \log_a c\) is hard!
+  - However, efficient algorithms for quantum computer exists
+
+*** Euler's Theorem
+- Consider the set of numbers that are
+  - less than n;
+  - and coprime to n.
+- Important observation:
+  - If \(a\) and \(b\) are coprime to \(n\), then \(ab\) is coprime to \(n\).
+  - If \(a\) is coprime to \(n\), then we can find \(a^{-1}\) coprime to \(n\).
+  - In other words, such set is an Abelian group under modulo multiplication.
+- Euler's Totient Function \(\phi(n)\): size of such set
+- For example: \(\phi(6) = |\{1,5\}| = 2.\)
+- If \(p\) and \(q\) are prime, then
+  - \(\phi(p) = p-1.\) (Fermat's Little Theorem)
+  - \(\phi(pq) = pq - p - q +1.\)
+  - Computing \(\phi(pq)\) is the same as factorizing \(pq\).
+  - No know fast factorization algorithm exists 
+  - However, efficient quantum algorithm exists
+
+*** Euler's Theorem
+- Euler's Theorem: If \(a\) and \(n\) are coprime, then
+\[a^{\phi(n)}\equiv 1; (mod\;n).\]
+- If \(ed \equiv 1; (mod\;\phi(n))\), and \(a\) is coprime to \(n\) then \[a^{ed} \equiv a^{k\phi(n)}\times a\equiv a; (mod\;n).\]
+  - The \(e\)th-root of \(a\) is \(a^d\), or vice versa.
+- If we know \(\phi(n)\), then we can easily generate compute \(d\)
+- However, computing \(d\) without knowing \(\phi(n)\) is considered to be difficult
+* Diffie-Hellman Key Exchange
+  
+** Diffie-Hellman Key Exchange
+- Named after Whitfield Diffie and Martin Hellman.
+- First published in 1976
+- The first public key exchange algorithm
+- Both received Turing Award in 2015
+*** DH Protocol
+| Alice                     | Public Information                 | Bob                      |
+| \(p, g , a\)              |                                    |                          |
+|                           | \(p, g , g^a(mod\;p)\)             |                          |
+|                           |                                    | \(p, g , g^a(mod\;p),b\) |
+|                           | \(p, g , g^a(mod\;p),g^b(mod\;p)\) |                          |
+| \(p, g , a, g^b(mod\;p)\) |                                    |                          |
+
+- The secret is generated as
+\[s \equiv g^{ab} \equiv (g^a)^b \equiv (g^b)^a \;(mod\;p).\]
+- However, the ones passively observing the public channel only have \(g^a(mod\;p),\,g^b(mod\;p)\) 
+  - \(a,b\) cannot be deduced since discrete logarithm is hard
+  - No fast algorithm known to compute the secret
+
+** Man-in-the-Middle Attack
+| Alice                         | Eve                                             | Bob                           |
+| \(p, g , a\)                  |                                                 |                               |
+|                               | \(p, g , g^a(mod\;p), \alpha, \beta\)           |                               |
+|                               |                                                 | \(p, g , g^\alpha(mod\;p),b\) |
+|                               | \(p, g , g^a(mod\;p),g^b(mod\;p),\alpha,\beta\) |                               |
+| \(p, g , a, g^\beta(mod\;p)\) |                                                 |                               |
+- Eve replace \(g^a(mod\;p)\) from Alice by \(g^\alpha(mod\;p)\);
+- and replace \(g^b(mod\;p)\) from Bob by \(g^\beta(mod\;p)\)
+- Alice will compute the secret as
+\[s_a \equiv g^{a\beta}\;(mod\;p).\]
+- Bob will compute the secret as
+\[s_b \equiv g^{\alpha b}\;(mod\;p).\]
+- Both can be computed by Eve
+- To avoid man in the middle attack, Alice and Bob need to verify that \(g^a(mod\;p)\) and \(g^b(mod\;p)\) come from the *correct* user.
+
+* Asymmetric Encryption 
+
+** RSA 
+
+- Named after Ron Rivest, Adi Shamir, and Leonard Adleman
+- First published in 1977 
+- The first public key algorithm
+- All received Turing Award in 2002
+
+*** RSA
+- If Alice know two large prime \(p\) and \(q\), then
+  - she can compute \(\phi(pq) = pq-p-q+1\)
+  - and generate \(e\) and \(d\), such that \(ed\equiv 1 \;(mod\;\phi(pq))\)
+- \(pq, e\) is the public key
+- \(d\) is the private key for Alice
+- By Euler's theorem, given \(a^e\;(mod\;pq)\), Alice can find \(a\) by \[a \equiv (a^e)^d \;(mod\;pq).\]
+  - This holds true even if \(a\) is not coprime to \(pq\), which is highly unlikely
+  - Need to leverage Chinese remainder theorem
+- However, this is very difficult for others who do not know \(d\)
+
+** Digital Signature
+
+- By Euler's theorem, given \(a^d\;(mod\;pq)\), any one can compute \(a\) by \[a \equiv (a^d)^e \;(mod\;pq).\]
+  - \(e\) is publicly known
+- Now Alice can send the message \((a, a^d\;(mod\;pq))\)
+  - It proves that the sender knows \(d\);
+  - without the sender actually revealing \(d\)!
+  - hence the sender is Alice;
+  - and \(a\) is sent by her.
+- Digital signature also provide non-repudiation
+- Usually combined with hash function
+
+*** Public Key Infrastructure
+
+- A PKI is an arrangement that binds public keys with respective identities of entities (like people and organizations).
+- A certificate authority (CA) that stores, issues and signs the digital certificates
+  - done via the CA's own private key
+  - the trust in the user key relies on one's trust in the CA's key.
+- Alternatively one could adopt a decentralized approach:
+  - Web of trust: can you trust your friend's friend?
+  - Blockchain PKI?
+
+* Transport Layer Security 
+
+TLS and SSL do not fit neatly into any single layer of the OSI model or the TCP/IP model.[8][9] TLS runs "on top of some reliable transport protocol (e.g., TCP),"[10] which would imply that it is above the transport layer. It serves encryption to higher layers, which is normally the function of the presentation layer. However, applications generally use TLS as if it were a transport layer,[8][9] even though applications using TLS must actively control initiating TLS handshakes and handling of exchanged authentication certificates.[10]
+
+
+* Security of Cyber-Physical System
+** Overview
+
+
+*** Countermeasures: Defense in Depth 
+  - Defense in Depth{{{reveallicense("./defense.meta","40vh",nil,'none)}}} 
+    - Prevention
+      - Using cryptography/coding to preserve confidentiality (privacy)
+    - Detection
+      - Fault Detection and Isolation (FDI)
+      - Active Detection
+    - Resiliency
+      - Off-line: Resilient system design
+      - On-line: Secure information fusion, control
+    - Recovery
+      - Software rejuvenation
+      - Patching 
+    - ...
+
+** Active Detection against Replay Attack
+
+*** Stuxnet 
+    
+    - NY times: /The worm itself now appears to have included two major components. One was designed to send Iran's nuclear centrifuges spinning wildly out of control. Another seems right out of the movies: *The computer program also secretly recorded what normal operations at the nuclear plant looked like, then played those readings back to plant operators*, like a pre-recorded security tape in a bank heist, so that it would appear that everything was operating normally while the centrifuges were actually tearing themselves apart./
+
+*** System Description
+    #+BEGIN_leftcol
+    #+HTML: <div class="r-stack">
+    #+ATTR_HTML: :class fragment fade-out :data-fragment-index 0
+    [[./replaydiagramone.svg]]
+    #+ATTR_HTML: :class fragment :data-fragment-index 0
+    [[./replaydiagramtwo.svg]]
+    #+HTML: </div>
+    - Assumptions: Linear Gaussian systems, Linear state estimator+state feedback, \(\chi_2\) failure detector.
+    #+END_leftcol
+    #+ATTR_REVEAL: :frag appear
+    #+BEGIN_rightcol
+    {{{revealimg("./replayunstableA.meta","Detection Rate v.s. Time","40vh",nil,'none)}}}
+    Not all system can detect replay attack!
+    #+END_rightcol
+ 
+*** Active Detection via Physical Watermarking
+    #+BEGIN_leftcol
+    - Change the control law by adding a zero mean i.i.d. Gaussian watermarking signal \(\zeta(k)\):
+    \[ u(k) = \text{Optimal LQG Control}+ \zeta(k).\]
+    {{{revealimg("./replaywithphywatermark.meta","Watermark","40vh",nil,'none)}}}
+    #+END_leftcol
+    #+BEGIN_rightcol
+    - Optimizing the covariance of \(\zeta(k)\):
+     \[ \begin{align*}
+        & \mathop{\textit{max}}&
+        & Detection\;Performance \\
+        &\text{s.t.}&
+        &Ctrl\;Loss\leq\delta
+      \end{align*}\]
+    - Can be relaxed into semidefinite programming cite:Mo2014
+    - The problem can be solved on-line, without explicit system knowledge cite:Liu2020
+    - Other watermarking schemes (e.g., multiplicative watermark) cite:Ferrari2020, cite:Satchidanandan2017
+    #+END_rightcol
+   
+*** Simulation: Tennessee Eastman Process
+    #+BEGIN_leftcol
+    - The TEP is a realistic industrial model for process control.
+      {{{revealimg("./simplifiedmodel.meta","TEP Model","40vh",nil,'none)}}}
+    - The simplified model contain 4 inputs, 4 outputs and 7 internal states.
+    #+END_leftcol
+    #+BEGIN_rightcol
+    {{{revealimg("./gng_te.meta","Detection Performance","40vh",nil,'none)}}}
+    - Physical watermarks enable replay attack detection.
+    - The optimal watermark signal and detector can be learned using data-driven approach.
+    #+END_rightcol
+
+** Secure State Estimation
+
+*** Static State Estimation
+    - Sensor model:
+    \[\begin{bmatrix}
+    y_1\\
+    \vdots\\
+    y_m
+    \end{bmatrix} = Hx + noise + attack. \]
+    - The noise is *small* (zero mean Gaussian or bounded) but *ubiquitous*.
+    - The attack is \(p\)-*sparse* but can be *arbitrarily large*.
+    - Originally proposed by Peng et al.cite:Liu2011 in the context of DC power flow model.
+
+*** Fundamental Limit for Noiseless Case
+    - The system is called \(p\)-observable if $H$ is full column rank even after removing rows corresponding to an arbitrary set of \(p\) sensors.
+    - The system is NOT \(p\)-observable \(\Rightarrow\) There exists undetectable attack.
+    - The system is NOT \(2p\)-observable \(\Rightarrow\) There exists unidentifiable attack.
+    - The system is NOT \(2p\)-observable \(\Rightarrow\) One cannot "securely" estimate the state with bounded error.
+    - The "secure" estimation problem is *NP-hard* in general cite:Hendrickx2014, cite:Mao2019
+
+*** Secure Static Estimator
+    #+BEGIN_leftcol
+    - Estimator with Combinatorial Complexity cite:Fawzi2014, cite:Ren2020, e.g.,
+\[  \begin{align*}
+        & \mathop{\textit{minimize}}\limits_{\hat x,a,w}&
+        & \|w\|^2 \\
+        &\text{subject to}&
+        &y = H \hat x + w + a,\\
+    &&
+    &\|a\|_0\leq p.
+      \end{align*}\]
+    - Require \(2p\)-observable to be "secure"
+    - Achieves fundamental limit
+    #+END_leftcol
+    #+BEGIN_rightcol
+    - Convex optimization based estimator cite:Han2019
+    \[\hat x = \mathop{argmin}_{\hat x} f_i (y_i - H_i\hat x)\]
+    - Require stronger condition than \(2p\)-observable to generate "secure" estimate.
+    #+END_rightcol
+   
+*** Simulation: IEEE 14-Bus System 
+    #+BEGIN_leftcol
+    - The system has 27 sensors and 13 states
+    {{{revealimg("./ieee14.meta","IEEE 14-Bus System","40vh",nil,'none)}}}
+    - The power flow meter on the red line is being attacked
+    #+END_leftcol
+    #+BEGIN_rightcol
+    {{{revealimg("./ieee14lasso.meta","Stuxnet Incident","40vh",nil,'none)}}}
+    - With fine-tuned parameters, we can design a "good" estimator both in the *absence* and in the *presence* of attacks.
+    #+END_rightcol
+   
+
+* Conclusion
 * Bibliography
   :PROPERTIES:
   :CUSTOM_ID: bibliography
