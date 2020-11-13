@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Information Security</title>
+<meta name="author" content="Mo, Yilin"/>
+<meta name="description" content="security for internet of things"/>
+<meta name="keywords" content="Security"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/oer-reveal.css" id="theme"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/accessibility/helper.css"/>
+
+<link rel="stylesheet" href="./reveal.js/plugin/toc-progress/toc-progress.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/toc-style.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/fonts/source-sans-pro/source-sans-pro.css"/>
+
+<link rel="stylesheet" href="figures/internal_grid_css/grid2.css"/>
+
+<link rel="stylesheet" href="figures/internal_grid_css/grid1.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<style type="text/css"> div.flushright{text-align:right;} </style>
+<script src="./reveal.js/plugin/chart/Chart.min.js"></script>
+<script src="./reveal.js/plugin/chart/plugin.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.2.min.js"></script>
+<script src="./reveal.js/plugin/chalkboard/plugin.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body prefix="dc: http://purl.org/dc/elements/1.1/ dcterms: http://purl.org/dc/terms/ dcmitype: http://purl.org/dc/dcmitype/ cc: http://creativecommons.org/ns#" typeof="dcmitype:InteractiveResource">
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-state="no-toc-progress">
+<!-- The following copyright information only applies to the title slide. -->
+<!-- SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger -->
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+<!-- This is an HTML template for the title slide. -->
+<!-- Embed logos as necessary. -->
+<!-- <a class="nooutlink" href="url"><img class="state-background your-logo-class" src="whatever.png" alt="Whatever" /></a> -->
+
+<div class="talk-title">
+    <h1 class="no-toc-progress">Information Security</h1>
+</div>
+<div class="talk-subtitle">
+    <p></p>
+</div>
+<div class="keyboard-usage">
+    <p>(Press <code>?</code> for help, <code>n</code> and <code>p</code> for next and previous slide; <a href="https://oer.gitlab.io/hints.html">usage hints</a>)</p>
+</div>
+<div class="talk-author">
+  <p>Mo, Yilin <br />
+  Nov 2020</p>
+</div>
+
+    <a class="nooutlink" href="http://www.au.tsinghua.edu.cn/"><img class="da-logo" src="./figures/raw/logo.png" alt="Logo of Dept. Automation" /></a>
+
+</section>
+
+<section>
+<section id="slide-org7fe28b6">
+<h2 id="org7fe28b6">Introduction</h2>
+<div class="outline-text-2" id="text-org7fe28b6">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2b677b9">
+<h3 id="org2b677b9">Core Questions</h3>
+<ul>
+<li>What security risks do we face?</li>
+<li>What are CIA triad for information security?</li>
+<li>How to establish a <b>secure</b> communication with pre-shared key?</li>
+<li>How to share a secret via public channels?</li>
+<li>How is the security of Cyber-Physical System different from that of a pure cyber system?</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc1b9836">
+<h3 id="orgc1b9836">Learning Objectives</h3>
+<ul>
+<li>Understand the key information security properties   
+<ul>
+<li>Confidentiality</li>
+<li>Integrity</li>
+<li>Availability</li>
+
+</ul></li>
+<li>Explain the purpose of different cryptography algorithms
+<ul>
+<li>Symmetric Encryption</li>
+<li>Cryptographic Hash</li>
+<li>Diffie-Hellman Key Exchange</li>
+<li>Asymmetric Encryption &amp; Digital Signature</li>
+
+</ul></li>
+<li>Understand the security challenges presented in CPS</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1a8f63b">
+<h3 id="org1a8f63b">Table of Contents</h3>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#slide-org7fe28b6">Introduction</a></li>
+<li><a href="#slide-orge49edff">Information Security</a></li>
+<li><a href="#slide-orgc7abd2e">Symmetric Encryption</a></li>
+<li><a href="#slide-org3d31384">Authenticated Encryption</a></li>
+<li><a href="#slide-org9c36efc">Key Management for Wireless Networks</a></li>
+<li><a href="#slide-org4a058c9">Modular Arithmetic</a></li>
+<li><a href="#slide-orgb05367b">Diffie-Hellman Key Exchange</a></li>
+<li><a href="#slide-org5516bf6">Asymmetric Encryption</a></li>
+<li><a href="#slide-org9e50a30">Transport Layer Security</a></li>
+<li><a href="#slide-orgd36865e">Security of Cyber-Physical System</a></li>
+<li><a href="#slide-bibliography">Bibliography</a></li>
+</ul>
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orge49edff">
+<h2 id="orge49edff">Information Security</h2>
+<div class="outline-text-2" id="text-orge49edff">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2a49352">
+<h3 id="org2a49352">Why <b>Security</b>?</h3>
+<ul>
+<li>The next generation of intelligent networked systems: <b>Smart Grids</b>, <b>Smart Buildings</b>, <b>Internet of Things</b>, will make extensive use of widespread sensing and networking.</li>
+<li>As the systems become &ldquo;<i>smarter</i>&rdquo;, they are also more vulnerable to malicious attacks.</li>
+
+</ul>
+<p>
+ </p><div class="grid1"><div about="figures/raw/smartcity.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid1-img1"><p><img data-src="figures/raw/smartcity.jpg" alt="Figure" style="max-height:19.0vh" /></p><p></p></div> <div about="figures/raw/smartgrid.png" typeof="dcmitype:StillImage" class="figure grid-img grid1-img2"><p><img data-src="figures/raw/smartgrid.png" alt="Figure" style="max-height:19.0vh" /></p><p></p></div> <div about="figures/raw/SmartHome.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid1-img3"><p><img data-src="figures/raw/SmartHome.jpg" alt="Figure" style="max-height:19.0vh" /></p><p></p></div></div><p>
+
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc4ec27d">
+<h4 id="orgc4ec27d">The First Cyber-physical system Malware: Stockist</h4>
+<ul>
+<li>Stuxnet is the first discovered malware that spies on and subverts industrial control systems. It was discovered in June 2010.
+ </p><div class="imgcontainer"><div about="figures/raw/stuxnet.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/stuxnet.jpg" alt="Figure" style="max-height:50vh" /></p><p>Stuxnet Incident</p></div></div><p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1b6ceb5">
+<h4 id="org1b6ceb5">Threats to Industrial Control Systems</h4>
+<ul>
+<li><p>
+In FY 2016, ICS-CERT received <b>290</b> incidents. The scope of incidents includes:  </p><div about="figures/raw/cert.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/cert.jpg" alt="Figure" style="max-height:60vh" /></p><p></p></div><p>
+</p>
+<ul>
+<li>Unauthorized access,</li>
+<li>Exploitation of zero-day vulnerabilities,</li>
+<li>Malware infections within air-gapped control system networks.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2a8d0de">
+<h4 id="org2a8d0de">Attacks on Critical Infrastructure</h4>
+<ul>
+<li><p>
+A Successful attack on <b>critical infrastructure</b> can be devastating.
+</p></li>
+
+</ul>
+<p>
+ </p><div class="grid2"><div about="figures/raw/ukraine.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid2-img1"><p><img data-src="figures/raw/ukraine.jpg" alt="Figure" style="max-height:38.0vh" /></p><p></p></div> <div about="figures/raw/venezuela.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid2-img2"><p><img data-src="figures/raw/venezuela.jpg" alt="Figure" style="max-height:38.0vh" /></p><p></p></div></div><p>
+
+</p>
+<ul>
+<li>Vitek Boden
+<ul>
+<li>Took control of municipal water system</li>
+<li>Dumped ~1 million liters of raw sewage into local waterways and parks</li>
+<li>Arrested in Queensland, Australia on April 23, 2000</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org95dd8e1">
+<h4 id="org95dd8e1">Attack Through Supply Chain</h4>
+<ul>
+<li>70% of the components for Boeing 787 are manufactured by other suppliers <a class="org-ref-reference" href="#slide-bibliography">[Tang2009]</a>
+ </p><div class="imgcontainer"><div about="figures/raw/boeing.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/boeing.jpg" alt="Figure" style="max-height:50vh" /></p><p>Supply Chain for Boeing 787</p></div></div><p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf9b43b2">
+<h3 id="orgf9b43b2">Key Information Security Concepts</h3>
+<div class="outline-text-3" id="text-orgf9b43b2">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5c3e610">
+<h4 id="org5c3e610">The CIA triad</h4>
+<ul>
+<li>Confidentiality
+<ul>
+<li>Information is not made available or disclosed to unauthorized individuals, entities, or processes.</li>
+
+</ul></li>
+<li>Integrity
+<ul>
+<li>Data cannot be modified in an unauthorized or undetected manner.</li>
+
+</ul></li>
+<li>Availability
+<ul>
+<li>Information must be available when it is needed.</li>
+<li>Information need to be <b>stored, processed, and communicated</b> in a timely manner.</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5efcdca">
+<h4 id="org5efcdca">Case Study of Smart Grid</h4>
+<ul>
+<li>A case study for smart grid <a class="org-ref-reference" href="#slide-bibliography">[Mo2011]</a></li>
+
+</ul>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Control Signal</td>
+<td class="org-left">Measurements</td>
+<td class="org-left">Software</td>
+</tr>
+
+<tr>
+<td class="org-left">Confidentiality</td>
+<td class="org-left">Exposure of System Structure</td>
+<td class="org-left">Unauthorized Access</td>
+<td class="org-left">Piracy</td>
+</tr>
+
+<tr>
+<td class="org-left">Integrity</td>
+<td class="org-left"><b>Changes of Control Command</b></td>
+<td class="org-left"><b>Incorrect Data</b></td>
+<td class="org-left"><b>Malicious Software</b></td>
+</tr>
+
+<tr>
+<td class="org-left">Availability</td>
+<td class="org-left"><b>Inability to Control the Grid</b></td>
+<td class="org-left"><b>Unavailability of Measurements</b></td>
+<td class="org-left">N/A</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org2277c35">
+<h4 id="org2277c35">Other Considerations</h4>
+<ul>
+<li>Non-Repudiation
+<ul>
+<li>One party of a transaction cannot deny having received a transaction;</li>
+<li>Nor can the other party deny having sent a transaction</li>
+<li>Legal implications</li>
+<li>Digital Signature can be used to enforce non-repudiation</li>
+
+</ul></li>
+<li>Privacy
+<ul>
+<li><i>Wikipedia</i>: Privacy is the ability of an individual or group to seclude themselves or information about themselves, and thereby express themselves <b>selectively</b>.</li>
+<li>Not to be confused with confidentiality</li>
+<li>Confidentiality: information is not disclosed to <b>unauthorized users</b></li>
+<li>Privacy: <b>authorized users</b> CANNOT infer private information from available data
+<ul>
+<li>Utility v.s. Privacy</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org50b1fd5">
+<h3 id="org50b1fd5">Security Risks for Endpoints</h3>
+<div class="outline-text-3" id="text-org50b1fd5">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org01b45c8">
+<h4 id="org01b45c8">Passive Information Gathering</h4>
+<ul>
+<li>Someone pulls up with a receiver and sniffs the packets being sent on the network
+<ul>
+<li>Same method used to sniff unencrypted WiFi traffic</li>
+<li>When sending un-important information, not a large threat</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6c54c3f">
+<h4 id="org6c54c3f">Traffic Analysis: Side-Channel Attack</h4>
+<ul>
+<li>Examine cause and effect of encrypted packet
+<ul>
+<li>E.g. Each time an xyz packet is sent, that valve opens</li>
+<li>We do not need to know what xyz is, only what it does</li>
+<li>Semantic security</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org075ae5d">
+<h4 id="org075ae5d">Subversion of a Node</h4>
+<ul>
+<li>Someone “captures” and “interrogates” the node to determine cryptographic information</li>
+<li>Sensor functionality may be compromised by attacker</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd1f429d">
+<h4 id="orgd1f429d">Fake Node</h4>
+<ul>
+<li>WSNs are self-arranging / self-configuring</li>
+<li>Intruder adds a node to the system</li>
+<li>Node may block passage of real data or transmit false data</li>
+<li>“Sybil” Attack
+<ul>
+<li>A single node presents multiple ID’s to other nodes</li>
+<li>Affects geographic routing, distributed storage, multi-path routing, topology maintenance</li>
+
+</ul></li>
+<li>How do we tell if a node is “real?”</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org421dca9">
+<h4 id="org421dca9">Message Corruption</h4>
+<ul>
+<li>Attacks integrity of message</li>
+<li>Intruder inserts itself between source and destination to modify contents of the message</li>
+<li>Use fake/false node?</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org5e21609">
+<h4 id="org5e21609">Node Malfunction and Outage</h4>
+<ul>
+<li>Node may malfunction and generate inaccurate data</li>
+<li>Node may forward packets incorrectly</li>
+<li>How to detect and remove these nodes?</li>
+<li>Node outage: node just stops working altogether
+<ul>
+<li>alternative route</li>
+<li>observability/controllability of the system?</li>
+<li>how much redundancy is needed where?</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc375535">
+<h4 id="orgc375535">Denial of Service (&ldquo;DOS&rdquo; attack)</h4>
+<ul>
+<li>Jamming the radio link</li>
+<li>Exhaust resources</li>
+<li>Re-route data</li>
+<li>Various kinds:
+<ul>
+<li>Black Hole
+<ul>
+<li>Node refuses to forward any packets it receives</li>
+
+</ul></li>
+<li>Sink-holes</li>
+<li>Induced Routing Loops</li>
+<li>HELLO Flooding</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orgc7abd2e">
+<h2 id="orgc7abd2e">Symmetric Encryption</h2>
+<div class="outline-text-2" id="text-orgc7abd2e">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc934922">
+<h3 id="orgc934922">Cryptography Basics</h3>
+<div class="outline-text-3" id="text-orgc934922">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgfd303ed">
+<h4 id="orgfd303ed">Basic Elements</h4>
+<ul>
+<li><b>Plaintext</b>: original message with no transformation</li>
+<li><b>Ciphertext</b>: plaintext message after modification to obscure it from normal usage and readability
+<ul>
+<li>encryption converts plaintext into ciphertext</li>
+<li>decryption converts ciphertext into plaintext</li>
+
+</ul></li>
+<li>Cryptographic algorithm: mathematical operation used to convert plain text into ciphertext</li>
+<li><b>Key</b>:
+<ul>
+<li>secret key used to encrypt or decrypt the message</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0fa6cd2">
+<h4 id="org0fa6cd2">Breaking a Cryptographic Algorithm</h4>
+<ul>
+<li>Crypto-analysis:
+<ul>
+<li>Identify patterns based on plaintext to re-generate key
+<ul>
+<li>Ciphertext only Attack</li>
+<li>Known Plaintext Attack</li>
+<li>Chosen Plaintext Attack</li>
+<li>Chosen Ciphertext Attack</li>
+
+</ul></li>
+<li>Good algorithms generate noisy ciphertext with no discernible patterns</li>
+
+</ul></li>
+<li>Brute-force guessing:
+<ul>
+<li>Keys longer than 128-bits (\(10^{38}\) possibilities) are generally considered to be acceptable</li>
+<li>Higher the key width, safer is the encryption</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org8634b4e">
+<h3 id="org8634b4e">Brief History of Cryptography</h3>
+<div class="outline-text-3" id="text-org8634b4e">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1421697">
+<h4 id="org1421697">Antiquity</h4>
+<ul>
+<li><p>
+1500 BC: clay tablets from Mesopotamia
+ </p><div about="figures/raw/skytale.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/skytale.png" alt="Scytale used by Spartans" style="max-height:20vh" /></p><p></p><p style="max-width:20vh">&ldquo;<span property="dcterms:title">Scytale used by Spartans</span>&rdquo; by <span property="cc:attributionName">Luringen</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:GNU_Free_Documentation_License">GNU Free Document</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/5/51/Skytale.png">Wikipedia</a></p></div><p>
+</p>
+<ul>
+<li>encrypt a craftsman&rsquo;s recipe for pottery glaze</li>
+
+</ul></li>
+<li>600~500 BC: Hebrew uses Atbash ciphers
+<ul>
+<li>Bible:  &ldquo;The king of Sheshach shall drink after them&rdquo; – Sheshach meaning Babylon</li>
+
+</ul></li>
+
+</ul>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Plain</td>
+<td class="org-left">A</td>
+<td class="org-left">B</td>
+<td class="org-left">C</td>
+</tr>
+
+<tr>
+<td class="org-left">Cipher</td>
+<td class="org-left">Z</td>
+<td class="org-left">Y</td>
+<td class="org-left">X</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>400 BC~200 AD: &ldquo;Mlecchita vikalpa&rdquo; was documented in the Kama Sutra for the purpose of communication between lovers.</li>
+<li>Scytale transposition cipher was used by the Spartan military</li>
+<li>Caesar cipher and its variations used by Julius Caesar:
+<ul>
+<li>Left shift by 3</li>
+<li>His nephew, Augustus, uses a similar system of right shift by 1</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb828881">
+<h4 id="orgb828881">Frequency Analysis</h4>
+<ul>
+<li><p>
+For a simple substitution cipher, there are \(26!\approx 4\times 10^26\) possible keys 
+ </p><div about="figures/raw/alkindi.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/alkindi.png" alt="The first page of al-Kindi's manuscript 'On Deciphering Cryptographic Messages'" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">The first page of al-Kindi's manuscript 'On Deciphering Cryptographic Messages'</span>&rdquo; by <span property="cc:attributionName">sador</span> under <a rel="license" href="https://en.wikipedia.org/wiki/public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/6/65/Al-kindi-cryptanalysis.png">Wikipedia</a></p></div><p>
+</p></li>
+
+<li>Roughly equivalent to 88 bit keys</li>
+<li>In comparison, the DES algorithm proposed in 1975 only has 56-bit key.</li>
+<li>However, substitution cipher are vulnerable to Frequency Analysis
+<ul>
+<li>First proposed by 9th century by Al-Kindi, an Arab polymath</li>
+<li><p>
+Appeared in Sherlock Holmes story
+ </p><div class="imgcontainer"><div about="figures/raw/dancingman.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/dancingman.png" alt="The Dancing Men" style="max-height:10vh" /></p><p>The Dancing Men</p><p style="max-width:10vh">by <span property="cc:attributionName">unknown</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/3/39/Dancing_men.svg">Wikipedia</a></p></div></div><p>
+</p></li>
+
+</ul></li>
+
+<li>Possible solutions:
+<ul>
+<li>map most common letters to multiple letters</li>
+<li>map a pair of letters or triplet of letters</li>
+<li>change the substitution rules for every letter</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7d168fb">
+<h4 id="org7d168fb">Frequency of English Letters</h4>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/english.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/english.png" alt="Frequency of English Letters" style="max-height:60vh" /></p><p>Frequency of English Letters</p><p style="max-width:60vh">by <span property="cc:attributionName">Nandhp</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/d/d5/English_letter_frequency_%28alphabetic%29.svg">Wikipedia</a></p></div></div><p>
+</p>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf28990f">
+<h4 id="orgf28990f">Kerckhoffs&rsquo; Principle</h4>
+<ul>
+<li>First formulated in 1883 by Auguste Kerckhoffs, in a journal article on <i>La Cryptographie Militaire</i></li>
+
+</ul>
+
+<p>
+<i>A cryptosystem should be secure even if <b>everything</b> about the system, except the <b>key</b>, is public knowledge.</i>
+</p>
+
+<ul>
+<li>Shannon&rsquo;s Maxim: &ldquo;the enemy knows the system&rdquo;.</li>
+<li>The &ldquo;wrong&rdquo; approach to security is called &ldquo;security by obscurity&rdquo;:
+<ul>
+<li>Used by CSS encryption on DVD</li>
+<li>compromised in 3 years</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf93a41a">
+<h4 id="orgf93a41a">Zimmermann Telegram</h4>
+<ul>
+<li><p>
+A secret diplomatic communication issued in January 1917 from German Foreign Office
+ </p><div about="figures/raw/zimmermann.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/zimmermann.jpg" alt="The Zimmermann Telegram" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">The Zimmermann Telegram</span>&rdquo; by <span property="cc:attributionName">NARA</span> under <a rel="license" href="https://commons.wikimedia.org/wiki/National_Archives_and_Records_Administration">NARA</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/f/f0/Zimmermann_Telegram_as_Received_by_the_German_Ambassador_to_Mexico_-_NARA_-_302025.jpg">Wikipedia</a></p></div><p>
+</p>
+<ul>
+<li>proposed a military alliance between Germany and Mexico.</li>
+<li>Mexico would recover Texas, Arizona, and New Mexico, if the United States enter war with German</li>
+
+</ul></li>
+<li>Intercepted and decoded by British intelligence.</li>
+<li>Pushed the United States to join WWI.</li>
+<li>One of the earliest occasions where a piece of signal intelligence influenced world events.</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org15bf162">
+<h4 id="org15bf162">Enigma Machine</h4>
+<ul>
+<li><p>
+The Enigma machine is an encryption device employed extensively by Nazi Germany during World War II
+ </p><div about="figures/raw/enigma.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/enigma.jpg" alt="The Enigma Machine" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">The Enigma Machine</span>&rdquo; by <span property="cc:attributionName"> Alessandro Nassiri</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/b/bd/Enigma_%28crittografia%29_-_Museo_scienza_e_tecnologia_Milano.jpg">Wikipedia</a></p></div><p>
+</p></li>
+
+<li>The machine contains a set of rotors:
+<ul>
+<li>The rotors provide a simple substitution cipher</li>
+<li>However, after encrypting each letter, the rotors advance positions, changing the substitution</li>
+<li>The substitution rule changes with every keypress.</li>
+
+</ul></li>
+<li>The military Enigma has 158,962,555,217,826,360,000 different settings (or about 67 bits).</li>
+<li>The breaking of Enigma have been &ldquo;decisive&rdquo; to Allied victory
+<ul>
+<li>The story is told in the movie &ldquo;The Imitation Game&rdquo;</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgff4de48">
+<h3 id="orgff4de48">Symmetric Encryption</h3>
+<div class="outline-text-3" id="text-orgff4de48">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb48d4e7">
+<h4 id="orgb48d4e7">Data Encryption Standard</h4>
+<ul>
+<li><p>
+Developed by IBM in 1970s and became a standard in 1977
+ </p><div about="figures/raw/des.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/des.png" alt="Diagram of DES" style="max-height:60vh" /></p><p></p><p style="max-width:60vh">&ldquo;<span property="dcterms:title">Diagram of DES</span>&rdquo; by <span property="cc:attributionName">Matt Crypto</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/6/6a/DES-main-network.png">Wikipedia</a></p></div><p>
+</p></li>
+
+<li>The size of the key is 56 bits, and 8 bits for parity check</li>
+<li>Block cipher: Encrypt 64 bits of plaintext into 64 bits of ciphertext</li>
+<li>First broke in 1997</li>
+<li><p>
+A brute-force attack using Nvidia GTX 1080 would require 15 days on average
+ </p><div class="imgcontainer"><div about="figures/raw/feistel.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/feistel.png" alt="Feistel Function" style="max-height:30vh" /></p><p>Feistel Function</p><p style="max-width:30vh">by <span property="cc:attributionName">Hellisp</span> under <a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/deed.en">CC 0</a>; from <a rel="dcterms:source" href="https://commons.wikimedia.org/wiki/File:Data_Encription_Standard_Flow_Diagram.svg">Wikipedia</a></p></div></div><p>
+</p></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6c7032f">
+<h4 id="org6c7032f">Advanced Encryption Standard</h4>
+<ul>
+<li>AES is established by the U.S. National Institute of Standards and Technology (NIST) in 2001 as a successor to DES</li>
+<li>Has a block size of 128 bits</li>
+<li>Support three different key lengths: 128, 192 and 256 bits.</li>
+<li>At present, no known practical attack</li>
+<li>One of the symmetric encryption schemes used by TLS.</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgba6c41b">
+<h4 id="orgba6c41b">One-time-pad</h4>
+<ul>
+<li><p>
+In OTP, a plaintext is paired with a random secret key (also referred to as a one-time pad). 
+ </p><div about="figures/raw/otp.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/otp.png" alt="One Time Pad used by NSA" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">One Time Pad used by NSA</span>&rdquo; by <span property="cc:attributionName">NSA</span> under <a rel="license" href="https://en.wikipedia.org/wiki/en:public_domain">Public Domain</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/1/19/NSA_DIANA_one_time_pad.tiff">Wikipedia</a></p></div><p>
+</p></li>
+
+<li>Each bit or character of the plaintext is encrypted by combining it with the corresponding bit or character from the pad using modular addition.</li>
+<li>The resulting ciphertext will be impossible to decrypt if:
+<ul>
+<li>The key must be truly random.</li>
+<li>The key must be at least as long as the plaintext.</li>
+<li>The key must never be reused in whole or in part.</li>
+<li>The key must be kept completely secret.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org3d31384">
+<h2 id="org3d31384">Authenticated Encryption</h2>
+<div class="outline-text-2" id="text-org3d31384">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org05417f1">
+<h3 id="org05417f1">Cryptographic Hash Functions</h3>
+<ul>
+<li>A function H that takes an arbitrary size input \(m\)</li>
+<li>and produces a <b>fixed</b> length output H(m). 
+<ul>
+<li>The output length is typically 128–1024 bits.</li>
+
+</ul></li>
+<li>A Hash be viewed as the finger print of the original message
+<ul>
+<li>Hard to find 2 people with same fingerprint</li>
+<li>Given a person, it&rsquo;s easy to get his/her fingerprint</li>
+<li>However given a fingerprint, it&rsquo;s hard to find the person it came from</li>
+
+</ul></li>
+<li>Similarly
+<ul>
+<li>Hard to find two message with the same hash (collision resistance)</li>
+<li>one-way</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org137bcca">
+<h4 id="org137bcca">Strong and Weak Collision Resistance</h4>
+<ul>
+<li>The once popular MD5 hash has a digest size of 128 bits.</li>
+<li>We want to find an input corresponding to a <b>specific hash</b> by brute force
+<ul>
+<li>We need to do \(2^{128}\) search on average</li>
+
+</ul></li>
+<li>However, how much search we need to do if we want to find 2 inputs sharing the <b>same hash</b> by brute force?
+<ul>
+<li>Surprisingly, only \(2^{64}\) search is needed due to birthday paradox!</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org25b2d52">
+<h4 id="org25b2d52">Birthday paradox</h4>
+<ul>
+<li>How likely this class of 30 students to contain two people with the same birthday?</li>
+<li>The answer is roughly 71%!</li>
+<li>The probability of <b>NOT</b> having two person with the same birthday (assuming no leap year) is</li>
+
+</ul>
+<p>
+\[P=\left(1-\frac{0}{365}\right) \left(1-\frac{1}{365}\right)\dots\left(1-\frac{n-1}{365}\right)\]
+</p>
+<ul>
+<li>Notice that \(1-x \approx \exp(-x)\)</li>
+
+</ul>
+<p>
+\[P\approx\exp\left(-\frac{\sum_{i=0}^{n-1}i}{365}\right)=\exp\left(-\frac{n(n-1)}{730}\right).\]
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgbf7627a">
+<h4 id="orgbf7627a">MD5 and SHA-1</h4>
+<ul>
+<li><p>
+MD5 was invented in 1991  </p><div about="figures/raw/wangxiaoyun.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/wangxiaoyun.png" alt="Figure" style="max-height:30vh" /></p><p></p></div><p>
+</p>
+<ul>
+<li>Digest size is 128 bits</li>
+
+</ul></li>
+<li>The strong collision resistance of MD5 was broken by Wang Xiaoyun in 2004.</li>
+<li>Now possible to find collisions in mere seconds.</li>
+<li>SHA-1 was released by the NSA in 1995
+<ul>
+<li>Digest size is 160 bits</li>
+
+</ul></li>
+<li>Best attack, also from Prof. Wang, on SHA-1 requires \(2^{63}\) search.</li>
+<li>Google has removed SHA-1 support in Chrome</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org362b2c2">
+<h3 id="org362b2c2">Hash-based Message Authentication Code</h3>
+<ul>
+<li>Hashing the pre-shared secret (key) with the message</li>
+
+</ul>
+<p>
+\[HMAC(k,m)=H\left((k\oplus opad)\|H((k\oplus ipad)\|m)\right).\]
+</p>
+<ul>
+<li>opad is the block-sized outer padding, consisting of repeated bytes valued 0x5c</li>
+<li>ipad is the block-sized inner padding, consisting of repeated bytes valued 0x36</li>
+<li><p>
+The receiver of the MAC can verify if the correct pre-share secret is used
+ </p><div class="imgcontainer"><div about="figures/raw/hmac.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hmac.png" alt="HMAC Diagram" style="max-height:30vh" /></p><p>HMAC Diagram</p><p style="max-width:30vh">by <span property="cc:attributionName">Gdrooid</span> under <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a>; from <a rel="dcterms:source" href="https://upload.wikimedia.org/wikipedia/commons/7/7f/SHAhmac.svg">Wikipedia</a></p></div></div><p>
+</p></li>
+
+</ul>
+
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb5df7f8">
+<h3 id="orgb5df7f8">Authenticated Encryption</h3>
+<ul>
+<li>Authenticated encryption simultaneously assures the confidentiality and authenticity of data.
+<ul>
+<li>Encryption</li>
+<li>Message Authentication Code</li>
+
+</ul></li>
+<li>Approaches:
+<ul>
+<li>Encrypt-then-MAC</li>
+<li>Encrypt-and-MAC</li>
+<li><p>
+MAC-then-Encrypt
+</p></li>
+
+</ul></li>
+
+</ul>
+<p>
+ </p><div class="grid1"><div about="figures/raw/etm.png" typeof="dcmitype:StillImage" class="figure grid-img grid1-img1"><p><img data-src="figures/raw/etm.png" alt="Encryption then MAC" style="max-height:28.5vh" /></p><p></p></div> <div about="figures/raw/eam.png" typeof="dcmitype:StillImage" class="figure grid-img grid1-img2"><p><img data-src="figures/raw/eam.png" alt="Encryption and MAC" style="max-height:28.5vh" /></p><p></p></div> <div about="figures/raw/mte.png" typeof="dcmitype:StillImage" class="figure grid-img grid1-img3"><p><img data-src="figures/raw/mte.png" alt="MAC then Encrypt" style="max-height:28.5vh" /></p><p></p></div></div><p>
+
+</p>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org9c36efc">
+<h2 id="org9c36efc">Key Management for Wireless Networks</h2>
+<div class="outline-text-2" id="text-org9c36efc">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org695f7c1">
+<h3 id="org695f7c1">Overview</h3>
+<ul>
+<li>The goal is to establish <b>secure</b> communication between endpoints in a wireless network.</li>
+<li>Possible schemes using symmetric keys:
+<ul>
+<li>Single Network-wide key</li>
+<li>Pair-wise Keys</li>
+<li>Bootstrapping off of Trusted Base-station</li>
+<li>Random Key Pre-distribution</li>
+
+</ul></li>
+<li>Alternatively, one could use asymmetric cryptography, which will be discussed later</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgc61c2ec">
+<h3 id="orgc61c2ec">Single Network-wide Key</h3>
+<ul>
+<li>Using a Single Network-wide Key</li>
+<li>Simple technique
+<ol>
+<li>Pre-load onto all nodes prior to deployment</li>
+<li>After deployment, establish communication with neighbors</li>
+<li>Authenticated encryption using the shared key</li>
+
+</ol></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org401fd3e">
+<h4 id="org401fd3e">Pros and Cons</h4>
+<div class="leftcol">
+<p>
+Pros:
+</p>
+<ul>
+<li>Simple</li>
+<li>Minimal storage required</li>
+<li>Resistant against DoS and packet injection
+<ul>
+<li>Provided adversary doesn’t know the key with communication</li>
+<li>Replay can be avoided by sending source, destination, and timestamp</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+Cons:
+</p>
+<ul>
+<li>If single node is compromised, security is lost</li>
+<li>Impractical unless:
+<ul>
+<li>Nodes are tamper-resistant</li>
+<li>No new nodes are ever added after deployment</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd68a282">
+<h3 id="orgd68a282">Using Pair-wise Keys</h3>
+<ul>
+<li>Every node shares a unique symmetric key with every other node on the network</li>
+<li>After deployment, nodes must perform key discovery to verify the identification of neighbors</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org994c46b">
+<h4 id="org994c46b">Pros and Cons</h4>
+<div class="leftcol">
+<p>
+Pros:
+</p>
+<ul>
+<li>Perfect resilience against node capture</li>
+<li>Revocation of compromised keys</li>
+<li>Uses only symmetric cryptography</li>
+<li>Allows for cheaper nodes</li>
+<li>Less susceptible to DoS</li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+Cons:
+</p>
+<ul>
+<li>Poor scalability</li>
+<li>With an 80-bit key, a 100- node network requires 1KB storage on each node</li>
+<li>Memory limitations make large networks infeasible</li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org24f8e90">
+<h3 id="org24f8e90">Bootstrapping Security from Trusted Base Station</h3>
+<ul>
+<li>Prior to deployment, symmetric key generated for each node and stored
+<ul>
+<li>in order to communicate with the base station</li>
+
+</ul></li>
+<li>Nodes authenticate to base station using secret master key</li>
+<li>Base station generates link key for two nodes to communicate</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org64d8f94">
+<h4 id="org64d8f94">Pros and Cons</h4>
+<div class="leftcol">
+<p>
+Pros:
+</p>
+<ul>
+<li>Small memory requirement</li>
+<li>Perfect resilience to node capture</li>
+<li>Revocation of nodes is simple</li>
+<li>Node replication is easily controlled
+<ul>
+<li>All key establishment goes through base station. If the number of links of any node is too high, station can refuse to generate new link keys for the node</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+Cons:
+</p>
+<ul>
+<li>Not scalable
+<ul>
+<li>High communication overhead</li>
+<li>All key establishment goes through base-station, which in large networks may be many hops away</li>
+
+</ul></li>
+<li>Base station becomes target for compromise
+<ul>
+<li>Single point of failure</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga2f7ff1">
+<h3 id="orga2f7ff1">Random Key Pre-distribution</h3>
+<ul>
+<li>Random set of keys, \(S\), chosen. For each node, \(m\) keys are selected and stored in memory (key ring)</li>
+<li>Size of \(S\), \(|S|\), chosen such that any two random subsets of size \(m\) will share at least one key with a probability of \(p\) Key Setup</li>
+<li>Nodes perform key discovery to determine neighbors with shared key Forms connected graph of secure links</li>
+<li>Nodes can set up path keys with neighboring nodes that lack a shared key</li>
+<li>Erdos–Renyi graph: Consider a graph with \(n\) vertices and each pair of vertices is connected independently with probability \(p\), then
+<ul>
+<li>If \(p < (1- \epsilon)\log n/n\), then the graph contains isolated vertices a.s.</li>
+<li>If \(p > (1+ \epsilon)\log n/n\), then the graph is connected a.s.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1962153">
+<h3 id="org1962153">Asymmetric Keys</h3>
+<ul>
+<li>Prior to deployment, master public/private key-pair generated.</li>
+<li>For every Node A, a public/private key-pair is generated and stored along with master key’s signature on \(K_A\).</li>
+<li>Nodes perform key exchange. Once public key is verified, a symmetric link key is generated to be used as session key
+<ul>
+<li>e.g., using Diffie-Hellman</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd92e8b6">
+<h4 id="orgd92e8b6">Pros and Cons</h4>
+<div class="leftcol">
+<p>
+Pros:
+</p>
+<ul>
+<li>Resilient against node capture
+<ul>
+<li>Nodes have no knowledge of other secret link keys</li>
+
+</ul></li>
+<li>Revocation possible
+<ul>
+<li>Broadcast of revoked key-pair signed by master will result in revocation</li>
+
+</ul></li>
+<li>Scalable
+<ul>
+<li>Scheme retains effectiveness regardless of number of nodes</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+Cons:
+</p>
+<ul>
+<li>Dependence on asymmetric key cryptographic hardware or software
+<ul>
+<li>Computationally intensive</li>
+<li>Nodes may lack integer multiplication unit</li>
+
+</ul></li>
+<li>Vulnerability to DoS
+<ul>
+<li>Digital signature verification is resource-consuming</li>
+<li>Floods of illegal signatures can drain batteries</li>
+
+</ul></li>
+<li>No resistance to node replication
+<ul>
+<li>By capturing one node, links can be set up with all other nodes, creating “omnipresence”</li>
+
+</ul></li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org4a058c9">
+<h2 id="org4a058c9">Modular Arithmetic</h2>
+<div class="outline-text-2" id="text-org4a058c9">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgd079b25">
+<h4 id="orgd079b25">Congruence</h4>
+<ul>
+<li>Given an integer \(n > 1\), called a modulus, two integers are said to be <b>congruent</b> modulo \(n\), if there is an integer \(k\) such that</li>
+
+</ul>
+<p>
+\[a − b = kn.\] 
+</p>
+<ul>
+<li>We write \(a \equiv b (mod\;n)\).</li>
+<li>One can verify that congruence is an equivalent relationship.
+<ul>
+<li>Symmetric</li>
+<li>Reflexive</li>
+<li>Transitive</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orge260782">
+<h4 id="orge260782">Modular Arithmetic: Addition and Multiplication</h4>
+<ul>
+<li>Addition and multiplication have the same properties as addition and multiplication on real numbers:
+<ul>
+<li>Associative</li>
+<li>Commutative</li>
+<li>Distributive</li>
+
+</ul></li>
+<li>Subtraction is trivial:
+<ul>
+<li>\(a + b \equiv c\; (mod\;n)\Rightarrow b\equiv c+(n-a)\;(mod\;n).\)</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgfdaaede">
+<h4 id="orgfdaaede">Modular Arithmetic: Inverse and Division</h4>
+<ul>
+<li>If \(a\) and \(n\) are coprime, then \(gcd(a,n)=1\).</li>
+<li>Notice that the gcd can be computed via Euclidean Division.</li>
+<li>There exists integer \(x,\,y\) such that</li>
+
+</ul>
+<p>
+\[xa+yn=1.\]
+</p>
+<ul>
+<li>or \(xa  \equiv 1\; (mod\;n)\).</li>
+<li>\(a b \equiv c\; (mod\;n)\Rightarrow b\equiv cx\;(mod\;n).\)</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7d30df4">
+<h4 id="org7d30df4">Modular Arithmetic: Power and Logarithm</h4>
+<ul>
+<li>How to compute \(c \equiv a^b\; (mod\;n)\)?</li>
+<li>Can be done in roughly \(O(\log b)\) multiplications.</li>
+<li>On the other hand, there is no known fast algorithm to solve the discrete logarithm problem.
+<ul>
+<li>Finding \(b = \log_a c\) is hard!</li>
+<li>However, efficient algorithms for quantum computer exists</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org82c85db">
+<h4 id="org82c85db">Euler&rsquo;s Theorem</h4>
+<ul>
+<li>Consider the set of numbers that are
+<ul>
+<li>less than n;</li>
+<li>and coprime to n.</li>
+
+</ul></li>
+<li>Important observation:
+<ul>
+<li>If \(a\) and \(b\) are coprime to \(n\), then \(ab\) is coprime to \(n\).</li>
+<li>If \(a\) is coprime to \(n\), then we can find \(a^{-1}\) coprime to \(n\).</li>
+<li>In other words, such set is an Abelian group under modulo multiplication.</li>
+
+</ul></li>
+<li>Euler&rsquo;s Totient Function \(\phi(n)\): size of such set
+<ul>
+<li>For example: \(\phi(6) = |\{1,5\}| = 2.\)</li>
+
+</ul></li>
+<li>If \(p\) and \(q\) are prime, then
+<ul>
+<li>\(\phi(pq) = pq - p - q +1.\)</li>
+<li>Computing \(\phi(pq)\) is the same as factorizing \(pq\).</li>
+<li>No know fast factorization algorithm exists</li>
+<li>However, efficient quantum algorithm exists</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org7a60e07">
+<h4 id="org7a60e07">Euler&rsquo;s Theorem</h4>
+<ul>
+<li>Euler&rsquo;s Theorem: If \(a\) and \(n\) are coprime, then</li>
+
+</ul>
+<p>
+\[a^{\phi(n)}\equiv 1\; (mod\;n).\]
+</p>
+<ul>
+<li>If \(ed \equiv 1\; (mod\;\phi(n))\), and \(a\) is coprime to \(n\) then \[a^{ed} \equiv a^{k\phi(n)}\times a\equiv a; (mod\;n).\]
+<ul>
+<li>The \(e\)th-root of \(a\) is \(a^d\), or vice versa.</li>
+
+</ul></li>
+<li>If we know \(\phi(n)\), then we can easily generate compute \(d\)</li>
+<li>However, computing \(d\) without knowing \(\phi(n)\) is considered to be difficult</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orgb05367b">
+<h2 id="orgb05367b">Diffie-Hellman Key Exchange</h2>
+<div class="outline-text-2" id="text-orgb05367b">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org89f43af">
+<h3 id="org89f43af">Diffie-Hellman Key Exchange</h3>
+<ul>
+<li><p>
+Named after Whitfield Diffie and Martin Hellman.
+ </p><div about="figures/raw/diffie.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/diffie.jpg" alt="Whitfield Diffie" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">Whitfield Diffie</span>&rdquo; by <span property="cc:attributionName">DuncanHull</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; from <a rel="dcterms:source" href="https://commons.wikimedia.org/wiki/File:Whitfield_Diffie_Royal_Society.jpg">Wikipedia</a></p></div><p>
+</p></li>
+
+<li>First published in 1976</li>
+<li><p>
+The first public key exchange algorithm
+ </p><div about="figures/raw/hellman.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/hellman.jpg" alt="Martin Edward Hellman" style="max-height:40vh" /></p><p></p><p style="max-width:40vh">&ldquo;<span property="dcterms:title">Martin Edward Hellman</span>&rdquo; by <span property="cc:attributionName">Ajvol</span> under <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; from <a rel="dcterms:source" href="https://commons.wikimedia.org/wiki/File:Martin-Hellman.jpg">Wikipedia</a></p></div><p>
+</p></li>
+
+<li>Both received Turing Award in 2015</li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org8257889">
+<h4 id="org8257889">DH Protocol</h4>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Alice</td>
+<td class="org-left">Public Information</td>
+<td class="org-left">Bob</td>
+</tr>
+
+<tr>
+<td class="org-left">\(p, g , a\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(p, g , g^a(mod\;p)\)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(p, g , g^a(mod\;p),b\)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(p, g , g^a(mod\;p),g^b(mod\;p)\)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">\(p, g , a, g^b(mod\;p)\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>The secret is generated as</li>
+
+</ul>
+<p>
+\[s \equiv g^{ab} \equiv (g^a)^b \equiv (g^b)^a \;(mod\;p).\]
+</p>
+<ul>
+<li>However, the ones passively observing the public channel only have \(g^a(mod\;p),\,g^b(mod\;p)\) 
+<ul>
+<li>\(a,b\) cannot be deduced since discrete logarithm is hard</li>
+<li>No fast algorithm known to compute the secret</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgadeee53">
+<h3 id="orgadeee53">Man-in-the-Middle Attack</h3>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Alice</td>
+<td class="org-left">Eve</td>
+<td class="org-left">Bob</td>
+</tr>
+
+<tr>
+<td class="org-left">\(p, g , a\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(p, g , g^a(mod\;p), \alpha, \beta\)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(p, g , g^\alpha(mod\;p),b\)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(p, g , g^a(mod\;p),g^b(mod\;p),\alpha,\beta\)</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">\(p, g , a, g^\beta(mod\;p)\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Eve replace \(g^a(mod\;p)\) from Alice by \(g^\alpha(mod\;p)\);</li>
+<li>and replace \(g^b(mod\;p)\) from Bob by \(g^\beta(mod\;p)\)</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1b7984d">
+<h4 id="org1b7984d">Man-in-the-Middle Attack</h4>
+<ul>
+<li>Alice will compute the secret as \[s_a \equiv g^{a\beta}\;(mod\;p).\]</li>
+<li>Bob will compute the secret as \[s_b \equiv g^{\alpha b}\;(mod\;p).\]</li>
+<li>Both can be computed by Eve</li>
+<li>To avoid man in the middle attack, Alice and Bob need to verify that \(g^a(mod\;p)\) and \(g^b(mod\;p)\) come from the <b>correct</b> user.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org5516bf6">
+<h2 id="org5516bf6">Asymmetric Encryption</h2>
+<div class="outline-text-2" id="text-org5516bf6">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga8d96a7">
+<h3 id="orga8d96a7">RSA</h3>
+<ul>
+<li>Named after Ron Rivest, Adi Shamir, and Leonard Adleman</li>
+<li>First published in 1977</li>
+<li>The first public key algorithm</li>
+<li><p>
+All received Turing Award in 2002
+</p></li>
+
+</ul>
+<p>
+ </p><div class="grid1"><div about="figures/raw/rivest.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid1-img1"><p><img data-src="figures/raw/rivest.jpg" alt="Ronald L. Rivest" style="max-height:38.0vh" /></p><p></p></div> <div about="figures/raw/shamir.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid1-img2"><p><img data-src="figures/raw/shamir.jpg" alt="Leonald Adleman" style="max-height:38.0vh" /></p><p></p></div> <div about="figures/raw/adleman.jpg" typeof="dcmitype:StillImage" class="figure grid-img grid1-img3"><p><img data-src="figures/raw/adleman.jpg" alt="Figure" style="max-height:38.0vh" /></p><p></p></div></div><p>
+
+</p>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org9cdf87b">
+<h4 id="org9cdf87b">RSA</h4>
+<ul>
+<li>If Alice know two large prime \(p\) and \(q\), then
+<ul>
+<li>she can compute \(\phi(pq) = pq-p-q+1\)</li>
+<li>and generate \(e\) and \(d\), such that \(ed\equiv 1 \;(mod\;\phi(pq))\)</li>
+
+</ul></li>
+<li>\(pq, e\) is the public key</li>
+<li>\(d\) is the private key for Alice</li>
+<li>By Euler&rsquo;s theorem, given \(a^e\;(mod\;pq)\), Alice can find \(a\) by \[a \equiv (a^e)^d \;(mod\;pq).\]
+<ul>
+<li>This holds true even if \(a\) is not coprime to \(pq\), which is highly unlikely</li>
+<li>Need to leverage Chinese remainder theorem</li>
+
+</ul></li>
+<li>However, this is very difficult for others who do not know \(d\)</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgdb00327">
+<h3 id="orgdb00327">Digital Signature</h3>
+<ul>
+<li>By Euler&rsquo;s theorem, given \(a^d\;(mod\;pq)\), any one can compute \(a\) by \[a \equiv (a^d)^e \;(mod\;pq).\]
+<ul>
+<li>\(e\) is publicly known</li>
+
+</ul></li>
+<li>Now Alice can send the message \((a, a^d\;(mod\;pq))\)
+<ul>
+<li>It proves that the sender knows \(d\);</li>
+<li>without the sender actually revealing \(d\)!</li>
+<li>hence the sender is Alice;</li>
+<li>and \(a\) is sent by her.</li>
+
+</ul></li>
+<li>Digital signature also provide non-repudiation</li>
+<li>Usually combined with hash function</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org595b4a8">
+<h4 id="org595b4a8">Public Key Infrastructure</h4>
+<ul>
+<li>A PKI is an arrangement that binds public keys with respective identities of entities (like people and organizations).</li>
+<li>A certificate authority (CA) that stores, issues and signs the digital certificates
+<ul>
+<li>done via the CA&rsquo;s own private key</li>
+<li>the trust in the user key relies on one&rsquo;s trust in the CA&rsquo;s key.</li>
+
+</ul></li>
+<li>Alternatively one could adopt a decentralized approach:
+<ul>
+<li>Web of trust: can you trust your friend&rsquo;s friend?</li>
+<li>Blockchain PKI?</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-org9e50a30">
+<h2 id="org9e50a30">Transport Layer Security</h2>
+<div class="outline-text-2" id="text-org9e50a30">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org1041611">
+<h3 id="org1041611">Overview</h3>
+<ul>
+<li>Transport Layer Security and predecessor, Secure Sockets Layer are designed to provide secure communications over a computer network.
+<ul>
+<li>Confidentiality</li>
+<li>Integrity</li>
+<li>The identity of the server (or both parties) is authenticated using public-key cryptography.</li>
+
+</ul></li>
+
+</ul>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Protocol</td>
+<td class="org-right">Published</td>
+<td class="org-left">Status</td>
+</tr>
+
+<tr>
+<td class="org-left">SSL 1.0</td>
+<td class="org-right">Unpublished</td>
+<td class="org-left">Unpublished</td>
+</tr>
+
+<tr>
+<td class="org-left">SSL 2.0</td>
+<td class="org-right">1995</td>
+<td class="org-left">Deprecated in 2011</td>
+</tr>
+
+<tr>
+<td class="org-left">SSL 3.0</td>
+<td class="org-right">1996</td>
+<td class="org-left">Deprecated in 2015</td>
+</tr>
+
+<tr>
+<td class="org-left">TLS 1.0</td>
+<td class="org-right">1999</td>
+<td class="org-left">Deprecated in 2020</td>
+</tr>
+
+<tr>
+<td class="org-left">TLS 1.1</td>
+<td class="org-right">2006</td>
+<td class="org-left">Deprecated in 2020</td>
+</tr>
+
+<tr>
+<td class="org-left">TLS 1.2</td>
+<td class="org-right">2008</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">TLS 1.3</td>
+<td class="org-right">2018</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgfb0d2cc">
+<h3 id="orgfb0d2cc">TLS 1.2 with DH Key Exchange</h3>
+<p>
+In TLS encryption, the process is as follows:
+</p>
+<ul>
+<li>The client opens a connection to a TLS-capable server (port 443 for HTTPS)</li>
+<li>Client: 
+<ul>
+<li>the TLS version and cipher suit supported</li>
+<li>a client random</li>
+
+</ul></li>
+<li>Server: 
+<ul>
+<li>selected cipher suit and TLS version</li>
+<li>certificate</li>
+<li>sign on the client random and DH parameter with server&rsquo;s private key</li>
+
+</ul></li>
+<li>Client:
+<ul>
+<li>confirms the validity of the certificate and server&rsquo;s signature</li>
+<li>sends DH parameter</li>
+
+</ul></li>
+<li>A session key is generated by DH key exchange</li>
+<li>Handshake is finished, secure communication is established with the session key</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-orgd36865e">
+<h2 id="orgd36865e">Security of Cyber-Physical System</h2>
+<div class="outline-text-2" id="text-orgd36865e">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org28c5c40">
+<h3 id="org28c5c40">Overview</h3>
+<div class="outline-text-3" id="text-org28c5c40">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org05ea34a">
+<h4 id="org05ea34a">Differences between Information Security and CPS Security</h4>
+<ul>
+<li>Physics!
+<ul>
+<li>Systems cannot be stopped easily</li>
+<li>Attacks from the physical world</li>
+
+</ul></li>
+<li>High reliability requirement
+<ul>
+<li>Performance guarantees in the presence of attack</li>
+<li>Graceful performance degradation</li>
+
+</ul></li>
+<li>Legacy software, firmware and hardware</li>
+<li>Cost of security?</li>
+<li>Physics is also difficult for the adversary to mimic
+<ul>
+<li>enables intrusion detection</li>
+
+</ul></li>
+
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org94d04ff">
+<h4 id="org94d04ff">Countermeasures: Defense in Depth</h4>
+<ul>
+<li><p>
+Defense in Depth </p><div about="figures/raw/defense.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/defense.jpg" alt="Figure" style="max-height:40vh" /></p><p></p></div><p>
+</p>
+<ul>
+<li>Prevention
+<ul>
+<li>Using cryptography/coding to preserve confidentiality (privacy)</li>
+
+</ul></li>
+<li>Detection
+<ul>
+<li>Fault Detection and Isolation (FDI)</li>
+<li>Active Detection</li>
+
+</ul></li>
+<li>Resiliency
+<ul>
+<li>Off-line: Resilient system design</li>
+<li>On-line: Secure information fusion, control</li>
+
+</ul></li>
+<li>Recovery
+<ul>
+<li>Software rejuvenation</li>
+<li>Patching</li>
+
+</ul></li>
+<li>&#x2026;</li>
+
+</ul></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgcefc7fd">
+<h3 id="orgcefc7fd">Physical Watermarking</h3>
+<div class="outline-text-3" id="text-orgcefc7fd">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org0dab170">
+<h4 id="org0dab170">Stuxnet</h4>
+<ul>
+<li>NY times: <i>The worm itself now appears to have included two major components. One was designed to send Iran&rsquo;s nuclear centrifuges spinning wildly out of control. Another seems right out of the movies: <b>The computer program also secretly recorded what normal operations at the nuclear plant looked like, then played those readings back to plant operators</b>, like a pre-recorded security tape in a bank heist, so that it would appear that everything was operating normally while the centrifuges were actually tearing themselves apart.</i></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org6cff61a">
+<h4 id="org6cff61a">System Description</h4>
+<div class="r-stack">
+
+<figure>
+<img src="./figures/raw/replaydiagramone.png" alt="replaydiagramone.png" class="fragment fade-out" data-fragment-index="0">
+
+</figure>
+
+<figure>
+<img src="./figures/raw/replaydiagramtwo.png" alt="replaydiagramtwo.png" class="fragment" data-fragment-index="0">
+
+</figure>
+</div>
+<ul>
+<li>Assumptions: Linear Gaussian systems, Linear state estimator+state feedback, \(\chi_2\) failure detector.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgb497d04">
+<h4 id="orgb497d04">Active Detection via Physical Watermarking</h4>
+<div class="leftcol">
+<ul>
+<li>Change the control law by adding a zero mean i.i.d. Gaussian watermarking signal \(\zeta(k)\):</li>
+
+</ul>
+<p>
+\[ u(k) = \text{Optimal LQG Control}+ \zeta(k).\]
+ </p><div class="imgcontainer"><div about="figures/tikz/replaywithphywatermark.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/tikz/replaywithphywatermark.png" alt="Figure" style="max-height:40vh" /></p><p>Watermark</p></div></div><p>
+</p>
+
+</div>
+<div class="rightcol">
+<ul>
+<li>Optimizing the covariance of \(\zeta(k)\):
+\[ \begin{align*}
+        & \mathop{\textit{max}}&
+        & Detection\;Performance \\
+        &\text{s.t.}&
+        &Ctrl\;Loss\leq\delta
+      \end{align*}\]</li>
+<li>Can be relaxed into semidefinite programming <a class="org-ref-reference" href="#slide-bibliography">[Mo2014]</a></li>
+<li>The problem can be solved on-line, without explicit system knowledge <a class="org-ref-reference" href="#slide-bibliography">[Liu2020]</a></li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org954a5a5">
+<h4 id="org954a5a5">Simulation: Tennessee Eastman Process</h4>
+<div class="leftcol">
+<ul>
+<li>The TEP is a realistic industrial model for process control.
+ </p><div class="imgcontainer"><div about="figures/raw/simplifiedmodel.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/simplifiedmodel.png" alt="Figure" style="max-height:40vh" /></p><p>TEP Model</p></div></div><p></li>
+
+</ul>
+<ul>
+<li>The simplified model contain 4 inputs, 4 outputs and 7 internal states.</li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/tikz/gng_te.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/tikz/gng_te.png" alt="Figure" style="max-height:40vh" /></p><p>Detection Performance</p></div></div><p>
+</p>
+<ul>
+<li>Physical watermarks enable replay attack detection.</li>
+<li>The optimal watermark signal and detector can be learned using data-driven approach.</li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga875c98">
+<h3 id="orga875c98">Information Fusion</h3>
+<div class="outline-text-3" id="text-orga875c98">
+</div>
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orga8db182">
+<h4 id="orga8db182">Static State Estimation</h4>
+<ul>
+<li>Sensor model:</li>
+
+</ul>
+<p>
+\[\begin{bmatrix}
+    y_1\\
+    \vdots\\
+    y_m
+    \end{bmatrix} = Hx + noise + attack. \]
+</p>
+<ul>
+<li>The noise is <b>small</b> (zero mean Gaussian or bounded) but <b>ubiquitous</b>.</li>
+<li>The attack is \(p\)-<b>sparse</b> but can be <b>arbitrarily large</b>.</li>
+<li>Originally proposed by Peng et al.<a class="org-ref-reference" href="#slide-bibliography">[Liu2011]</a> in the context of DC power flow model.</li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org13b223e">
+<h4 id="org13b223e">Fundamental Limit for Noiseless Case</h4>
+<ul>
+<li>The system is called \(p\)-observable if \(H\) is full column rank even after removing rows corresponding to an arbitrary set of \(p\) sensors.</li>
+<li>The system is NOT \(p\)-observable \(\Rightarrow\) There exists undetectable attack.</li>
+<li>The system is NOT \(2p\)-observable \(\Rightarrow\) There exists unidentifiable attack.</li>
+<li>The system is NOT \(2p\)-observable \(\Rightarrow\) One cannot &ldquo;securely&rdquo; estimate the state with bounded error.</li>
+<li>The &ldquo;secure&rdquo; estimation problem is <b>NP-hard</b> in general <a class="org-ref-reference" href="#slide-bibliography">[Hendrickx2014]</a>, <a class="org-ref-reference" href="#slide-bibliography">[Mao2019]</a></li>
+
+</ul>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-org3c03765">
+<h4 id="org3c03765">Secure Static Estimator</h4>
+<div class="leftcol">
+<ul>
+<li>Estimator with Combinatorial Complexity <a class="org-ref-reference" href="#slide-bibliography">[Fawzi2014]</a>, <a class="org-ref-reference" href="#slide-bibliography">[Ren2020]</a>, e.g.,</li>
+
+</ul>
+<p>
+\[  \begin{align*}
+        & \mathop{\textit{minimize}}\limits_{\hat x,a,w}&
+        & \|w\|^2 \\
+        &\text{subject to}&
+        &y = H \hat x + w + a,\\
+    &&
+    &\|a\|_0\leq p.
+      \end{align*}\]
+</p>
+<ul>
+<li>Require \(2p\)-observable to be &ldquo;secure&rdquo;</li>
+<li>Achieves fundamental limit</li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<ul>
+<li>Convex optimization based estimator <a class="org-ref-reference" href="#slide-bibliography">[Han2019]</a></li>
+
+</ul>
+<p>
+\[\hat x = \mathop{argmin}_{\hat x} f_i (y_i - H_i\hat x)\]
+</p>
+<ul>
+<li>Require stronger condition than \(2p\)-observable to generate &ldquo;secure&rdquo; estimate.</li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+<section id="slide-orgf33657b">
+<h4 id="orgf33657b">Simulation: IEEE 14-Bus System</h4>
+<div class="leftcol">
+<ul>
+<li>The system has 27 sensors and 13 states</li>
+
+</ul>
+<p>
+ </p><div class="imgcontainer"><div about="figures/raw/ieee14.jpg" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/raw/ieee14.jpg" alt="Figure" style="max-height:40vh" /></p><p>IEEE 14-Bus System</p></div></div><p>
+</p>
+<ul>
+<li>The power flow meter on the red line is being attacked</li>
+
+</ul>
+
+</div>
+<div class="rightcol">
+<p>
+ </p><div class="imgcontainer"><div about="figures/tikz/ieee14lasso.png" typeof="dcmitype:StillImage" class="figure"><p><img data-src="figures/tikz/ieee14lasso.png" alt="Figure" style="max-height:40vh" /></p><p>Stuxnet Incident</p></div></div><p>
+</p>
+<ul>
+<li>With fine-tuned parameters, we can design a &ldquo;good&rdquo; estimator both in the <b>absence</b> and in the <b>presence</b> of attacks.</li>
+
+</ul>
+
+</div>
+
+<div class="slide-footer"><br></div>
+</section>
+</section>
+<section>
+<section id="slide-bibliography">
+<h2 id="bibliography">Bibliography</h2>
+<ul class='org-ref-bib'><li><a id="Fawzi2014">[Fawzi2014]</a> <a name="Fawzi2014"></a>Fawzi, Tabuada & Diggavi, Secure Estimation and Control for Cyber-Physical Systems Under Adversarial Attacks, <i>IEEE Trans. Automat. Contr. 59(6)</i>, 1454-1467 (2014). <a href="http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=6727407">http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=6727407</a></li>
+<li><a id="Han2019">[Han2019]</a> <a name="Han2019"></a>Han, Mo & Xie, Convex Optimization Based State Estimation Against Sparse Integrity Attacks, <i>IEEE Trans. Automat. Contr. 64(6)</i>, 2383-2395 (2019). <a href=""></a></li>
+<li><a id="Hendrickx2014">[Hendrickx2014]</a> <a name="Hendrickx2014"></a>Hendrickx, Johansson, Jungers, Sandberg & Sou, Efficient Computations of a Security Index for False Data Attacks in Power Networks, <i>IEEE Trans. Automat. Contr. 59(12)</i>, 3194-3208 (2014). <a href="http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=6882830">http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=6882830</a></li>
+<li><a id="Liu2011">[Liu2011]</a> <a name="Liu2011"></a>Liu, Ning & Reiter, False data injection attacks against state estimation in electric power grids, <i>ACM Trans. Inf. Syst. Secur. 14(1)</i>, 1-33 (2011). <a href="http://dl.acm.org/citation.cfm?id=1952982.1952995">http://dl.acm.org/citation.cfm?id=1952982.1952995</a></li>
+<li><a id="Liu2020">[Liu2020]</a> <a name="Liu2020"></a>Liu, Mo, Yan, Xie & Johansson, An Online Approach to Physical Watermark Design, <i>IEEE Trans. Automat. Contr. </i>, 1-1 (2020). <a href=""></a></li>
+<li><a id="Mao2019">[Mao2019]</a> <a name="Mao2019"></a>Mao, Mitra, Sundaram & Tabuada, When is the Secure State-Reconstruction Problem Hard, in: Proc. IEEE Conf. Decis. Control, 2019. <a href=""></a></li>
+<li><a id="Mo2011">[Mo2011]</a> <a name="Mo2011"></a>Mo, Kim, Brancik, Dickinson, Lee, Perrig & Sinopoli, Cyber – Physical Security of a Smart Grid Infrastructure, <i>Proc. IEEE 100(1)</i>, 1-15 (2011). <a href="http://dx.doi.org/10.1109/JPROC.2011.2161428">http://dx.doi.org/10.1109/JPROC.2011.2161428</a></li>
+<li><a id="Mo2014">[Mo2014]</a> <a name="Mo2014"></a>Mo, Chabukswar & Sinopoli, Detecting Integrity Attacks on SCADA Systems, <i>IEEE Trans. Control Syst. Technol. 22(4)</i>, 1396-1407 (2014). <a href="http://ieeexplore.ieee.org/articleDetails.jsp?arnumber=6612700">http://ieeexplore.ieee.org/articleDetails.jsp?arnumber=6612700</a></li>
+<li><a id="Ren2020">[Ren2020]</a> <a name="Ren2020"></a>Ren, Mo, Chen & Johansson, Secure State Estimation with Byzantine Sensors: A Probabilistic Approach, <i>IEEE Trans. Automat. Contr. </i>, 1-1 (2020). <a href=""></a></li>
+<li><a id="Tang2009">[Tang2009]</a> <a name="Tang2009"></a>Tang, Zimmerman & Nelson, Managing New Product Development and Supply Chain Risks: The Boeing 787 Case, <i>Supply Chain Forum An Int. J. 10(2)</i>, 74-86 (2009). <a href="https://doi.org/10.1080/16258312.2009.11517219">https://doi.org/10.1080/16258312.2009.11517219</a></li>
+</ul>
+<div class="slide-footer"><br></div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/dist/reveal.js"></script>
+<script src="./reveal.js/plugin/notes/notes.js"></script>
+<script src="./reveal.js/plugin/search/search.js"></script>
+<script src="./reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: true,
+fragmentInURL: true,
+hashOneBasedIndex: false,
+pdfSeparateFragments: false,
+
+overview: true,
+
+transition: 'fade',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealNotes, RevealSearch, RevealZoom ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+{src:'./reveal.js/plugin/spotlight/spotlight.js'},
+{src: './reveal.js/plugin/wordcloud/reveal-wordcloud.js', condition: function() { return !!document.querySelector( '[wordcloud]' ); } },
+{ src: './reveal.js/plugin/audio-slideshow/audio-slideshow.js', condition: function( ) { return !!document.body.classList && !Reveal.isSpeakerNotes(); } },
+{ src: './reveal.js/plugin/anything/anything.js' },
+{ src: './reveal.js/plugin/toc-progress/toc-progress.js', async: true, callback: function() { toc_progress.initialize('reduce', 'rgba(120,138,130,0.2)', 'body'); toc_progress.create(); } },
+{ src: './reveal.js/plugin/jump/jump.js', async: true },
+{ src: './reveal.js/plugin/quiz/js/quiz.js', async: true, callback: function() { prepareQuizzes({preventUnanswered: true, skipStartButton: true}); } },
+{ src: './reveal.js/plugin/coursemod/coursemod.js', async: true },
+{ src: './reveal.js/plugin/accessibility/helper.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+,plugins: [ RevealNotes, RevealSearch, RevealZoom, RevealChart, RevealChalkboard ], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {84: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1,
+audioStartAtFragment: true,
+  audio: {
+    advance: -1, autoplay: false, defaultDuration: 0, defaultAudios: false, playerOpacity: 0.8, playerStyle: 'position: fixed; bottom: 9.5vh; left: 0%; width: 30%; height:30px; z-index: 33;' },
+anything: [
+        // Following initialization code for class animate from anything-demo.html.
+        // Copyright (c) 2016 Asvin Goel, under The MIT License (MIT).
+	{className: "animate",  initialize: (function(container, options){
+		Reveal.addEventListener( 'fragmentshown', function( event ) {
+			if (typeof event.fragment.beginElement === "function" ) {
+				event.fragment.beginElement();
+			}
+		});
+		Reveal.addEventListener( 'fragmenthidden', function( event ) {
+			if (event.fragment.hasAttribute('data-reverse') ) {
+				var reverse = event.fragment.parentElement.querySelector('[id=\"' + event.fragment.getAttribute('data-reverse') + '\"]');
+				if ( reverse && typeof reverse.beginElement === "function" ) {
+					reverse.beginElement();
+				}
+			}
+		});
+		if ( container.getAttribute("data-svg-src") ) {
+			var xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+				if (xhr.readyState === 4) {
+					var svg = container.querySelector('svg');
+					container.removeChild( svg );
+					container.innerHTML = xhr.responseText + container.innerHTML;
+					if ( svg ) {
+						container.querySelector('svg').innerHTML = container.querySelector('svg').innerHTML + svg.innerHTML;
+					}
+				}
+				else {
+					console.warn( "Failed to get file. ReadyState: " + xhr.readyState + ", Status: " + xhr.status);
+				}
+			};
+			xhr.open( 'GET', container.getAttribute("data-svg-src"), true );
+			xhr.send();
+		}
+	}) },
+	{className: "randomPic",
+	 defaults: {imgalt: "Dummy alt text",
+		    imgcaption: "Image by {name}",
+		    choices: [ {name: "dummyname", path: "dummypath"} ]},
+	 initialize: (function(container, options){
+	     var choice = Math.trunc( Math.random()*(options.choices.length) );
+	     var img = "<img src='" + options.choices[choice].path + "' alt='" + options.choices[choice].imgalt + "' />";
+	     var caption = options.imgcaption.replace(new RegExp('\{name\}', 'gm'), options.choices[choice].name);
+	     container.innerHTML = img + caption;
+	 }) },
+	{className: "notes",
+	 initialize: (function(container, options){
+	     container.addEventListener('click', function(e) { Reveal.getPlugins().notes.open(); });
+	 }) }
+],
+coursemod: { enabled: true, shown: false },
+});
+</script>
+</body>
+</html>

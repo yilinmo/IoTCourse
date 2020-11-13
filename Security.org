@@ -36,7 +36,7 @@ def step_func(x, x0, y0):
 - Understand the key information security properties   
   - Confidentiality
   - Integrity
-  - Available
+  - Availability
 - Explain the purpose of different cryptography algorithms
   - Symmetric Encryption
   - Cryptographic Hash
@@ -52,11 +52,11 @@ def step_func(x, x0, y0):
 * Information Security 
   
 ** Why *Security*?
-   - The next generation of systems: *Smart Grids*, *Smart Buildings*, *Internet of Things*, will make extensive use of widespread sensing and networking.
+   - The next generation of intelligent networked systems: *Smart Grids*, *Smart Buildings*, *Internet of Things*, will make extensive use of widespread sensing and networking.
    - As the systems become "/smarter/", they are also more vulnerable to malicious attacks.
    {{{revealgrid(1, "./figures/smartcps.grid", 20, 3, 1, "\"ga1 ga2 ga3\"")}}}
    
-*** The First Cyber-physical system Malware: Stuxnet
+*** The First Cyber-physical system Malware: Stockist
 
     - Stuxnet is the first discovered malware that spies on and subverts industrial control systems. It was discovered in June 2010.
       {{{revealimg("./figures/stuxnet.meta","Stuxnet Incident","50vh",nil,'none)}}}
@@ -120,7 +120,7 @@ def step_func(x, x0, y0):
   - Same method used to sniff unencrypted WiFi traffic
   - When sending un-important information, not a large threat
 
-*** Traffic Analysis: Side-Information
+*** Traffic Analysis: Side-Channel Attack
 - Examine cause and effect of encrypted packet
   - E.g. Each time an xyz packet is sent, that valve opens
   - We do not need to know what xyz is, only what it does
@@ -253,12 +253,12 @@ def step_func(x, x0, y0):
 *** Data Encryption Standard
 
 - Developed by IBM in 1970s and became a standard in 1977
- {{{reveallicense("./figures/des.meta","40vh")}}}
+ {{{reveallicense("./figures/des.meta","60vh")}}}
 - The size of the key is 56 bits, and 8 bits for parity check 
 - Block cipher: Encrypt 64 bits of plaintext into 64 bits of ciphertext
 - First broke in 1997
 - A brute-force attack using Nvidia GTX 1080 would require 15 days on average
-    {{{revealimg("./figures/feistel.meta",t,"10vh")}}}
+    {{{revealimg("./figures/feistel.meta",t,"30vh")}}}
 *** Advanced Encryption Standard
 - AES is established by the U.S. National Institute of Standards and Technology (NIST) in 2001 as a successor to DES
 - Has a block size of 128 bits
@@ -267,14 +267,13 @@ def step_func(x, x0, y0):
 - One of the symmetric encryption schemes used by TLS.
 *** One-time-pad
 - In OTP, a plaintext is paired with a random secret key (also referred to as a one-time pad). 
- {{{reveallicense("./figures/otp.meta","60vh")}}}
+ {{{reveallicense("./figures/otp.meta","40vh")}}}
 - Each bit or character of the plaintext is encrypted by combining it with the corresponding bit or character from the pad using modular addition.
 - The resulting ciphertext will be impossible to decrypt if:
   - The key must be truly random.
   - The key must be at least as long as the plaintext.
   - The key must never be reused in whole or in part.
   - The key must be kept completely secret.
-
 
 * Authenticated Encryption
   
@@ -293,9 +292,9 @@ def step_func(x, x0, y0):
 *** Strong and Weak Collision Resistance
 - The once popular MD5 hash has a digest size of 128 bits.
 - We want to find an input corresponding to a *specific hash* by brute force
-  - We need to do \(2^128\) search on average
+  - We need to do \(2^{128}\) search on average
 - However, how much search we need to do if we want to find 2 inputs sharing the *same hash* by brute force?
-  - Surprisingly, only \(2^64\) search is needed due to birthday paradox!
+  - Surprisingly, only \(2^{64}\) search is needed due to birthday paradox!
 
 *** Birthday paradox
 - How likely this class of 30 students to contain two people with the same birthday?
@@ -349,15 +348,15 @@ def step_func(x, x0, y0):
 - Using a Single Network-wide Key
 - Simple technique
   1. Pre-load onto all nodes prior to deployment
-  2. After deployment, establish communication with neighbors with shared key
-  3. Encrypt all communication in shared key and append MAC (message authentication code) for integrity
+  2. After deployment, establish communication with neighbors 
+  3. Authenticated encryption using the shared key  
 
 *** Pros and Cons
 
 #+BEGIN_leftcol
 Pros:
+- Simple
 - Minimal storage required
-- No additional steps in scheme
 - Resistant against DoS and packet injection
   - Provided adversary doesn’t know the key with communication
   - Replay can be avoided by sending source, destination, and timestamp
@@ -628,7 +627,8 @@ In TLS encryption, the process is as follows:
   - Graceful performance degradation
 - Legacy software, firmware and hardware
 - Cost of security?
-
+- Physics is also difficult for the adversary to mimic
+  - enables intrusion detection 
 *** Countermeasures: Defense in Depth 
   - Defense in Depth{{{reveallicense("./figures/defense.meta","40vh",nil,'none)}}} 
     - Prevention
@@ -653,9 +653,9 @@ In TLS encryption, the process is as follows:
 *** System Description
     #+HTML: <div class="r-stack">
     #+ATTR_HTML: :class fragment fade-out :data-fragment-index 0
-    [[./figures/raw/replaydiagramone.svg]]
+    [[./figures/raw/replaydiagramone.png]]
     #+ATTR_HTML: :class fragment :data-fragment-index 0
-    [[./figures/raw/replaydiagramtwo.svg]]
+    [[./figures/raw/replaydiagramtwo.png]]
     #+HTML: </div>
     - Assumptions: Linear Gaussian systems, Linear state estimator+state feedback, \(\chi_2\) failure detector.
  
