@@ -116,9 +116,9 @@
 <ul>
 <li><a href="#slide-orgb02673c">Introduction</a></li>
 <li><a href="#slide-org6bdb5a0">Overview</a></li>
-<li><a href="#slide-org210b64c">Ordered Access</a></li>
-<li><a href="#slide-org9d2a778">Deterministic Access</a></li>
-<li><a href="#slide-org198f4aa">Random Access</a></li>
+<li><a href="#slide-org4a11f0d">Ordered Access</a></li>
+<li><a href="#slide-org306a140">Deterministic Access</a></li>
+<li><a href="#slide-orgf6ad514">Random Access</a></li>
 <li><a href="#slide-org3dd6a44">Hybrid MAC: IEEE 802.15.4</a></li>
 <li><a href="#slide-bibliography">Bibliography</a></li>
 </ul>
@@ -143,8 +143,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgded93d7">
-<h4 id="orgded93d7">Data-Link Layer</h4>
+<section id="slide-orgccf5f11">
+<h4 id="orgccf5f11">Data-Link Layer</h4>
 <ul>
 <li>Physical Layer: handles transmission of raw bits</li>
 <li>What is not taken care of&#x2026;
@@ -160,8 +160,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orga7aaf85">
-<h4 id="orga7aaf85">Data-Link Layer</h4>
+<section id="slide-orgfb59711">
+<h4 id="orgfb59711">Data-Link Layer</h4>
 <ul>
 <li>Logical Link Control (LLC)
 <ul>
@@ -195,8 +195,8 @@
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org1f78c81">
-<h4 id="org1f78c81">Design Considerations</h4>
+<section id="slide-orgd67584a">
+<h4 id="orgd67584a">Design Considerations</h4>
 <ul>
 <li>What kind of a resource do we have?
 <ul>
@@ -370,14 +370,14 @@ However R1 cannot hear S2 and R2 cannot hear S1.
 </section>
 </section>
 <section>
-<section id="slide-org210b64c">
-<h2 id="org210b64c">Ordered Access</h2>
-<div class="outline-text-2" id="text-org210b64c">
+<section id="slide-org4a11f0d">
+<h2 id="org4a11f0d">Ordered Access</h2>
+<div class="outline-text-2" id="text-org4a11f0d">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orge696e50">
-<h3 id="orge696e50">Ordered Access</h3>
+<section id="slide-org9bc6d53">
+<h3 id="org9bc6d53">Ordered Access</h3>
 <ul>
 <li>Not random</li>
 <li>Not controlled by a central control point that allocates channels</li>
@@ -429,14 +429,14 @@ Token is passed to the next candidate in a sequential manner
 </section>
 </section>
 <section>
-<section id="slide-org9d2a778">
-<h2 id="org9d2a778">Deterministic Access</h2>
-<div class="outline-text-2" id="text-org9d2a778">
+<section id="slide-org306a140">
+<h2 id="org306a140">Deterministic Access</h2>
+<div class="outline-text-2" id="text-org306a140">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org518a12c">
-<h3 id="org518a12c">Deterministic Access</h3>
+<section id="slide-org7d666f2">
+<h3 id="org7d666f2">Deterministic Access</h3>
 <ul>
 <li>Controlled by a central control point that allocates channels
 <ul>
@@ -565,14 +565,14 @@ Token is passed to the next candidate in a sequential manner
 </section>
 </section>
 <section>
-<section id="slide-org198f4aa">
-<h2 id="org198f4aa">Random Access</h2>
-<div class="outline-text-2" id="text-org198f4aa">
+<section id="slide-orgf6ad514">
+<h2 id="orgf6ad514">Random Access</h2>
+<div class="outline-text-2" id="text-orgf6ad514">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgc509f4e">
-<h3 id="orgc509f4e">Random Access</h3>
+<section id="slide-orge1ce53a">
+<h3 id="orge1ce53a">Random Access</h3>
 <ul>
 <li>Randomly access media, usually detect collision <b>after</b> it happens
 <ul>
@@ -609,8 +609,8 @@ Token is passed to the next candidate in a sequential manner
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgc57976a">
-<h4 id="orgc57976a">Slotted ALOHA</h4>
+<section id="slide-org7f82224">
+<h4 id="org7f82224">Slotted ALOHA</h4>
 <ul>
 <li>Time is divided into &ldquo;slots&rdquo; of one frame duration
 <ul>
@@ -635,15 +635,15 @@ Token is passed to the next candidate in a sequential manner
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org8ff15eb">
-<h4 id="org8ff15eb">Slotted ALOHA</h4>
+<section id="slide-org24c20ee">
+<h4 id="org24c20ee">Slotted ALOHA</h4>
 
 <script src="figures/alohatimeslot.js" id="e7c3d856-8d97-48f1-b417-48be8645a812"></script>
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgbeb7b62">
-<h4 id="orgbeb7b62">Throughput of Slotted ALOHA</h4>
+<section id="slide-org34b3862">
+<h4 id="org34b3862">Throughput of Slotted ALOHA</h4>
 <ul>
 <li>Assuming that the packet transmission attempts in a time slot follows a Poission distribution of rate \(\lambda\)
 <ul>
@@ -665,8 +665,8 @@ Token is passed to the next candidate in a sequential manner
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org5c20ddd">
-<h4 id="org5c20ddd">Throughput of Slotted ALOHA</h4>
+<section id="slide-org0f7e441">
+<h4 id="org0f7e441">Throughput of Slotted ALOHA</h4>
 
 <script src="figures/slottedaloha.js" id="17b62b03-0d50-4e63-900b-c619680c1597"></script>
 
@@ -799,14 +799,14 @@ Token is passed to the next candidate in a sequential manner
 
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-orgf2930c5">
-<h3 id="orgf2930c5">Design Considerations</h3>
-<div class="outline-text-3" id="text-orgf2930c5">
+<section id="slide-orgf1f69c4">
+<h3 id="orgf1f69c4">Design Considerations</h3>
+<div class="outline-text-3" id="text-orgf1f69c4">
 </div>
 <div class="slide-footer"><br></div>
 </section>
-<section id="slide-org5660563">
-<h4 id="org5660563">Random Access</h4>
+<section id="slide-org64de2bb">
+<h4 id="org64de2bb">Random Access</h4>
 <ul>
 <li>Carrier sense or not?
 <ul>
